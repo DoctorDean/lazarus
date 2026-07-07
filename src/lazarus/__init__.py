@@ -17,12 +17,24 @@ from lazarus.pinner import (
     pin_requirements,
     select_version,
 )
+from lazarus.sandbox import (
+    CommandResult,
+    DockerClient,
+    DockerError,
+    Sandbox,
+)
 
 __all__ = [
     "__version__",
+    # pinner
     "ReleaseInfo",
     "fetch_release_history",
     "pin_package",
     "pin_requirements",
     "select_version",
+    # sandbox
+    "CommandResult",
+    "DockerClient",
+    "DockerError",
+    "Sandbox",
 ]

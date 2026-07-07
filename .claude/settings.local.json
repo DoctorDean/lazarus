@@ -17,7 +17,8 @@
       "Bash(.venv/bin/python -m pip install -q --upgrade pip)",
       "Bash(.venv/bin/pip install *)",
       "Bash(.venv/bin/lazarus pin *)",
-      "Bash(.venv/bin/lazarus --version)"
+      "Bash(.venv/bin/lazarus --version)",
+      "Bash(.venv/bin/pytest -q)"
     ]
   }
 }
