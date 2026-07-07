@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebSearch",
+      "WebFetch(domain:hub.docker.com)",
+      "Bash(sysctl -n machdep.cpu.brand_string)",
+      "Read(//Users/dean/.claude/**)",
+      "Read(//Applications/**)",
+      "Bash(gh auth *)",
+      "Bash(git config *)",
+      "Read(//Users/dean/.ssh/**)",
+      "Bash(python3 -c \"import venv; print\\('venv ok'\\)\")",
+      "Bash(set -e)",
+      "Bash(git init *)",
+      "Bash(python3 -m venv .venv)",
+      "Bash(.venv/bin/python -m pip install -q --upgrade pip)",
+      "Bash(.venv/bin/pip install *)",
+      "Bash(.venv/bin/lazarus pin *)",
+      "Bash(.venv/bin/lazarus --version)"
+    ]
+  }
+}
