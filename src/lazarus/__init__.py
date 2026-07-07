@@ -23,6 +23,12 @@ from lazarus.sandbox import (
     DockerError,
     Sandbox,
 )
+from lazarus.contract import (
+    Contract,
+    IOSpec,
+    SmokeCheck,
+    emit,
+)
 
 __all__ = [
     "__version__",

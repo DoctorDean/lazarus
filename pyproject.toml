@@ -13,6 +13,7 @@ authors = [{ name = "Dean Sherry" }]
 keywords = ["bioinformatics", "reproducibility", "agents", "dependency-pinning"]
 dependencies = [
     "packaging>=21",
+    "PyYAML>=6",
 ]
 
 [project.optional-dependencies]
