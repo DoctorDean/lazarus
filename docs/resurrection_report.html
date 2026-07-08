@@ -1,0 +1,270 @@
+<style>
+  :root {
+    --ground: #edf0ef; --panel: #f9fbfa; --panel-2: #ffffff;
+    --ink: #12201d; --muted: #556b66;
+    --line: rgba(18,32,29,0.13); --line-strong: rgba(18,32,29,0.28);
+    --accent: #0c8f6e; --accent-soft: rgba(12,143,110,0.12);
+    --wound: #bd4f36; --wound-soft: rgba(189,79,54,0.10);
+    --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --maxw: 76rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0c1312; --panel: #121c1a; --panel-2: #16211f;
+      --ink: #e7ece9; --muted: #8ba09b;
+      --line: rgba(231,236,233,0.12); --line-strong: rgba(231,236,233,0.26);
+      --accent: #34d1a4; --accent-soft: rgba(52,209,164,0.14);
+      --wound: #e0745b; --wound-soft: rgba(224,116,91,0.14);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #edf0ef; --panel: #f9fbfa; --panel-2: #ffffff;
+    --ink: #12201d; --muted: #556b66;
+    --line: rgba(18,32,29,0.13); --line-strong: rgba(18,32,29,0.28);
+    --accent: #0c8f6e; --accent-soft: rgba(12,143,110,0.12);
+    --wound: #bd4f36; --wound-soft: rgba(189,79,54,0.10);
+  }
+  :root[data-theme="dark"] {
+    --ground: #0c1312; --panel: #121c1a; --panel-2: #16211f;
+    --ink: #e7ece9; --muted: #8ba09b;
+    --line: rgba(231,236,233,0.12); --line-strong: rgba(231,236,233,0.26);
+    --accent: #34d1a4; --accent-soft: rgba(52,209,164,0.14);
+    --wound: #e0745b; --wound-soft: rgba(224,116,91,0.14);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--font-sans); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
+  .mono { font-family: var(--font-mono); }
+  .eyebrow {
+    font-family: var(--font-mono); text-transform: uppercase;
+    letter-spacing: 0.18em; font-size: 0.72rem; color: var(--muted);
+  }
+  h1, h2, h3 { text-wrap: balance; }
+
+  /* ---- top rule / masthead ---- */
+  .masthead {
+    border-bottom: 1px solid var(--line-strong);
+    padding-top: 2.4rem; padding-bottom: 1.6rem;
+  }
+  .masthead-row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .record-id { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+
+  .hero { padding: 2.6rem 0 1.4rem; }
+  .hero .kicker { color: var(--accent); }
+  .repo {
+    font-family: var(--font-mono); font-weight: 600;
+    font-size: clamp(1.9rem, 5vw, 3.3rem); letter-spacing: -0.02em;
+    margin: 0.5rem 0 0; line-height: 1.05;
+  }
+  .lede { font-size: clamp(1.02rem, 1.6vw, 1.2rem); color: var(--muted); max-width: 42ch; margin: 1.1rem 0 0; }
+
+  .stamp {
+    font-family: var(--font-mono); font-weight: 700; letter-spacing: 0.05em;
+    color: var(--accent); border: 2px solid var(--accent); border-radius: 6px;
+    padding: 0.5rem 0.9rem; font-size: 1.05rem; text-transform: uppercase;
+    transform: rotate(-4deg); background: var(--accent-soft);
+    display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap;
+  }
+  .stamp::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+  /* ---- vitals strip ---- */
+  .vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.6rem, 1fr)); gap: 0.7rem; margin: 1.5rem 0 0; }
+  .vital { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; }
+  .vital .n { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .vital .l { font-family: var(--font-mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--muted); margin-top: 0.3rem; }
+  .vital .n.good { color: var(--accent); }
+
+  /* ---- pulse panel ---- */
+  .pulse {
+    margin: 2.2rem 0; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: 1.6rem 1.8rem; display: grid;
+    grid-template-columns: minmax(0,1fr) auto; gap: 1.4rem 2rem; align-items: center;
+  }
+  @media (max-width: 640px) { .pulse { grid-template-columns: 1fr; } }
+  .pulse svg { width: 100%; height: 90px; display: block; }
+  .ecg-line { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.6s ease-out 0.3s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .ecg-flat { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+  @media (prefers-reduced-motion: reduce) { .ecg-line { animation: none; stroke-dashoffset: 0; } }
+  .auc { text-align: right; }
+  .auc .big { font-family: var(--font-mono); font-size: clamp(2.6rem, 7vw, 4.2rem); font-weight: 700; color: var(--accent); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+  .auc .lab { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--muted); margin-top: 0.5rem; }
+  .auc .cmp { font-size: 0.82rem; color: var(--muted); margin-top: 0.35rem; }
+
+  /* ---- sections ---- */
+  section { padding: 2.2rem 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.3rem; }
+  .sec-num { font-family: var(--font-mono); color: var(--accent); font-size: 0.8rem; letter-spacing: 0.1em; }
+  h2 { font-family: var(--font-mono); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.01em; margin: 0; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+  @media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.3rem 1.4rem; }
+  .card h3 { margin: 0 0 0.8rem; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.02em; }
+  .card.wound { border-color: color-mix(in srgb, var(--wound) 40%, var(--line)); }
+  .card.wound h3 { color: var(--wound); }
+
+  .kv { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  .kv li { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0.8rem; font-size: 0.9rem; }
+  .kv .k { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); padding-top: 0.15rem; }
+  .kv .v { color: var(--ink); }
+  .kv .v code { font-family: var(--font-mono); font-size: 0.84rem; background: var(--accent-soft); padding: 0.05rem 0.35rem; border-radius: 4px; }
+
+  .stack-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
+  .tag { font-family: var(--font-mono); font-size: 0.74rem; padding: 0.2rem 0.55rem; border-radius: 5px; border: 1px solid color-mix(in srgb, var(--wound) 35%, var(--line)); color: var(--wound); background: var(--wound-soft); }
+
+  /* ---- procedure timeline ---- */
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 0.55rem; top: 0.4rem; bottom: 0.4rem; width: 2px; background: var(--line); }
+  .step { position: relative; padding: 0 0 1.35rem 2.1rem; }
+  .step:last-child { padding-bottom: 0; }
+  .step::before { content: ""; position: absolute; left: 0.16rem; top: 0.28rem; width: 0.82rem; height: 0.82rem; border-radius: 50%; background: var(--panel); border: 2px solid var(--accent); }
+  .step.diag::before { border-color: var(--wound); background: var(--wound-soft); }
+  .step .st { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+  .step .sh { font-weight: 600; margin: 0.15rem 0 0.2rem; }
+  .step .sb { font-size: 0.92rem; color: var(--muted); margin: 0; }
+  .step .sb code { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink); }
+
+  /* ---- contract / files ---- */
+  .files { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem,1fr)); gap: 0.9rem; margin-bottom: 1.3rem; }
+  .file { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 0.85rem 1rem; }
+  .file .fn { font-family: var(--font-mono); font-weight: 600; font-size: 0.9rem; }
+  .file .fd { font-size: 0.78rem; color: var(--muted); margin-top: 0.25rem; }
+
+  pre { margin: 0; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; overflow-x: auto; }
+  pre code { font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; color: var(--ink); }
+  .c-com { color: var(--muted); }
+  .c-ok { color: var(--accent); font-weight: 600; }
+
+  .organs { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem,1fr)); gap: 1rem; }
+  .organ { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.2rem; }
+  .organ .on { font-family: var(--font-mono); font-size: 0.88rem; font-weight: 600; color: var(--accent); }
+  .organ .od { font-size: 0.86rem; color: var(--muted); margin-top: 0.4rem; }
+
+  footer { border-top: 1px solid var(--line-strong); padding: 1.8rem 0 3rem; color: var(--muted); font-size: 0.82rem; }
+  footer .mono { color: var(--ink); }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+  a:hover { border-bottom-color: var(--accent); }
+  .note { font-size: 0.9rem; color: var(--muted); }
+</style>
+
+<div class="wrap masthead">
+  <div class="masthead-row">
+    <span class="record-id">Lazarus · Resurrection Record № 001</span>
+    <span class="record-id">2026-07-08 · Bertha (native x86-64)</span>
+  </div>
+</div>
+
+<div class="wrap hero">
+  <div class="masthead-row">
+    <div>
+      <div class="eyebrow kicker">Dead research code, made callable</div>
+      <h1 class="repo">LPDI-EPFL/masif</h1>
+      <p class="lede">A widely-cited molecular-surface method, dormant ~5 years and wired to a stack that no longer resolves — resurrected autonomously and proven on a fresh structure.</p>
+    </div>
+    <div class="stamp">Revived</div>
+  </div>
+
+  <div class="vitals">
+    <div class="vital"><div class="n">~5 yr</div><div class="l">Dormant</div></div>
+    <div class="vital"><div class="n">763</div><div class="l">GitHub stars</div></div>
+    <div class="vital"><div class="n">53</div><div class="l">Open issues</div></div>
+    <div class="vital"><div class="n">18</div><div class="l">Agent turns</div></div>
+    <div class="vital"><div class="n good">0.9137</div><div class="l">ROC-AUC · 4ZQK_A</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="pulse">
+    <svg viewBox="0 0 700 90" preserveAspectRatio="none" aria-hidden="true">
+      <path class="ecg-flat" d="M0,45 L700,45" />
+      <path class="ecg-line" d="M0,45 L250,45 L275,45 L288,20 L300,45 L315,45 L330,8 L345,80 L360,30 L372,45 L700,45" />
+    </svg>
+    <div class="auc">
+      <div class="big">0.9137</div>
+      <div class="lab">ROC-AUC · interaction site</div>
+      <div class="cmp">threshold 0.80 · paper ≈ 0.85 · <span style="color:var(--accent)">PASS</span></div>
+    </div>
+  </div>
+  <p class="note">The sanity check the biologist defined: on the PD-L1 complex <span class="mono">4ZQK</span> chain A, the model must score the known binding interface higher than the rest of the surface. It does — and above the value reported in the original paper.</p>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>The patient</h2></div>
+    <div class="two">
+      <div class="card">
+        <h3>Method</h3>
+        <ul class="kv">
+          <li><span class="k">Capability</span><span class="v">MaSIF-site — per-vertex protein interaction-site prediction from molecular surface fingerprints</span></li>
+          <li><span class="k">Paper</span><span class="v">Gainza et al., <em>Nature Methods</em> 2020</span></li>
+          <li><span class="k">Use</span><span class="v">Triage step in a binder-discovery pipeline</span></li>
+          <li><span class="k">Weights</span><span class="v">Pretrained <code>all_feat_3l</code>, shipped in-repo</span></li>
+        </ul>
+      </div>
+      <div class="card wound">
+        <h3>Why it wouldn't run</h3>
+        <p class="note" style="margin-top:0">Published, open, and effectively unrunnable — a stack pinned to an era that modern machines and package managers no longer resolve:</p>
+        <div class="stack-tags">
+          <span class="tag">Python 3.6</span><span class="tag">TensorFlow 1.12</span><span class="tag">MSMS</span><span class="tag">APBS</span><span class="tag">PDB2PQR</span><span class="tag">reduce</span><span class="tag">PyMesh (from source)</span><span class="tag">slurm data-prep</span>
+        </div>
+        <p class="note">The real capability is buried in shell scripts, invoked by hand — never exposed as an API.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>The procedure — 18 autonomous turns</h2></div>
+    <p class="note" style="margin-top:-0.6rem;margin-bottom:1.4rem">Lazarus ran a build → execute → read-traceback → repair loop in a disposable container, using only its own container tools. No human input.</p>
+    <ul class="timeline">
+      <li class="step"><div class="st">Orient</div><p class="sh">Located the real capability</p><p class="sb">Read <code>data_prepare_one.sh</code>, <code>predict_site.sh</code>, <code>color_site.sh</code> and traced the path from a PDB to per-vertex scores.</p></li>
+      <li class="step"><div class="st">Inventory</div><p class="sh">Probed the environment</p><p class="sb">Confirmed <code>msms / reduce / apbs / pdb2pqr / multivalue</code> on PATH, TensorFlow 1.12 imports (host has AVX), pretrained weights present.</p></li>
+      <li class="step diag"><div class="st">Diagnose</div><p class="sh">One broken link: the PDB download</p><p class="sb">The built-in fetch points at a rotted RCSB URL (issue #85) — the single thing standing between the repo and a result.</p></li>
+      <li class="step"><div class="st">Repair</div><p class="sh">Routed around it</p><p class="sb">Fetched <code>4ZQK</code> from the current RCSB endpoint and fed it through the script's <code>--file</code> mechanism — also the right API design.</p></li>
+      <li class="step"><div class="st">Prepare</div><p class="sh">Built the surface + features</p><p class="sb">reduce → MSMS → APBS → triangulate → precompute produced all feature arrays incl. ground-truth <code>iface_labels</code>. <span class="c-ok mono">▸ snapshot: site-dataprep-ok</span></p></li>
+      <li class="step"><div class="st">Predict</div><p class="sh">Ran the pretrained network</p><p class="sb"><code>predict_site.sh</code> → 2,336 per-vertex interaction-site scores.</p></li>
+      <li class="step"><div class="st">Prove</div><p class="sh">ROC-AUC = 0.9137 on 4ZQK_A</p><p class="sb">Above the 0.80 bar and the paper's ~0.85. <span class="c-ok mono">▸ snapshot: site-ready</span></p></li>
+      <li class="step"><div class="st">Deliver</div><p class="sh">Emitted the integration contract</p><p class="sb">A self-contained, callable package written back to the operator's machine.</p></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>The deliverable — a callable component</h2></div>
+    <div class="files">
+      <div class="file"><div class="fn">predict.py</div><div class="fd">Call MaSIF-site on any PDB → per-vertex scores</div></div>
+      <div class="file"><div class="fn">smoke_test.py</div><div class="fd">Re-derives the ROC-AUC, asserts ≥ 0.80</div></div>
+      <div class="file"><div class="fn">Dockerfile</div><div class="fd">Pinned, from the revived + snapshotted image</div></div>
+      <div class="file"><div class="fn">lazarus.yaml</div><div class="fd">The contract: inputs, outputs, provenance</div></div>
+    </div>
+    <p class="note" style="margin-bottom:0.7rem">Verification that matters: the emitted package was run <strong>standalone — no agent, no LLM, pure Docker</strong>:</p>
+    <pre><code><span class="c-com"># the package Lazarus wrote, executed on its own</span>
+$ python smoke_test.py
+roc_auc=0.91 (threshold 0.8) -> <span class="c-ok">PASS</span></code></pre>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>How Lazarus works</h2></div>
+    <div class="organs">
+      <div class="organ"><div class="on">Sandbox</div><div class="od">Disposable container; every expensive success is snapshotted so a later failure never re-pays the build.</div></div>
+      <div class="organ"><div class="on">Commit-era pinner</div><div class="od">Reconstructs the dependency universe as it was on the repo's last commit, from the PyPI timeline.</div></div>
+      <div class="organ"><div class="on">Repair loop</div><div class="od">Build → run → read traceback → patch → retry, bounded, isolated to the container.</div></div>
+      <div class="organ"><div class="on">Capability locator</div><div class="od">Finds where "input → the famous output" happens and carves the minimal path to it.</div></div>
+      <div class="organ"><div class="on">Contract emitter</div><div class="od">Module + CLI + pinned container + smoke test encoding the user's sanity check.</div></div>
+    </div>
+    <p class="note">Runs on a laptop; executes anywhere. This resurrection was driven from a MacBook and executed on a native-x86 workstation over a single <code class="mono">--docker-host</code> flag — because MaSIF's binaries (MSMS, TF) need native x86 that Apple-silicon emulation can't provide. Lazarus's sandbox is host-pluggable, so the method runs wherever the method can run.</p>
+  </section>
+</div>
+
+<div class="wrap"><footer>
+  <div class="mono">Project Lazarus — turn dead research code into a callable pipeline component.</div>
+  Anchor case: <a href="https://github.com/LPDI-EPFL/masif">LPDI-EPFL/masif</a> · target <span class="mono">4ZQK</span> chain A (PD-L1) · verified ROC-AUC 0.9137.
+  Generated from an autonomous run · 18 turns · billed to API credit.
+</footer></div>
+
