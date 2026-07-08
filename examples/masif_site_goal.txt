@@ -1,0 +1,20 @@
+Resurrect MaSIF's interaction-site prediction (MaSIF-site) inside this container so
+it runs on a single PDB structure and produces per-vertex interaction-site scores.
+
+The repo is at /masif. The site experiment lives in /masif/data/masif_site with
+scripts data_prepare_one.sh, predict_site.sh, and color_site.sh, and shipped
+pretrained weights under nn_models/all_feat_3l/model_data.
+
+PROVE success on the canonical example 4ZQK chain A: color_site.sh reports a ROC-AUC
+of the predicted per-vertex scores against the true interface. You must reach a
+ROC-AUC of at least 0.80 on 4ZQK_A.
+
+Constraints and notes:
+- This is INFERENCE ONLY. Do not run training or the large multi-structure data-prep
+  protocol (prepare_data.slurm / data_prepare_all.sh). Prepare only the one structure.
+- The built-in PDB download may be broken. If so, obtain the 4ZQK structure yourself
+  (e.g. the current RCSB endpoint) and feed it through the --file mechanism.
+- Snapshot the container once the environment works (e.g. lazarus/masif:site-ready)
+  so progress is banked.
+- When finished, report: the exact minimal command sequence from a PDB to scores,
+  where the scores/output land, and the ROC-AUC you measured on 4ZQK_A.

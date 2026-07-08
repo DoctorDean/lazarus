@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import tempfile
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 
@@ -60,9 +61,26 @@ Hard-won repair heuristics:
 - Snapshot after each expensive success (a resolved binary chain, a working import)
   so a later failure re-runs from the checkpoint, not from scratch.
 
+Environmental vs. code blockers: try software fixes first (downgrade, non-AVX
+build, PATH). But if a CLOSED-SOURCE or prebuilt binary that you cannot replace or
+downgrade fails with SIGILL / "illegal instruction" or a CPU-feature abort under
+emulation, the sandbox HOST lacks the required native CPU support and no in-sandbox
+fix exists. Do not spin: verify it concisely (does a trivial input also fail?),
+then STOP and report that this resurrection requires a native host of the right
+architecture (e.g. native x86-64), naming the exact offending binary and evidence.
+
 Be surgical and incremental. When finished, state the exact minimal command, where
 the output lands, and the sanity metric you measured.
 """
+
+# Built-in tools the resurrection agent must NOT have: it works only through the
+# container. Blocking host filesystem/exec/web keeps the run honest (no reading
+# the operator's notes) and scoped to the sandbox.
+HOST_TOOLS_BLOCKLIST = [
+    "Read", "Write", "Edit", "MultiEdit", "NotebookEdit",
+    "Bash", "BashOutput", "KillShell",
+    "Glob", "Grep", "WebSearch", "WebFetch", "Task", "TodoWrite",
+]
 
 
 def find_claude_cli() -> Optional[str]:
@@ -100,6 +118,7 @@ class Resurrector:
         max_turns: int = 80,
         cli_path: Optional[str] = None,
         keep_container: bool = False,
+        cwd: Optional[str] = None,
         on_event: Optional[Callable[[ResurrectionEvent], None]] = None,
     ) -> None:
         self.image = image
@@ -109,6 +128,8 @@ class Resurrector:
         self.max_turns = max_turns
         self.cli_path = cli_path or find_claude_cli()
         self.keep_container = keep_container
+        # A neutral cwd with no operator files, so the agent can't read host notes.
+        self.cwd = cwd or tempfile.mkdtemp(prefix="lazarus-run-")
         self.on_event = on_event
         self.sandbox: Optional[Sandbox] = None
 
@@ -134,7 +155,10 @@ class Resurrector:
         server, allowed = build_server(sandbox)
         options = ClaudeAgentOptions(
             mcp_servers={SERVER_NAME: server},
-            allowed_tools=allowed,
+            allowed_tools=allowed + ["ToolSearch"],
+            disallowed_tools=HOST_TOOLS_BLOCKLIST,
+            setting_sources=[],  # don't load host CLAUDE.md / memory / project settings
+            cwd=self.cwd,
             system_prompt=SYSTEM_PROMPT,
             permission_mode="bypassPermissions",
             max_turns=self.max_turns,
