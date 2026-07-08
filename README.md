@@ -82,6 +82,13 @@ lazarus resurrect ... --docker-host ssh://you@your-x86-box
 The MaSIF resurrection above was **driven from a MacBook and executed on a native-x86
 workstation** over exactly that flag.
 
+Any Docker daemon reachable over SSH qualifies — a lab workstation, a **cloud VM**
+(EC2/GCE), or a rented **GPU box** (Lambda, RunPod). The agent's tools issue
+`docker exec`/`docker cp` against whatever daemon `DOCKER_HOST` points at, so the whole
+resurrection orchestrates on the remote host with no host-specific code. The emitted
+`predict.py` copies inputs/outputs with `docker cp` (not bind-mounts), so the *delivered*
+component is host-agnostic too.
+
 ## Quickstart
 
 ```bash
