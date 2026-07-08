@@ -68,6 +68,26 @@ def test_smoke_test_is_valid_python_and_encodes_threshold():
     assert "THRESHOLD = 0.8" in text
 
 
+def test_emitter_escapes_quotes_and_newlines():
+    # Regression: the real agent-emitted smoke command contained
+    # awk '{print "roc_auc="$1}' — embedded double-quotes that broke the
+    # naive "..." template. Entrypoints are multi-line too.
+    c = Contract(
+        name="q",
+        repo_url="",
+        base_image="img:x",
+        entrypoint='echo "hi $INPUT"\ncd /x && run --flag "a b" > "$OUTDIR/o"\n',
+        smoke=SmokeCheck(
+            description='first line\nsecond with "quotes"',
+            command="run 2>&1 | awk '{print \"roc_auc=\"$1}'",
+            metric="roc_auc",
+            threshold=0.8,
+        ),
+    )
+    compile(render_predict_py(c), "predict.py", "exec")   # must stay valid Python
+    compile(render_smoke_test(c), "smoke_test.py", "exec")
+
+
 def test_emit_writes_full_package(tmp_path):
     out = emit(masif_site_contract(), tmp_path / "pkg")
     written = {p.name for p in Path(out).iterdir()}

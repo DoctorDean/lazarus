@@ -19,6 +19,7 @@ the exact mounts/entrypoint get refined once MaSIF is actually running.
 
 from __future__ import annotations
 
+import json
 import string
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -115,10 +116,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-IMAGE = "$base_image"
-PLATFORM = "$platform"
+IMAGE = $base_image
+PLATFORM = $platform
 # In-container command template; $$INPUT and $$OUTDIR are substituted at runtime.
-ENTRYPOINT = "$entrypoint"
+ENTRYPOINT = $entrypoint
 
 
 def predict(input_path: str, output_dir: str) -> None:
@@ -153,10 +154,10 @@ import re
 import subprocess
 import sys
 
-IMAGE = "$base_image"
-PLATFORM = "$platform"
-COMMAND = "$smoke_command"
-METRIC = "$smoke_metric"
+IMAGE = $base_image
+PLATFORM = $platform
+COMMAND = $smoke_command
+METRIC = $smoke_metric
 THRESHOLD = $smoke_threshold
 
 
@@ -193,22 +194,28 @@ def render_dockerfile(c: Contract) -> str:
 
 
 def render_predict_py(c: Contract) -> str:
+    # json.dumps -> a properly escaped Python string literal (handles quotes,
+    # newlines, backslashes in the entrypoint/image).
     return _PREDICT_PY.substitute(
-        name=c.name, base_image=c.base_image, platform=c.platform,
-        entrypoint=c.entrypoint,
+        name=c.name,
+        base_image=json.dumps(c.base_image),
+        platform=json.dumps(c.platform),
+        entrypoint=json.dumps(c.entrypoint),
     )
 
 
 def render_smoke_test(c: Contract) -> str:
     if c.smoke is None:
         raise ValueError(f"contract {c.name!r} has no smoke check to render")
+    # Keep the description safe inside the docstring; escape the rest as literals.
+    description = c.smoke.description.replace('"""', "'''").replace("\n", " ")
     return _SMOKE_PY.substitute(
         name=c.name,
-        base_image=c.base_image,
-        platform=c.platform,
-        smoke_description=c.smoke.description,
-        smoke_command=c.smoke.command,
-        smoke_metric=c.smoke.metric,
+        base_image=json.dumps(c.base_image),
+        platform=json.dumps(c.platform),
+        smoke_description=description,
+        smoke_command=json.dumps(c.smoke.command),
+        smoke_metric=json.dumps(c.smoke.metric),
         smoke_threshold=c.smoke.threshold,
     )
 

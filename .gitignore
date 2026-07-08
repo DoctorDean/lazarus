@@ -14,6 +14,7 @@ venv/
 # Lazarus working dirs
 /workdir/
 /runs/
+/lazarus-output/
 *.log
 
 # Secrets & local config — never commit these

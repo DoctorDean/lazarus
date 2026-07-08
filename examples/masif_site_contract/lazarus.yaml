@@ -1,0 +1,97 @@
+name: masif_site
+repo_url: https://github.com/LPDI-EPFL/masif
+base_image: lazarus/masif:site-ready
+entrypoint: '#!/bin/bash
+
+  set -euo pipefail
+
+
+  # MaSIF-site inference on a single PDB structure.
+
+  # INPUT: a .pdb file.  OUTDIR: where per-vertex scores + colored surface land.
+
+  # The target chain defaults to "A"; override with env MASIF_CHAIN.
+
+  # PPI_PAIR_ID is <PDBID>_<CHAIN> (single chain => MaSIF-site inference on that chain).
+
+
+  CHAIN="${MASIF_CHAIN:-A}"
+
+  # PDB id = uppercased input basename without extension
+
+  PDB_ID=$(basename "$INPUT" | sed ''s/\.[^.]*$//'' | tr ''[:lower:]'' ''[:upper:]'')
+
+  PPI_PAIR_ID="${MASIF_PPI_PAIR_ID:-${PDB_ID}_${CHAIN}}"
+
+
+  cd /masif/data/masif_site
+
+
+  # 1. Prepare surface + features for the one structure (feed the file directly; skip
+  broken PDB download)
+
+  ./data_prepare_one.sh --file "$INPUT" "$PPI_PAIR_ID"
+
+
+  # 2. Predict per-vertex interaction-site scores with the shipped pretrained weights
+
+  ./predict_site.sh "$PPI_PAIR_ID"
+
+
+  # 3. Color the surface and (when a true interface is derivable) report ROC-AUC
+
+  ./color_site.sh "$PPI_PAIR_ID" 2>&1 | tee "$OUTDIR/color_site.log" || true
+
+
+  # 4. Collect outputs
+
+  mkdir -p "$OUTDIR"
+
+  cp output/all_feat_3l/pred_data/pred_${PPI_PAIR_ID}.npy "$OUTDIR/" 2>/dev/null ||
+  true
+
+  cp output/all_feat_3l/pred_surfaces/${PPI_PAIR_ID}.ply "$OUTDIR/" 2>/dev/null ||
+  true
+
+  grep "ROC AUC" "$OUTDIR/color_site.log" || true
+
+  echo "MaSIF-site outputs written to $OUTDIR"'
+inputs:
+- name: INPUT
+  type: file
+  description: A protein structure in PDB format (e.g. 4ZQK.pdb from RCSB). The chain
+    to analyze defaults to A, overridable via env MASIF_CHAIN.
+outputs:
+- name: pred_<PDBID>_<CHAIN>.npy
+  type: file
+  description: NumPy array shape (1, n_vertices) of per-vertex interaction-site probability
+    scores in [0,1].
+- name: <PDBID>_<CHAIN>.ply
+  type: file
+  description: Molecular surface mesh colored by predicted interaction-site score.
+- name: color_site.log
+  type: file
+  description: Log containing the ROC-AUC of predicted scores vs. the true interface.
+smoke:
+  description: Prepare 4ZQK chain A, predict site scores, and check ROC-AUC vs true
+    interface is >= 0.80.
+  command: 'cd /masif/data/masif_site && ./data_prepare_one.sh --file /tmp/4ZQK.pdb
+    4ZQK_A >/dev/null 2>&1 && ./predict_site.sh 4ZQK_A >/dev/null 2>&1 && ./color_site.sh
+    4ZQK_A 2>&1 | grep -oE ''ROC AUC score for protein 4ZQK_A : [0-9.]+'' | grep -oE
+    ''[0-9.]+$'' | tail -1 | awk ''{print "roc_auc="$1}'''
+  metric: roc_auc
+  threshold: 0.8
+  input_ref: 4ZQK chain A (RCSB https://files.rcsb.org/download/4ZQK.pdb)
+paper: Gainza et al., "Deciphering interaction fingerprints from protein molecular
+  surfaces using geometric deep learning" (MaSIF), Nature Methods 2020
+commit: 'MaSIF-site inference: prepare one PDB structure, run pretrained all_feat_3l
+  model, output per-vertex interaction-site scores + ROC-AUC vs true interface. Verified
+  ROC-AUC=0.9137 on 4ZQK_A.'
+patches:
+- "No source patches were required \u2014 the shipped environment already had msms,\
+  \ reduce, apbs, pdb2pqr, multivalue on PATH with MSMS_BIN/PDB2PQR_BIN/APBS_BIN/MULTIVALUE_BIN\
+  \ set, TensorFlow 1.12 importing fine (host has AVX), and pretrained weights present.\
+  \ The only broken piece is the built-in PDB download; bypassed by fetching 4ZQK.pdb\
+  \ from RCSB (https://files.rcsb.org/download/4ZQK.pdb) and feeding it through data_prepare_one.sh's\
+  \ --file mechanism."
+platform: linux/amd64
