@@ -16,6 +16,17 @@ venv/
 /runs/
 *.log
 
+# Secrets & local config — never commit these
+.claude/
+.env
+.env.*
+*.key
+*.pem
+*.credentials
+secrets/
+anthropic_key*
+*_api_key*
+
 # OS / editor
 .DS_Store
 .idea/
