@@ -1,0 +1,33 @@
+Resurrect ScanNet's protein-protein binding-site prediction (jertubiana/ScanNet) so it
+runs on a single PDB chain and produces per-residue binding-site probabilities.
+
+The repo lives inside this container (locate it, e.g. find the file predict_bindingsites.py).
+The entry point is predict_bindingsites.py. Use the protein-protein interface model in
+STRUCTURE-ONLY mode: the default `--mode interface` with `--noMSA` (no MSA / HHblits).
+Pretrained weights are shipped in the repo under models/ (e.g. ScanNet_PPI_noMSA) — no
+download or training needed.
+
+Target: 4ZQK chain A (PD-L1).
+
+Known issues to expect and work around (verify by reading the code / tracebacks):
+- The built-in structure auto-download is broken (returns "structure doesn't exist" then
+  crashes on a None path). Do NOT rely on it. Fetch the structure yourself from the current
+  RCSB endpoint (https://files.rcsb.org/download/4ZQK.pdb) and pass a LOCAL file; ScanNet's
+  chain syntax is like `/path/to/4zqk.pdb_A`.
+- Even with --noMSA the code may still touch MSA_folder paths configured in
+  utilities/paths.py. If it errors on MSA or missing paths, set/patch utilities/paths.py
+  (structures_folder, predictions_folder, MSA_folder, etc.) so inference runs.
+- Legacy stack (Python 3.6 / TF 1.14 / Keras 2.2.5). Expect a flood of harmless numpy
+  FutureWarnings — ignore them.
+
+PROVE it (sanity check): ScanNet writes per-residue binding-site probabilities to a CSV in
+predictions/<query>/. Establish the TRUE interface residues of PD-L1 (chain A) from the full
+4ZQK complex — chain A residues with any heavy atom within 5.0 Å of the partner chain (PD-1)
+— using the complete 4ZQK structure and Biopython (already installed). Compute the ROC-AUC of
+ScanNet's per-residue probabilities against those interface labels. You must reach
+ROC-AUC >= 0.70 on 4ZQK_A.
+
+Constraints: inference only, no training. Snapshot the working image once it runs. When
+finished, emit the integration contract (entrypoint: a PDB file -> per-residue CSV, using
+$INPUT and $OUTDIR), and report the exact minimal command sequence, where the CSV lands, and
+the ROC-AUC you measured.
