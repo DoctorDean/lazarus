@@ -10,8 +10,28 @@ import argparse
 import sys
 from datetime import datetime, timezone
 
+import os
+
 from lazarus import __version__
 from lazarus.pinner import pin_requirements
+
+
+def load_dotenv(path: str = ".env") -> None:
+    """Load KEY=VALUE lines from a local .env into the environment.
+
+    Never overrides an already-set variable, and silently no-ops if absent.
+    Lets Lazarus pick up ANTHROPIC_API_KEY (the API-credit path) without the
+    secret ever being passed on the command line or committed.
+    """
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, value = line.split("=", 1)
+            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
 def _parse_date(text: str) -> datetime:
@@ -115,6 +135,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    load_dotenv()
     parser = build_parser()
     args = parser.parse_args(argv)
     return args.func(args)
