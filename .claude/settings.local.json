@@ -18,7 +18,8 @@
       "Bash(.venv/bin/pip install *)",
       "Bash(.venv/bin/lazarus pin *)",
       "Bash(.venv/bin/lazarus --version)",
-      "Bash(.venv/bin/pytest -q)"
+      "Bash(.venv/bin/pytest -q)",
+      "Bash(timeout 120 .venv/bin/python /private/tmp/claude-501/-Users-dean-PycharmProjects-Lazarus/00946282-9aa9-418e-ab15-001602d24573/scratchpad/sdk_probe.py)"
     ]
   }
 }

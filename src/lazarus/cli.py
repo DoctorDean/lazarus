@@ -51,12 +51,37 @@ def cmd_pin(args: argparse.Namespace) -> int:
 
 
 def cmd_resurrect(args: argparse.Namespace) -> int:
-    print(
-        "lazarus resurrect is not wired up yet — the build/repair/contract "
-        "loop lands in a later slice. For now, try `lazarus pin`.",
-        file=sys.stderr,
+    import asyncio
+
+    from lazarus.resurrect import Resurrector, ResurrectionEvent
+
+    goal = args.goal
+    if args.goal_file:
+        with open(args.goal_file, encoding="utf-8") as fh:
+            goal = fh.read()
+    if not goal:
+        print("provide --goal or --goal-file", file=sys.stderr)
+        return 2
+
+    icons = {"text": "\U0001f4ac", "tool_use": "\U0001f527", "tool_result": "\U0001f4e4", "result": "✅"}
+
+    def show(ev: ResurrectionEvent) -> None:
+        text = ev.text if len(ev.text) < 600 else ev.text[:600] + "…"
+        print(f"{icons.get(ev.kind, ev.kind)} {text}", flush=True)
+
+    r = Resurrector(
+        image=args.image,
+        workdir=args.workdir,
+        docker_host=args.docker_host,
+        max_turns=args.max_turns,
+        keep_container=args.keep,
+        on_event=show,
     )
-    return 1
+    res = asyncio.run(r.resurrect(goal))
+    print("\n=== resurrection finished ===", file=sys.stderr)
+    print(f"completed={res.completed} error={res.is_error} turns={res.num_turns} "
+          f"snapshots={res.snapshots}", file=sys.stderr)
+    return 0 if (res.completed and not res.is_error) else 1
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -74,8 +99,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_pin.add_argument("--pre", action="store_true", help="allow prerelease versions")
     p_pin.set_defaults(func=cmd_pin)
 
-    p_res = sub.add_parser("resurrect", help="(coming soon) resurrect a repo end to end")
-    p_res.add_argument("repo", help="git URL or local path of the repo to resurrect")
+    p_res = sub.add_parser("resurrect", help="drive an autonomous resurrection loop in a sandbox")
+    p_res.add_argument("--image", required=True, help="base container image to resurrect in")
+    p_res.add_argument("--goal", help="what to resurrect and how to prove it")
+    p_res.add_argument("--goal-file", help="read the goal from a file")
+    p_res.add_argument("--workdir", default="/work", help="working dir inside the container")
+    p_res.add_argument("--docker-host", default=None, help="e.g. ssh://user@host to run remotely")
+    p_res.add_argument("--max-turns", type=int, default=80)
+    p_res.add_argument("--keep", action="store_true", help="keep the container after finishing")
     p_res.set_defaults(func=cmd_resurrect)
 
     return parser

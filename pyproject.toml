@@ -18,6 +18,8 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=7"]
+# The autonomous loop needs the Claude Agent SDK (Python >= 3.10).
+agent = ["claude-agent-sdk>=0.2"]
 
 [project.scripts]
 lazarus = "lazarus.cli:main"

@@ -17,11 +17,22 @@ tested with a fake -- no Docker daemon required.
 from __future__ import annotations
 
 import os
+import shlex
+import shutil
 import subprocess
 import time
 import uuid
 from dataclasses import dataclass, field
 from typing import Callable, Optional, Sequence, Union
+
+
+def find_docker() -> str:
+    """Locate the docker binary, falling back to OrbStack's shim path."""
+    exe = shutil.which("docker")
+    if exe:
+        return exe
+    cand = os.path.expanduser("~/.orbstack/bin/docker")
+    return cand if os.path.exists(cand) else "docker"
 
 Command = Union[str, Sequence[str]]
 
@@ -221,6 +232,21 @@ class Sandbox:
         return self.client.run(
             ["cp", f"{self.name}:{container_path}", local_path]
         ).raise_for_status()
+
+    def write_file(self, path: str, content: str) -> CommandResult:
+        """Write ``content`` to ``path`` inside the container (for patches)."""
+        return self.client.run(
+            ["exec", "-i", self.name, "bash", "-c", f"cat > {shlex.quote(path)}"],
+            input_bytes=content.encode("utf-8"),
+        ).raise_for_status()
+
+    def read_file(self, path: str, *, max_bytes: int = 100_000) -> str:
+        """Return the first ``max_bytes`` bytes of a file inside the container."""
+        res = self.client.run(
+            ["exec", self.name, "bash", "-lc", f"head -c {int(max_bytes)} {shlex.quote(path)}"]
+        )
+        res.raise_for_status()
+        return res.stdout
 
     def snapshot(self, tag: str, *, message: Optional[str] = None) -> str:
         """``docker commit`` the live container to ``tag``; return the tag.
