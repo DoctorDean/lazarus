@@ -69,8 +69,11 @@ fix exists. Do not spin: verify it concisely (does a trivial input also fail?),
 then STOP and report that this resurrection requires a native host of the right
 architecture (e.g. native x86-64), naming the exact offending binary and evidence.
 
-Be surgical and incremental. When finished, state the exact minimal command, where
-the output lands, and the sanity metric you measured.
+Be surgical and incremental. Once the capability runs on a fresh input and the sanity
+check passes, snapshot the working image, then call emit_contract ONCE to write the
+integration package (its entrypoint is a bash template using $INPUT and $OUTDIR that
+reproduces your minimal command). Finally, state the exact minimal command, where the
+output lands, and the sanity metric you measured.
 """
 
 # Built-in tools the resurrection agent must NOT have: it works only through the
@@ -105,6 +108,7 @@ class ResurrectionResult:
     events: list[ResurrectionEvent] = field(default_factory=list)
     num_turns: int = 0
     snapshots: list[str] = field(default_factory=list)
+    output_dir: str = ""
 
 
 class Resurrector:
@@ -119,6 +123,7 @@ class Resurrector:
         cli_path: Optional[str] = None,
         keep_container: bool = False,
         cwd: Optional[str] = None,
+        output_dir: Optional[str] = None,
         on_event: Optional[Callable[[ResurrectionEvent], None]] = None,
     ) -> None:
         self.image = image
@@ -130,6 +135,8 @@ class Resurrector:
         self.keep_container = keep_container
         # A neutral cwd with no operator files, so the agent can't read host notes.
         self.cwd = cwd or tempfile.mkdtemp(prefix="lazarus-run-")
+        # Where emit_contract writes the integration package (on the host).
+        self.output_dir = os.path.abspath(output_dir or "lazarus-output")
         self.on_event = on_event
         self.sandbox: Optional[Sandbox] = None
 
@@ -152,7 +159,8 @@ class Resurrector:
         is_error = False
         completed = False
 
-        server, allowed = build_server(sandbox)
+        os.makedirs(self.output_dir, exist_ok=True)
+        server, allowed = build_server(sandbox, output_dir=self.output_dir)
         options = ClaudeAgentOptions(
             mcp_servers={SERVER_NAME: server},
             allowed_tools=allowed + ["ToolSearch"],
@@ -198,6 +206,7 @@ class Resurrector:
             events=events,
             num_turns=num_turns,
             snapshots=snapshots,
+            output_dir=self.output_dir,
         )
 
 

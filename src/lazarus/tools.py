@@ -14,6 +14,7 @@ from typing import Any
 
 from claude_agent_sdk import create_sdk_mcp_server, tool
 
+from lazarus.contract import Contract, IOSpec, SmokeCheck, emit
 from lazarus.pinner import pin_requirements
 from lazarus.sandbox import Sandbox
 
@@ -24,6 +25,7 @@ TOOL_NAMES = [
     "sandbox_read_file",
     "sandbox_snapshot",
     "pin_dependencies",
+    "emit_contract",
 ]
 
 
@@ -35,10 +37,11 @@ def _text(s: str) -> dict[str, Any]:
     return {"content": [{"type": "text", "text": s}]}
 
 
-def build_server(sandbox: Sandbox, *, max_output_chars: int = 8000):
+def build_server(sandbox: Sandbox, *, output_dir: str, max_output_chars: int = 8000):
     """Build the Lazarus MCP server bound to a live ``sandbox``.
 
-    Returns ``(server_config, allowed_tool_names)`` for ClaudeAgentOptions.
+    ``output_dir`` is the host directory where ``emit_contract`` writes the
+    integration package. Returns ``(server_config, allowed_tool_names)``.
     """
 
     @tool(
@@ -136,9 +139,85 @@ def build_server(sandbox: Sandbox, *, max_output_chars: int = 8000):
         ]
         return _text("\n".join(lines))
 
+    @tool(
+        "emit_contract",
+        "Emit the final integration contract as a self-contained package (lazarus.yaml, "
+        "Dockerfile, predict.py, smoke_test.py). Call this ONCE at the end, after you have "
+        "a working minimal command and a passing sanity check. entrypoint is a bash template "
+        "using $INPUT (the input file) and $OUTDIR (where outputs go).",
+        {
+            "type": "object",
+            "properties": {
+                "name": {"type": "string", "description": "capability id, e.g. masif_site"},
+                "base_image": {"type": "string", "description": "the snapshotted image tag to call"},
+                "entrypoint": {"type": "string", "description": "bash template using $INPUT and $OUTDIR"},
+                "repo_url": {"type": "string"},
+                "commit": {"type": "string"},
+                "paper": {"type": "string"},
+                "inputs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "type": {"type": "string"},
+                            "description": {"type": "string"},
+                        },
+                        "required": ["name", "type"],
+                    },
+                },
+                "outputs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "type": {"type": "string"},
+                            "description": {"type": "string"},
+                        },
+                        "required": ["name", "type"],
+                    },
+                },
+                "smoke": {
+                    "type": "object",
+                    "properties": {
+                        "description": {"type": "string"},
+                        "command": {"type": "string", "description": "in-container command printing <metric>=<value>"},
+                        "metric": {"type": "string"},
+                        "threshold": {"type": "number"},
+                        "input_ref": {"type": "string"},
+                    },
+                    "required": ["description", "command"],
+                },
+                "patches": {"type": "array", "items": {"type": "string"}},
+            },
+            "required": ["name", "base_image", "entrypoint"],
+        },
+    )
+    async def emit_contract(args: dict[str, Any]) -> dict[str, Any]:
+        smoke = args.get("smoke")
+        contract = Contract(
+            name=args["name"],
+            repo_url=args.get("repo_url", ""),
+            base_image=args["base_image"],
+            entrypoint=args["entrypoint"],
+            inputs=[IOSpec(**i) for i in args.get("inputs", [])],
+            outputs=[IOSpec(**o) for o in args.get("outputs", [])],
+            smoke=SmokeCheck(**smoke) if smoke else None,
+            paper=args.get("paper", ""),
+            commit=args.get("commit", ""),
+            patches=args.get("patches", []),
+        )
+        out = await asyncio.to_thread(emit, contract, output_dir)
+        written = ", ".join(sorted(p.name for p in out.iterdir()))
+        return _text(f"wrote integration contract to {out}\nfiles: {written}")
+
     server = create_sdk_mcp_server(
         name=SERVER_NAME,
         version="0.1.0",
-        tools=[sandbox_run, sandbox_write_file, sandbox_read_file, sandbox_snapshot, pin_dependencies],
+        tools=[
+            sandbox_run, sandbox_write_file, sandbox_read_file,
+            sandbox_snapshot, pin_dependencies, emit_contract,
+        ],
     )
     return server, allowed_tool_names()
