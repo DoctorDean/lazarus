@@ -82,6 +82,17 @@ smoke:
   metric: roc_auc
   threshold: 0.8
   input_ref: 4ZQK chain A (RCSB https://files.rcsb.org/download/4ZQK.pdb)
+benchmark:
+  description: "MaSIF-site transient PPI benchmark \u2014 median per-structure interaction-site\
+    \ ROC-AUC"
+  metric: median_roc_auc
+  reported: 0.85
+  tolerance: 0.05
+  n: 15
+  source: Gainza et al., Nat. Methods 2020; transient test set (full n=59)
+  command: 'cd /masif/data/masif_site && bash reproduce_transient_benchmark.sh   #
+    this run: first 15 of lists/testing_transient.txt'
+  measured: 0.82
 paper: Gainza et al., "Deciphering interaction fingerprints from protein molecular
   surfaces using geometric deep learning" (MaSIF), Nature Methods 2020
 commit: 'MaSIF-site inference: prepare one PDB structure, run pretrained all_feat_3l
@@ -95,3 +106,4 @@ patches:
   \ from RCSB (https://files.rcsb.org/download/4ZQK.pdb) and feeding it through data_prepare_one.sh's\
   \ --file mechanism."
 platform: linux/amd64
+gpus: ''

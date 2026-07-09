@@ -9,16 +9,18 @@ import sys
 
 IMAGE = "lazarus/masif:site-ready"
 PLATFORM = "linux/amd64"
+GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /masif/data/masif_site && ./data_prepare_one.sh --file /tmp/4ZQK.pdb 4ZQK_A >/dev/null 2>&1 && ./predict_site.sh 4ZQK_A >/dev/null 2>&1 && ./color_site.sh 4ZQK_A 2>&1 | grep -oE 'ROC AUC score for protein 4ZQK_A : [0-9.]+' | grep -oE '[0-9.]+$' | tail -1 | awk '{print \"roc_auc=\"$1}'"
 METRIC = "roc_auc"
 THRESHOLD = 0.8
 
 
 def main() -> int:
-    proc = subprocess.run(
-        ["docker", "run", "--rm", "--platform", PLATFORM, IMAGE, "bash", "-lc", COMMAND],
-        capture_output=True, text=True,
-    )
+    run_args = ["docker", "run", "--rm", "--platform", PLATFORM]
+    if GPUS:
+        run_args += ["--gpus", GPUS]
+    run_args += [IMAGE, "bash", "-lc", COMMAND]
+    proc = subprocess.run(run_args, capture_output=True, text=True)
     sys.stdout.write(proc.stdout)
     sys.stderr.write(proc.stderr)
     m = re.search(rf"{METRIC}\s*=\s*([0-9.]+)", proc.stdout)

@@ -96,6 +96,20 @@ plus a **CI smoke test** so it can't silently rot again:
 
 (dMaSIF is skipped — CC BY-NC-ND, no-derivatives; fpocket's upstream is alive.)
 
+## Reproduces the paper
+
+A smoke test proves a method *runs*; a benchmark proves it's *the method*. Lazarus re-ran
+MaSIF-site on its own **transient PPI benchmark** — through the built-in download that
+give-back PR #85 revived — and matched the published number:
+
+| Metric | Paper (Gainza et al. 2020, n=59) | Lazarus (n=15 slice) |
+|---|:--:|:--:|
+| median per-structure ROC-AUC | **0.85** | **0.82** → **reproduced** (±0.05) |
+
+Every revival can carry this: the contract's `benchmark` field emits a
+[`REPRODUCE.md`](examples/masif_site_contract/REPRODUCE.md) certificate with a PASS/OFF
+verdict — the trust layer that turns a resurrection into something a team will actually adopt.
+
 ## How it works — five organs
 
 | Organ | Role |
@@ -139,9 +153,10 @@ Log in the `claude` CLI (subscription) or put `ANTHROPIC_API_KEY=...` in a gitig
 ## Status
 
 Working today: pinner · Docker sandbox (local + `ssh://` remote + `--gpus`) · autonomous
-repair loop · capability locator · GPU-aware contract emitter · **Lazarus Compose** — with
-**four** dead repos revived, a three-way method comparison, a live binder-triage pipeline,
-two give-back PRs, and 44 passing tests.
+repair loop · capability locator · contract emitter (GPU-aware, with reproduction
+certificates) · **Lazarus Compose**. All three pillars landed — **four** dead repos revived,
+a three-way method comparison, a live binder-triage pipeline, a reproduced paper benchmark,
+and two give-back PRs — with 41 passing tests.
 
 ## License
 

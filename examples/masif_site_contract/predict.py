@@ -15,6 +15,7 @@ from pathlib import Path
 
 IMAGE = "lazarus/masif:site-ready"
 PLATFORM = "linux/amd64"
+GPUS = None  # e.g. "all" to pass GPUs (needs nvidia-container-toolkit), or None
 # In-container command template; $INPUT and $OUTDIR are substituted at runtime.
 ENTRYPOINT = "#!/bin/bash\nset -euo pipefail\n\n# MaSIF-site inference on a single PDB structure.\n# INPUT: a .pdb file.  OUTDIR: where per-vertex scores + colored surface land.\n# The target chain defaults to \"A\"; override with env MASIF_CHAIN.\n# PPI_PAIR_ID is <PDBID>_<CHAIN> (single chain => MaSIF-site inference on that chain).\n\nCHAIN=\"${MASIF_CHAIN:-A}\"\n# PDB id = uppercased input basename without extension\nPDB_ID=$(basename \"$INPUT\" | sed 's/\\.[^.]*$//' | tr '[:lower:]' '[:upper:]')\nPPI_PAIR_ID=\"${MASIF_PPI_PAIR_ID:-${PDB_ID}_${CHAIN}}\"\n\ncd /masif/data/masif_site\n\n# 1. Prepare surface + features for the one structure (feed the file directly; skip broken PDB download)\n./data_prepare_one.sh --file \"$INPUT\" \"$PPI_PAIR_ID\"\n\n# 2. Predict per-vertex interaction-site scores with the shipped pretrained weights\n./predict_site.sh \"$PPI_PAIR_ID\"\n\n# 3. Color the surface and (when a true interface is derivable) report ROC-AUC\n./color_site.sh \"$PPI_PAIR_ID\" 2>&1 | tee \"$OUTDIR/color_site.log\" || true\n\n# 4. Collect outputs\nmkdir -p \"$OUTDIR\"\ncp output/all_feat_3l/pred_data/pred_${PPI_PAIR_ID}.npy \"$OUTDIR/\" 2>/dev/null || true\ncp output/all_feat_3l/pred_surfaces/${PPI_PAIR_ID}.ply \"$OUTDIR/\" 2>/dev/null || true\ngrep \"ROC AUC\" \"$OUTDIR/color_site.log\" || true\necho \"MaSIF-site outputs written to $OUTDIR\""
 
@@ -29,8 +30,11 @@ def predict(input_path: str, output_dir: str) -> None:
     out.mkdir(parents=True, exist_ok=True)
     cmd = ENTRYPOINT.replace("$INPUT", "/io/in/" + inp.name).replace("$OUTDIR", "/io/out")
     name = "lazarus-predict-" + uuid.uuid4().hex[:10]
-    _run("docker", "run", "-d", "--name", name, "--platform", PLATFORM,
-         IMAGE, "sleep", "infinity")
+    run_args = ["docker", "run", "-d", "--name", name, "--platform", PLATFORM]
+    if GPUS:
+        run_args += ["--gpus", GPUS]
+    run_args += [IMAGE, "sleep", "infinity"]
+    _run(*run_args)
     try:
         _run("docker", "exec", name, "mkdir", "-p", "/io/in", "/io/out")
         _run("docker", "cp", str(inp), f"{name}:/io/in/{inp.name}")

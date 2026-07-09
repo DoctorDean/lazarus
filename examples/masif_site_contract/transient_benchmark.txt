@@ -1,0 +1,23 @@
+# MaSIF-site transient PPI benchmark — reproduction run (Lazarus)
+# 15-structure slice of lists/testing_transient.txt (full set n=59).
+# Every structure fetched via the built-in download that give-back PR #85 revived.
+# Command: cd /masif/data/masif_site && bash reproduce_transient_benchmark.sh
+#
+# per-structure ROC-AUC:
+1EWY_A  0.80
+1F6M_A  0.86
+1GP2_BG 0.94
+1I2M_B  0.78
+1JTD_B  0.92
+1NCA_N  0.55
+1W1W_B  0.79
+1WDW_H  0.82
+1XG2_A  0.73
+1XQS_A  0.85
+1ZHH_A  0.77
+2AYO_A  0.85
+2C0L_A  0.66
+2F4M_A  0.95
+2I3T_A  0.85
+#
+# median = 0.82   |   paper reports 0.85 (n=59)   |   reproduced within +/-0.05
