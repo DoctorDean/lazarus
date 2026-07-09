@@ -37,3 +37,6 @@ anthropic_key*
 *.pdb.gz
 *.ply
 *.npy
+
+# pipeline run outputs
+/pipeline-output/

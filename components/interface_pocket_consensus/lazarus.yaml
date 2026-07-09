@@ -1,0 +1,63 @@
+name: interface_pocket_consensus
+repo_url: (Lazarus adapter)
+base_image: python:3.11-slim
+entrypoint: "set -euo pipefail\npip install --quiet numpy >/dev/null 2>&1 || pip install\
+  \ --quiet --break-system-packages numpy >/dev/null 2>&1\nmkdir -p \"$OUTDIR\"\n\
+  python - <<'PY'\nimport os, csv, json\nimport numpy as np\n\ndef get(d, *keys, default=None):\n\
+  \    for k in keys:\n        if k in d: return d[k]\n    return default\n\n# ScanNet:\
+  \ per-residue CSV\nscannet = {}\nwith open(os.environ[\"scannet\"]) as f:\n    for\
+  \ row in csv.DictReader(f):\n        if row.get(\"Chain\", \"A\").strip() == \"\
+  A\":\n            scannet[int(row[\"Residue Index\"])] = float(row[\"Binding site\
+  \ probability\"])\n\n# dMaSIF: per-residue npy (ids + scores)\nd_ids = np.load(os.environ[\"\
+  dmasif_ids\"])\nd_scores = np.load(os.environ[\"dmasif_scores\"])\ndmasif = {int(r):\
+  \ float(s) for r, s in zip(d_ids, d_scores)}\n\n# fpocket: pockets.json -> druggable-pocket\
+  \ residues\npockets = json.load(open(os.environ[\"pockets\"]))\nif isinstance(pockets,\
+  \ dict):\n    pockets = get(pockets, \"pockets\", default=[])\nDRUG = 0.5\ndrug_res\
+  \ = {}\nn_drug = 0\nfor p in pockets:\n    score = float(get(p, \"druggability\"\
+  , \"drug_score\", \"druggability_score\", default=0) or 0)\n    if score >= DRUG:\n\
+  \        n_drug += 1\n        for r in get(p, \"lining_residues\", \"residues\"\
+  , \"resids\", default=[]) or []:\n            try:\n                rid = int(r)\n\
+  \            except (ValueError, TypeError):\n                continue\n       \
+  \     drug_res[rid] = max(drug_res.get(rid, 0.0), score)\n\nresids = sorted(set(scannet)\
+  \ | set(dmasif))\nrows = []\nfor r in resids:\n    sn, dm = scannet.get(r), dmasif.get(r)\n\
+  \    vals = [x for x in (sn, dm) if x is not None]\n    site = float(np.mean(vals))\
+  \ if vals else 0.0\n    rows.append((r, sn, dm, site, r in drug_res, drug_res.get(r,\
+  \ 0.0)))\nrows.sort(key=lambda x: -x[3])\n\nout = os.environ[\"OUTDIR\"]\nwith open(os.path.join(out,\
+  \ \"triage.csv\"), \"w\", newline=\"\") as f:\n    w = csv.writer(f)\n    w.writerow([\"\
+  resid\", \"scannet\", \"dmasif\", \"consensus_site\", \"in_druggable_pocket\", \"\
+  pocket_druggability\"])\n    for row in rows:\n        w.writerow([\"\" if v is\
+  \ None else v for v in row])\n\nhot = [r for r in rows if r[3] >= 0.5 and r[4]]\n\
+  with open(os.path.join(out, \"summary.txt\"), \"w\") as f:\n    f.write(\"Binder-interface\
+  \ triage \u2014 PD-L1 (4ZQK chain A)\\n\")\n    f.write(f\"residues scored (ScanNet\
+  \ + dMaSIF consensus): {len(rows)}\\n\")\n    f.write(f\"druggable fpocket pockets\
+  \ (druggability >= {DRUG}): {n_drug} of {len(pockets)}\\n\")\n    f.write(f\"HOT\
+  \ targets \u2014 consensus interface (>=0.5) AND in a druggable pocket: {len(hot)}\\\
+  n\")\n    for r in hot[:25]:\n        f.write(f\"  resid {r[0]:>4}: site={r[3]:.2f}\
+  \  pocket_druggability={r[5]:.2f}\\n\")\n\nprint(f\"triage_residues={len(rows)}\
+  \ druggable_pockets={n_drug} hot_targets={len(hot)}\")\nPY\n"
+inputs:
+- name: scannet
+  type: file
+  description: ScanNet per-residue CSV
+- name: dmasif_scores
+  type: file
+  description: dMaSIF per-residue scores .npy
+- name: dmasif_ids
+  type: file
+  description: dMaSIF per-residue ids .npy
+- name: pockets
+  type: file
+  description: fpocket pockets.json
+outputs:
+- name: triage.csv
+  type: file
+  description: per-residue consensus site score + druggable-pocket flag
+- name: summary.txt
+  type: file
+  description: human-readable triage summary + HOT targets
+smoke: null
+paper: "Lazarus adapter \u2014 fuses site predictions with fpocket druggability"
+commit: ''
+patches: []
+platform: linux/amd64
+gpus: ''

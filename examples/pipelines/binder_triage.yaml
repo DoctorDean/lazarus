@@ -1,0 +1,38 @@
+# A full in-silico binder-triage pipeline, assembled from methods that were each
+# individually unrunnable a week ago. ScanNet + dMaSIF predict the interaction
+# interface; fpocket (2010 C) finds druggable pockets; a consensus step flags the
+# interface residues that ALSO line a druggable pocket — prime binder-design targets.
+#
+#   lazarus run examples/pipelines/binder_triage.yaml \
+#     --input structure=4ZQK.pdb \
+#     --registry examples --registry components \
+#     --docker-host ssh://dean@100.80.108.2
+name: binder-interface-triage
+
+inputs:
+  structure: { type: path:pdb }
+
+steps:
+  - id: scannet
+    uses: scannet_ppi_binding_sites
+    with: { INPUT: "${inputs.structure}", CHAIN: A }
+
+  - id: dmasif                      # GPU brick — runner passes --gpus from its contract
+    uses: dmasif_site
+    with: { INPUT: "${inputs.structure}", CHAIN: A, DEVICE: "cuda:0" }
+
+  - id: fpocket                     # cross-language brick (2010 C)
+    uses: fpocket_pockets           # TODO: set to fpocket's emitted contract name
+    with: { INPUT: "${inputs.structure}" }
+
+  - id: consensus                   # adapter brick: fuse sites + pockets -> triage
+    uses: interface_pocket_consensus
+    with:
+      scannet: "${scannet.predictions}"
+      dmasif_scores: "${dmasif.residue_scores}"
+      dmasif_ids: "${dmasif.residue_ids}"
+      pockets: "${fpocket.pockets}"
+
+outputs:
+  triage: "${consensus.triage}"
+  summary: "${consensus.summary}"
