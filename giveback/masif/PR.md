@@ -46,6 +46,7 @@ reproducibility heartbeat so it can't silently rot again.
 
 ---
 
-*Full disclosure: the diagnosis and fix were produced with an automated repo-resurrection
-agent and then verified by hand end-to-end (the ROC-AUC above is a real run). Happy to
+*Full disclosure: the diagnosis and fix were produced by **Lazarus**
+(https://github.com/DoctorDean/lazarus), an autonomous agent that resurrects dead research
+code, and then verified by hand end-to-end (the ROC-AUC above is a real run). Happy to
 adjust anything to fit the project's conventions.*

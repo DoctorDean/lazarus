@@ -57,5 +57,6 @@ fix (fetch from `https://files.rcsb.org/download/`) if you'd like it in the same
 
 ---
 
-*Full disclosure: diagnosis and fix were produced with an automated repo-resurrection
-agent and verified by hand (the run above is real). Glad to adjust to fit conventions.*
+*Full disclosure: the diagnosis and fix were produced by **Lazarus**
+(https://github.com/DoctorDean/lazarus), an autonomous agent that resurrects dead research
+code, and verified by hand (the run above is real). Glad to adjust to fit conventions.*
