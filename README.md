@@ -37,29 +37,37 @@ buried in the scripts, and emits a fixed **integration contract**:
 Success is concrete: *import and run a method you couldn't execute this morning, on your
 own structures, by the end of the week.*
 
-## Proof — two dead repos, resurrected autonomously
+## Proof — three dead repos, resurrected autonomously
 
-Lazarus revived **two independent protein binding-site methods** — different eras,
-different stacks — each in ~19 turns using only its general heuristics (no repo-specific
-notes), each emitting a callable package that passes its **own smoke test standalone**
-(no agent, pure Docker):
+Lazarus revived **three independent protein binding-site methods** — three eras, three
+stacks (one a from-scratch GPU build) — each using only its general heuristics (no
+repo-specific notes), each emitting a callable package that passes its **own smoke test
+standalone** (no agent, pure Docker):
 
 | Repo | Stack | Turns | Native output | Sanity on `4ZQK_A` | Package |
 |---|---|:--:|---|---|:--:|
-| **MaSIF-site** ([LPDI-EPFL/masif](https://github.com/LPDI-EPFL/masif)) | Py3.6 · TF 1.12 · surface + MSMS/APBS | 18 | per-vertex | **ROC-AUC 0.9137** *(vertex)* | ✅ PASS |
-| **ScanNet** ([jertubiana/ScanNet](https://github.com/jertubiana/ScanNet)) | Py3.6 · TF 1.14 · Keras · point-cloud | 19 | per-residue | **ROC-AUC 0.9233** *(residue)* | ✅ PASS |
+| **MaSIF-site** ([LPDI-EPFL/masif](https://github.com/LPDI-EPFL/masif)) | Py3.6 · TF 1.12 · surface + MSMS/APBS | 18 | per-vertex | **0.9137** *(vertex)* | ✅ |
+| **ScanNet** ([jertubiana/ScanNet](https://github.com/jertubiana/ScanNet)) | Py3.6 · TF 1.14 · Keras · point-cloud | 19 | per-residue | **0.9233** *(residue)* | ✅ |
+| **dMaSIF** ([FreyrS/dMaSIF](https://github.com/FreyrS/dMaSIF)) | Py3.6 · torch cu111 · PyKeOps · **GPU** | 51 | per-point | **0.8390** *(residue)* | ✅ |
 
-**Head-to-head.** Scored on *identical* residue labels (the 22 PD-L1 chain-A residues
-within 5 Å of PD-1 in the 4ZQK complex): **ScanNet 0.915 vs MaSIF 0.823** at residue level
-(MaSIF's native *vertex*-level score is 0.914 — it's a surface method, so collapsing to
-residues costs resolution). Both **correctly localize the interface**, agreeing on its core
-(Spearman ρ 0.43; 16 shared top-22 calls). Two tools raised from the dead, independently
-reproducing the PD-1/PD-L1 interface. Details: [`analysis/RESULTS.md`](analysis/RESULTS.md).
+The third is the stress test: **no docker image**, a CUDA-10 stack that won't run on
+Ampere, missing weights, and a PyKeOps install that dead-ends on `cppyy`/glibc. Lazarus
+built the whole cu111 + KeOps GPU environment from a bare image, found the real weights in
+a community fork, and **patched a source bug to unlock GPU execution the original forced to
+CPU**. (dMaSIF is CC BY-NC-ND — a research beat, not a shippable component.)
 
-📄 **The resurrection report** (visual — both revivals + the head-to-head) lives at
-[`docs/resurrection_report.html`](docs/resurrection_report.html). The actual emitted packages
-are in [`examples/masif_site_contract/`](examples/masif_site_contract/) and
-[`examples/scannet_ppi_contract/`](examples/scannet_ppi_contract/).
+**Three-way head-to-head.** Scored by one script on identical residue labels (22 PD-L1
+interface residues within 5 Å of PD-1): **ScanNet 0.915 · dMaSIF 0.854 · MaSIF 0.823**.
+All three localize the interface (a **13-residue consensus core**), and the two *surface*
+methods (MaSIF & its differentiable successor dMaSIF) agree most with each other (Spearman
+ρ 0.70) — method family shows up in the numbers. Details:
+[`analysis/RESULTS.md`](analysis/RESULTS.md).
+
+📄 **The resurrection report** (visual — all three + the head-to-head) lives at
+[`docs/resurrection_report.html`](docs/resurrection_report.html). The emitted packages are in
+[`examples/masif_site_contract/`](examples/masif_site_contract/),
+[`examples/scannet_ppi_contract/`](examples/scannet_ppi_contract/), and
+[`examples/dmasif_site_contract/`](examples/dmasif_site_contract/).
 
 ## How it works — five organs
 
