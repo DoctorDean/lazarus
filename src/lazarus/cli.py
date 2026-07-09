@@ -106,6 +106,27 @@ def cmd_resurrect(args: argparse.Namespace) -> int:
     return 0 if (res.completed and not res.is_error) else 1
 
 
+def cmd_run(args: argparse.Namespace) -> int:
+    from lazarus.compose import Pipeline, Registry, Runner
+
+    with open(args.pipeline, encoding="utf-8") as fh:
+        pipeline = Pipeline.from_yaml(fh.read())
+    registry = Registry.from_dirs(args.registry or ["examples"])
+    inputs = {}
+    for kv in args.input or []:
+        if "=" not in kv:
+            print(f"--input must be name=path (got {kv!r})", file=sys.stderr)
+            return 2
+        name, path = kv.split("=", 1)
+        inputs[name] = path
+    r = Runner(registry, docker_host=args.docker_host, on_event=lambda m: print(m, flush=True))
+    outputs, _ = r.run(pipeline, inputs, args.out)
+    print("\n=== pipeline outputs ===", file=sys.stderr)
+    for name, path in outputs.items():
+        print(f"{name}: {path}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="lazarus", description=__doc__)
     parser.add_argument("--version", action="version", version=f"lazarus {__version__}")
@@ -132,6 +153,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_res.add_argument("--out", default="lazarus-output", help="dir for the emitted integration package")
     p_res.add_argument("--gpus", default=None, help="pass GPUs to the container, e.g. 'all' (needs nvidia-container-toolkit)")
     p_res.set_defaults(func=cmd_resurrect)
+
+    p_run = sub.add_parser("run", help="run a pipeline composing resurrected components")
+    p_run.add_argument("pipeline", help="pipeline YAML file")
+    p_run.add_argument("--input", action="append", help="pipeline input as name=path (repeatable)")
+    p_run.add_argument("--registry", action="append", help="dir(s) of component contracts (default: examples/)")
+    p_run.add_argument("--docker-host", default=None, help="e.g. ssh://user@host to run on a remote/GPU box")
+    p_run.add_argument("--out", default="pipeline-output", help="output directory")
+    p_run.set_defaults(func=cmd_run)
 
     return parser
 
