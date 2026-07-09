@@ -1,0 +1,59 @@
+name: scannet_ppi_binding_sites
+repo_url: https://github.com/jertubiana/ScanNet
+base_image: lazarus/scannet:ppi-noMSA-proven
+entrypoint: 'set -e
+
+  cd /ScanNet
+
+  CHAIN="${CHAIN:-A}"
+
+  BASE=$(basename "$INPUT")
+
+  BASE="${BASE%.*}"
+
+  NAME="${BASE}_${CHAIN}"
+
+  mkdir -p "$OUTDIR"
+
+  # ScanNet chain syntax: <path/to/file.pdb>_<CHAIN>. Structure-only mode (--noMSA),
+  single chain (--pdb).
+
+  python predict_bindingsites.py "${INPUT}_${CHAIN}" --mode interface --noMSA --pdb
+  --name "$NAME" --predictions_folder "$OUTDIR/"
+
+  # Surface the per-residue CSV at a stable top-level path.
+
+  cp "$OUTDIR/${NAME}_(0-${CHAIN})_single_ScanNet_interface_noMSA/predictions_${NAME}.csv"
+  "$OUTDIR/predictions_${NAME}.csv"
+
+  echo "Per-residue binding-site probabilities: $OUTDIR/predictions_${NAME}.csv"'
+inputs:
+- name: INPUT
+  type: file
+  description: Path to a PDB file containing the query protein chain (e.g. 4zqk.pdb).
+    The chain to score is selected via the CHAIN env var (default A).
+outputs:
+- name: predictions_<basename>_<CHAIN>.csv
+  type: file
+  description: Per-residue CSV with columns Model,Chain,Residue Index,Sequence,Binding
+    site probability. One row per residue of the selected chain.
+smoke:
+  description: Fetch full 4ZQK complex, derive PD-L1 (chain A) interface residues
+    as chain-A residues with any heavy atom within 5.0 A of partner chain PD-1 (Biopython),
+    compute ROC-AUC of ScanNet per-residue probabilities vs those labels. Must be
+    >= 0.70.
+  command: cd /ScanNet && CHAIN=A INPUT=/ScanNet/PDB/4zqk.pdb OUTDIR=/ScanNet/predictions
+    bash -c 'python predict_bindingsites.py "${INPUT}_${CHAIN}" --mode interface --noMSA
+    --pdb --name 4ZQK_A --predictions_folder /ScanNet/predictions/' >/dev/null 2>&1;
+    python sanity_check.py 2>/dev/null | grep ROC_AUC
+  metric: ROC_AUC
+  threshold: 0.7
+  input_ref: https://files.rcsb.org/download/4ZQK.pdb
+paper: 'Tubiana, Schneidman-Duhovny, Wolfson. "ScanNet: an interpretable geometric
+  deep learning model for structure-based protein binding site prediction." Nature
+  Methods (2022).'
+commit: 'true'
+patches:
+- 'utilities/paths.py: set library_folder = ''/ScanNet/'' so structures_folder/predictions_folder/model_folder/MSA_folder
+  resolve to absolute in-repo paths (was empty '''').'
+platform: linux/amd64
