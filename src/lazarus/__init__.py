@@ -24,6 +24,7 @@ from lazarus.sandbox import (
     Sandbox,
 )
 from lazarus.contract import (
+    Benchmark,
     Contract,
     IOSpec,
     SmokeCheck,

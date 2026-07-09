@@ -14,7 +14,7 @@ from typing import Any
 
 from claude_agent_sdk import create_sdk_mcp_server, tool
 
-from lazarus.contract import Contract, IOSpec, SmokeCheck, emit
+from lazarus.contract import Benchmark, Contract, IOSpec, SmokeCheck, emit
 from lazarus.pinner import pin_requirements
 from lazarus.sandbox import Sandbox
 
@@ -191,6 +191,21 @@ def build_server(sandbox: Sandbox, *, output_dir: str, max_output_chars: int = 8
                 },
                 "patches": {"type": "array", "items": {"type": "string"}},
                 "gpus": {"type": "string", "description": "set to 'all' if the method needs a GPU — makes the emitted package pass --gpus"},
+                "benchmark": {
+                    "type": "object",
+                    "description": "OPTIONAL — if you reproduced the paper's benchmark, record it here so the package ships a reproduction certificate.",
+                    "properties": {
+                        "description": {"type": "string"},
+                        "metric": {"type": "string"},
+                        "reported": {"type": "number", "description": "the value the paper reports"},
+                        "measured": {"type": "number", "description": "what you measured"},
+                        "tolerance": {"type": "number"},
+                        "n": {"type": "integer", "description": "number of benchmark items evaluated"},
+                        "source": {"type": "string"},
+                        "command": {"type": "string"},
+                    },
+                    "required": ["description", "metric", "reported"],
+                },
             },
             "required": ["name", "base_image", "entrypoint"],
         },
@@ -209,6 +224,7 @@ def build_server(sandbox: Sandbox, *, output_dir: str, max_output_chars: int = 8
             commit=args.get("commit", ""),
             patches=args.get("patches", []),
             gpus=args.get("gpus", ""),
+            benchmark=Benchmark(**args["benchmark"]) if args.get("benchmark") else None,
         )
         out = await asyncio.to_thread(emit, contract, output_dir)
         written = ", ".join(sorted(p.name for p in out.iterdir()))

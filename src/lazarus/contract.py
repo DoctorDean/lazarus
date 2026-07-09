@@ -53,6 +53,30 @@ class SmokeCheck:
 
 
 @dataclass
+class Benchmark:
+    """Reproduce the paper's reported metric on the paper's own benchmark.
+
+    The trust layer: a smoke test proves the method *runs*; a benchmark proves it's
+    *the method* and reproduces the published result — what a team needs to adopt it.
+    """
+
+    description: str
+    metric: str                       # e.g. "median_roc_auc"
+    reported: float                   # the value the paper reports
+    tolerance: float = 0.05           # acceptable |measured - reported|
+    n: int = 0                        # number of benchmark items evaluated
+    source: str = ""                  # citation for the reported value
+    command: str = ""                 # in-container command printing <metric>=<value>
+    measured: Optional[float] = None  # what Lazarus actually measured
+
+    @property
+    def reproduced(self) -> Optional[bool]:
+        if self.measured is None:
+            return None
+        return abs(self.measured - self.reported) <= self.tolerance
+
+
+@dataclass
 class Contract:
     """A callable, verified interface carved out of a dead repo."""
 
@@ -63,6 +87,7 @@ class Contract:
     inputs: list[IOSpec] = field(default_factory=list)
     outputs: list[IOSpec] = field(default_factory=list)
     smoke: Optional[SmokeCheck] = None
+    benchmark: Optional[Benchmark] = None   # reproduces the paper's reported metric
     paper: str = ""                 # citation or URL, for provenance
     commit: str = ""                # pinned source commit of the resurrected repo
     patches: list[str] = field(default_factory=list)   # human summary of fixes applied
@@ -83,6 +108,8 @@ class Contract:
         data["outputs"] = [IOSpec(**d) for d in data.get("outputs", [])]
         smoke = data.get("smoke")
         data["smoke"] = SmokeCheck(**smoke) if smoke else None
+        bench = data.get("benchmark")
+        data["benchmark"] = Benchmark(**bench) if bench else None
         return cls(**data)
 
     @classmethod
@@ -241,6 +268,35 @@ def render_smoke_test(c: Contract) -> str:
     )
 
 
+def render_reproduce(c: Contract) -> str:
+    """A reproduction certificate (markdown): does the revival match the paper?"""
+    b = c.benchmark
+    if b is None:
+        raise ValueError(f"contract {c.name!r} has no benchmark to render")
+    if b.measured is None:
+        verdict, measured = "not yet run", "(pending)"
+    else:
+        verdict = "REPRODUCED ✓" if b.reproduced else "OFF ✗"
+        measured = f"{b.measured} (n={b.n})"
+    lines = [
+        f"# Reproduction certificate — {c.name}",
+        "",
+        f"> {b.description}",
+        "",
+        "| | |",
+        "|---|---|",
+        f"| Metric | `{b.metric}` |",
+        f"| Paper reports | **{b.reported}**" + (f" ({b.source})" if b.source else "") + " |",
+        f"| Lazarus measured | **{measured}** |",
+        f"| Tolerance | ±{b.tolerance} |",
+        f"| Verdict | **{verdict}** |",
+        "",
+    ]
+    if b.command:
+        lines += ["Reproduce it yourself:", "", "```bash", b.command, "```", ""]
+    return "\n".join(lines)
+
+
 def emit(contract: Contract, outdir: str | Path) -> Path:
     """Write the full integration package to ``outdir``; return the path."""
     out = Path(outdir)
@@ -250,4 +306,6 @@ def emit(contract: Contract, outdir: str | Path) -> Path:
     (out / "predict.py").write_text(render_predict_py(contract), encoding="utf-8")
     if contract.smoke is not None:
         (out / "smoke_test.py").write_text(render_smoke_test(contract), encoding="utf-8")
+    if contract.benchmark is not None:
+        (out / "REPRODUCE.md").write_text(render_reproduce(contract), encoding="utf-8")
     return out

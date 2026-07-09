@@ -99,6 +99,24 @@ def test_gpus_flag_in_emitted_package():
     assert "GPUS = None" in render_predict_py(masif_site_contract())
 
 
+def test_benchmark_roundtrip_and_certificate(tmp_path):
+    from lazarus.contract import Benchmark, render_reproduce
+    c = masif_site_contract()
+    c.benchmark = Benchmark(
+        description="MaSIF-site transient PPI benchmark",
+        metric="median_roc_auc", reported=0.85, tolerance=0.05, n=15,
+        source="Gainza et al. 2020", command="bash reproduce_transient_benchmark.sh",
+        measured=0.86,
+    )
+    back = Contract.from_yaml(c.to_yaml())
+    assert back.benchmark.reported == 0.85
+    assert back.benchmark.reproduced is True          # |0.86 - 0.85| <= 0.05
+    cert = render_reproduce(c)
+    assert "REPRODUCED" in cert and "median_roc_auc" in cert
+    out = emit(c, tmp_path / "pkg")
+    assert (out / "REPRODUCE.md").exists()
+
+
 def test_emit_writes_full_package(tmp_path):
     out = emit(masif_site_contract(), tmp_path / "pkg")
     written = {p.name for p in Path(out).iterdir()}
