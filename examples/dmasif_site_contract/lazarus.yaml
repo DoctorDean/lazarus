@@ -1,0 +1,84 @@
+name: dmasif_site
+repo_url: https://github.com/casperg92/MaSIF_colab (site weights + single-PDB path);
+  https://github.com/FreyrS/dMaSIF (original)
+base_image: lazarus/dmasif:site-ready
+entrypoint: '#!/bin/bash
+
+  set -euo pipefail
+
+  # dMaSIF interaction-site prediction for one chain of a PDB.
+
+  # $INPUT  : a .pdb file
+
+  # $OUTDIR : directory for outputs
+
+  # CHAIN   : chain id to analyze (default A); DEVICE default cuda:0
+
+  export KEOPS_CACHE_FOLDER=/root/keops_cache
+
+  mkdir -p "$KEOPS_CACHE_FOLDER" "$OUTDIR"
+
+  CHAIN="${CHAIN:-A}"
+
+  DEVICE="${DEVICE:-cuda:0}"
+
+  cd /root/MaSIF_colab
+
+  python predict_site.py "$INPUT" "$OUTDIR" "$CHAIN" "$DEVICE"'
+inputs:
+- name: INPUT
+  type: file
+  description: A PDB file (e.g. 4ZQK.pdb). The chain given by CHAIN (default A) is
+    isolated, protonated with reduce, and its molecular surface is built on-the-fly.
+- name: CHAIN
+  type: env
+  description: Chain id to analyze (default A)
+- name: DEVICE
+  type: env
+  description: torch device (default cuda:0; requires CUDA>=11.1 / sm_86-capable GPU)
+outputs:
+- name: <stem>_<chain>_site_scores.npy
+  type: file
+  description: Per-surface-point interaction-site score (sigmoid of iface logit),
+    shape (N_points,)
+- name: <stem>_<chain>_predcoords.npy
+  type: file
+  description: XYZ coordinates of the N surface points, shape (N_points,3)
+- name: <stem>_<chain>_residue_scores.npy
+  type: file
+  description: Per-residue site score = max over the chain's atoms of the nearest
+    surface point's score
+- name: <stem>_<chain>_residue_ids.npy
+  type: file
+  description: Residue sequence ids aligned with residue_scores.npy
+- name: <stem>_<chain>_site.pdb
+  type: file
+  description: Chain PDB with per-residue site score (x100) written into the B-factor
+    column
+smoke:
+  description: Run dMaSIF-site on 4ZQK chain A, map per-point scores to residues (nearest
+    atom, max-aggregate), and compute residue-level ROC-AUC against the true PD-L1
+    interface (chain A heavy atoms within 5.0A of partner chain B). Must exceed 0.65.
+  command: export KEOPS_CACHE_FOLDER=/root/keops_cache; cd /root/MaSIF_colab && python
+    predict_site.py examples/4ZQK.pdb /tmp/smoke A cuda:0 >/dev/null 2>&1 && python
+    smoke_test.py examples/4ZQK.pdb /tmp/smoke A B 2>/dev/null | grep ROCAUC
+  metric: ROCAUC
+  threshold: 0.65
+  input_ref: examples/4ZQK.pdb
+paper: Sverrisson et al., "Fast end-to-end learning on protein surfaces" (dMaSIF),
+  CVPR 2021
+commit: MaSIF_colab @ dMaSIF_Colab_V1; FreyrS/dMaSIF main
+patches:
+- 'geometry_processing.py: replaced `torch.FloatTensor([...], device=x.device)` in
+  soft_distances() with `torch.tensor([...], dtype=torch.float, device=x.device)`
+  so surface generation runs on CUDA (the legacy FloatTensor constructor rejects a
+  CUDA device; the Colab worked around this by forcing CPU).'
+- "Environment: substituted the task's KeOps python_engine branch (which imports cppyy;\
+  \ no cppyy wheel exists for this glibc-2.27 host and cppyy-cling fails to build)\
+  \ with released pykeops/keopscore 2.1.2 \u2014 same runtime NVRTC-JIT design, and\
+  \ the LazyTensor API dMaSIF uses is unchanged."
+- 'Dependency pins for torch-1.8.1 era: numpy==1.23.5 (avoid np.float removal), googledrivedownloader==0.4
+  (module name google_drive_downloader expected by torch-geometric 1.6.1), plus plyfile/pyvtk
+  needed at import time.'
+platform: linux/amd64
+gpus: all

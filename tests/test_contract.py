@@ -88,6 +88,17 @@ def test_emitter_escapes_quotes_and_newlines():
     compile(render_smoke_test(c), "smoke_test.py", "exec")
 
 
+def test_gpus_flag_in_emitted_package():
+    c = masif_site_contract()
+    c.gpus = "all"
+    predict, smoke = render_predict_py(c), render_smoke_test(c)
+    compile(predict, "predict.py", "exec")
+    compile(smoke, "smoke_test.py", "exec")
+    assert 'GPUS = "all"' in predict and 'GPUS = "all"' in smoke
+    # default (no GPU) renders GPUS = None, so no --gpus is added
+    assert "GPUS = None" in render_predict_py(masif_site_contract())
+
+
 def test_emit_writes_full_package(tmp_path):
     out = emit(masif_site_contract(), tmp_path / "pkg")
     written = {p.name for p in Path(out).iterdir()}

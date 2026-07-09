@@ -67,6 +67,7 @@ class Contract:
     commit: str = ""                # pinned source commit of the resurrected repo
     patches: list[str] = field(default_factory=list)   # human summary of fixes applied
     platform: str = "linux/amd64"
+    gpus: str = ""                  # e.g. "all" for GPU methods (needs nvidia-container-toolkit)
 
     # -- serialization ---------------------------------------------------
     def to_dict(self) -> dict:
@@ -123,6 +124,7 @@ from pathlib import Path
 
 IMAGE = $base_image
 PLATFORM = $platform
+GPUS = $gpus  # e.g. "all" to pass GPUs (needs nvidia-container-toolkit), or None
 # In-container command template; $$INPUT and $$OUTDIR are substituted at runtime.
 ENTRYPOINT = $entrypoint
 
@@ -137,8 +139,11 @@ def predict(input_path: str, output_dir: str) -> None:
     out.mkdir(parents=True, exist_ok=True)
     cmd = ENTRYPOINT.replace("$$INPUT", "/io/in/" + inp.name).replace("$$OUTDIR", "/io/out")
     name = "lazarus-predict-" + uuid.uuid4().hex[:10]
-    _run("docker", "run", "-d", "--name", name, "--platform", PLATFORM,
-         IMAGE, "sleep", "infinity")
+    run_args = ["docker", "run", "-d", "--name", name, "--platform", PLATFORM]
+    if GPUS:
+        run_args += ["--gpus", GPUS]
+    run_args += [IMAGE, "sleep", "infinity"]
+    _run(*run_args)
     try:
         _run("docker", "exec", name, "mkdir", "-p", "/io/in", "/io/out")
         _run("docker", "cp", str(inp), f"{name}:/io/in/{inp.name}")
@@ -168,16 +173,18 @@ import sys
 
 IMAGE = $base_image
 PLATFORM = $platform
+GPUS = $gpus  # e.g. "all" to pass GPUs, or None
 COMMAND = $smoke_command
 METRIC = $smoke_metric
 THRESHOLD = $smoke_threshold
 
 
 def main() -> int:
-    proc = subprocess.run(
-        ["docker", "run", "--rm", "--platform", PLATFORM, IMAGE, "bash", "-lc", COMMAND],
-        capture_output=True, text=True,
-    )
+    run_args = ["docker", "run", "--rm", "--platform", PLATFORM]
+    if GPUS:
+        run_args += ["--gpus", GPUS]
+    run_args += [IMAGE, "bash", "-lc", COMMAND]
+    proc = subprocess.run(run_args, capture_output=True, text=True)
     sys.stdout.write(proc.stdout)
     sys.stderr.write(proc.stderr)
     m = re.search(rf"{METRIC}\\s*=\\s*([0-9.]+)", proc.stdout)
@@ -213,6 +220,7 @@ def render_predict_py(c: Contract) -> str:
         base_image=json.dumps(c.base_image),
         platform=json.dumps(c.platform),
         entrypoint=json.dumps(c.entrypoint),
+        gpus=json.dumps(c.gpus) if c.gpus else "None",
     )
 
 
@@ -229,6 +237,7 @@ def render_smoke_test(c: Contract) -> str:
         smoke_command=json.dumps(c.smoke.command),
         smoke_metric=json.dumps(c.smoke.metric),
         smoke_threshold=c.smoke.threshold,
+        gpus=json.dumps(c.gpus) if c.gpus else "None",
     )
 
 

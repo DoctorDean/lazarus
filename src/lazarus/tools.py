@@ -190,6 +190,7 @@ def build_server(sandbox: Sandbox, *, output_dir: str, max_output_chars: int = 8
                     "required": ["description", "command"],
                 },
                 "patches": {"type": "array", "items": {"type": "string"}},
+                "gpus": {"type": "string", "description": "set to 'all' if the method needs a GPU — makes the emitted package pass --gpus"},
             },
             "required": ["name", "base_image", "entrypoint"],
         },
@@ -207,6 +208,7 @@ def build_server(sandbox: Sandbox, *, output_dir: str, max_output_chars: int = 8
             paper=args.get("paper", ""),
             commit=args.get("commit", ""),
             patches=args.get("patches", []),
+            gpus=args.get("gpus", ""),
         )
         out = await asyncio.to_thread(emit, contract, output_dir)
         written = ", ".join(sorted(p.name for p in out.iterdir()))
