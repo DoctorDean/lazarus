@@ -1,0 +1,13 @@
+Binder-interface triage
+=======================
+residues scored (ScanNet + dMaSIF consensus) : 115
+predicted interface residues (consensus >= 0.5): 27
+  top: 115, 123, 56, 121, 54, 117, 113, 120, 69, 122, 66, 118
+fpocket pockets found: 3 (top druggability 0.32)
+interface residues that coincide with a pocket : 10 (max pocket druggability 0.32)
+HOT small-molecule targets (interface AND druggability >= 0.5): 0
+
+=> The interface is clearly localized but is NOT a druggable small-molecule
+   pocket (top druggability 0.32 < 0.5). This is the signature of a flat
+   protein-protein interface -> an antibody / biologic target, not a small
+   molecule one.

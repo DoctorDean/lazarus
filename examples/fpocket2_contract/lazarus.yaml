@@ -1,0 +1,55 @@
+name: fpocket2
+repo_url: https://sourceforge.net/projects/fpocket/files/fpocket2.tar.gz
+base_image: lazarus/fpocket:working
+entrypoint: '#!/usr/bin/env bash
+
+  # fpocket 2.0 (2010) pocket/cavity detection.
+
+  # $INPUT = a PDB file; $OUTDIR = output directory.
+
+  # Produces: $OUTDIR/pockets.json  and  $OUTDIR/<name>_out/ (raw fpocket output).
+
+  set -euo pipefail
+
+  /usr/local/bin/fpocket_run.sh "$INPUT" "$OUTDIR"
+
+  '
+inputs:
+- name: INPUT
+  type: file
+  description: A protein PDB file (e.g. 4ZQK chain A). fpocket runs on all ATOM records
+    present; lining_residues in pockets.json are filtered to chain A.
+outputs:
+- name: pockets.json
+  type: file
+  description: JSON list of detected pockets, each {rank:int, druggability:float in
+    [0,1], lining_residues:[chain-A residue ids]}, ranked by fpocket score.
+- name: <name>_out
+  type: dir
+  description: 'Raw fpocket output directory: <name>_info.txt (ranked pockets with
+    Score + Druggability Score), pockets/pocketN_atm.pdb (protein atoms lining each
+    pocket), plus pqr/pml/tcl visualization files.'
+smoke:
+  description: Run fpocket 2.0 on 4ZQK chain A; expect >=1 detected pocket with a
+    valid druggability score in [0,1] and extractable lining residues.
+  command: fpocket_run.sh /opt/fpocket/ref/4ZQK_A.pdb /tmp/smoke
+  metric: pockets
+  threshold: 1
+  input_ref: /opt/fpocket/ref/4ZQK_A.pdb
+paper: 'Le Guilloux V, Schmidtke P, Tuffery P. Fpocket: An open source platform for
+  ligand pocket detection. BMC Bioinformatics 2009;10:168.'
+commit: fpocket 2.0 (SourceForge, 2010)
+patches:
+- 'makefile: append -lm after the object list in each executable link rule (modern
+  ld is link-order sensitive, so -lm placed before objects via LFLAGS was discarded,
+  causing undefined references to exp/sqrt/sincos).'
+- 'src/fpout.c: replaced two self-referential sprintf calls (sprintf(out_path, "%s/%s",
+  out_path, pdb_code) and sprintf(out_path, "%s/pockets", out_path)) with a scratch-buffer
+  snprintf+strcpy. Overlapping source/dest in sprintf is undefined behavior; on modern
+  glibc it collapsed out_path to empty, so fpocket tried to mkdir /pockets and silently
+  wrote no pocket files.'
+- 'Build flags: CFLAGS=''-std=gnu89 -Wno-error=implicit-function-declaration -Wno-error=implicit-int
+  -Wno-error'' (and QCFLAGS=''-O -std=gnu89 -Wno-error'' for bundled Qhull) so 2010
+  C compiles under GCC 13. Built only the ''fpocket'' target (skipped mdpocket/netcdf).'
+platform: linux/amd64
+gpus: ''

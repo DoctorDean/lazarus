@@ -21,8 +21,8 @@ steps:
     uses: dmasif_site
     with: { INPUT: "${inputs.structure}", CHAIN: A, DEVICE: "cuda:0" }
 
-  - id: fpocket                     # cross-language brick (2010 C)
-    uses: fpocket_pockets           # TODO: set to fpocket's emitted contract name
+  - id: fpocket                     # cross-language brick (2010 C from SourceForge)
+    uses: fpocket2
     with: { INPUT: "${inputs.structure}" }
 
   - id: consensus                   # adapter brick: fuse sites + pockets -> triage
