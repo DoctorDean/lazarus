@@ -1,0 +1,52 @@
+Resurrect dMaSIF's protein interaction-site prediction (FreyrS/dMaSIF) FROM SCRATCH in
+this container and run it on a single PDB chain, producing per-surface-point
+interaction-site scores. There is no working Docker image for this method — you must
+build the environment.
+
+This container starts from a PyTorch + CUDA "-devel" base image (nvcc + CUDA headers
+present) with a GPU passed through — confirm with `nvidia-smi`.
+
+CRITICAL build guidance (the repo README's CUDA-10 / PyKeOps-1.4 stack will NOT run on
+this Ampere GPU (compute capability sm_86 needs CUDA >= 11.1) — do NOT use it):
+- Install this exact stack:
+    torch==1.8.1+cu111
+    torch-scatter==2.0.7, torch-sparse==0.6.11, torch-cluster==1.5.9
+      (from https://data.pyg.org/whl/torch-1.8.1+cu111.html)
+    torch-geometric==1.6.1
+- Install KeOps 2.x from the python_engine branch:
+    pip install git+https://github.com/getkeops/keops.git@python_engine
+  (NOT pykeops 1.4 — its ahead-of-time C++ compile is broken on modern CUDA. KeOps 2.x
+  uses runtime NVRTC JIT; the FIRST run pauses ~30-60s compiling kernels — this is
+  normal, not a hang. Ensure a writable KeOps cache dir.)
+- Install `reduce` (Richardson lab) for protonation.
+- dMaSIF builds the molecular surface on-the-fly from the atom point cloud — NO
+  MSMS/APBS/PyMesh/PDB2PQR needed.
+
+Weights + a clean single-PDB inference path: the FreyrS repo ships ONLY the *search*
+weights, NOT the site weights (issue #35). Get the SITE weights and the correct inference
+args from the fork casperg92/MaSIF_colab — its models/ dir contains
+`dMaSIF_site_3layer_16dims_9A_0.7res_150sup_epoch85`, and its notebook's `generate_descr`
+wrapper shows the working single-protein inference path. Clone both repos as needed.
+
+Run interaction-site prediction on 4ZQK chain A:
+- Fetch 4ZQK.pdb yourself (https://files.rcsb.org/download/4ZQK.pdb is live), isolate
+  chain A, protonate with reduce (`reduce -Trim` then `reduce -HIS`).
+- Run the SITE model with config: --site True --single_protein True --n_layers 3
+  --emb_dims 16 --radius 9 --resolution 0.7 --supsampling 150, weights
+  dMaSIF_site_3layer_16dims_9A_0.7res_150sup_epoch85.
+- main_inference.py may demand a `y` label for a single unlabeled PDB (issue #36) — use
+  the Colab generate_descr path, or patch around the label requirement.
+
+Output: per-surface-point interaction-site scores (.npy) and/or a B-factor-annotated PDB.
+
+PROVE it (sanity check): map per-point (or per-atom B-factor) scores to per-residue
+(nearest atom -> residue, aggregate by max). Define the TRUE PD-L1 interface residues from
+the full 4ZQK complex — chain A residues with any heavy atom within 5.0 A of the partner
+chain — via Biopython. Compute the residue-level ROC-AUC. You must reach ROC-AUC >= 0.65
+on 4ZQK_A. (dMaSIF-site is known to score lower than MaSIF-site/ScanNet and has
+reproducibility caveats, so 0.65 is the bar for "clearly localizes the interface.")
+
+Constraints: inference only, no training. Snapshot the working image once it runs. When
+finished, emit the integration contract (entrypoint: a PDB file -> per-residue/point
+scores, using $INPUT and $OUTDIR) and report the exact minimal command sequence, the
+output location, and the ROC-AUC you measured.
