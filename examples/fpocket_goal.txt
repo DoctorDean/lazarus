@@ -1,0 +1,44 @@
+Resurrect fpocket 2.0 (2010) — the genuinely abandoned SourceForge release — FROM SOURCE
+in this container, and run pocket/cavity detection on a single PDB. fpocket is a C program
+(the maintained GitHub fork is too new to count; use the frozen 2010 SourceForge 2.0).
+
+This container starts from a modern Linux base (ubuntu:24.04 / GCC 13-14). You must BUILD
+fpocket from its 2010 C source against this modern toolchain.
+
+Build guidance:
+- Get the fpocket 2.0 source from SourceForge (project "fpocket"; the source tarball is
+  named like `fpocket2.tar.gz` under https://sourceforge.net/projects/fpocket/files/). Fetch
+  it yourself (curl/wget; follow the SourceForge download redirect). If that exact URL is
+  unavailable, find the fpocket 2.0 (2010) source another way, but do NOT use the maintained
+  4.x GitHub release — the point is the 2010 code.
+- Install a compiler toolchain: `apt-get install -y build-essential wget`.
+- Build with the plain `makefile` (`make`) — there is NO ./configure or CMake. It is C
+  (gnu99) plus a bundled Qhull and a little C++. Build ONLY the `fpocket` binary target;
+  SKIP `mdpocket` (it needs netcdf and you don't need it).
+- Modern GCC (14) promotes -Werror=implicit-function-declaration and -Werror=implicit-int
+  to hard errors, which 2010 C trips. Fix properly (add missing #includes / prototypes)
+  where easy, or use the escape hatch: add to CFLAGS
+  `-std=gnu89 -Wno-error=implicit-function-declaration -Wno-error=implicit-int -Wno-error`.
+  Expect to patch a few C source files and/or the makefile.
+
+Run on 4ZQK chain A:
+- Fetch 4ZQK.pdb (https://files.rcsb.org/download/4ZQK.pdb) and isolate chain A (grep the
+  ATOM records for chain A, or run on the full complex — your call, but be consistent).
+- Run `fpocket -f <pdb>` → it writes `<name>_out/` containing `<name>_info.txt` (ranked
+  pockets with Score and **Druggability Score** 0-1) and `pockets/pocketN_atm.pdb` (the
+  protein atoms lining each pocket).
+
+Make it COMPOSABLE (this is a pipeline brick): the entrypoint, given $INPUT (a pdb) and
+$OUTDIR, must run fpocket AND write to $OUTDIR a machine-readable `pockets.json` — a list of
+pockets, each with {rank, druggability (float), lining_residues (list of integer chain-A
+residue ids parsed from pockets/pocketN_atm.pdb)}. Also copy the raw fpocket `*_out/`
+directory into $OUTDIR.
+
+PROVE it (sanity check): fpocket detects at least one pocket on 4ZQK with a valid
+druggability score in [0,1], and lining residues are extractable. Report the number of
+pockets found; it must be >= 1 (metric: `pockets`, threshold 1). Print a line `pockets=<N>`.
+
+Constraints: no network needed at runtime beyond fetching the PDB and the source; no GPU.
+Snapshot the working image once it builds and runs. When finished, emit the integration
+contract (entrypoint: a PDB file -> pockets.json + raw fpocket output, via $INPUT and
+$OUTDIR) and report the exact minimal commands, output location, and the pocket count.
