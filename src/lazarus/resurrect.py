@@ -124,6 +124,7 @@ class Resurrector:
         keep_container: bool = False,
         cwd: Optional[str] = None,
         output_dir: Optional[str] = None,
+        gpus: Optional[str] = None,
         on_event: Optional[Callable[[ResurrectionEvent], None]] = None,
     ) -> None:
         self.image = image
@@ -131,6 +132,7 @@ class Resurrector:
         self.workdir = workdir
         self.model = model
         self.max_turns = max_turns
+        self.gpus = gpus
         self.cli_path = cli_path or find_claude_cli()
         self.keep_container = keep_container
         # A neutral cwd with no operator files, so the agent can't read host notes.
@@ -148,7 +150,7 @@ class Resurrector:
 
     async def resurrect(self, goal: str) -> ResurrectionResult:
         client = DockerClient(binary=find_docker(), docker_host=self.docker_host)
-        sandbox = Sandbox(client, self.image, workdir=self.workdir)
+        sandbox = Sandbox(client, self.image, workdir=self.workdir, gpus=self.gpus)
         sandbox.start()
         self.sandbox = sandbox
 

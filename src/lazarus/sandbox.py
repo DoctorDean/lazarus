@@ -182,23 +182,17 @@ class Sandbox:
     workdir: str = "/work"
     platform: str = "linux/amd64"
     keepalive: Sequence[str] = ("sleep", "infinity")
+    gpus: Optional[str] = None      # e.g. "all" -> passes GPUs to the container
     started: bool = field(default=False, init=False)
 
     def start(self, *, timeout: Optional[float] = 300.0) -> "Sandbox":
         if self.started:
             return self
-        res = self.client.run(
-            [
-                "run", "-d",
-                "--platform", self.platform,
-                "--name", self.name,
-                "-w", self.workdir,
-                self.image,
-                *self.keepalive,
-            ],
-            timeout=timeout,
-        )
-        res.raise_for_status()
+        args = ["run", "-d", "--platform", self.platform, "--name", self.name, "-w", self.workdir]
+        if self.gpus:
+            args += ["--gpus", self.gpus]
+        args += [self.image, *self.keepalive]
+        self.client.run(args, timeout=timeout).raise_for_status()
         self.started = True
         return self
 

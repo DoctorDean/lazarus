@@ -96,6 +96,7 @@ def cmd_resurrect(args: argparse.Namespace) -> int:
         max_turns=args.max_turns,
         keep_container=args.keep,
         output_dir=args.out,
+        gpus=args.gpus,
         on_event=show,
     )
     res = asyncio.run(r.resurrect(goal))
@@ -129,6 +130,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_res.add_argument("--max-turns", type=int, default=80)
     p_res.add_argument("--keep", action="store_true", help="keep the container after finishing")
     p_res.add_argument("--out", default="lazarus-output", help="dir for the emitted integration package")
+    p_res.add_argument("--gpus", default=None, help="pass GPUs to the container, e.g. 'all' (needs nvidia-container-toolkit)")
     p_res.set_defaults(func=cmd_resurrect)
 
     return parser

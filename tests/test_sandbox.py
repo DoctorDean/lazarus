@@ -57,6 +57,20 @@ def test_start_is_idempotent():
     assert sum(1 for c in runner.calls if c[1] == "run") == 1
 
 
+def test_start_with_gpus_adds_flag():
+    runner, box = make_box(gpus="all")
+    box.start()
+    argv = runner.last
+    assert argv[argv.index("--gpus") + 1] == "all"
+    assert argv[-2:] == ["sleep", "infinity"]
+
+
+def test_start_without_gpus_omits_flag():
+    runner, box = make_box()
+    box.start()
+    assert "--gpus" not in runner.last
+
+
 def test_exec_string_runs_under_bash_lc():
     runner, box = make_box()
     box.start()
