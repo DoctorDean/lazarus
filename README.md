@@ -10,6 +10,12 @@
   🧬 <strong>Build track</strong> · Built with <strong>Claude Science</strong> hackathon · July 2026
 </p>
 
+<p align="center">
+  <a href="https://colab.research.google.com/github/DoctorDean/lazarus/blob/main/notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" /></a>
+</p>
+
+<p align="center"><em>New here? <a href="notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb">Open the notebook in Colab</a> — a 2-minute, zero-setup tour (no Docker, no GPU): run the dependency pinner live, inspect the four revived tools, and see the binder-triage result rendered in 3D.</em></p>
+
 ---
 
 ## The wall
@@ -89,10 +95,11 @@ code. Sample output: [`examples/pipelines/sample_output_4ZQK/`](examples/pipelin
 For the genuinely-abandoned repos, Lazarus prepares maintainer-ready PRs — the real fix
 plus a **CI smoke test** so it can't silently rot again:
 
-- **MaSIF #85** — the rotted PDB download, fixed (direct RCSB fetch); verified to revive the
-  built-in flow at ROC-AUC 0.9137. → [`giveback/masif/`](giveback/masif/)
-- **ScanNet #15** — `library_folder=''` made to auto-detect the repo root; verified. →
-  [`giveback/scannet/`](giveback/scannet/)
+- **MaSIF — [PR #93](https://github.com/LPDI-EPFL/masif/pull/93)** — the rotted PDB download,
+  fixed (direct RCSB fetch); verified to revive the built-in flow at ROC-AUC 0.9137. →
+  [`giveback/masif/`](giveback/masif/)
+- **ScanNet — [PR #16](https://github.com/jertubiana/ScanNet/pull/16)** — `library_folder=''`
+  made to auto-detect the repo root; verified. → [`giveback/scannet/`](giveback/scannet/)
 
 (dMaSIF is skipped — CC BY-NC-ND, no-derivatives; fpocket's upstream is alive.)
 
@@ -100,7 +107,7 @@ plus a **CI smoke test** so it can't silently rot again:
 
 A smoke test proves a method *runs*; a benchmark proves it's *the method*. Lazarus re-ran
 MaSIF-site on its own **transient PPI benchmark** — through the built-in download that
-give-back PR #85 revived — and matched the published number:
+give-back [PR #93](https://github.com/LPDI-EPFL/masif/pull/93) revived — and matched the published number:
 
 | Metric | Paper (Gainza et al. 2020, n=59) | Lazarus (n=15 slice) |
 |---|:--:|:--:|
@@ -157,6 +164,11 @@ repair loop · capability locator · contract emitter (GPU-aware, with reproduct
 certificates) · **Lazarus Compose**. All three pillars landed — **four** dead repos revived,
 a three-way method comparison, a live binder-triage pipeline, a reproduced paper benchmark,
 and two give-back PRs — with 41 passing tests.
+
+**Two front doors:** a [zero-setup Colab notebook](notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)
+for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and a
+[3-minute demo-video script](docs/DEMO_SCRIPT.md) for the live-compute story (autonomous
+revival + the pipeline running on a GPU box).
 
 ## License
 

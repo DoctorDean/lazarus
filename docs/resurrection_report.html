@@ -224,11 +224,11 @@
     <p class="sub">The fixes Lazarus found are real and wanted. For the genuinely-abandoned repos, it prepares maintainer-ready PRs — the fix plus a CI smoke test, so the method can't silently rot again. (dMaSIF is skipped — no-derivatives license; fpocket's upstream is alive.)</p>
     <div class="two">
       <div class="pr">
-        <div class="h"><a href="https://github.com/LPDI-EPFL/masif">MaSIF · issue #85</a></div>
+        <div class="h"><a href="https://github.com/LPDI-EPFL/masif/pull/93">MaSIF · PR #93</a></div>
         <div class="d">The rotted PDB download (Biopython's retired wwPDB path) replaced with a direct RCSB fetch — verified to revive the built-in flow at ROC-AUC 0.9137 — plus a CI smoke test asserting ≥ 0.8.</div>
       </div>
       <div class="pr">
-        <div class="h"><a href="https://github.com/jertubiana/ScanNet">ScanNet · issue #15</a></div>
+        <div class="h"><a href="https://github.com/jertubiana/ScanNet/pull/16">ScanNet · PR #16</a></div>
         <div class="d"><code>library_folder=''</code> made to auto-detect the repo root, fixing single-PDB inference from any directory — verified — plus a CI smoke test.</div>
       </div>
     </div>
@@ -264,7 +264,7 @@
         <span style="position:absolute;left:60%;top:15px;width:11px;height:11px;border-radius:50%;background:var(--accent-soft);border:2px solid var(--accent);transform:translateX(-50%)"></span>
       </div>
       <div class="scale"><span>0.5</span><span>0.75</span><span>1.0</span></div>
-      <p class="cap">Per-structure ROC-AUC across 15 transient-benchmark structures (min 0.55, max 0.95). Green line = Lazarus median (0.82); grey = paper (0.85). Every structure was fetched via the built-in downloader that give-back PR #85 repaired.</p>
+      <p class="cap">Per-structure ROC-AUC across 15 transient-benchmark structures (min 0.55, max 0.95). Green line = Lazarus median (0.82); grey = paper (0.85). Every structure was fetched via the built-in downloader that give-back <a href="https://github.com/LPDI-EPFL/masif/pull/93">MaSIF PR #93</a> repaired.</p>
     </div>
   </section>
 
