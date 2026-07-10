@@ -1,0 +1,2 @@
+# Docs site (MkDocs Material) — used by the `docs` GitHub Actions workflow.
+mkdocs-material>=9.5

@@ -1,0 +1,65 @@
+site_name: Lazarus
+site_description: Turn dead research code into a callable pipeline component — and give the revival back.
+site_url: https://doctordean.github.io/lazarus/
+repo_url: https://github.com/DoctorDean/lazarus
+repo_name: DoctorDean/lazarus
+copyright: MIT-licensed · Built with Claude Science
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.top
+    - navigation.sections
+    - navigation.instant
+    - navigation.tracking
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Quickstart: quickstart.md
+  - How it works: how-it-works.md
+  - Compose & reproduce: compose.md
+  - The hard problems it solved: CHALLENGES.md
+  - Publishing (maintainers): PUBLISHING.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+
+exclude_docs: |
+  DEMO_SCRIPT.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/DoctorDean/lazarus
