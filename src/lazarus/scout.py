@@ -27,12 +27,9 @@ import shutil
 from dataclasses import dataclass, field
 from typing import Optional
 
-from claude_agent_sdk import (
-    AssistantMessage,
-    ClaudeAgentOptions,
-    TextBlock,
-    query,
-)
+# NOTE: claude_agent_sdk is imported lazily inside scout() so that the pure
+# planning logic (plan_from_text / ResurrectionPlan) — and its tests — work
+# without the optional `agent` extra installed.
 
 SCOUT_SYSTEM_PROMPT = """\
 You are Lazarus Scout. Given a public GitHub repository for a computational-science
@@ -232,6 +229,13 @@ async def scout(
 
     Runs a host-side agent with only web tools — no sandbox, no operator notes.
     """
+    from claude_agent_sdk import (  # lazy: only the live path needs the SDK
+        AssistantMessage,
+        ClaudeAgentOptions,
+        TextBlock,
+        query,
+    )
+
     options = ClaudeAgentOptions(
         allowed_tools=["WebFetch", "WebSearch"],
         setting_sources=[],  # never read host CLAUDE.md / memory / project settings

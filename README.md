@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="lazarus.png" width="440" alt="Lazarus — resurrecting a dead repo" />
+  <img src="https://raw.githubusercontent.com/DoctorDean/lazarus/main/lazarus.png" width="440" alt="Lazarus — resurrecting a dead repo" />
 </p>
 
 <h1 align="center">Lazarus</h1>
@@ -11,7 +11,10 @@
 </p>
 
 <p align="center">
+  <a href="https://pypi.org/project/lazarus-bio/"><img src="https://img.shields.io/pypi/v/lazarus-bio?color=0c8f6e" alt="PyPI" /></a>
+  <a href="https://doctordean.github.io/lazarus/"><img src="https://img.shields.io/badge/docs-github.io-0c8f6e" alt="Docs" /></a>
   <a href="https://colab.research.google.com/github/DoctorDean/lazarus/blob/main/notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" /></a>
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT" />
 </p>
 
 <p align="center"><em>New here? <a href="notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb">Open the notebook in Colab</a> — a 2-minute, zero-setup tour (no Docker, no GPU): run the dependency pinner live, inspect the four revived tools, and see the binder-triage result rendered in 3D.</em></p>
@@ -175,8 +178,11 @@ agent's tools and the emitted `predict.py` both run against whatever `--docker-h
 ## Quickstart
 
 ```bash
-python3 -m venv .venv
-.venv/bin/pip install -e ".[dev,agent]"     # agent extra needs Python ≥ 3.10
+pip install lazarus-bio                      # the tooling: pinner, compose, contracts
+pip install "lazarus-bio[agent]"             # + the autonomous revive loop & Scout (Python ≥ 3.10 + Docker)
+# or, to hack on Lazarus itself:
+#   git clone https://github.com/DoctorDean/lazarus && cd lazarus
+#   pip install -e ".[dev,agent]"
 
 # commit-era dependency pinning — no repo execution required
 lazarus pin --date 2019-01-01 tensorflow numpy scipy

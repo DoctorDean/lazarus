@@ -40,3 +40,6 @@ anthropic_key*
 
 # pipeline run outputs
 /pipeline-output/
+
+# MkDocs build output
+site/

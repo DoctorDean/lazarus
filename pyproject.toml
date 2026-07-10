@@ -4,22 +4,50 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lazarus-bio"
-version = "0.0.1"
-description = "Resurrect dead research code into a callable pipeline component."
+version = "0.1.0"
+description = "Resurrect dead research code into a callable pipeline component — and give the revival back."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
-authors = [{ name = "Dean Sherry" }]
-keywords = ["bioinformatics", "reproducibility", "agents", "dependency-pinning"]
+authors = [{ name = "Dean Sherry", email = "dean.shez@gmail.com" }]
+keywords = [
+    "bioinformatics",
+    "reproducibility",
+    "agents",
+    "dependency-pinning",
+    "research-software",
+    "docker",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Software Development :: Build Tools",
+]
 dependencies = [
     "packaging>=21",
     "PyYAML>=6",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7"]
-# The autonomous loop needs the Claude Agent SDK (Python >= 3.10).
+dev = ["pytest>=7", "build>=1", "twine>=5"]
+# The autonomous loop + Scout need the Claude Agent SDK (Python >= 3.10).
 agent = ["claude-agent-sdk>=0.2"]
+
+[project.urls]
+Homepage = "https://github.com/DoctorDean/lazarus"
+Documentation = "https://doctordean.github.io/lazarus/"
+Repository = "https://github.com/DoctorDean/lazarus"
+Issues = "https://github.com/DoctorDean/lazarus/issues"
+"Try in Colab" = "https://colab.research.google.com/github/DoctorDean/lazarus/blob/main/notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb"
 
 [project.scripts]
 lazarus = "lazarus.cli:main"
