@@ -40,7 +40,6 @@ nav:
   - How it works: how-it-works.md
   - Compose & reproduce: compose.md
   - The hard problems it solved: CHALLENGES.md
-  - Publishing (maintainers): PUBLISHING.md
 
 markdown_extensions:
   - admonition
@@ -58,6 +57,7 @@ markdown_extensions:
 
 exclude_docs: |
   DEMO_SCRIPT.md
+  PUBLISHING.md
 
 extra:
   social:
