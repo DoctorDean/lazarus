@@ -77,6 +77,32 @@ def test_no_json_block_raises():
         plan_from_text("u", "the repo looks interesting but I forgot to emit JSON")
 
 
+def _plan_json(**over):
+    base = {
+        "capability": "c", "base_image": "python:3.9", "needs_gpu": False,
+        "test_input": "t", "sanity_metric": "qualitative", "sanity_threshold": None,
+        "sanity_description": "outputs 164 columns on one sequence", "goal_text": "g",
+    }
+    base.update(over)
+    import json
+    return "```json\n" + json.dumps(base) + "\n```"
+
+
+def test_prose_base_image_is_reduced_to_reference():
+    # the real bug: the model appended a whole sentence to the image field
+    text = _plan_json(
+        base_image="kaixhin/cuda-torch:latest (a prebuilt Torch7 image). If unavailable, build from scratch"
+    )
+    plan = plan_from_text("u", text)
+    assert plan.base_image == "kaixhin/cuda-torch:latest"
+
+
+def test_garbage_base_image_rejected():
+    text = _plan_json(base_image="(see notes above)")
+    with pytest.raises(ValueError, match="not a valid Docker reference"):
+        plan_from_text("u", text)
+
+
 def test_string_threshold_is_coerced():
     text = (
         '```json\n{'

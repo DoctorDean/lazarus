@@ -49,7 +49,7 @@ You see only what any newcomer sees — the public repo and its paper. Investiga
 Then output ONE fenced ```json block (and nothing after it) with EXACTLY these keys:
 {
   "capability": "<one sentence: the concrete fresh-input -> headline-output this revival targets>",
-  "base_image": "<a Docker image to start the sandbox from: a published image the repo provides if any, else a sensible base like 'python:3.9', 'continuumio/miniconda3', or 'nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04' for GPU/CUDA methods>",
+  "base_image": "<ONLY a bare Docker image reference and nothing else — no prose, no parenthetical, no 'if unavailable' fallback. STRONGLY prefer an image the repo/README itself endorses if one exists (that image usually has the stack prebuilt); else a sensible base like 'python:3.9', 'continuumio/miniconda3', or 'nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04'. Example valid values: 'lzamparo/basset', 'python:3.6'>",
   "needs_gpu": <true|false>,
   "test_input": "<the smallest concrete input to run the sanity check on, and where it comes from (a file the repo ships, or a specific public URL/accession)>",
   "sanity_metric": "<short name of the number that proves it worked, e.g. 'roc_auc', 'pearson_r', 'top1_matches_reference'; or 'qualitative' if no metric applies>",
@@ -99,9 +99,12 @@ class ResurrectionPlan:
         )
         return (
             f"Resurrect this repository: {self.repo_url}\n\n"
-            f"FIRST, clone it into your working directory:\n"
+            f"FIRST, get the code into the container. It MAY already be baked into this "
+            f"base image (check, e.g. search the filesystem for a signature file from the "
+            f"repo). If it is NOT already present, clone it:\n"
             f"    git clone --depth 1 {self.repo_url} repo && cd repo\n"
-            f"(install git with the system package manager if it is missing.)\n\n"
+            f"(install git with the system package manager if it is missing. If the repo is "
+            f"already in the image, use that copy and its configured paths.)\n\n"
             f"CAPABILITY TO REVIVE:\n{self.capability}\n\n"
             f"TASK:\n{self.goal_text}\n\n"
             f"SANITY CHECK (this is how a revival is judged{thr}):\n"
@@ -143,6 +146,26 @@ def _extract_json(text: str) -> dict:
     return json.loads(candidate)
 
 
+_IMAGE_RE = re.compile(r"^[A-Za-z0-9][\w.\-/]*(?::[\w.\-]+)?(?:@sha256:[a-f0-9]+)?$")
+
+
+def _sanitize_image(value: str) -> str:
+    """Coerce the Scout's base_image field to a bare, valid Docker reference.
+
+    The model sometimes appends prose ('python:3.9 (a slim base)') or a fallback
+    ('kaixhin/cuda-torch:latest. If unavailable, build ...'). A whole sentence
+    reaching ``docker run`` is a hard 'invalid reference format' crash, so keep
+    only the leading token and require it to look like an image reference.
+    """
+    token = value.strip().split()[0].rstrip(".,;") if value.strip() else ""
+    if not _IMAGE_RE.match(token):
+        raise ValueError(
+            f"Scout base_image is not a valid Docker reference: {value!r} "
+            f"(parsed {token!r}). Re-run the Scout or pass --image explicitly."
+        )
+    return token
+
+
 def _coerce_threshold(value) -> Optional[float]:
     if value is None or value == "" or value == "null":
         return None
@@ -176,7 +199,7 @@ def plan_from_text(repo_url: str, text: str) -> ResurrectionPlan:
     return ResurrectionPlan(
         repo_url=repo_url,
         capability=str(data["capability"]).strip(),
-        base_image=str(data["base_image"]).strip(),
+        base_image=_sanitize_image(str(data["base_image"])),
         needs_gpu=bool(data["needs_gpu"]),
         test_input=str(data["test_input"]).strip(),
         sanity_metric=metric,
