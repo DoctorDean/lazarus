@@ -92,6 +92,16 @@ plan matching the one a human expert hand-wrote after days of work:
 That's the democratization step: the expert judgment of *what "revived" even means* becomes
 something you get from pasting a link.
 
+**Then we pointed it at a repo we'd never touched, in a different field entirely.** From just
+`github.com/davek44/Basset` — a 2016 **Lua Torch7** genomics CNN (chromatin accessibility from DNA
+sequence) — the Scout planned it and the agent revived it end to end. Along the way it cleared a
+*new* class of decay (the README's 2016 Docker image ships a manifest modern Docker refuses to pull
+— converted with `skopeo`), and caught a **silent scientific-correctness bug**: the naive run scored
+mean AUROC **0.675**, but the agent traced it to hg19's soft-masked lowercase bases falling through
+Basset's uppercase-only one-hot encoder, patched it, and **reproduced the paper — mean AUROC 0.8944
+vs 0.895** across all 164 cell types. A fifth brick, a new domain (genomics, not protein surfaces),
+a fourth dead framework — from a link. Details: [`docs/CHALLENGES.md`](docs/CHALLENGES.md) §5.
+
 ## Compose — an in-silico pipeline from revived bricks
 
 `examples/pipelines/binder_triage.yaml` assembles **methods that were each individually
@@ -192,9 +202,10 @@ Log in the `claude` CLI (subscription) or put `ANTHROPIC_API_KEY=...` in a gitig
 
 Working today: **Scout** (URL → resurrection plan) · pinner · Docker sandbox (local + `ssh://`
 remote + `--gpus`) · autonomous repair loop · capability locator · contract emitter (GPU-aware,
-with reproduction certificates) · **Lazarus Compose**. All three pillars landed — **four** dead
-repos revived, a three-way method comparison, a live binder-triage pipeline, a reproduced paper
-benchmark, and two give-back PRs — with 47 passing tests.
+with reproduction certificates) · **Lazarus Compose**. All three pillars landed — **five** dead
+repos revived (four protein + one genomics, the fifth from nothing but a URL), a three-way method
+comparison, a live binder-triage pipeline, two reproduced paper benchmarks, and two give-back
+PRs — with 49 passing tests.
 
 **Two front doors:** a [zero-setup Colab notebook](notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)
 for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and a

@@ -1,10 +1,11 @@
 # What Lazarus actually had to overcome
 
 "Just run the repo" hides days of expert debugging. Below is the concrete gauntlet
-Lazarus cleared **autonomously** for each of the four resurrections — the kind of thing
+Lazarus cleared **autonomously** for each of the five resurrections — the kind of thing
 that normally eats a computational biologist's week per repo, and requires niche knowledge
-across CUDA, glibc, TensorFlow-era packaging, and 15-year-old C. Every failure below is
-real and was fixed in a single unattended run.
+across CUDA, glibc, TensorFlow-era packaging, 15-year-old C, and Lua Torch7. Every failure
+below is real and was fixed in a single unattended run — and the fifth (Basset) was reached
+from nothing but a GitHub URL, with the agent writing its own goal and sanity check.
 
 ---
 
@@ -107,6 +108,41 @@ up on old scientific binaries. Lazarus found it by disassembling the failure, no
 
 ---
 
+## 5. Basset — davek44/Basset  (48 turns · a *fifth* flavor: Lua Torch7 · from a bare URL)
+
+**A different domain entirely (genomics, not protein structure) and a fourth dead framework
+(Lua Torch7), reached with *no hand-written goal* — the Scout planned it from the URL alone.**
+Basset is a 2016 convolutional net that predicts DNaseI-hypersensitivity across 164 cell types
+from a 600 bp DNA sequence.
+
+1. **From a link, not a recipe.** Given only `github.com/davek44/Basset`, Lazarus's Scout read
+   the repo + paper and wrote its own plan: the capability, the README-endorsed base image, and a
+   *falsifiable* sanity check (mean AUROC ≥ 0.80 across 164 targets; the paper reports ~0.895).
+2. **Container-registry rot — a new decay layer.** *(operator-side pre-step, not the sandbox
+   agent.)* The README-endorsed `lzamparo/basset` image is from 2016 and ships a **v1 manifest
+   that modern Docker — containerd ≥ 2.1 — flatly refuses to pull** (`media type ... no longer
+   supported`). The escape-hatch image is itself too old to run in 2026. We converted it with
+   `skopeo` to a v2 manifest so the sandbox could even start — a resurrection obstacle one level
+   *below* the code, at the registry.
+3. **A silent *scientific-correctness* bug — the one that matters.** The naive full-test run scored
+   mean AUROC **0.675**, well under the paper's 0.895. Lazarus refused the number: it saw the
+   *training* AUROC was equally depressed (so not a model/loading fault), traced ~22% of every
+   sequence to all-zero columns, and identified the cause — **hg19 writes repeat regions in
+   soft-masked lowercase `acgt` (~half the genome), and Basset's one-hot encoder matched only
+   uppercase**, so those bases silently became blank `N`. It patched `dna_io.py` to uppercase
+   first, re-encoded all 71,886 test sequences (N-fraction 0.38 → **0.0000**), and reproduced the
+   paper: **mean AUROC 0.8944 vs 0.895**. On the *clean* subset it matched to four digits (0.8968).
+4. **Carved a label-free inference path.** The shipped `seq_hdf5.py` needs a targets file; Lazarus
+   wrote a minimal `fasta_to_h5.py` so the brick takes an arbitrary FASTA → a 164-column
+   accessibility matrix, and emitted the contract + a REPRODUCE certificate.
+
+*This is the most valuable failure mode in the whole set: a run that **completes and looks
+plausible** while being quietly wrong by 0.22 AUROC. "Just run it" would have published 0.675 and
+concluded the method underperforms. Reproducing the paper — not merely executing the code — is
+what caught it.*
+
+---
+
 ## The cross-cutting infrastructure problem
 
 Three of the four have binaries that **cannot run under Apple-silicon emulation** (AVX-only
@@ -123,6 +159,7 @@ than spin on an unwinnable local fix.
 | ScanNet | two dead endpoints + writing the eval from scratch | ~half a day |
 | dMaSIF | GPU build from scratch, KeOps/cppyy/glibc, weights-in-a-fork, a CUDA source patch | ~2–3 days |
 | fpocket | download evasion + modern-GCC/ld + a 15-yr UB bug | ~half–1 day |
+| Basset | Lua Torch7 from a bare URL + registry-manifest rot + a silent soft-masking bug (0.675→0.895) | ~1–2 days |
 
-Four repos, ~120 autonomous agent-turns total, zero human edits — versus roughly a person-week
-of specialized debugging.
+Five repos, ~170 autonomous agent-turns total, zero human edits — versus well over a person-week
+of specialized debugging spanning TensorFlow, CUDA, 2010-era C, and Lua Torch7.

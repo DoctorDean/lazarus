@@ -1,0 +1,82 @@
+name: basset_predict
+repo_url: https://github.com/davek44/Basset
+base_image: lazarus/basset:site-ready
+entrypoint: 'set -euo pipefail
+
+  source /etc/profile.d/basset.sh
+
+  cd "$BASSETDIR"
+
+  mkdir -p "$OUTDIR"
+
+  # 1) Encode input FASTA -> HDF5 (test_in). The encoder now uppercases soft-masked
+
+  #    (lowercase) bases and centers/trims each sequence to the model''s 600 bp window.
+
+  python src/fasta_to_h5.py "$INPUT" "$OUTDIR/seqs.h5"
+
+  # 2) Run the pretrained Basset ConvNet forward pass on CPU.
+
+  th src/basset_predict.lua data/models/pretrained_model.th "$OUTDIR/seqs.h5" "$OUTDIR/predictions.txt"
+
+  echo "Wrote $OUTDIR/predictions.txt : one row per input sequence, 164 tab-separated"
+
+  echo "DNaseI-hypersensitivity / chromatin-accessibility probabilities (ENCODE+Roadmap
+  cell types)."'
+inputs:
+- name: INPUT
+  type: file (FASTA)
+  description: FASTA of one or more DNA sequences (any case; soft-masked lowercase
+    is handled). Each is centered/trimmed to the model's 600 bp input window.
+outputs:
+- name: predictions.txt
+  type: file (TSV)
+  description: One row per input sequence; 164 tab-separated accessibility probabilities
+    in [0,1], one per ENCODE+Roadmap cell type, in the model's target order.
+- name: seqs.h5
+  type: file (HDF5)
+  description: 'Intermediate one-hot encoding (test_in: n x 4 x 1 x 600) of the input
+    FASTA.'
+smoke:
+  description: Encode 4 real (soft-masked) genomic sequences and run the forward pass;
+    assert the 164-column probability matrix has non-degenerate variance across cell
+    types (min per-sequence std over the 164 targets).
+  command: source /etc/profile.d/basset.sh && cd $BASSETDIR && awk '/^>/{c++} c<=4{print}
+    c>4{exit}' data/encode_roadmap.fa > /tmp/smoke.fa && python src/fasta_to_h5.py
+    /tmp/smoke.fa /tmp/smoke.h5 2>/dev/null && th src/basset_predict.lua data/models/pretrained_model.th
+    /tmp/smoke.h5 /tmp/smoke.txt 2>/dev/null && python -c "import numpy as np; P=np.loadtxt('/tmp/smoke.txt');
+    assert P.shape[1]==164 and P.min()>=0 and P.max()<=1; print('min_perseq_std=%.4f'%P.std(1).min())"
+  metric: min_perseq_std
+  threshold: 0.01
+  input_ref: first 4 records of data/encode_roadmap.fa
+benchmark:
+  description: 'Full ENCODE+Roadmap held-out test set: mean AUROC across the 164 cell-type
+    targets, using the official basset_test.lua. Test sequences re-encoded from the
+    local encode_roadmap.fa with the uppercasing fix so soft-masked bases are not
+    dropped.'
+  metric: mean AUROC across 164 targets
+  reported: 0.895
+  tolerance: 0.02
+  n: 71886
+  source: Kelley et al., Genome Research 2016 (reports ~0.895 mean AUC)
+  command: source /etc/profile.d/basset.sh && cd $BASSETDIR && th src/basset_test.lua
+    data/models/pretrained_model.th data/encode_roadmap_test_fixed.h5 test_out_fixed
+    && awk '{s+=$2;n++} END{printf "mean_auroc=%.4f\n",s/n}' test_out_fixed/aucs.txt
+  measured: 0.8944
+paper: 'Kelley, Snoek & Rinn, "Basset: learning the regulatory code of the accessible
+  genome with deep convolutional neural networks", Genome Research 26:990-999 (2016)'
+commit: ''
+patches:
+- 'src/dna_io.py: dna_one_hot now calls seq.upper() before one-hot encoding. Previously
+  only uppercase A/C/G/T matched; soft-masked lowercase acgt fell through to the except
+  branch and became all-zero (N) columns, silently zeroing ~half of every repeat-rich
+  sequence. This depressed full-test mean AUROC from the paper''s 0.895 down to 0.675.
+  With the fix, clean-encoded sequences reproduce 0.8944.'
+- 'src/fasta_to_h5.py: new minimal helper to convert an arbitrary FASTA into the HDF5
+  (test_in: n x 4 x 1 x 600, int8) that basset_predict.lua consumes, enabling label-free
+  single/multi-sequence inference (seq_hdf5.py otherwise requires a targets file).'
+- 'data/encode_roadmap_test_fixed.h5: benchmark test set (71,886 seqs) re-encoded
+  from the local encode_roadmap.fa with the uppercasing fix (test_out copied unchanged),
+  used to measure the corrected mean AUROC.'
+platform: linux/amd64
+gpus: ''
