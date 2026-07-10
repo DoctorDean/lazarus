@@ -31,11 +31,12 @@ method you need exists, but getting it to run costs days you don't have, so it g
 Lazarus is an agent that **revives** dead research code, lets you **compose** the revivals
 into pipelines, and **gives the fixes back** to the community.
 
-1. **Revive** — clone a dead repo, read the paper for intent, and run a
+1. **Revive** — point it at a **bare GitHub URL**. Lazarus reads the repo and the paper the
+   way a newcomer would and **writes its own goal and sanity check**, then runs a
    build → execute → read-traceback → repair loop in a sandbox. Pin dependencies to the
    commit era, resolve the binary chain, locate the real capability, and emit a fixed
    **integration contract**: an importable module, a CLI, a pinned container, and a smoke
-   test that proves it runs on a fresh input and passes a sanity check *you* define.
+   test that proves it runs on a fresh input and passes the sanity check it defined.
 2. **Compose** — because every revival emits the *same* contract, a revived tool is a
    composable **brick**. Wire bricks from any domain/language/era into a pipeline with a
    small YAML; one command runs them, passing artifacts between steps (local / remote / GPU).
@@ -65,6 +66,31 @@ different resurrection flavors — TF/CUDA/C.
 PD-L1 residue labels): **ScanNet 0.915 · dMaSIF 0.854 · MaSIF 0.823**. All localize the
 interface (a **13-residue consensus core**); the two *surface* methods (MaSIF & dMaSIF)
 agree most (Spearman ρ 0.70). Details: [`analysis/RESULTS.md`](analysis/RESULTS.md).
+
+## Point it at a URL — it writes its own plan
+
+You don't hand Lazarus a goal; you hand it a link. A web-enabled **Scout** reads the repo
+and paper (and *only* those — never your notes) and drafts the whole plan: the capability to
+revive, a base image, and a **falsifiable sanity check**. Then it pauses for your OK before
+spending a turn.
+
+```bash
+lazarus resurrect https://github.com/jertubiana/ScanNet
+```
+
+Run cold against ScanNet with **no hints**, the Scout reconstructed — from the URL alone — a
+plan matching the one a human expert hand-wrote after days of work:
+
+| | Human, after days of setup | Scout, from the URL alone |
+|---|---|---|
+| Capability | per-residue binding-site probabilities | ✅ same |
+| Test input | 4ZQK chain A (PD-L1) | ✅ same |
+| Sanity check | ROC-AUC ≥ 0.70 vs the 5 Å interface | ✅ **identical** |
+| Base image | *(supplied by hand)* | ✅ found the real `jertubiana/scannet` on Docker Hub |
+| Known traps | issues #14 & #15 (hand-noted) | ✅ **surfaced both unaided** — the two we later fixed upstream |
+
+That's the democratization step: the expert judgment of *what "revived" even means* becomes
+something you get from pasting a link.
 
 ## Compose — an in-silico pipeline from revived bricks
 
@@ -121,6 +147,7 @@ verdict — the trust layer that turns a resurrection into something a team will
 
 | Organ | Role |
 |---|---|
+| **Scout** | Reads a bare repo URL + its paper (web-enabled, but blind to your notes) and drafts the resurrection plan: capability, base image, and a falsifiable sanity check — so a revival starts from a link, not a hand-written goal. |
 | **Sandbox** | Disposable container (CPU or GPU); expensive successes are snapshotted so a later failure never re-pays the build. |
 | **Commit-era pinner** | Reconstructs the dependency universe as it was on the repo's last commit — the reasoning that beat the cu111/KeOps/`cppyy` tangle. |
 | **Repair loop** | build → run → read traceback → patch → retry, bounded, isolated to the container. |
@@ -145,7 +172,11 @@ python3 -m venv .venv
 lazarus pin --date 2019-01-01 tensorflow numpy scipy
 #   tensorflow==1.12.0   (matches MaSIF's real Dockerfile, not its README)
 
-# resurrect a capability in a sandbox (needs Docker + Claude auth)
+# resurrect straight from a URL — the Scout writes the goal + picks the image,
+# then pauses for your OK before spending compute (needs Docker + Claude auth)
+lazarus resurrect https://github.com/jertubiana/ScanNet
+
+# …or drive it by hand with an explicit image + goal (both override the Scout)
 lazarus resurrect --image pablogainza/masif:latest --workdir /masif \
   --goal-file examples/masif_site_goal.txt --keep
 
@@ -159,11 +190,11 @@ Log in the `claude` CLI (subscription) or put `ANTHROPIC_API_KEY=...` in a gitig
 
 ## Status
 
-Working today: pinner · Docker sandbox (local + `ssh://` remote + `--gpus`) · autonomous
-repair loop · capability locator · contract emitter (GPU-aware, with reproduction
-certificates) · **Lazarus Compose**. All three pillars landed — **four** dead repos revived,
-a three-way method comparison, a live binder-triage pipeline, a reproduced paper benchmark,
-and two give-back PRs — with 41 passing tests.
+Working today: **Scout** (URL → resurrection plan) · pinner · Docker sandbox (local + `ssh://`
+remote + `--gpus`) · autonomous repair loop · capability locator · contract emitter (GPU-aware,
+with reproduction certificates) · **Lazarus Compose**. All three pillars landed — **four** dead
+repos revived, a three-way method comparison, a live binder-triage pipeline, a reproduced paper
+benchmark, and two give-back PRs — with 47 passing tests.
 
 **Two front doors:** a [zero-setup Colab notebook](notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)
 for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and a

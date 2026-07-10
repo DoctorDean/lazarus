@@ -75,12 +75,45 @@ def cmd_resurrect(args: argparse.Namespace) -> int:
 
     from lazarus.resurrect import Resurrector, ResurrectionEvent
 
+    # Goal: either handed in directly, or drafted by the Scout from a repo URL.
     goal = args.goal
     if args.goal_file:
         with open(args.goal_file, encoding="utf-8") as fh:
             goal = fh.read()
+
+    image = args.image
+    gpus = args.gpus
     if not goal:
-        print("provide --goal or --goal-file", file=sys.stderr)
+        if not args.repo_url:
+            print("provide a repo URL, or --goal / --goal-file", file=sys.stderr)
+            return 2
+        from lazarus.scout import scout
+
+        print(f"🔭 Scouting {args.repo_url} — reading the repo + paper to draft a plan…",
+              file=sys.stderr, flush=True)
+        try:
+            plan = asyncio.run(scout(args.repo_url, model=args.model))
+        except Exception as exc:  # noqa: BLE001 — surface any planning failure cleanly
+            print(f"scout failed: {exc}", file=sys.stderr)
+            return 1
+        print("\n" + plan.summary() + "\n", file=sys.stderr, flush=True)
+        goal = plan.to_goal()
+        image = image or plan.base_image
+        if gpus is None and plan.needs_gpu:
+            gpus = "all"
+        if not args.yes:
+            if not sys.stdin.isatty():
+                print("plan drafted. Re-run with --yes to proceed non-interactively.",
+                      file=sys.stderr)
+                return 0
+            reply = input("Proceed with this resurrection? [y/N] ").strip().lower()
+            if reply not in ("y", "yes"):
+                print("aborted before spending compute.", file=sys.stderr)
+                return 0
+
+    if not image:
+        print("no base image: pass --image, or a repo URL so the Scout can pick one",
+              file=sys.stderr)
         return 2
 
     icons = {"text": "\U0001f4ac", "tool_use": "\U0001f527", "tool_result": "\U0001f4e4", "result": "✅"}
@@ -90,13 +123,14 @@ def cmd_resurrect(args: argparse.Namespace) -> int:
         print(f"{icons.get(ev.kind, ev.kind)} {text}", flush=True)
 
     r = Resurrector(
-        image=args.image,
+        image=image,
         workdir=args.workdir,
         docker_host=args.docker_host,
         max_turns=args.max_turns,
         keep_container=args.keep,
         output_dir=args.out,
-        gpus=args.gpus,
+        gpus=gpus,
+        model=args.model,
         on_event=show,
     )
     res = asyncio.run(r.resurrect(goal))
@@ -143,12 +177,15 @@ def build_parser() -> argparse.ArgumentParser:
     p_pin.set_defaults(func=cmd_pin)
 
     p_res = sub.add_parser("resurrect", help="drive an autonomous resurrection loop in a sandbox")
-    p_res.add_argument("--image", required=True, help="base container image to resurrect in")
-    p_res.add_argument("--goal", help="what to resurrect and how to prove it")
-    p_res.add_argument("--goal-file", help="read the goal from a file")
+    p_res.add_argument("repo_url", nargs="?", help="a GitHub URL to resurrect from scratch (the Scout writes the goal + picks a base image)")
+    p_res.add_argument("--image", help="base container image to resurrect in (overrides the Scout's pick)")
+    p_res.add_argument("--goal", help="what to resurrect and how to prove it (skips the Scout)")
+    p_res.add_argument("--goal-file", help="read the goal from a file (skips the Scout)")
+    p_res.add_argument("--yes", "-y", action="store_true", help="don't pause to confirm the Scout's plan before spending compute")
     p_res.add_argument("--workdir", default="/work", help="working dir inside the container")
     p_res.add_argument("--docker-host", default=None, help="e.g. ssh://user@host to run remotely")
     p_res.add_argument("--max-turns", type=int, default=80)
+    p_res.add_argument("--model", default=None, help="model for the Scout + resurrection agent (default: SDK default)")
     p_res.add_argument("--keep", action="store_true", help="keep the container after finishing")
     p_res.add_argument("--out", default="lazarus-output", help="dir for the emitted integration package")
     p_res.add_argument("--gpus", default=None, help="pass GPUs to the container, e.g. 'all' (needs nvidia-container-toolkit)")
