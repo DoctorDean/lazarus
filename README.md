@@ -105,6 +105,14 @@ Basset's uppercase-only one-hot encoder, patched it, and **reproduced the paper 
 vs 0.895** across all 164 cell types. A fifth brick, a new domain (genomics, not protein surfaces),
 a fourth dead framework — from a link. Details: [`docs/CHALLENGES.md`](docs/CHALLENGES.md) §5.
 
+**And the one that shows the *integrity* of the sanity check:** from `github.com/gcorso/DiffDock`
+— the ICLR-2023 diffusion **molecular-docking** model, ~2 years stale — the Scout revived it on
+GPU. Its shipped example is a hard case (top-1 ~5 Å, under DiffDock's own < 2 Å bar), so rather
+than fake a pass, Lazarus docked **8 complexes from DiffDock's own test set**, **reproduced its
+~40 % top-1 success rate**, and found a rock-solid hero case (**6MOA: RMSD 0.35 Å** — the predicted
+pose sitting on the crystal ligand). It refused to ship a green checkmark it hadn't earned. Details:
+[`docs/CHALLENGES.md`](docs/CHALLENGES.md) §6.
+
 ## Compose — an in-silico pipeline from revived bricks
 
 `examples/pipelines/binder_triage.yaml` assembles **methods that were each individually
@@ -208,10 +216,10 @@ Log in the `claude` CLI (subscription) or put `ANTHROPIC_API_KEY=...` in a gitig
 
 Working today: **Scout** (URL → resurrection plan) · pinner · Docker sandbox (local + `ssh://`
 remote + `--gpus`) · autonomous repair loop · capability locator · contract emitter (GPU-aware,
-with reproduction certificates) · **Lazarus Compose**. All three pillars landed — **five** dead
-repos revived (four protein + one genomics, the fifth from nothing but a URL), a three-way method
-comparison, a live binder-triage pipeline, two reproduced paper benchmarks, and two give-back
-PRs — with 49 passing tests.
+with reproduction certificates) · **Lazarus Compose**. All three pillars landed — **six** dead
+repos revived (four protein + genomics + molecular docking; two from nothing but a URL), a
+three-way method comparison, a live binder-triage pipeline, three reproduced paper benchmarks, and
+two give-back PRs — with 49 passing tests, published to PyPI (`pip install lazarus-bio`).
 
 **Two front doors:** a [zero-setup Colab notebook](notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)
 for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and a

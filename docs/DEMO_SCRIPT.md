@@ -1,109 +1,99 @@
 # Lazarus — 3-minute demo video script
 
-The **live-compute** companion to the [zero-setup Colab notebook](../notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb).
-The notebook teaches Lazarus with no Docker and no accounts; **this video shows the
-real thing running** — the autonomous revival, and a pipeline of four just-revived
-tools executing on a GPU box in one command.
+The companion to the [zero-setup Colab notebook](../notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb).
+This video shows the live thing: Lazarus reviving a famous, 2-years-stale model **from a bare URL**,
+and docking a ligand back into its pocket.
 
-> **Golden rule for a 3-minute cut:** don't run the slow parts live. The full
-> resurrections take 18–51 agent-turns (minutes each). Pre-record that b-roll and
-> **fast-forward it**; run *live* only the things that finish in seconds (the
-> pinner, `lazarus run` against a **pre-warmed** box). Everything below is timed
-> for a pre-warmed setup.
+> **Golden rule:** only run *live* what is fast and reliable — the `pip install`, the **Scout
+> planning from a URL** (~40 s, pauses at a confirm prompt), and a **pre-warmed** result. The full
+> revive (image pull + GPU + ESM + diffusion sampling) is **pre-recorded b-roll, fast-forwarded.**
 
 ---
 
-## Pre-flight checklist (do this before you hit record)
+## Pre-flight checklist
 
-**Bertha (the A4500 x86 GPU box) — the compute host**
-- [ ] Box online and reachable: `tailscale status` shows it; `ssh dean@100.80.108.2 true` returns instantly.
-- [ ] Docker up on the box; the four images present:
-      `docker images | grep -E 'lazarus/(masif|scannet|dmasif|fpocket)'`
-      → `lazarus/masif:site-ready`, `lazarus/scannet:ppi-noMSA-proven`, `lazarus/dmasif:site-ready`, `lazarus/fpocket:working`.
-- [ ] **Warm the images** so nothing pulls/builds on camera: run `binder_triage.yaml` once end-to-end *before* recording (also confirms the demo works today).
+**Bertha (the A4500 GPU host)**
+- [ ] Online and reachable: `tailscale status` shows `big-bertha` active; `ssh dean@100.80.108.2 true` returns instantly.
+      ⚠️ Bertha has been idle-suspending and dropping off the tailnet — **disable sleep/suspend for the recording** (`sudo systemctl mask sleep.target suspend.target`), or keep a keep-alive running.
+- [ ] DiffDock ready: `docker images | grep lazarus/diffdock` shows `:site-ready` (+ `:inference-ready`), and `rbgcsail/diffdock:latest` is present (pre-pulled — a fresh pull over the ssh tunnel times out).
+- [ ] The 6MOA hero inputs are baked into `lazarus/diffdock:site-ready` (`/home/appuser/DiffDock/lazarus_bench/6moa/`).
+- [ ] Compose bricks present: `lazarus/{masif,scannet,dmasif,fpocket,basset}` images (for the pipeline montage).
 
 **Mac (the control plane — what's on screen)**
-- [ ] `export DOCKER_HOST=ssh://dean@100.80.108.2` in the demo shell (Lazarus drives Bertha over this).
-- [ ] `.env` has `ANTHROPIC_API_KEY` (billed to hackathon credit); venv active: `source .venv/bin/activate`.
-- [ ] `4ZQK.pdb` present in the repo root (`cp pipeline-output/fpocket/4ZQK.pdb .`).
-- [ ] Terminal font **large** (18–20pt), dark theme, window ~110 cols. Clear scrollback.
-- [ ] Browser tabs pre-opened: the Colab notebook, the repo, `docs/CHALLENGES.md`, the two PR pages.
+- [ ] `export DOCKER_HOST=ssh://dean@100.80.108.2`; venv active.
+- [ ] `.env` has `ANTHROPIC_API_KEY`; `pip install lazarus-bio` already works (don't debug installs on camera).
+- [ ] Terminal large (18–20 pt), dark theme, ~110 cols, scrollback cleared.
+- [ ] Browser tabs: the PyPI page, the docs site, the Colab notebook, the two give-back PRs.
 
 **Pre-recorded b-roll to capture beforehand**
-- [ ] A real `lazarus resurrect` run (fpocket or dMaSIF is most dramatic) captured start→contract, to fast-forward in Beat 1.
-- [ ] The Colab notebook's 3D view already rendered (so Beat 4 doesn't wait on a cell).
+- [ ] A full `lazarus resurrect https://github.com/gcorso/DiffDock --yes` run captured start→contract, to fast-forward in Beat 3.
+- [ ] The **6MOA docked pose**: DiffDock's `rank1.sdf` overlaid on the crystal ligand (PyMOL/py3Dmol), RMSD 0.35 Å on screen — the hero image/animation.
+- [ ] The `lazarus run binder_triage.yaml` pipeline output (or reuse `examples/pipelines/sample_output_4ZQK/`).
 
 ---
 
 ## The cut (target 3:00)
 
 ### 0:00–0:18 — The wall (hook)
-**On screen:** a GitHub repo, last commit ~5 years ago, `pip install` erroring in red.
-**VO:** "Most published biology methods stop running within a few years. The code
-is open and cited — and completely dead. Lazarus is an agent that brings them back,
-composes them, and mails the fix upstream. Here's four of them, resurrected."
+**On screen:** the DiffDock GitHub page (famous, ICLR 2023), last commit ~2 years ago; a terminal
+`python -m inference …` erroring on a dead dependency.
+**VO:** "This is one of the best molecular-docking models in the world. Two years on, it doesn't
+run. Most published methods don't, within a few years. Lazarus brings them back."
 
-### 0:18–1:05 — REVIVE (pre-recorded, fast-forwarded)
-**On screen:** the `lazarus resurrect` b-roll, sped up. Let a few real tracebacks
-flash by, then the emitted contract + `SMOKE PASS`.
-**VO:** "You point it at a dead repo and give it a goal — a task plus a sanity
-check. It runs a build-run-read-the-traceback-and-patch loop in a sandbox. On
-fpocket, a 2010 C program, it worked around a SourceForge download wall, fixed a
-modern-linker break, and patched a **fifteen-year-old undefined-behaviour bug** that
-was silently producing empty output. Zero human edits. Out comes a callable
-contract with a passing smoke test."
-**Lower-third:** *4 repos · ~120 autonomous turns · TensorFlow / CUDA / 2010 C*
+### 0:18–0:38 — It's one pip away
+**On screen — live:** `pip install lazarus-bio` → done in seconds; flash the PyPI + docs badges.
+**VO:** "Lazarus is an agent that revives dead research code — and anyone can install it."
 
-### 1:05–2:05 — COMPOSE (LIVE, the centerpiece)
-**On screen — type and run:**
+### 0:38–1:30 — THE LIVE MOMENT: revive from a URL
+**On screen — type it live:**
 ```bash
-lazarus run examples/pipelines/binder_triage.yaml \
-    --input structure=4ZQK.pdb \
-    --registry examples --registry components \
-    --docker-host ssh://dean@100.80.108.2
+lazarus resurrect https://github.com/gcorso/DiffDock
 ```
-Let the step log scroll: `scannet ▸ dmasif (GPU) ▸ fpocket ▸ consensus`. Then `cat`
-the summary.
-**VO:** "Because every revival emits the *same* contract, they compose. This one
-command runs three of them — ScanNet, dMaSIF on the GPU, and fpocket — plus a
-consensus step, on my x86 box over a single flag. On PD-L1: twenty-seven interface
-residues, but zero druggable pockets. Its conclusion —" *(point at the summary)* "—
-a flat protein-protein interface: an antibody target, not a small-molecule one.
-That's textbook immuno-oncology, reproduced from code that was dead a week ago."
+The **Scout reads the repo + paper and prints its plan live** (~40 s): the capability, the base
+image, and the sanity check — *top-1 pose within 2 Å of the crystal ligand*. It **pauses at a
+confirm prompt** (natural hold). → cut to **fast-forwarded b-roll** of the repair loop pulling the
+CUDA/PyG/ESM stack and running diffusion sampling on the GPU → lands on **contract emitted**.
+**VO:** "You hand it nothing but a link. It reads the repo and the paper itself, decides what
+'working' even means, and fights the whole dead stack on a GPU — unattended."
 
-### 2:05–2:35 — REPRODUCE + GIVE BACK
-**On screen:** `cat examples/masif_site_contract/REPRODUCE.md` (0.82 vs paper 0.85 →
-REPRODUCED); then flip to the two open PR tabs.
-**VO:** "A smoke test proves it runs; this proves it's *the method* — MaSIF-site
-reproduces its published benchmark within tolerance. And every fix Lazarus finds
-becomes a maintainer-ready pull request with CI, so the method can't silently rot
-again."
+### 1:30–2:05 — The payoff, and the honesty
+**On screen:** the 6MOA docked pose — DiffDock's top-1 (pre-rendered) snapping onto the crystal
+ligand, **RMSD 0.35 Å**.
+**VO:** "The shipped example was actually a *hard* case — so instead of faking a pass, it tested
+DiffDock's own benchmark, reproduced its ~40 % top-1 accuracy, and nailed this one at a third of an
+ångström. It won't ship a green checkmark it didn't earn."
 
-### 2:35–3:00 — Democratize (the Colab close)
-**On screen:** the Colab notebook — scroll to the rendered 3D PD-L1 view (interface
-in red).
-**VO:** "And you don't need any of my setup to see it. This notebook opens in a
-browser — no Docker, no GPU — runs the dependency pinner live, and renders the whole
-result in 3D. Dead state-of-the-art, one click away. That's Lazarus."
-**End card:** `github.com/DoctorDean/lazarus` + the "Open in Colab" badge.
+### 2:05–2:35 — Breadth + compose
+**On screen:** quick montage of the **six** bricks, then the one-liner
+`lazarus run examples/pipelines/binder_triage.yaml …` → the PD-L1 result.
+**VO:** "It's done this six times — TensorFlow, CUDA, 15-year-old C, Lua Torch7, diffusion models.
+And because every revival emits the same contract, they compose: on PD-L1 the pipeline calls it —
+a flat interface, an antibody target. Reproduced from dead code."
+
+### 2:35–3:00 — Close
+**On screen:** the give-back PRs (#93, #16); then `pip install lazarus-bio`, the docs site, "Open in
+Colab."
+**VO:** "Every fix goes back upstream as a pull request. Install it, open the notebook, point it at
+a dead repo. Dead state-of-the-art, one command away. That's Lazarus."
+**End card:** `pip install lazarus-bio` · `github.com/DoctorDean/lazarus`
 
 ---
 
 ## If something breaks on camera (fallbacks)
-- **Bertha offline / slow:** skip the live `lazarus run`; show `cat
-  examples/pipelines/sample_output_4ZQK/summary.txt` and the pre-recorded pipeline
-  b-roll instead. The conclusion is identical.
-- **`DOCKER_HOST` SSH hiccup:** `ssh dean@100.80.108.2 docker ps` to prove
-  reachability, then retry; or fall back to the sample output as above.
-- **Any live cell stalls:** cut to the pre-rendered Colab 3D view — it needs no
-  compute and always works.
+- **Bertha offline / drops mid-shot:** skip the live revive; the Scout plan (0:38) still runs
+  (it's host-side, no Bertha) — show that + the pre-recorded revive b-roll + the pre-rendered 6MOA
+  pose. Nothing here needs Bertha live.
+- **`lazarus resurrect` is slow to plan:** the Scout is deterministic-ish and ~40 s; if it stalls,
+  cut to the pre-recorded plan.
+- **Any live cell stalls:** cut to the Colab notebook (needs no compute) and the pre-rendered pose.
 
-## One-liners to have on a sticky note
+## Sticky-note commands
 ```bash
 export DOCKER_HOST=ssh://dean@100.80.108.2
-source .venv/bin/activate
-cp pipeline-output/fpocket/4ZQK.pdb .
-# warm-up (run before recording):
+pip install lazarus-bio
+lazarus resurrect https://github.com/gcorso/DiffDock        # live: Scout plan, then Ctrl-C at the prompt
+# pre-warm the pieces the day of:
+ssh dean@100.80.108.2 'docker pull rbgcsail/diffdock:latest'  # avoid an on-camera pull
 lazarus run examples/pipelines/binder_triage.yaml --input structure=4ZQK.pdb \
   --registry examples --registry components --docker-host ssh://dean@100.80.108.2
 ```

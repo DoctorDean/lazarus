@@ -130,14 +130,14 @@
   <div class="row">
     <div>
       <div class="eyebrow kicker">Revive · Compose · Give back</div>
-      <h1 class="title">Five dead repos,<br>one live pipeline.</h1>
-      <p class="lede">Five abandoned methods — TensorFlow, CUDA, 2010 C, and Lua Torch7 — resurrected fully autonomously (the fifth from nothing but a URL), composed into a working binder-triage pipeline, shown to reproduce their published benchmarks, and their fixes contributed back upstream.</p>
+      <h1 class="title">Six dead repos,<br>one live pipeline.</h1>
+      <p class="lede">Six abandoned methods — TensorFlow, CUDA, 2010 C, Lua Torch7, and a diffusion docking model — resurrected fully autonomously (two from nothing but a URL), composed into a working binder-triage pipeline, shown to reproduce their published benchmarks, and their fixes contributed back upstream.</p>
     </div>
-    <div class="stamp">Revived ×5</div>
+    <div class="stamp">Revived ×6</div>
   </div>
   <div class="vitals">
-    <div class="vital"><div class="n">5</div><div class="l">Repos revived</div></div>
-    <div class="vital"><div class="n">TF·CUDA·C·Lua</div><div class="l">Stacks, autonomously</div></div>
+    <div class="vital"><div class="n">6</div><div class="l">Repos revived</div></div>
+    <div class="vital"><div class="n">TF·CUDA·C·Lua·Diff</div><div class="l">Stacks, autonomously</div></div>
     <div class="vital"><div class="n good">1</div><div class="l">Composed pipeline</div></div>
     <div class="vital"><div class="n">2</div><div class="l">Give-back PRs</div></div>
     <div class="vital"><div class="n">0</div><div class="l">Human edits</div></div>
@@ -181,6 +181,17 @@
         <div style="text-align:right"><div class="auc">0.8944</div><div class="aucl">mean AUROC · 164 targets (paper 0.895)</div></div>
       </div>
       <p class="note" style="margin-top:.7rem">No hand-written goal: given only the URL, Lazarus's <strong>Scout</strong> read the repo and paper and wrote the plan itself. It cleared a new decay layer — the README's <strong>2016 Docker image ships a manifest modern Docker refuses to pull</strong>, converted with <code>skopeo</code> — and caught a <strong>silent scientific-correctness bug</strong>: the naive run scored 0.675, but the agent traced it to hg19's soft-masked lowercase bases falling through Basset's uppercase-only one-hot encoder, patched it, and reproduced the paper (<strong>0.894 vs 0.895</strong>). A run that “completes and looks plausible” while quietly wrong by 0.22 AUROC — caught by reproducing the paper, not merely executing it. <strong>48 turns · <span class="pass">smoke PASS</span> · <span class="pass">REPRODUCED</span></strong></p>
+    </div>
+    <div class="repo" style="margin-top:1rem; border-left:3px solid var(--alt2)">
+      <div class="row" style="justify-content:space-between; align-items:flex-start; gap:1rem; flex-wrap:wrap">
+        <div style="max-width:46rem">
+          <div class="eyebrow kicker" style="color:var(--alt2)">A sixth — molecular docking, from a URL, and the integrity case</div>
+          <div class="name">gcorso/DiffDock — diffusion-based blind docking</div>
+          <div class="task">2023 diffusion model · GPU · revived from nothing but a GitHub URL</div>
+        </div>
+        <div style="text-align:right"><div class="auc">0.35 Å</div><div class="aucl">top-1 RMSD · 6MOA (hero dock)</div></div>
+      </div>
+      <p class="note" style="margin-top:.7rem">The shipped example (1a0q) is a hard case — top-1 ~5 Å, under DiffDock's own &lt; 2 Å bar. Rather than fake a pass, Lazarus docked <strong>8 complexes from DiffDock's own test set</strong> and <strong>reproduced its ~40% top-1 success rate</strong> (measured 0.375), landing a rock-solid <strong>6MOA dock at 0.35 Å</strong> — the predicted pose on the crystal ligand (confidence tracked RMSD; 6QQW a documented 23.7 Å miss). It refused to ship a green checkmark it hadn't earned. <strong>57 turns · <span class="pass">smoke PASS</span> · <span class="pass">REPRODUCED</span></strong></p>
     </div>
   </section>
 
@@ -247,7 +258,7 @@
 
   <section>
     <div class="sec-head"><span class="sec-num">05</span><h2>Reproduces the paper</h2></div>
-    <p class="sub">A smoke test proves a method <em>runs</em>; a benchmark proves it's <em>the method</em>. Lazarus re-ran MaSIF-site on its own transient PPI benchmark — through the built-in download the give-back fix revived — and matched the published number. This is the trust layer a team needs to actually adopt a revived tool. <strong>Basset carries the same certificate</strong>: revived from a URL, it reproduced its paper's mean AUROC across all 164 cell types (0.894 vs 0.895) — and that reproduction is exactly what exposed the silent soft-masking bug a naive run would have shipped.</p>
+    <p class="sub">A smoke test proves a method <em>runs</em>; a benchmark proves it's <em>the method</em>. Lazarus re-ran MaSIF-site on its own transient PPI benchmark — through the built-in download the give-back fix revived — and matched the published number. This is the trust layer a team needs to actually adopt a revived tool. <strong>Basset carries the same certificate</strong>: revived from a URL, it reproduced its paper's mean AUROC across all 164 cell types (0.894 vs 0.895) — and that reproduction is exactly what exposed the silent soft-masking bug a naive run would have shipped. <strong>DiffDock too</strong>: when its shipped example wouldn't honestly clear the &lt; 2 Å bar, Lazarus reproduced the model's ~40% top-1 success rate (0.375) rather than fake a pass.</p>
     <div class="card">
       <div class="row" style="align-items:flex-end; gap:2rem; flex-wrap:wrap">
         <div><div class="mono" style="font-size:2.4rem; font-weight:700; color:var(--accent); line-height:1">0.82</div><div class="aucl">median ROC-AUC · Lazarus (n=15)</div></div>

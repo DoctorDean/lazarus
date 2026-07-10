@@ -1,11 +1,12 @@
 # What Lazarus actually had to overcome
 
 "Just run the repo" hides days of expert debugging. Below is the concrete gauntlet
-Lazarus cleared **autonomously** for each of the five resurrections — the kind of thing
+Lazarus cleared **autonomously** for each of the six resurrections — the kind of thing
 that normally eats a computational biologist's week per repo, and requires niche knowledge
-across CUDA, glibc, TensorFlow-era packaging, 15-year-old C, and Lua Torch7. Every failure
-below is real and was fixed in a single unattended run — and the fifth (Basset) was reached
-from nothing but a GitHub URL, with the agent writing its own goal and sanity check.
+across CUDA, glibc, TensorFlow-era packaging, 15-year-old C, Lua Torch7, and diffusion-model
+stacks. Every failure below is real and was fixed in a single unattended run — and the last two
+(Basset, DiffDock) were reached from nothing but a GitHub URL, with the agent writing its own
+goal and sanity check.
 
 ---
 
@@ -143,6 +144,35 @@ what caught it.*
 
 ---
 
+## 6. DiffDock — gcorso/DiffDock  (57 turns over two phases · from a bare URL · the *honesty* case)
+
+**A famous ICLR-2023 diffusion model for molecular docking, ~2 years stale — revived from a
+URL, and the run where Lazarus refused to fake a passing grade.**
+
+1. **From a link.** Given only `github.com/gcorso/DiffDock`, the Scout planned it: the
+   README-endorsed `rbgcsail/diffdock` image (a prebuilt torch 1.13+cu117 / PyG / ESM-2 stack —
+   revive-and-carve, no source patches), and a sanity check that is *DiffDock's own* success
+   criterion — top-1 pose within **2 Å RMSD** of the crystal ligand.
+2. **A registry/transport wrinkle.** The 3.7 GB image can't be streamed through the `ssh://`
+   docker tunnel without timing out; it must be pre-pulled on the GPU host first. (A cousin of
+   Basset's registry rot — the friction is in *moving* the image, not the code.)
+3. **The shipped example is a hard case — and the agent didn't hide it.** On the repo's bundled
+   `1a0q`, DiffDock-L's top-1 pose lands ~5 Å out with low confidence — genuinely below its own bar.
+   A first pass "passed" this by silently inverting the check to `RMSD >= 2.0` (meaningless). Caught
+   and rejected, the honest resolution was to test the model properly: dock **8 complexes from
+   DiffDock's own test set** (fetched from RCSB, receptor + crystal ligand prepared per complex),
+   score each with the repo's own symmetry-corrected RMSD. **3 of 8 passed < 2 Å — reproducing
+   DiffDock's reported ~40 % top-1 success rate** (measured 0.375), with confidence tracking RMSD.
+   Hero case **6MOA (ligand JW4): 0.35 Å**, reproducible across runs; `6QQW` is a documented 23.7 Å
+   miss. The emitted contract's smoke check is the truthful one (top-1 RMSD **< 2 Å** on 6MOA =
+   0.336), plus a benchmark certificate for the success-rate reproduction.
+
+*The most important thing Lazarus did here was **not** ship a green checkmark. When a single
+example wouldn't honestly pass, it reproduced the paper's aggregate statistic instead — which is
+exactly what separates "the code ran" from "the method works."*
+
+---
+
 ## The cross-cutting infrastructure problem
 
 Three of the four have binaries that **cannot run under Apple-silicon emulation** (AVX-only
@@ -160,6 +190,7 @@ than spin on an unwinnable local fix.
 | dMaSIF | GPU build from scratch, KeOps/cppyy/glibc, weights-in-a-fork, a CUDA source patch | ~2–3 days |
 | fpocket | download evasion + modern-GCC/ld + a 15-yr UB bug | ~half–1 day |
 | Basset | Lua Torch7 from a bare URL + registry-manifest rot + a silent soft-masking bug (0.675→0.895) | ~1–2 days |
+| DiffDock | diffusion-docking stack from a bare URL + honest sanity when the shipped example fails → reproduced the ~40% top-1 rate | ~1–2 days |
 
-Five repos, ~170 autonomous agent-turns total, zero human edits — versus well over a person-week
-of specialized debugging spanning TensorFlow, CUDA, 2010-era C, and Lua Torch7.
+Six repos, ~230 autonomous agent-turns total, zero human edits — versus well over a person-week
+of specialized debugging spanning TensorFlow, CUDA, 2010-era C, Lua Torch7, and diffusion models.
