@@ -19,6 +19,18 @@ from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Optional
 
+# The benchmark applies its OWN reproduction criterion — never the agent's
+# self-declared tolerance (an agent can set that loose to self-award a pass).
+# "reproduced" = the measured number is within this relative band of the paper's.
+REPRODUCE_REL_TOL = 0.15
+
+
+def reproduced_ok(measured, reported, rel_tol: float = REPRODUCE_REL_TOL) -> bool:
+    if measured is None or reported in (None, 0):
+        return False
+    return abs(measured - reported) <= rel_tol * abs(reported)
+
+
 # reason codes — success first, then the failure taxonomy (see benchmark/README.md)
 SUCCESS = ("reproduced", "revived", "runs-unverified")
 FAILURE = ("weights-gone", "data-gated", "hardware-incompatible",
@@ -217,8 +229,8 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
             if contract.benchmark and contract.benchmark.measured is not None:
                 res.reproduced_reported = contract.benchmark.reported
                 res.reproduced_measured = contract.benchmark.measured
-                tol = contract.benchmark.tolerance or 0.05
-                reproduced = abs(contract.benchmark.measured - contract.benchmark.reported) <= tol
+                # harness criterion, NOT the agent's self-declared tolerance
+                reproduced = reproduced_ok(contract.benchmark.measured, contract.benchmark.reported)
         except Exception as exc:  # noqa: BLE001
             res.notes += f" | contract parse: {exc}"
 

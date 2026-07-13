@@ -37,6 +37,15 @@ def test_classify_budget_and_failures():
                         final_text="something else entirely broke") == "unresolvable-deps"
 
 
+def test_reproduced_uses_harness_tolerance_not_agents():
+    # the shakedown bug: an agent set tolerance=10 so 18-vs-14.1 self-awarded "reproduced"
+    assert run.reproduced_ok(0.8993, 0.88) is True     # 2% — genuinely close
+    assert run.reproduced_ok(18.0, 14.1) is False      # 28% — not a reproduction
+    assert run.reproduced_ok(0.90, 0.88) is True
+    assert run.reproduced_ok(None, 0.88) is False
+    assert run.reproduced_ok(0.5, 0) is False
+
+
 def test_results_io_roundtrip(tmp_path):
     p = tmp_path / "results.json"
     rows = [run.BenchmarkResult(repo_url="u/a", outcome="revived").to_dict()]

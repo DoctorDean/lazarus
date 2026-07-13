@@ -1,0 +1,53 @@
+[
+  {
+    "repo_url": "https://github.com/kexinhuang12345/DeepPurpose",
+    "outcome": "reproduced",
+    "name": "deeppurpose_dti",
+    "turns": 57,
+    "wall_clock_s": 1780.9407460689545,
+    "cost_usd": 2.9872265000000002,
+    "naive_runs": null,
+    "sanity_metric": "concordance_index",
+    "sanity_threshold": 0.75,
+    "reproduced_reported": 0.88,
+    "reproduced_measured": 0.8993,
+    "base_image": "python:3.6",
+    "summary": "Given one drug SMILES string and one target protein amino-acid sequence, predict their binding affinity (pKd) using a shipped pretrained deep DTI model — no training required.",
+    "attempted_at": "2026-07-13",
+    "notes": ""
+  },
+  {
+    "repo_url": "https://github.com/octavian-ganea/equidock_public",
+    "outcome": "revived",
+    "name": "equidock_rigid_docking",
+    "turns": 44,
+    "wall_clock_s": 1196.1721079349518,
+    "cost_usd": 1.6608352499999997,
+    "naive_runs": null,
+    "sanity_metric": "ligand_CA_RMSD_vs_reference_output",
+    "sanity_threshold": 2,
+    "reproduced_reported": 14.1,
+    "reproduced_measured": 18.000393,
+    "base_image": "continuumio/miniconda3",
+    "summary": "Given two unbound protein PDB structures (a randomly rotated/translated ligand and a receptor), predict the rigid docking pose (rotation + translation) that assembles them into a bound complex, output as a transformed ligand PDB.",
+    "attempted_at": "2026-07-13",
+    "notes": ""
+  },
+  {
+    "repo_url": "https://github.com/uci-cbcl/DanQ",
+    "outcome": "revived",
+    "name": "danq_inference",
+    "turns": 36,
+    "wall_clock_s": 1104.5090460777283,
+    "cost_usd": 1.3536020000000002,
+    "naive_runs": null,
+    "sanity_metric": "features_std_gt_0.01",
+    "sanity_threshold": 100,
+    "reproduced_reported": null,
+    "reproduced_measured": null,
+    "base_image": "continuumio/miniconda:4.3.14",
+    "summary": "Given 1000-bp one-hot DNA sequences, run pretrained DanQ inference to predict the 919-dim chromatin-feature profile (TF binding, DNase hypersensitivity, histone marks) for each sequence.",
+    "attempted_at": "2026-07-13",
+    "notes": ""
+  }
+]
