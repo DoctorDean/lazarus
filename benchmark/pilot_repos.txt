@@ -1,2 +1,18 @@
-# Lazarus benchmark — pilot corpus (comp-bio). One repo URL per line.
-# Filled after the vetting pass; ~10-12 with 2-3 expected honest failures.
+# Lazarus benchmark — pilot corpus (computational biology).
+# Vetted 2026-07-13: staleness + weight availability checked live. 11 repos.
+# The "expected" note is a hypothesis — the run assigns the real reason code.
+
+# --- expected reproducible / revivable (broad comp-bio coverage) ---
+https://github.com/flatironinstitute/DeepFRI       # function <- structure · TF2 · weights live ~900MB · BSD-3 · reproduced?
+https://github.com/songlab-cal/tape                # protein representation · PyTorch · weights live ~370MB · BSD-3 · reproduced?
+https://github.com/kexinhuang12345/DeepPurpose     # drug-target affinity · PyTorch · auto-download weights (verified) · BSD-3 · reproduced?
+https://github.com/octavian-ganea/equidock_public  # protein-protein docking · DGL/torch1.10 · weights+inputs+GT in-repo · MIT · reproduced?
+https://github.com/HannesStark/EquiBind            # blind docking · DGL/torch1.10 · in-repo checkpoint · MIT · reproduced?
+https://github.com/gjoni/trRosetta                 # contact/structure · TF1.x · weights live ~270MB · MIT · revived? (TF1.x)
+https://github.com/churchlab/UniRep                # protein representation · TF1.3 (oldest) · weights live · code GPLv3 / weights CC-BY-NC · revived?/license
+https://github.com/theislab/scgen                  # single-cell perturbation · PyTorch/scvi-tools · trains fast, no shipped weights · GPL-3 · revived?
+
+# --- expected honest failures (the decay signal) ---
+https://github.com/uci-cbcl/DanQ                    # genomics · Theano/Keras1 · WEIGHTS GONE (host NXDOMAIN, no mirror) · weights-gone
+https://github.com/thinng/GraphDTA                  # drug-target · PyG · no released weights (train-required) · weights-gone / needs-training
+https://github.com/hkmztrk/DeepDTA                  # drug-target · TF1.x + no released weights · unresolvable-deps
