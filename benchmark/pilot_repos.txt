@@ -1,0 +1,2 @@
+# Lazarus benchmark — pilot corpus (comp-bio). One repo URL per line.
+# Filled after the vetting pass; ~10-12 with 2-3 expected honest failures.

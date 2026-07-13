@@ -107,6 +107,7 @@ class ResurrectionResult:
     final_text: str
     events: list[ResurrectionEvent] = field(default_factory=list)
     num_turns: int = 0
+    cost_usd: Optional[float] = None   # from the SDK ResultMessage, when available
     snapshots: list[str] = field(default_factory=list)
     output_dir: str = ""
 
@@ -158,6 +159,7 @@ class Resurrector:
         snapshots: list[str] = []
         final_text = ""
         num_turns = 0
+        cost_usd: Optional[float] = None
         is_error = False
         completed = False
 
@@ -196,6 +198,7 @@ class Resurrector:
                     completed = True
                     num_turns = getattr(msg, "num_turns", 0) or 0
                     is_error = bool(getattr(msg, "is_error", False))
+                    cost_usd = getattr(msg, "total_cost_usd", None)
                     events.append(self._emit("result", f"turns={num_turns} error={is_error}"))
         finally:
             if not self.keep_container:
@@ -207,6 +210,7 @@ class Resurrector:
             final_text=final_text,
             events=events,
             num_turns=num_turns,
+            cost_usd=cost_usd,
             snapshots=snapshots,
             output_dir=self.output_dir,
         )
