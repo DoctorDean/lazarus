@@ -4,6 +4,11 @@ All notable changes to Lazarus (`lazarus-bio`) are documented here. The format f
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.1]
+
+### Changed
+- Removed the author email from the package metadata (privacy).
+
 ## [0.1.0] — 2026-07-10
 
 First public release.
@@ -26,4 +31,5 @@ First public release.
 - A zero-setup **Colab notebook**, a **MkDocs docs site**, and CI (test matrix + Trusted-Publishing
   release workflow).
 
+[0.1.1]: https://github.com/DoctorDean/lazarus/releases/tag/v0.1.1
 [0.1.0]: https://github.com/DoctorDean/lazarus/releases/tag/v0.1.0
