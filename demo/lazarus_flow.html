@@ -100,7 +100,7 @@
   function tick(){
     i++;
     if(i >= steps.length){                    // brief hold, then loop
-      setTimeout(()=>{ steps.forEach(s=>s.classList.remove('done','active')); fill.style.height='0%'; i=-1; tick(); }, 1400);
+      setTimeout(()=>{ steps.forEach(s=>s.classList.remove('done','active')); fill.style.height='0%'; i=-1; tick(); }, 2200);
       return;
     }
     steps.forEach((s,k)=>{
@@ -110,7 +110,7 @@
     const b = steps[i].querySelector('.badge').getBoundingClientRect();
     const box = document.querySelector('.steps').getBoundingClientRect();
     fill.style.height = ((b.top + b.height/2 - box.top) / box.height * 100) + '%';
-    setTimeout(tick, 2100);
+    setTimeout(tick, 4000);
   }
   window.addEventListener('load', ()=> setTimeout(tick, 500));
 </script>
