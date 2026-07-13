@@ -1,0 +1,23 @@
+name: masif_site
+title: MaSIF-site
+domain: Protein interaction sites
+summary: Predict per-residue protein-interaction-site probability from a molecular
+  surface.
+repo_url: https://github.com/LPDI-EPFL/masif
+paper: Gainza et al., Nature Methods 2020 — MaSIF
+era: 2020 · Py3.6 · TF 1.12 · MSMS/APBS
+license: Apache-2.0
+base_image: lazarus/masif:site-ready
+gpu: false
+image_public: false
+from_url: false
+turns: 18
+sanity_metric: roc_auc
+sanity_threshold: 0.8
+sanity_direction: above
+reproduced_metric: median ROC-AUC
+reproduced_reported: 0.85
+reproduced_measured: 0.82
+giveback_pr: https://github.com/LPDI-EPFL/masif/pull/93
+contract: examples/masif_site_contract
+added: '2026-07-07'

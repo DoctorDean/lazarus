@@ -38,6 +38,7 @@ nav:
   - Home: index.md
   - Quickstart: quickstart.md
   - How it works: how-it-works.md
+  - Registry: registry.md
   - Compose & reproduce: compose.md
   - The hard problems it solved: CHALLENGES.md
 

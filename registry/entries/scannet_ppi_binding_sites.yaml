@@ -1,0 +1,23 @@
+name: scannet_ppi_binding_sites
+title: ScanNet
+domain: Protein binding sites
+summary: Per-residue protein–protein binding-site probability from one structure (structure-only,
+  no MSA).
+repo_url: https://github.com/jertubiana/ScanNet
+paper: Tubiana et al., Nature Methods 2022 — ScanNet
+era: 2022 · Py3.6 · TF 1.14 · Keras
+license: Apache-2.0
+base_image: lazarus/scannet:ppi-noMSA-proven
+gpu: false
+image_public: false
+from_url: false
+turns: 19
+sanity_metric: ROC_AUC
+sanity_threshold: 0.7
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: https://github.com/jertubiana/ScanNet/pull/16
+contract: examples/scannet_ppi_contract
+added: '2026-07-08'

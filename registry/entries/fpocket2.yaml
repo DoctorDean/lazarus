@@ -1,0 +1,22 @@
+name: fpocket2
+title: fpocket
+domain: Druggable pocket detection
+summary: Detect and rank druggable pockets on a protein structure (Voronoi / alpha-spheres).
+repo_url: https://fpocket.sourceforge.net
+paper: Le Guilloux et al., BMC Bioinformatics 2009 — fpocket
+era: 2010 C · built on modern GCC
+license: MIT
+base_image: lazarus/fpocket:working
+gpu: false
+image_public: false
+from_url: false
+turns: 32
+sanity_metric: pockets
+sanity_threshold: 1
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/fpocket2_contract
+added: '2026-07-08'

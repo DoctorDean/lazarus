@@ -1,0 +1,22 @@
+name: basset_predict
+title: Basset
+domain: Genomics — chromatin accessibility
+summary: Predict DNaseI-hypersensitivity across 164 cell types from a 600 bp DNA sequence.
+repo_url: https://github.com/davek44/Basset
+paper: Kelley et al., Genome Research 2016 — Basset
+era: 2016 · Lua Torch7
+license: see source repo
+base_image: lazarus/basset:site-ready
+gpu: false
+image_public: false
+from_url: true
+turns: 48
+sanity_metric: min_perseq_std
+sanity_threshold: 0.01
+sanity_direction: above
+reproduced_metric: mean AUROC (164 targets)
+reproduced_reported: 0.895
+reproduced_measured: 0.894
+giveback_pr: null
+contract: examples/basset_predict_contract
+added: '2026-07-10'
