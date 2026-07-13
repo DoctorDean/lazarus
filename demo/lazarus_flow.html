@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lazarus — how it works</title>
+<style>
+  :root{
+    --bg:#070b0a; --panel:#0f1817; --line:#1e2c2a;
+    --ink:#eaf1ef; --muted:#8ba09b;
+    --accent:#34d1a4; --accent-dim:rgba(52,209,164,.16);
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:radial-gradient(120% 90% at 50% 0%,#0b1413,#070b0a 70%);color:var(--ink);font-family:var(--font);overflow:hidden}
+  .wrap{max-width:1000px;margin:0 auto;padding:4.2vh 5vw 3vh;height:100%;display:flex;flex-direction:column}
+  header{margin-bottom:2.4vh;animation:fade .8s ease both}
+  .eyebrow{font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted)}
+  h1{margin:.35rem 0 0;font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:750;letter-spacing:-.01em}
+  h1 .g{color:var(--accent)}
+  .steps{position:relative;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding-left:2.7rem}
+  /* the spine */
+  .spine{position:absolute;left:1.02rem;top:1.1rem;bottom:1.1rem;width:2px;background:var(--line);border-radius:2px;overflow:hidden}
+  .spine .fill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(var(--accent),#1a8f6e);transition:height .6s cubic-bezier(.4,0,.2,1)}
+  .step{position:relative;display:flex;align-items:center;gap:1rem;padding:.5vh 0;opacity:.32;filter:saturate(.6);transition:opacity .5s,filter .5s,transform .5s}
+  .step.done{opacity:.62}
+  .step.active{opacity:1;filter:none;transform:translateX(4px)}
+  .badge{position:absolute;left:-2.7rem;width:2.1rem;height:2.1rem;border-radius:50%;display:grid;place-items:center;font-size:1.05rem;
+    background:var(--panel);border:2px solid var(--line);transition:all .5s;z-index:2}
+  .step.done .badge{border-color:var(--accent);background:var(--accent-dim)}
+  .step.active .badge{border-color:var(--accent);background:var(--accent);box-shadow:0 0 0 6px var(--accent-dim),0 0 26px rgba(52,209,164,.5)}
+  .card{flex:1;background:linear-gradient(180deg,var(--panel),#0c1413);border:1px solid var(--line);border-radius:12px;padding:.85rem 1.15rem;transition:border-color .5s,box-shadow .5s}
+  .step.active .card{border-color:rgba(52,209,164,.55);box-shadow:0 8px 30px rgba(0,0,0,.5)}
+  .t{font-size:clamp(1rem,1.9vw,1.24rem);font-weight:650;letter-spacing:-.01em}
+  .d{margin-top:.2rem;font-size:clamp(.82rem,1.4vw,.98rem);color:var(--muted);line-height:1.35}
+  .d code{font-family:var(--mono);color:#bfe9db;background:rgba(52,209,164,.10);padding:.05em .4em;border-radius:5px;font-size:.92em}
+  .loopico{display:inline-block}
+  .step.active .loopico{animation:spin 1.5s linear infinite}
+  .footer{margin-top:2vh;font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between;align-items:center;animation:fade 1s ease both}
+  .footer .brand{font-weight:700;letter-spacing:.02em;color:var(--ink)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">How it works</div>
+    <h1>A <span class="g">dead repo</span> → a callable tool, from a link</h1>
+  </header>
+
+  <div class="steps" id="steps">
+    <div class="spine"><div class="fill" id="fill"></div></div>
+
+    <div class="step"><div class="badge">🔗</div><div class="card">
+      <div class="t">Point it at a GitHub URL</div>
+      <div class="d"><code>github.com/gcorso/DiffDock</code> — open, cited, and 2 years too stale to run.</div></div></div>
+
+    <div class="step"><div class="badge">📄</div><div class="card">
+      <div class="t">Read the repo &amp; the paper</div>
+      <div class="d">The Scout writes its own goal — and a <em>falsifiable</em> success test it must pass.</div></div></div>
+
+    <div class="step"><div class="badge">📌</div><div class="card">
+      <div class="t">Pin dependencies to the repo's era</div>
+      <div class="d">Reconstruct the exact stack from the commit date — <code>torch 1.13 · CUDA 11.7</code>, not today's.</div></div></div>
+
+    <div class="step"><div class="badge">📦</div><div class="card">
+      <div class="t">Spin up a disposable sandbox</div>
+      <div class="d">A clean container — CPU or GPU — isolated from everything else.</div></div></div>
+
+    <div class="step"><div class="badge"><span class="loopico">🔁</span></div><div class="card">
+      <div class="t">Build → run → read the error → fix → retry</div>
+      <div class="d">A repair loop that patches real bugs, not just installs — until it actually runs.</div></div></div>
+
+    <div class="step"><div class="badge">🎯</div><div class="card">
+      <div class="t">Carve the capability</div>
+      <div class="d">Find where <em>input → the famous output</em> happens, and keep the minimal path.</div></div></div>
+
+    <div class="step"><div class="badge">✅</div><div class="card">
+      <div class="t">Emit a contract</div>
+      <div class="d">Pinned container + clean API + the self-test — so every revived tool composes.</div></div></div>
+
+    <div class="step"><div class="badge">🏅</div><div class="card">
+      <div class="t">Reproduce the paper &amp; give back</div>
+      <div class="d">Match the published numbers, then send the fix upstream as a pull request.</div></div></div>
+  </div>
+
+  <div class="footer">
+    <span><span class="brand">Lazarus</span> · <code style="font-family:var(--mono);color:var(--muted)">pip install lazarus-bio</code></span>
+    <span>github.com/DoctorDean/lazarus</span>
+  </div>
+</div>
+
+<script>
+  const steps = Array.from(document.querySelectorAll('.step'));
+  const fill = document.getElementById('fill');
+  let i = -1;
+  function tick(){
+    i++;
+    if(i >= steps.length){                    // brief hold, then loop
+      setTimeout(()=>{ steps.forEach(s=>s.classList.remove('done','active')); fill.style.height='0%'; i=-1; tick(); }, 1400);
+      return;
+    }
+    steps.forEach((s,k)=>{
+      s.classList.toggle('active', k===i);
+      s.classList.toggle('done', k<i);
+    });
+    const b = steps[i].querySelector('.badge').getBoundingClientRect();
+    const box = document.querySelector('.steps').getBoundingClientRect();
+    fill.style.height = ((b.top + b.height/2 - box.top) / box.height * 100) + '%';
+    setTimeout(tick, 2100);
+  }
+  window.addEventListener('load', ()=> setTimeout(tick, 500));
+</script>
+</body>
+</html>
