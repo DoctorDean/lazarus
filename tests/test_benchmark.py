@@ -53,6 +53,9 @@ def test_interpret_smoke_verdicts_and_metrics():
     assert run.interpret_smoke("rmsd = 1.20 A", "rmsd", 2.0) is True            # lower-is-better, passes
     assert run.interpret_smoke("rmsd: 3.5", "rmsd", 2.0) is False               # lower-is-better, fails
     assert run.interpret_smoke("just some logs, no verdict") is None
+    # the pilot bug: a non-TTY docker warning contains "failed" — must NOT read as a verdict
+    noise = "pearson_r=1.000000\nmesg: ttyname failed: Inappropriate ioctl for device"
+    assert run.interpret_smoke(noise, "pearson_r", 0.9) is True
 
 
 def test_results_io_roundtrip(tmp_path):

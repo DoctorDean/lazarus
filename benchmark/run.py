@@ -126,14 +126,17 @@ def interpret_smoke(output: str, metric: Optional[str] = None,
     """Decide pass/fail from a smoke run's output. Prefers an explicit PASS/FAIL
     token; else extracts the metric and compares to threshold (direction inferred
     from the metric name). Returns None when it genuinely can't tell."""
-    low = output.lower()
-    has_fail = re.search(r"\bfail(ed|ure)?\b", low) is not None
-    has_pass = re.search(r"\bpass(ed)?\b", low) is not None
+    # Authoritative verdict = a standalone UPPERCASE PASS/FAIL, which the emitted
+    # smokes print deliberately. Case-sensitive so prose noise like
+    # "mesg: ttyname failed: Inappropriate ioctl for device" (a non-TTY docker
+    # warning) does NOT read as a failure.
+    has_pass = re.search(r"\bPASS\b", output) is not None
+    has_fail = re.search(r"\bFAIL\b", output) is not None
     if has_pass and not has_fail:
         return True
     if has_fail and not has_pass:
         return False
-    # both tokens (or neither) → fall through to the metric comparison
+    # no explicit verdict → compare the metric to its threshold
     if metric and threshold is not None:
         m = re.search(rf"{re.escape(metric)}\s*[=:]\s*(-?\d+(?:\.\d+)?)", output, re.I)
         if not m:  # fall back to the last number printed
@@ -283,6 +286,7 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
         try:
             contract = Contract.from_yaml(cpath.read_text())
             res.name = contract.name
+            res.base_image = contract.base_image  # the final snapshot, not the Scout's start image
             if contract.smoke:
                 res.sanity_metric, res.sanity_threshold = contract.smoke.metric, contract.smoke.threshold
                 revived = True
