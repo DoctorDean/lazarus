@@ -46,6 +46,15 @@ def test_reproduced_uses_harness_tolerance_not_agents():
     assert run.reproduced_ok(0.5, 0) is False
 
 
+def test_interpret_smoke_verdicts_and_metrics():
+    assert run.interpret_smoke("...\nPASS\n") is True
+    assert run.interpret_smoke("Traceback...\nFAIL") is False
+    assert run.interpret_smoke("roc_auc=0.91 done", "roc_auc", 0.8) is True     # higher-is-better
+    assert run.interpret_smoke("rmsd = 1.20 A", "rmsd", 2.0) is True            # lower-is-better, passes
+    assert run.interpret_smoke("rmsd: 3.5", "rmsd", 2.0) is False               # lower-is-better, fails
+    assert run.interpret_smoke("just some logs, no verdict") is None
+
+
 def test_results_io_roundtrip(tmp_path):
     p = tmp_path / "results.json"
     rows = [run.BenchmarkResult(repo_url="u/a", outcome="revived").to_dict()]

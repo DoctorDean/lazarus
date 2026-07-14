@@ -14,7 +14,8 @@
     "base_image": "python:3.6",
     "summary": "Given one drug SMILES string and one target protein amino-acid sequence, predict their binding affinity (pKd) using a shipped pretrained deep DTI model — no training required.",
     "attempted_at": "2026-07-13",
-    "notes": ""
+    "notes": "",
+    "verified": true
   },
   {
     "repo_url": "https://github.com/octavian-ganea/equidock_public",
@@ -31,7 +32,8 @@
     "base_image": "continuumio/miniconda3",
     "summary": "Given two unbound protein PDB structures (a randomly rotated/translated ligand and a receptor), predict the rigid docking pose (rotation + translation) that assembles them into a bound complex, output as a transformed ligand PDB.",
     "attempted_at": "2026-07-13",
-    "notes": ""
+    "notes": "",
+    "verified": true
   },
   {
     "repo_url": "https://github.com/uci-cbcl/DanQ",
@@ -48,6 +50,7 @@
     "base_image": "continuumio/miniconda:4.3.14",
     "summary": "Given 1000-bp one-hot DNA sequences, run pretrained DanQ inference to predict the 919-dim chromatin-feature profile (TF binding, DNase hypersensitivity, histone marks) for each sequence.",
     "attempted_at": "2026-07-13",
-    "notes": ""
+    "notes": "",
+    "verified": true
   }
 ]

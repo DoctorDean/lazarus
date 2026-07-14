@@ -15,6 +15,7 @@ unit-tested; `run_one` drives the real agent and needs Docker + Claude auth.
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Optional
@@ -51,6 +52,7 @@ class BenchmarkResult:
     sanity_threshold: Optional[float] = None
     reproduced_reported: Optional[float] = None
     reproduced_measured: Optional[float] = None
+    verified: Optional[bool] = None         # did WE re-run the smoke and see it pass?
     base_image: str = ""
     summary: str = ""                       # the Scout's capability line
     attempted_at: str = ""                  # ISO date (stamped by the caller)
@@ -109,6 +111,63 @@ def classify(*, completed: bool, is_error: bool, contract_emitted: bool,
         if any(k in text for k in keys):
             return reason
     return "unresolvable-deps"
+
+
+# --------------------------------------------------------------------------
+# Independent verification — re-run the emitted smoke in its own image and
+# confirm WE see it pass. No agent, no rebuild: it reuses the snapshot the
+# resurrection already produced, so it's one short container run, not a redo.
+# --------------------------------------------------------------------------
+_LOWER_IS_BETTER = ("rmsd", "loss", "mae", "mse", "error", "distance", "perplexity")
+
+
+def interpret_smoke(output: str, metric: Optional[str] = None,
+                    threshold: Optional[float] = None) -> Optional[bool]:
+    """Decide pass/fail from a smoke run's output. Prefers an explicit PASS/FAIL
+    token; else extracts the metric and compares to threshold (direction inferred
+    from the metric name). Returns None when it genuinely can't tell."""
+    low = output.lower()
+    has_fail = re.search(r"\bfail(ed|ure)?\b", low) is not None
+    has_pass = re.search(r"\bpass(ed)?\b", low) is not None
+    if has_pass and not has_fail:
+        return True
+    if has_fail and not has_pass:
+        return False
+    # both tokens (or neither) → fall through to the metric comparison
+    if metric and threshold is not None:
+        m = re.search(rf"{re.escape(metric)}\s*[=:]\s*(-?\d+(?:\.\d+)?)", output, re.I)
+        if not m:  # fall back to the last number printed
+            nums = re.findall(r"-?\d+(?:\.\d+)?", output)
+            m = nums[-1] if nums else None
+            val = float(m) if m else None
+        else:
+            val = float(m.group(1))
+        if val is not None:
+            below = any(k in metric.lower() for k in _LOWER_IS_BETTER)
+            return (val <= threshold) if below else (val >= threshold)
+    return None
+
+
+def verify_smoke(contract, docker_host: Optional[str] = None,
+                 timeout_s: int = 900) -> tuple[Optional[bool], str]:
+    """Run ``contract.smoke.command`` in ``contract.base_image`` and interpret it.
+    Returns (passed | None, combined output)."""
+    from lazarus.sandbox import DockerClient, find_docker
+
+    if not contract.smoke or not contract.smoke.command:
+        return None, "no smoke command in contract"
+    client = DockerClient(binary=find_docker(), docker_host=docker_host)
+    args = ["run", "--rm", "--platform", contract.platform or "linux/amd64"]
+    if getattr(contract, "gpus", ""):
+        args += ["--gpus", contract.gpus]
+    args += [contract.base_image, "bash", "-lc", contract.smoke.command]
+    try:
+        cr = client.run(args, timeout=timeout_s)
+    except Exception as exc:  # noqa: BLE001
+        return None, f"verify run error: {exc}"
+    out = (cr.stdout or "") + "\n" + (cr.stderr or "")
+    passed = interpret_smoke(out, contract.smoke.metric, contract.smoke.threshold)
+    return passed, out[-2000:]
 
 
 # --------------------------------------------------------------------------
@@ -171,7 +230,8 @@ def provisional_entry(contract, plan, result: BenchmarkResult, added: str):
 # --------------------------------------------------------------------------
 def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
             timeout_s: int = 5400, out_root: str = "benchmark/output",
-            model: Optional[str] = None, on_event=None) -> BenchmarkResult:
+            model: Optional[str] = None, verify: bool = True,
+            on_event=None) -> BenchmarkResult:
     import asyncio
     import time
 
@@ -242,6 +302,16 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
         timed_out=timed_out, hit_turn_cap=bool(result and result.num_turns >= max_turns),
         final_text=(result.final_text if result else ""),
     )
+
+    # 4) independently verify a claimed success by re-running its smoke in-image
+    if verify and contract is not None and res.outcome in SUCCESS:
+        passed, vout = verify_smoke(contract, docker_host=docker_host)
+        res.verified = passed
+        if passed is False:  # agent's contract doesn't actually pass on our re-run
+            res.outcome = "runs-unverified"
+            res.notes = (res.notes + " | independent smoke re-run FAILED").strip(" |")
+        elif passed is None:
+            res.notes = (res.notes + " | verification inconclusive").strip(" |")
     return res
 
 
@@ -258,6 +328,8 @@ def main(argv=None) -> int:
     ap.add_argument("--model", default=None)
     ap.add_argument("--out", default="benchmark/results.json")
     ap.add_argument("--land", action="store_true", help="auto-land successes into the registry")
+    ap.add_argument("--no-verify", action="store_true",
+                    help="skip the independent smoke re-run (trust the agent's claim)")
     args = ap.parse_args(argv)
 
     from lazarus.cli import load_dotenv
@@ -281,7 +353,7 @@ def main(argv=None) -> int:
             continue
         print(f"\n=== {url} ===", flush=True)
         res = run_one(url, docker_host=args.docker_host, max_turns=args.max_turns,
-                      timeout_s=args.timeout, model=args.model,
+                      timeout_s=args.timeout, model=args.model, verify=not args.no_verify,
                       on_event=lambda e: print(f"  {e.kind}: {e.text[:200]}", flush=True))
         res.attempted_at = today
         rows = [r for r in rows if r.get("repo_url") != url] + [res.to_dict()]
