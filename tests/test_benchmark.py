@@ -73,12 +73,14 @@ def test_summarize_rates_and_reasons():
         {"repo_url": "b", "outcome": "revived", "naive_runs": False},
         {"repo_url": "c", "outcome": "weights-gone", "naive_runs": False},
         {"repo_url": "d", "outcome": "revived", "naive_runs": True},   # ran on its own → not "dead"
+        {"repo_url": "e", "outcome": "infra-failed", "naive_runs": False},  # excluded from the rate
     ]
     s = report.summarize(rows)
-    assert s["attempted"] == 4 and s["revived"] == 3 and s["reproduced"] == 1
-    # 3 dead (a,b,c); 2 of them revived → 67%
+    assert s["attempted"] == 4 and s["infra_failed"] == 1              # infra excluded from attempted
+    assert s["revived"] == 3 and s["reproduced"] == 1
+    # 3 dead (a,b,c); 2 of them revived → 67%  (infra 'e' not counted as dead)
     assert round(s["revival_rate"], 2) == 0.67
-    assert round(s["decay_rate"], 2) == 0.75   # 3 of 4 didn't run on their own
+    assert round(s["decay_rate"], 2) == 0.75
     assert s["reasons"]["revived"] == 2
     assert "reproduced" in report.render(rows)
 

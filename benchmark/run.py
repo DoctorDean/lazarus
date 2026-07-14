@@ -36,6 +36,9 @@ def reproduced_ok(measured, reported, rel_tol: float = REPRODUCE_REL_TOL) -> boo
 SUCCESS = ("reproduced", "revived", "runs-unverified")
 FAILURE = ("weights-gone", "data-gated", "hardware-incompatible",
            "unresolvable-deps", "license-blocked", "budget-exceeded")
+# not a *method* outcome — the harness/host couldn't even start (bad base image,
+# pull timeout). Kept out of the revival-rate denominator; retry these.
+INFRA = ("infra-failed",)
 REASONS = SUCCESS + FAILURE
 
 
@@ -151,6 +154,19 @@ def interpret_smoke(output: str, metric: Optional[str] = None,
     return None
 
 
+def pull_image(image: str, docker_host: Optional[str] = None, timeout_s: int = 1800) -> bool:
+    """Pull ``image`` on the docker host. Returns True if it now exists locally.
+    Doubles as an existence check (a non-existent tag fails fast) and pre-warms the
+    sandbox so its start doesn't time out on a big image."""
+    from lazarus.sandbox import DockerClient, find_docker
+    client = DockerClient(binary=find_docker(), docker_host=docker_host)
+    try:
+        cr = client.run(["pull", "--platform", "linux/amd64", image], timeout=timeout_s)
+        return cr.exit_code == 0
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def verify_smoke(contract, docker_host: Optional[str] = None,
                  timeout_s: int = 900) -> tuple[Optional[bool], str]:
     """Run ``contract.smoke.command`` in ``contract.base_image`` and interpret it.
@@ -189,7 +205,9 @@ def save_results(path: str, rows: list[dict]) -> None:
 
 
 def already_done(rows: list[dict], repo_url: str) -> bool:
-    return any(r.get("repo_url") == repo_url and r.get("outcome") for r in rows)
+    # infra-failed is not terminal — leave it retryable on the next sweep
+    return any(r.get("repo_url") == repo_url and r.get("outcome")
+               and r.get("outcome") not in INFRA for r in rows)
 
 
 # --------------------------------------------------------------------------
@@ -251,15 +269,42 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
     try:
         plan = asyncio.run(scout(repo_url, model=model))
     except Exception as exc:  # noqa: BLE001
-        res.outcome, res.notes = "unresolvable-deps", f"scout failed: {exc}"
+        res.outcome, res.notes = "infra-failed", f"scout failed: {exc}"
         res.wall_clock_s = time.time() - t0
         return res
     res.summary, res.base_image = plan.capability, plan.base_image
 
-    # 2) resurrect under caps
+    # 1.5) ensure the base image is real and pre-pulled. If the Scout picked a
+    #      non-existent tag (the pilot's TAPE case), re-plan once with a correction;
+    #      pre-pulling also stops the sandbox from timing out on a big image (DeepDTA).
+    if not pull_image(plan.base_image, docker_host):
+        try:
+            plan2 = asyncio.run(scout(repo_url, model=model, hint=(
+                f"The base image '{plan.base_image}' is NOT pullable — it does not exist "
+                f"on the registry. Choose a DIFFERENT, currently-available base image.")))
+        except Exception:  # noqa: BLE001
+            plan2 = None
+        if plan2 is not None and pull_image(plan2.base_image, docker_host):
+            plan = plan2
+            res.summary, res.base_image = plan.capability, plan.base_image
+        else:
+            res.outcome = "infra-failed"
+            res.notes = f"base image not pullable: {plan.base_image}"
+            res.wall_clock_s = time.time() - t0
+            return res
+
+    # 2) resurrect under caps (count tool calls so a timeout still reports turns)
+    turn_est = [0]
+
+    def _ev(e):
+        if e.kind == "tool_use":
+            turn_est[0] += 1
+        if on_event:
+            on_event(e)
+
     r = Resurrector(image=plan.base_image, docker_host=docker_host, max_turns=max_turns,
                     keep_container=True, output_dir=out_dir,
-                    gpus="all" if plan.needs_gpu else None, model=model, on_event=on_event)
+                    gpus="all" if plan.needs_gpu else None, model=model, on_event=_ev)
     timed_out = False
     result = None
     try:
@@ -278,6 +323,14 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
     res.wall_clock_s = time.time() - t0
     if result is not None:
         res.turns, res.cost_usd = result.num_turns, result.cost_usd
+    elif timed_out:
+        res.turns = turn_est[0]          # timeout: no final message → estimate from tool calls
+    else:
+        # the resurrect raised before producing a result (sandbox start, etc.) — infra, not science
+        res.turns = turn_est[0]
+        res.outcome = "infra-failed"
+        res.notes = res.notes or "resurrection failed to start"
+        return res
 
     # 3) inspect the emitted contract (if any) and classify
     contract, reproduced, revived = None, False, False

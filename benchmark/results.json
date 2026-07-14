@@ -73,7 +73,7 @@
   },
   {
     "repo_url": "https://github.com/songlab-cal/tape",
-    "outcome": "unresolvable-deps",
+    "outcome": "infra-failed",
     "name": "",
     "turns": 0,
     "wall_clock_s": 90.15667486190796,
@@ -87,7 +87,7 @@
     "base_image": "pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime",
     "summary": "Given a single protein sequence in a FASTA file, produce a fixed-dimensional (768-d) TAPE ProteinBert embedding using the pretrained 'bert-base' transformer via the `tape-embed` command.",
     "attempted_at": "2026-07-14",
-    "notes": "run error: command failed (exit 125): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--platform', 'linux/amd64', '--name', 'lazarus-eb7b3720e0af', '-w', '/work', 'pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime', 'sleep', 'infinity']\nUnable to find image 'pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime' locally\ndocker: Error response from daemon: failed to resolve reference \"docker.io/pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime\": docker.io/pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime: not found\n\nRun 'docker run --help' for more information"
+    "notes": "run error: command failed (exit 125): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--platform', 'linux/amd64', '--name', 'lazarus-eb7b3720e0af', '-w', '/work', 'pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime', 'sleep', 'infinity']\nUnable to find image 'pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime' locally\ndocker: Error response from daemon: failed to resolve reference \"docker.io/pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime\": docker.io/pytorch/pytorch:1.1.0-cuda9.0-cudnn7.5-runtime: not found\n\nRun 'docker run --help' for more information | reclassified: base image not pullable/timed out"
   },
   {
     "repo_url": "https://github.com/HannesStark/EquiBind",
@@ -181,7 +181,7 @@
   },
   {
     "repo_url": "https://github.com/hkmztrk/DeepDTA",
-    "outcome": "unresolvable-deps",
+    "outcome": "infra-failed",
     "name": "",
     "turns": 0,
     "wall_clock_s": 440.2310221195221,
@@ -195,6 +195,6 @@
     "base_image": "tensorflow/tensorflow:1.15.0-gpu-py3",
     "summary": "Given one drug SMILES string plus one protein amino-acid sequence, predict their binding-affinity scalar (pKd) using DeepDTA's sequence CNN.",
     "attempted_at": "2026-07-14",
-    "notes": "run error: command failed (exit 124): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--platform', 'linux/amd64', '--name', 'lazarus-ad964c39d1c2', '-w', '/work', '--gpus', 'all', 'tensorflow/tensorflow:1.15.0-gpu-py3', 'sleep', 'infinity']\n1.15.0-gpu-py3: Pulling from tensorflow/tensorflow\n35c102085707: Pulling fs layer\n443f54337004: Pulling fs layer\n9f0a21d58e5d: Pulling fs layer\n33787e08066b: Pulling fs layer\n14e9264cc500: Pulling fs layer\n5da9dba96c29: Pulling fs layer\n9c648a00ccc9: Pulling fs layer\nd701a76e3193: Pulling fs layer\n6001e1789921: Pulling fs layer\n8810fcda1e6e: Pulling fs layer\n1fa41467f169: Pulling fs layer\nac05c69d85cf: Pulling fs layer\n1d80bd4663fe: Pulling fs layer\n251f5509d51d: Pulling fs layer\nc5c3ef1817a6: Pulling fs layer\n8e829fe70a46: Pulling fs layer\n443f54337004: Download complete\n8e829fe70a46: Download complete\n6001e1789921: Download complete\n251f5509d51d: Download complete\n14e9264cc500: Download complete\n9c648a00ccc9: Download complete\nd701a76e3193: Download complete\n1d80bd4663fe: Download complete\n33787e08066b: Download complete\n9f0a21d58e5d: Download complete\n8810fcda1e6e: Download complete\n35c102085707: Download complete\n35c102085707: Pull complete\n8e829fe70a46: Pull complete\n6001e1789921: Pull complete\n251f5509d51d: Pull complete\n9f0a21d58e5d: Pull complete\nd701a76e3193: Pull complete\n8810fcda1e6e: Pull complete\n1fa41467f169: Download complete\n5da9dba96c29: Download complete\n\n[timed out]"
+    "notes": "run error: command failed (exit 124): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--platform', 'linux/amd64', '--name', 'lazarus-ad964c39d1c2', '-w', '/work', '--gpus', 'all', 'tensorflow/tensorflow:1.15.0-gpu-py3', 'sleep', 'infinity']\n1.15.0-gpu-py3: Pulling from tensorflow/tensorflow\n35c102085707: Pulling fs layer\n443f54337004: Pulling fs layer\n9f0a21d58e5d: Pulling fs layer\n33787e08066b: Pulling fs layer\n14e9264cc500: Pulling fs layer\n5da9dba96c29: Pulling fs layer\n9c648a00ccc9: Pulling fs layer\nd701a76e3193: Pulling fs layer\n6001e1789921: Pulling fs layer\n8810fcda1e6e: Pulling fs layer\n1fa41467f169: Pulling fs layer\nac05c69d85cf: Pulling fs layer\n1d80bd4663fe: Pulling fs layer\n251f5509d51d: Pulling fs layer\nc5c3ef1817a6: Pulling fs layer\n8e829fe70a46: Pulling fs layer\n443f54337004: Download complete\n8e829fe70a46: Download complete\n6001e1789921: Download complete\n251f5509d51d: Download complete\n14e9264cc500: Download complete\n9c648a00ccc9: Download complete\nd701a76e3193: Download complete\n1d80bd4663fe: Download complete\n33787e08066b: Download complete\n9f0a21d58e5d: Download complete\n8810fcda1e6e: Download complete\n35c102085707: Download complete\n35c102085707: Pull complete\n8e829fe70a46: Pull complete\n6001e1789921: Pull complete\n251f5509d51d: Pull complete\n9f0a21d58e5d: Pull complete\nd701a76e3193: Pull complete\n8810fcda1e6e: Pull complete\n1fa41467f169: Download complete\n5da9dba96c29: Download complete\n\n[timed out] | reclassified: base image not pullable/timed out"
   }
 ]

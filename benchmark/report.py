@@ -11,23 +11,27 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from run import SUCCESS  # type: ignore  # (run.py sits alongside)
+from run import SUCCESS, INFRA  # type: ignore  # (run.py sits alongside)
 
 
 def summarize(rows: list[dict]) -> dict:
-    n = len(rows)
-    revived = sum(1 for r in rows if r.get("outcome") in SUCCESS)
-    reproduced = sum(1 for r in rows if r.get("outcome") == "reproduced")
+    # infra-failed = the harness/host couldn't start; not a method outcome, so it's
+    # excluded from the revival-rate denominator (but reported and retryable).
+    infra = sum(1 for r in rows if r.get("outcome") in INFRA)
+    method = [r for r in rows if r.get("outcome") not in INFRA]
+    n = len(method)
+    revived = sum(1 for r in method if r.get("outcome") in SUCCESS)
+    reproduced = sum(1 for r in method if r.get("outcome") == "reproduced")
 
     reasons: dict[str, int] = {}
     for r in rows:
         reasons[r.get("outcome", "?")] = reasons.get(r.get("outcome", "?"), 0) + 1
 
     # decay: fraction that did NOT run without the agent (only over repos with a baseline)
-    with_baseline = [r for r in rows if r.get("naive_runs") is not None]
+    with_baseline = [r for r in method if r.get("naive_runs") is not None]
     dead = [r for r in with_baseline if not r["naive_runs"]]
     decay_rate = (len(dead) / len(with_baseline)) if with_baseline else None
-    # revival rate over the dead ones (if baseline), else over all attempted
+    # revival rate over the dead ones (if baseline), else over all attempted (method) repos
     if dead:
         revived_dead = sum(1 for r in dead if r.get("outcome") in SUCCESS)
         revival_rate = revived_dead / len(dead)
@@ -36,6 +40,7 @@ def summarize(rows: list[dict]) -> dict:
 
     return {
         "attempted": n,
+        "infra_failed": infra,
         "revived": revived,
         "reproduced": reproduced,
         "revival_rate": revival_rate,
@@ -55,7 +60,8 @@ def render(rows: list[dict]) -> str:
         out.append(f"  {r.get('outcome',''):18} {name:24} "
                    f"{r.get('turns',0):>3}t {r.get('wall_clock_s',0):>6.0f}s{extra}")
     out += ["",
-            f"attempted     : {s['attempted']}",
+            f"attempted     : {s['attempted']}"
+            + (f"  (+{s['infra_failed']} infra-failed, retryable, excluded)" if s['infra_failed'] else ""),
             f"revived       : {s['revived']}  (reproduced the paper: {s['reproduced']})",
             f"revival rate  : {s['revival_rate']*100:.0f}%"
             + ("  (of the dead)" if s['decay_rate'] is not None else "  (of attempted)")]
