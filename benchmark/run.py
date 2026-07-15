@@ -254,6 +254,7 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
             model: Optional[str] = None, verify: bool = True,
             on_event=None) -> BenchmarkResult:
     import asyncio
+    import threading
     import time
 
     from lazarus.scout import scout
@@ -305,20 +306,38 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
     r = Resurrector(image=plan.base_image, docker_host=docker_host, max_turns=max_turns,
                     keep_container=True, output_dir=out_dir,
                     gpus="all" if plan.needs_gpu else None, model=model, on_event=_ev)
-    timed_out = False
+
+    # HARD wall-clock cap. A blocking in-container command (e.g. a multi-hour
+    # training) freezes the event loop, so asyncio.wait_for never fires. Instead a
+    # watchdog THREAD force-removes the sandbox container at the cap — that kills
+    # the running `docker exec`, unblocks the loop, and the run winds down.
+    done, fired = threading.Event(), threading.Event()
+
+    def _watchdog():
+        if done.wait(timeout_s):        # returns True if the run finished in time
+            return
+        fired.set()
+        try:
+            if r.sandbox is not None:
+                r.sandbox.stop()        # docker rm -f — interrupts the in-container command
+        except Exception:  # noqa: BLE001
+            pass
+
+    wd = threading.Thread(target=_watchdog, daemon=True)
+    wd.start()
     result = None
     try:
-        result = asyncio.run(asyncio.wait_for(r.resurrect(plan.to_goal()), timeout=timeout_s))
-    except asyncio.TimeoutError:
-        timed_out = True
-    except Exception as exc:  # noqa: BLE001
+        result = asyncio.run(r.resurrect(plan.to_goal()))
+    except Exception as exc:  # noqa: BLE001 — a killed run may raise; that's the timeout path
         res.notes = f"run error: {exc}"
     finally:
+        done.set()
         if r.sandbox is not None:
             try:
                 r.sandbox.stop()
             except Exception:  # noqa: BLE001
                 pass
+    timed_out = fired.is_set()
 
     res.wall_clock_s = time.time() - t0
     if result is not None:
