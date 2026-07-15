@@ -102,6 +102,17 @@ def test_baseline_language_and_image():
     assert baseline.primary_language({}) == "python"
     assert "rocker" in baseline.base_image_for("r")
     assert "miniconda" in baseline.base_image_for("python")
+    # README extractor: skip install blocks, return the first real usage block's code
+    md = ("# Tool\n## Install\n```bash\npip install tool\n```\n"
+          "## Usage\n```python\nfrom tool import run\nrun('x')\n```\n")
+    code = baseline.readme_example(md)
+    assert "run('x')" in code and "pip install" not in code
+    # a real R usage line survives even next to a trivial library() line
+    assert "simpg()" in baseline.readme_example("```r\nlibrary(simurg)\npg <- simpg()\n```")
+    # help-only / install-only / no-code blocks are not runnable examples
+    assert baseline.readme_example("```r\nhelp('simpg')\n```") is None
+    assert baseline.readme_example("```r\ninstall_github('a/b')\n```") is None
+    assert baseline.readme_example("no code blocks here") is None
     # the protocol embeds a machine-readable verdict line the runner parses
     assert "===BASELINE===" in baseline.PROTOCOL and "REPO_URL" in baseline.PROTOCOL
 

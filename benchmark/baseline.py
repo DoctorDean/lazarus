@@ -19,6 +19,7 @@ it's a fair contrast to the agent, whose value-add is exactly the repair it skip
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import re
 import sys
@@ -30,6 +31,48 @@ from pathlib import Path
 from typing import Optional
 
 UA = {"User-Agent": "lazarus-benchmark/0.2"}
+
+# A naive user copies the README's *usage* example — not an install block. Extract
+# the first fenced code block that runs the method (skipping install/shell blocks).
+_INSTALL_RE = re.compile(r"pip[0-9]? install|python -m pip|conda (install|env|create)|"
+                         r"install\.packages|install_github|install_bitbucket|devtools::install|"
+                         r"remotes::install|BiocManager::install|R CMD INSTALL|setup\.py|"
+                         r"apt(-get)? |git clone|wget |curl |cmake|\bmake\b|npm install|docker ", re.I)
+_RUN_RE = re.compile(r"\bimport \b|\bfrom \w+ import|Rscript|python[0-9 ]|"
+                     r"\w+\.\w+\(|\w+\s*<-\s*|\w+\(", re.I)
+# lines that don't actually run the method (help/load/version calls)
+_TRIVIAL_RE = re.compile(r"^\s*(help|vignette|browseVignettes|\?|library|require|"
+                         r"sessionInfo|citation|packageVersion|install\.packages)\s*[\(A-Za-z]", re.I)
+
+
+def readme_example(text: str) -> Optional[str]:
+    """Return the code of the README's first runnable, non-install, non-trivial block
+    (the language is the repo's primary language, decided by the caller)."""
+    for block in re.findall(r"```[A-Za-z0-9]*\n(.*?)```", text, re.S):
+        b = block.strip()
+        if not b or _INSTALL_RE.search(b) or not _RUN_RE.search(b):
+            continue
+        lines = [ln for ln in b.splitlines()
+                 if ln.strip() and not ln.strip().startswith(("$", "//", "%", "!", ">>>", "R>", "#"))]
+        if not any(not _TRIVIAL_RE.match(ln) for ln in lines):  # only help()/library()/… → not a real example
+            continue
+        code = "\n".join(lines).strip()
+        if code:
+            return code
+    return None
+
+
+def fetch_readme(slug: str, timeout: float = 20) -> str:
+    for branch in ("HEAD",):
+        for name in ("README.md", "README.rst", "README.txt", "readme.md"):
+            try:
+                req = urllib.request.Request(
+                    f"https://raw.githubusercontent.com/{slug}/{branch}/{name}", headers=UA)
+                with urllib.request.urlopen(req, timeout=timeout) as r:  # noqa: S310
+                    return r.read().decode("utf-8", "ignore")
+            except Exception:  # noqa: BLE001
+                continue
+    return ""
 
 # --- base image by primary language (pure) ---------------------------------
 _PY = {"python", "jupyter notebook", "cython"}
@@ -79,34 +122,51 @@ elif [ -f requirements.txt ]; then
 elif [ -f setup.py ] || [ -f pyproject.toml ]; then
   timeout 900 pip install -q . >/tmp/inst.log 2>&1 || verdict 0 install pip_install_failed
 elif [ -f DESCRIPTION ]; then
-  timeout 1200 Rscript -e 'if(!requireNamespace("remotes",quietly=TRUE))install.packages("remotes",repos="https://cloud.r-project.org");remotes::install_local(".",dependencies=TRUE,upgrade="never")' >/tmp/inst.log 2>&1 || verdict 0 install R_install_failed
+  RPKG=$(grep -i '^Package:' DESCRIPTION | head -1 | sed 's/[Pp]ackage:[[:space:]]*//' | tr -d '\r')
+  # install AND verify the package is actually available (install_local only *warns* on a
+  # failed build, so a missing package after install is a real install failure).
+  timeout 1200 Rscript -e "if(!requireNamespace('remotes',quietly=TRUE))install.packages('remotes',repos='https://cloud.r-project.org'); remotes::install_local('.',dependencies=TRUE,upgrade='never'); if(!requireNamespace('$RPKG',quietly=TRUE)) quit(status=3)" >/tmp/inst.log 2>&1 || { echo "INSTLOG:"; tail -4 /tmp/inst.log; verdict 0 install R_install_failed; }
 else
   verdict 0 install no_install_manifest
 fi
 
-# --- find + run a shipped example ---
+# --- find + run a shipped example (what a naive user runs); NOT test files ---
 EX=""
-for d in example examples demo demos tutorial tutorials vignettes test tests testthat; do
+for d in example examples demo demos tutorial tutorials quickstart getting_started vignettes; do
   for pat in "*.py" "*.R" "*.r" "*.sh"; do
-    f=$(ls $d/$pat 2>/dev/null | head -1)
+    f=$(ls $d/$pat 2>/dev/null | grep -vi test | head -1)
     if [ -n "$f" ]; then
       case "$f" in *.py) EX="python $f";; *.R|*.r) EX="Rscript $f";; *.sh) EX="bash $f";; esac
       break 2
     fi
   done
 done
-# fallback: a package CLI / module --help (weak, but proves it imports + runs)
+# else the README's first non-install usage block (injected; run in the repo's language)
+IMPORTONLY=""
+if [ -z "$EX" ] && [ -n "README_B64" ]; then
+  echo "README_B64" | base64 -d > /repo/.naive_example
+  if [ "PRIMARY_LANG" = "r" ]; then EX="Rscript /repo/.naive_example"; else EX="python /repo/.naive_example"; fi
+fi
+# else: does it at least import / load? (a weaker "runs today"; language-aware)
 if [ -z "$EX" ]; then
-  PKG=$(basename $(pwd))
-  if [ -d "$PKG" ] && [ -f "$PKG/__init__.py" ]; then EX="python -c 'import $PKG'"; fi
+  if [ -f DESCRIPTION ]; then
+    P=$(grep -i '^Package:' DESCRIPTION | head -1 | sed 's/[Pp]ackage:[[:space:]]*//' | tr -d '\r')
+    EX="Rscript -e 'library($P)'"; IMPORTONLY=1
+  else
+    P=""; for d in */; do [ -f "${d}__init__.py" ] && P="${d%/}" && break; done
+    [ -z "$P" ] && P=$(basename "$(pwd)" | tr '-' '_')
+    EX="python -c 'import $P'"; IMPORTONLY=1
+  fi
 fi
 [ -z "$EX" ] && verdict 0 example no_example_found
 
-OUT=$(cd /repo && timeout 900 bash -lc "$EX" 2>/tmp/ex.log)
-RC=$?
-if [ $RC -eq 0 ] && { [ -n "$OUT" ] || [ -s /tmp/ex.log ]; }; then
-  verdict 1 example ran_ok
+echo "RAN: $EX"
+cd /repo && timeout 900 bash -lc "$EX" >/tmp/ex.out 2>/tmp/ex.log; RC=$?
+# a shipped example (or import) completing without error = it ran (output is often a file)
+if [ $RC -eq 0 ]; then
+  [ -n "$IMPORTONLY" ] && verdict 1 example imports_only || verdict 1 example ran_ok
 else
+  echo "EXLOG_TAIL:"; tail -10 /tmp/ex.log 2>/dev/null; echo "INSTLOG_TAIL:"; tail -4 /tmp/inst.log 2>/dev/null
   verdict 0 example "example_exit_${RC}"
 fi
 """
@@ -132,6 +192,10 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
     slug = "/".join(repo_url.rstrip("/").split("/")[-2:])
     lang = primary_language(github_languages(slug))
     res = NaiveResult(repo_url=repo_url, lang=lang)
+    code = readme_example(fetch_readme(slug))
+    b64 = base64.b64encode(code.encode()).decode() if code else ""
+    script = (PROTOCOL.replace("REPO_URL", repo_url)
+              .replace("README_B64", b64).replace("PRIMARY_LANG", lang))
     t0 = time.time()
     client = DockerClient(binary=find_docker(), docker_host=docker_host)
     sb = Sandbox(client, base_image_for(lang), workdir="/")
@@ -150,7 +214,7 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
     threading.Thread(target=_watchdog, daemon=True).start()
     try:
         sb.start()
-        cr = sb.exec(PROTOCOL.replace("REPO_URL", repo_url), timeout=timeout_s + 60)
+        cr = sb.exec(script, timeout=timeout_s + 60)
         out = (cr.stdout or "") + "\n" + (cr.stderr or "")
         res.log_tail = out[-1500:]
         m = re.search(r"===BASELINE===\s+naive_runs=(\d)\s+stage=(\S+)\s+reason=(\S+)", out)
