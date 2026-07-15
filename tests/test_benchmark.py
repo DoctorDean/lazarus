@@ -1,5 +1,6 @@
 """Tests for the benchmark harness — the pure pieces (classify, results IO,
 summarize, provisional_entry). The live `run_one` needs Docker + auth."""
+import json
 import sys
 from pathlib import Path
 
@@ -65,6 +66,20 @@ def test_results_io_roundtrip(tmp_path):
     back = run.load_results(str(p))
     assert back == rows
     assert run.already_done(back, "u/a") and not run.already_done(back, "u/b")
+
+
+def test_collect_urls_merges_sources_and_dedups(tmp_path):
+    repos = tmp_path / "repos.txt"
+    repos.write_text("https://github.com/o/a  # keep\n\n# comment only\nhttps://github.com/o/b\n")
+    frame = tmp_path / "frame.json"
+    frame.write_text(json.dumps({"sample": [
+        {"repo_url": "https://github.com/o/b"},   # dup of a --repos entry
+        {"repo_url": "https://github.com/o/c"},
+    ]}))
+    urls = run.collect_urls(["https://github.com/o/a"], str(repos), str(frame))
+    # order preserved (url, then repos, then frame), inline # comments stripped, dups removed
+    assert urls == ["https://github.com/o/a", "https://github.com/o/b", "https://github.com/o/c"]
+    assert run.collect_urls() == []
 
 
 def test_summarize_rates_and_reasons():

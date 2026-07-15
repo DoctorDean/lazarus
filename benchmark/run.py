@@ -391,6 +391,20 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
     return res
 
 
+def collect_urls(urls=None, repos_file=None, frame_file=None) -> list:
+    """Merge repo URLs from --url, --repos (one per line, # comments), and --frame
+    (a sampled-frame JSON: {'sample':[{'repo_url':...}]}); de-dup, preserve order."""
+    out = list(urls or [])
+    if repos_file:
+        for line in Path(repos_file).read_text().splitlines():
+            line = line.split("#")[0].strip()
+            if line:
+                out.append(line)
+    if frame_file:
+        out += [s["repo_url"] for s in json.loads(Path(frame_file).read_text())["sample"]]
+    return list(dict.fromkeys(out))  # a URL may arrive via more than one source
+
+
 def main(argv=None) -> int:
     import argparse
     import time
@@ -398,6 +412,7 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description="Lazarus benchmark harness")
     ap.add_argument("--repos", help="file with one repo URL per line (# comments ok)")
     ap.add_argument("--url", action="append", help="a single repo URL (repeatable)")
+    ap.add_argument("--frame", help="a sampled-frame JSON ({'sample':[{'repo_url':...}]}) e.g. benchmark/frame.json")
     ap.add_argument("--docker-host", default=None)
     ap.add_argument("--max-turns", type=int, default=90)
     ap.add_argument("--timeout", type=int, default=5400, help="per-repo wall-clock cap (s)")
@@ -411,14 +426,9 @@ def main(argv=None) -> int:
     from lazarus.cli import load_dotenv
     load_dotenv()
 
-    urls = list(args.url or [])
-    if args.repos:
-        for line in Path(args.repos).read_text().splitlines():
-            line = line.split("#")[0].strip()
-            if line:
-                urls.append(line)
+    urls = collect_urls(args.url, args.repos, args.frame)
     if not urls:
-        print("no repos given (--repos FILE or --url URL)")
+        print("no repos given (--repos FILE, --frame FILE, or --url URL)")
         return 2
 
     rows = load_results(args.out)
