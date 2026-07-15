@@ -94,6 +94,18 @@ def test_frame_extract_repo():
     assert frame.extract_repo("no code here") is None
 
 
+def test_baseline_language_and_image():
+    import baseline  # noqa: E402
+    assert baseline.primary_language({"Python": 9000, "Shell": 100}) == "python"
+    assert baseline.primary_language({"R": 5000, "C++": 200}) == "r"
+    assert baseline.primary_language({"Jupyter Notebook": 800}) == "python"
+    assert baseline.primary_language({}) == "python"
+    assert "rocker" in baseline.base_image_for("r")
+    assert "miniconda" in baseline.base_image_for("python")
+    # the protocol embeds a machine-readable verdict line the runner parses
+    assert "===BASELINE===" in baseline.PROTOCOL and "REPO_URL" in baseline.PROTOCOL
+
+
 def test_provisional_entry_from_contract():
     from lazarus.contract import Contract, SmokeCheck, Benchmark
 
