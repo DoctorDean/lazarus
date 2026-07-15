@@ -65,9 +65,19 @@ Precision × budget. N≈30 → ±~18 % (95 % Wilson); N≈50 → ±~14 %. Pilot
 4. **Run** baseline + Lazarus over the sample (budget-managed, resumable).
 5. **Analyze + figures + write-up.**
 
-## Open decisions for Dean
-- **Frame:** Bioinformatics-anchored (rec) · multi-venue · Papers-with-Code.
-- **Year range:** 2018–2021 (rec).
-- **N:** 30 first tranche (rec) · 50.
-- **Baseline judge:** how strictly to score "the example ran" (exact-output match vs "produced
-  plausible output without erroring").
+## Locked decisions (2026-07-15)
+- **Frame:** anchored on the journal **_Bioinformatics_**.
+- **Year range:** **2018–2021**.
+- **N:** **20** — a mini first tranche to shake down the frame + baseline runner before
+  scaling to 30–50. (±~22% CI; treat as a methods dry-run, not the final headline.)
+- **Baseline judge:** *(still to pin)* — lean toward "produced plausible output without
+  erroring within 30 min" rather than exact-output match, to avoid unfairly scoring decay high.
+
+## Next build steps
+1. **Frame enumeration** — `benchmark/frame.py`: OpenAlex query (venue = Bioinformatics,
+   2018–2021), keep papers whose repo link resolves to a public GitHub, emit the population
+   with metadata. Over-draw (inclusion attrition is real), seeded.
+2. **Draw + screen** to 20 that meet inclusion; log every exclusion with a reason.
+3. **Baseline runner** — `benchmark/baseline.py`: agent-free clone → README install → run the
+   shipped example, 30-min hard cap → `naive_runs`.
+4. Run baseline + Lazarus over the 20; analyze; decide whether to expand to 50.
