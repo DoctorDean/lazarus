@@ -1,0 +1,182 @@
+{
+  "frame": "Bioinformatics (ISSN 1367-4803), 2018–2021, full-text/abstract links a public GitHub repo",
+  "seed": 42,
+  "population_enumerated": 571,
+  "hit_count": 571,
+  "screened": 23,
+  "n": 20,
+  "sample": [
+    {
+      "repo_url": "https://github.com/parklab/HiTea",
+      "title": "HiTea: a computational pipeline to identify non-reference transposable element insertions in Hi-C data.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btaa923",
+      "id": "33136153"
+    },
+    {
+      "repo_url": "https://github.com/lauzingaretti/LinkHD",
+      "title": "Link-HD: a versatile framework to explore and integrate heterogeneous microbial communities.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btz862",
+      "id": "31738392"
+    },
+    {
+      "repo_url": "https://github.com/zky0708/2DImpute",
+      "title": "2DImpute: imputation in single-cell RNA-seq data from correlations in two dimensions.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btaa148",
+      "id": "32108864"
+    },
+    {
+      "repo_url": "https://github.com/tylii/ddap",
+      "title": "DDAP: docking domain affinity and biosynthetic pathway prediction tool for type I polyketide synthases.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btz677",
+      "id": "31504190"
+    },
+    {
+      "repo_url": "https://github.com/RedaRawi/PaRSnIP",
+      "title": "PaRSnIP: sequence-based protein solubility prediction using gradient boosting machine.",
+      "year": "2018",
+      "doi": "10.1093/bioinformatics/btx662",
+      "id": "29069295"
+    },
+    {
+      "repo_url": "https://github.com/rauschenberger/joinet",
+      "title": "Predicting correlated outcomes from molecular data.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btab576",
+      "id": "34358294"
+    },
+    {
+      "repo_url": "https://github.com/jorgemf/DeepLatentMicrobiome",
+      "title": "Predicting microbiomes through a deep latent space.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btaa971",
+      "id": "33289510"
+    },
+    {
+      "repo_url": "https://github.com/szymczak-lab/PathwayGuidedRF",
+      "title": "Integrating biological knowledge and gene expression data using pathway-guided random forests: a benchmarking study.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btaa483",
+      "id": "32399562"
+    },
+    {
+      "repo_url": "https://github.com/iferres/simurg",
+      "title": "simurg: simulate bacterial pangenomes in R.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btz735",
+      "id": "31584605"
+    },
+    {
+      "repo_url": "https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer",
+      "title": "DNA Features Viewer: a sequence annotation formatting and plotting library for Python.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btaa213",
+      "id": "32637988"
+    },
+    {
+      "repo_url": "https://github.com/skalyaanamoorthy/PoseFilter",
+      "title": "PoseFilter: a PyMOL plugin for filtering and analyzing small molecule docking in symmetric binding sites.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btab188",
+      "id": "33742661"
+    },
+    {
+      "repo_url": "https://github.com/intermine/interMineR",
+      "title": "InterMineR: an R package for InterMine databases.",
+      "year": "2019",
+      "doi": "10.1093/bioinformatics/btz039",
+      "id": "30668641"
+    },
+    {
+      "repo_url": "https://github.com/mrzResearchArena/PyFeat",
+      "title": "PyFeat: a Python-based effective feature generation tool for DNA, RNA and protein sequences.",
+      "year": "2019",
+      "doi": "10.1093/bioinformatics/btz165",
+      "id": "30850831"
+    },
+    {
+      "repo_url": "https://github.com/radamsRHA/PhyloWGA",
+      "title": "PhyloWGA: chromosome-aware phylogenetic interrogation of whole genome alignments.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btaa884",
+      "id": "33051672"
+    },
+    {
+      "repo_url": "https://github.com/Puumanamana/CoCoNet",
+      "title": "CoCoNet: an efficient deep learning tool for viral metagenome binning.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btab213",
+      "id": "33822891"
+    },
+    {
+      "repo_url": "https://github.com/benhid/Sequoya",
+      "title": "Sequoya: multiobjective multiple sequence alignment in Python.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btaa257",
+      "id": "32315391"
+    },
+    {
+      "repo_url": "https://github.com/hr1912/TreeExp",
+      "title": "Estimating the strength of expression conservation from high throughput RNA-seq data.",
+      "year": "2019",
+      "doi": "10.1093/bioinformatics/btz405",
+      "id": "31114853"
+    },
+    {
+      "repo_url": "https://github.com/ablab/TandemTools",
+      "title": "TandemTools: mapping long reads and assessing/improving assembly quality in extra-long tandem repeats.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btaa440",
+      "id": "32657355"
+    },
+    {
+      "repo_url": "https://github.com/SCBIT-YYLab/DysRegSig",
+      "title": "DysRegSig: an R package for identifying gene dysregulations and building mechanistic signatures in cancer.",
+      "year": "2021",
+      "doi": "10.1093/bioinformatics/btaa688",
+      "id": "32717036"
+    },
+    {
+      "repo_url": "https://github.com/weng-lab/ZING",
+      "title": "Integrating ab initio and template-based algorithms for protein-protein complex structure prediction.",
+      "year": "2020",
+      "doi": "10.1093/bioinformatics/btz623",
+      "id": "31393558"
+    }
+  ],
+  "excluded": [
+    {
+      "id": "30520945",
+      "source": "MED",
+      "pmcid": "PMC6612896",
+      "doi": "10.1093/bioinformatics/bty1007",
+      "title": "Alfred: interactive multi-sample BAM alignment statistics, feature counting and feature annotation for long- and short-read sequencing.",
+      "year": "2019",
+      "abstract": "<h4>Summary</h4>Harmonizing quality control (QC) of large-scale second and third-generation sequencing datasets is key for enabling downstream computational and biological analyses. We present Alfred, an efficient and versatile command-line application that computes multi-sample QC metrics in a read-group aware manner, across a wide variety of sequencing assays and technologies. In addition to standard QC metrics such as GC bias, base composition, insert size and sequencing coverage distributions it supports haplotype-aware and allele-specific feature counting and feature annotation. The versatility of Alfred allows for easy pipeline integration in high-throughput settings, including DNA sequencing facilities and large-scale research initiatives, enabling continuous monitoring of sequence data quality and characteristics across samples. Alfred supports haplo-tagging of BAM/CRAM files to conduct haplotype-resolved analyses in conjunction with a variety of next-generation sequencing based assays. Alfred's companion web application enables interactive exploration of results and comparison to public datasets.<h4>Availability and implementation</h4>Alfred is open-source and freely available at https://tobiasrausch.com/alfred/.<h4>Supplementary information</h4>Supplementary data are available at Bioinformatics online.",
+      "reason": "no github repo extracted"
+    },
+    {
+      "id": "30721922",
+      "source": "MED",
+      "pmcid": "PMC6748775",
+      "doi": "10.1093/bioinformatics/btz087",
+      "title": "G4Hunter web application: a web server for G-quadruplex prediction.",
+      "year": "2019",
+      "abstract": "<h4>Motivation</h4>Expanding research highlights the importance of guanine quadruplex structures. Therefore, easy-accessible tools for quadruplex analyses in DNA and RNA molecules are important for the scientific community.<h4>Results</h4>We developed a web version of the G4Hunter application. This new web-based server is a platform-independent and user-friendly application for quadruplex analyses. It allows retrieval of gene/nucleotide sequence entries from NCBI databases and provides complete characterization of localization and quadruplex propensity of quadruplex-forming sequences. The G4Hunter web application includes an interactive graphical data representation with many useful options including visualization, sorting, data storage and export.<h4>Availability and implementation</h4>G4Hunter web application can be accessed at: http://bioinformatics.ibp.cz.<h4>Supplementary information</h4>Supplementary data are available at Bioinformatics online.",
+      "reason": "no github repo extracted"
+    },
+    {
+      "id": "33715003",
+      "source": "MED",
+      "pmcid": "PMC8479676",
+      "doi": "10.1093/bioinformatics/btab180",
+      "title": "POKY: a software suite for multidimensional NMR and 3D structure calculation of biomolecules.",
+      "year": "2021",
+      "abstract": "<h4>Summary</h4>The need for an efficient and cost-effective method is compelling in biomolecular NMR. To tackle this problem, we have developed the Poky suite, the revolutionized platform with boundless possibilities for advancing research and technology development in signal detection, resonance assignment, structure calculation and relaxation studies with the help of many automation and user interface tools. This software is extensible and scalable by scripting and batching as well as providing modern graphical user interfaces and a diverse range of modules right out of the box.<h4>Availability and implementation</h4>Poky is freely available to non-commercial users at https://poky.clas.ucdenver.edu.<h4>Supplementary information</h4>Supplementary data are available at Bioinformatics online.",
+      "reason": "no github repo extracted"
+    }
+  ]
+}

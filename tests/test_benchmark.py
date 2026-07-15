@@ -85,6 +85,15 @@ def test_summarize_rates_and_reasons():
     assert "reproduced" in report.render(rows)
 
 
+def test_frame_extract_repo():
+    import frame  # noqa: E402  (benchmark/ is on sys.path)
+    t = ("Availability: implemented in Python, freely available at "
+         "https://github.com/My-Lab/CoolTool.git; issues at github.com/My-Lab/CoolTool/issues")
+    assert frame.extract_repo(t) == "My-Lab/CoolTool"           # strips .git and /issues
+    assert frame.extract_repo("see github.com/features/actions for CI") is None  # bad owner
+    assert frame.extract_repo("no code here") is None
+
+
 def test_provisional_entry_from_contract():
     from lazarus.contract import Contract, SmokeCheck, Benchmark
 
