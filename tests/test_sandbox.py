@@ -128,9 +128,9 @@ def test_failed_lifecycle_command_raises():
 
 def test_remote_host_sets_docker_host_env():
     runner = FakeRunner()
-    client = DockerClient(runner=runner, docker_host="ssh://dean@100.1.2.3")
+    client = DockerClient(runner=runner, docker_host="ssh://you@gpu-box")
     client.run(["ps"])
-    assert runner.envs[-1] == {"DOCKER_HOST": "ssh://dean@100.1.2.3"}
+    assert runner.envs[-1] == {"DOCKER_HOST": "ssh://you@gpu-box"}
 
 
 def test_local_host_passes_no_docker_host_env():

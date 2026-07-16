@@ -6,7 +6,7 @@
 #   lazarus run examples/pipelines/binder_triage.yaml \
 #     --input structure=4ZQK.pdb \
 #     --registry examples --registry components \
-#     --docker-host ssh://dean@100.80.108.2
+#     --docker-host ssh://you@your-gpu-box
 name: binder-interface-triage
 
 inputs:

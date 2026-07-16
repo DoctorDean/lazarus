@@ -273,9 +273,9 @@ binder-triage pipeline, reproduced paper benchmarks, and two give-back PRs — p
 Start at [CONTRIBUTING.md](CONTRIBUTING.md). Development happens on the `next` branch.
 
 **Two front doors:** a [zero-setup Colab notebook](notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)
-for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and a
-[3-minute demo-video script](docs/DEMO_SCRIPT.md) for the live-compute story (autonomous
-revival + the pipeline running on a GPU box).
+for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and the
+[interactive dashboard](demo/dashboard/) — search a repo, watch it come back to life, and
+browse the registry.
 
 ## License
 

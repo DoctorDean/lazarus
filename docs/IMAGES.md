@@ -57,7 +57,7 @@ yours to provide — the script never handles credentials.
    ```
 2. Push (point `DOCKER_HOST` at the host holding the images — e.g. the GPU box):
    ```bash
-   DOCKER_HOST=ssh://dean@100.80.108.2 scripts/publish_images.sh
+   DOCKER_HOST=ssh://you@your-gpu-box scripts/publish_images.sh
    ```
 3. In the GHCR web UI, set each new package's visibility to **Public**.
 4. Reflect it in the registry: add `image_public=True` to those entries in

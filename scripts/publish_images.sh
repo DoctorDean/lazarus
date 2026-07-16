@@ -12,7 +12,7 @@
 #   …on whichever docker host holds the images (set DOCKER_HOST to point there).
 #
 # Usage:
-#   DOCKER_HOST=ssh://dean@100.80.108.2 NS=ghcr.io/doctordean scripts/publish_images.sh
+#   DOCKER_HOST=ssh://you@your-gpu-box NS=ghcr.io/doctordean scripts/publish_images.sh
 #
 set -euo pipefail
 
