@@ -1,0 +1,182 @@
+[
+  {
+    "repo_url": "https://github.com/parklab/HiTea",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 24.107433795928955,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/lauzingaretti/LinkHD",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 499.10757207870483,
+    "log_tail": "INSTLOG:\n4: In i.p(...) :\n  installation of package ‘MultiAssayExperiment’ had non-zero exit status\n5: In i.p(...) :\n  installation of package ‘/tmp/RtmpFuf5zb/file1e91893baef/LinkHD_0.99.9.tar.gz’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/zky0708/2DImpute",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 89.29423999786377,
+    "log_tail": "INSTLOG:\n1: In i.p(...) :\n  installation of package ‘jaccard’ had non-zero exit status\n2: In i.p(...) :\n  installation of package ‘/tmp/Rtmpoo7yya/file1e971890248/R2DImpute_0.1.0.tar.gz’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/tylii/ddap",
+    "naive_runs": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 51.850558280944824,
+    "log_tail": "RAN: python -c 'import ddap'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/RedaRawi/PaRSnIP",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 45.18351411819458,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/rauschenberger/joinet",
+    "naive_runs": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 333.4079668521881,
+    "log_tail": "RAN: Rscript -e 'library(joinet)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jorgemf/DeepLatentMicrobiome",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 23.77859115600586,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/szymczak-lab/PathwayGuidedRF",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 148.45038533210754,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/PathwayGuidedRF’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpZCtpX8/file1e965447aca/PathwayGuidedRF_0.5.0.tar.gz’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/iferres/simurg",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 186.78868699073792,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/simurg’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpIjFw49/file1e97dffee15/simurg_0.2.1.tar.gz’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer",
+    "naive_runs": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 32.55419588088989,
+    "log_tail": "RAN: python examples/cartoon_style.py\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/skalyaanamoorthy/PoseFilter",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 12.786312103271484,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/intermine/interMineR",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 630.8365812301636,
+    "log_tail": "INSTLOG:\n(as ‘lib’ is unspecified)\nERROR: dependencies ‘Biostrings’, ‘GenomicRanges’, ‘SummarizedExperiment’ are not available for package ‘InterMineR’\n* removing ‘/usr/local/lib/R/site-library/InterMineR’\nThere were 22 warnings (use warnings() to see them)\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mrzResearchArena/PyFeat",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 14.3753821849823,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/radamsRHA/PhyloWGA",
+    "naive_runs": false,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 64.23290681838989,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError in library(ape) : there is no package called ‘ape’\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (PhyloWGA)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Puumanamana/CoCoNet",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 913.1720769405365,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/benhid/Sequoya",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 28.69909119606018,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/hr1912/TreeExp",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 241.65239095687866,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/TreeExp’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpkRYbic/file1e962925886/TreeExp_2.0.tar.gz’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ablab/TandemTools",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 45.90034818649292,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SCBIT-YYLab/DysRegSig",
+    "naive_runs": false,
+    "stage": "timeout",
+    "reason": "hard_cap",
+    "lang": "r",
+    "wall_clock_s": 4808.909351825714,
+    "log_tail": "\n\n[timed out]"
+  },
+  {
+    "repo_url": "https://github.com/weng-lab/ZING",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 14.055615186691284,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  }
+]

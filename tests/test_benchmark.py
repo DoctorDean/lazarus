@@ -100,6 +100,28 @@ def test_summarize_rates_and_reasons():
     assert "reproduced" in report.render(rows)
 
 
+def test_wilson_ci_and_baseline_merge():
+    # Wilson interval: bounded to [0,1], brackets the point estimate, and a known value.
+    assert report.wilson_ci(0, 0) is None
+    lo, hi = report.wilson_ci(17, 20)          # 85% decay of 20
+    assert 0 <= lo < 0.85 < hi <= 1
+    assert round(lo, 2) == 0.64 and round(hi, 2) == 0.95   # standard Wilson 95% for 17/20
+    lo, hi = report.wilson_ci(20, 20)          # all successes: upper bound stays <1, lower <1
+    assert hi == 1.0 and lo < 1.0
+    # merge_baseline fills naive_runs from the baseline file by repo_url, leaves others
+    rows = [{"repo_url": "a", "outcome": "revived", "naive_runs": None},
+            {"repo_url": "b", "outcome": "revived", "naive_runs": True}]
+    base = [{"repo_url": "a", "naive_runs": False}]
+    merged = report.merge_baseline(rows, base)
+    assert merged[0]["naive_runs"] is False        # filled from baseline
+    assert merged[1]["naive_runs"] is True         # untouched (already set)
+    assert rows[0]["naive_runs"] is None           # original not mutated
+    # CIs now surface in the summary + render
+    s = report.summarize(merged)
+    assert s["decay_ci"] is not None and s["revival_ci"] is not None
+    assert "95% CI" in report.render(merged)
+
+
 def test_frame_extract_repo():
     import frame  # noqa: E402  (benchmark/ is on sys.path)
     t = ("Availability: implemented in Python, freely available at "
