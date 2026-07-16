@@ -7,7 +7,7 @@
 <p align="center"><em>Turn dead research code into a callable pipeline component — and give the revival back.</em></p>
 
 <p align="center">
-  🧬 <strong>Build track</strong> · Built with <strong>Claude Science</strong> hackathon · July 2026
+  🏆 <strong>Winner — Build track, Claude Science hackathon</strong> · July 2026
 </p>
 
 <p align="center">
@@ -164,6 +164,25 @@ Every revival can carry this: the contract's `benchmark` field emits a
 [`REPRODUCE.md`](examples/masif_site_contract/REPRODUCE.md) certificate with a PASS/OFF
 verdict — the trust layer that turns a resurrection into something a team will actually adopt.
 
+## Measured — most of these repos are dead, and Lazarus revived them all
+
+The hero repos above are anecdotes. To test the thesis honestly we drew a **principled,
+seeded random sample** — 20 tools published in *Bioinformatics* (2018–2021) — and ran two
+passes over each: an **agent-free baseline** (does it still run today?) and the **full
+Lazarus harness** (can the agent revive it?), with every verdict independently re-verified.
+
+| | Result | 95% CI |
+|---|:--:|:--:|
+| **Ran on its own today**, agent-free | **3 / 20** — so **85% are dead** | 64–95% |
+| **Revived by Lazarus**, of the dead ones | **17 / 17 → 100%** | 82–100% |
+| Reproduced the paper's own reported metric | **5 / 20** | |
+
+85% of a random slice of recent, peer-reviewed computational biology **won't install or run**
+a few years on. Lazarus brought back **every** dead repo in the sample — 20 / 20 overall —
+and 5 matched the original paper's numbers. Nothing here is cherry-picked: the frame, the
+seed, the per-repo outcomes, and the runnable harness are all in [`benchmark/`](benchmark/)
+(`benchmark/report.py` regenerates the table with confidence intervals).
+
 ## How it works — five organs
 
 | Organ | Role |
@@ -182,6 +201,29 @@ container, a remote x86 box, a **cloud VM**, or a **GPU rental** — for methods
 MSMS or dMaSIF's CUDA) whose binaries need hardware laptop emulation can't provide. The
 agent's tools and the emitted `predict.py` both run against whatever `--docker-host` /
 `DOCKER_HOST` points at, so the whole chain is host-agnostic.
+
+## The registry — pull a revived tool
+
+Every revival lands in a living registry, so you don't have to re-resurrect what someone
+already did. Browse it and pull any tool's contract — an importable module, a CLI, a pinned
+container, and the smoke test that proves it runs:
+
+```bash
+lazarus registry                              # list the revived tools
+lazarus pull scannet_ppi_binding_sites        # fetch its contract bundle
+```
+
+Six tools are in today — **MaSIF-site, ScanNet, dMaSIF, fpocket, Basset, DiffDock** — each a
+callable brick backed by a pinned container image on **GHCR** (see [`docs/IMAGES.md`](docs/IMAGES.md)
+to run one). Adding a tool is a pull request: see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Try it — the dashboard
+
+A public "try it" surface: search a GitHub repo, watch it come back to life, browse the registry.
+
+```bash
+uvicorn demo.dashboard.app:app --port 8080    # → http://localhost:8080
+```
 
 ## Quickstart
 
@@ -204,6 +246,10 @@ lazarus resurrect https://github.com/jertubiana/ScanNet
 lazarus resurrect --image pablogainza/masif:latest --workdir /masif \
   --goal-file examples/masif_site_goal.txt --keep
 
+# browse & pull from the registry of already-revived tools
+lazarus registry
+lazarus pull scannet_ppi_binding_sites
+
 # compose revived components into a pipeline
 lazarus run examples/pipelines/binder_triage.yaml --input structure=4ZQK.pdb \
   --registry examples --registry components
@@ -216,15 +262,20 @@ Log in the `claude` CLI (subscription) or put `ANTHROPIC_API_KEY=...` in a gitig
 
 Working today: **Scout** (URL → resurrection plan) · pinner · Docker sandbox (local + `ssh://`
 remote + `--gpus`) · autonomous repair loop · capability locator · contract emitter (GPU-aware,
-with reproduction certificates) · **Lazarus Compose**. All three pillars landed — **six** dead
-repos revived (four protein + genomics + molecular docking; two from nothing but a URL), a
-three-way method comparison, a live binder-triage pipeline, three reproduced paper benchmarks, and
-two give-back PRs — with 49 passing tests, published to PyPI (`pip install lazarus-bio`).
+with reproduction certificates) · **Lazarus Compose** · a **registry** of revived tools · a
+public **dashboard**. All three pillars landed — the curated hero set of **six** dead repos
+revived (protein + genomics + molecular docking), a three-way method comparison, a live
+binder-triage pipeline, reproduced paper benchmarks, and two give-back PRs — plus a
+**principled N=20 benchmark** (85% of the sample dead, 100% of the dead revived; see
+[`benchmark/`](benchmark/)). 66 passing tests, published to PyPI (`pip install lazarus-bio`).
+
+**Contributions welcome** — add a repo, curate a registry entry, or file a revival that failed.
+Start at [CONTRIBUTING.md](CONTRIBUTING.md). Development happens on the `next` branch.
 
 **Two front doors:** a [zero-setup Colab notebook](notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)
-for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and a
-[3-minute demo-video script](docs/DEMO_SCRIPT.md) for the live-compute story (autonomous
-revival + the pipeline running on a GPU box).
+for newcomers (no Docker/GPU — pinner live + the result rendered in 3D), and the
+[interactive dashboard](demo/dashboard/) — search a repo, watch it come back to life, and
+browse the registry.
 
 ## License
 

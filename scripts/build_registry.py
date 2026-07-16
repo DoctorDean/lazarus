@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+"""Seed + (re)generate the Lazarus registry.
+
+Curated metadata for each revived tool lives here (the human bits the contract
+doesn't carry: title, domain, era, one-line summary, license, agent-turns,
+give-back PR). This writes:
+  - registry/entries/<name>.yaml   (source of truth — the benchmark/bot append here)
+  - registry/index.json            (aggregated, fetchable)
+  - docs/registry.md               (the public index page)
+
+Run from the repo root: python scripts/build_registry.py
+"""
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from lazarus.registry import RegistryEntry, build_index, render_markdown  # noqa: E402
+
+ROOT = Path(__file__).resolve().parents[1]
+
+ENTRIES = [
+    RegistryEntry(
+        name="masif_site", title="MaSIF-site", domain="Protein interaction sites",
+        summary="Predict per-residue protein-interaction-site probability from a molecular surface.",
+        repo_url="https://github.com/LPDI-EPFL/masif",
+        paper="Gainza et al., Nature Methods 2020 — MaSIF",
+        era="2020 · Py3.6 · TF 1.12 · MSMS/APBS", license="Apache-2.0",
+        base_image="ghcr.io/doctordean/lazarus-masif:site-ready", image_public=True, gpu=False, from_url=False, turns=18,
+        sanity_metric="roc_auc", sanity_threshold=0.8, sanity_direction="above",
+        reproduced_metric="median ROC-AUC", reproduced_reported=0.85, reproduced_measured=0.82,
+        giveback_pr="https://github.com/LPDI-EPFL/masif/pull/93",
+        contract="examples/masif_site_contract", added="2026-07-07",
+    ),
+    RegistryEntry(
+        name="scannet_ppi_binding_sites", title="ScanNet", domain="Protein binding sites",
+        summary="Per-residue protein–protein binding-site probability from one structure (structure-only, no MSA).",
+        repo_url="https://github.com/jertubiana/ScanNet",
+        paper="Tubiana et al., Nature Methods 2022 — ScanNet",
+        era="2022 · Py3.6 · TF 1.14 · Keras", license="Apache-2.0",
+        base_image="ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven", image_public=True, gpu=False, from_url=False, turns=19,
+        sanity_metric="ROC_AUC", sanity_threshold=0.7, sanity_direction="above",
+        giveback_pr="https://github.com/jertubiana/ScanNet/pull/16",
+        contract="examples/scannet_ppi_contract", added="2026-07-08",
+    ),
+    RegistryEntry(
+        name="dmasif_site", title="dMaSIF", domain="Protein interface (surface, GPU)",
+        summary="Differentiable molecular-surface interface prediction, built and run on GPU.",
+        repo_url="https://github.com/FreyrS/dMaSIF",
+        paper="Sverrisson et al., CVPR 2021 — dMaSIF",
+        era="2021 · Py3.6 · torch cu111 · PyKeOps · GPU", license="CC BY-NC-ND",
+        # NOT published to GHCR: CC BY-NC-ND forbids redistributing a derivative image.
+        # Users rebuild locally via Lazarus; see docs/IMAGES.md.
+        base_image="lazarus/dmasif:site-ready", gpu=True, from_url=False, turns=51,
+        sanity_metric="ROCAUC", sanity_threshold=0.65, sanity_direction="above",
+        contract="examples/dmasif_site_contract", added="2026-07-08",
+    ),
+    RegistryEntry(
+        name="fpocket2", title="fpocket", domain="Druggable pocket detection",
+        summary="Detect and rank druggable pockets on a protein structure (Voronoi / alpha-spheres).",
+        repo_url="https://fpocket.sourceforge.net",
+        paper="Le Guilloux et al., BMC Bioinformatics 2009 — fpocket",
+        era="2010 C · built on modern GCC", license="MIT",
+        base_image="ghcr.io/doctordean/lazarus-fpocket:working", image_public=True, gpu=False, from_url=False, turns=32,
+        sanity_metric="pockets", sanity_threshold=1, sanity_direction="above",
+        contract="examples/fpocket2_contract", added="2026-07-08",
+    ),
+    RegistryEntry(
+        name="basset_predict", title="Basset", domain="Genomics — chromatin accessibility",
+        summary="Predict DNaseI-hypersensitivity across 164 cell types from a 600 bp DNA sequence.",
+        repo_url="https://github.com/davek44/Basset",
+        paper="Kelley et al., Genome Research 2016 — Basset",
+        era="2016 · Lua Torch7", license="see source repo",
+        # NOT published to GHCR pending an upstream license check (repo states none clearly).
+        # Users rebuild locally via Lazarus; see docs/IMAGES.md.
+        base_image="lazarus/basset:site-ready", gpu=False, from_url=True, turns=48,
+        sanity_metric="min_perseq_std", sanity_threshold=0.01, sanity_direction="above",
+        reproduced_metric="mean AUROC (164 targets)", reproduced_reported=0.895, reproduced_measured=0.894,
+        contract="examples/basset_predict_contract", added="2026-07-10",
+    ),
+    RegistryEntry(
+        name="diffdock_blind_docking", title="DiffDock", domain="Molecular docking",
+        summary="Blind docking — protein + ligand → ranked, confidence-scored 3D poses (diffusion model).",
+        repo_url="https://github.com/gcorso/DiffDock",
+        paper="Corso et al., ICLR 2023 — DiffDock",
+        era="2023 · PyTorch diffusion · ESM-2 · GPU", license="MIT",
+        base_image="ghcr.io/doctordean/lazarus-diffdock:site-ready", image_public=True, gpu=True, from_url=True, turns=57,
+        sanity_metric="rmsd", sanity_threshold=2.0, sanity_direction="below",
+        reproduced_metric="top-1 success rate (<2Å)", reproduced_reported=0.40, reproduced_measured=0.375,
+        contract="examples/diffdock_contract", added="2026-07-10",
+    ),
+]
+
+
+def main() -> None:
+    entries = sorted(ENTRIES, key=lambda e: e.title.lower())
+    edir = ROOT / "registry" / "entries"
+    edir.mkdir(parents=True, exist_ok=True)
+    for e in entries:
+        (edir / f"{e.name}.yaml").write_text(e.to_yaml(), encoding="utf-8")
+    (ROOT / "registry" / "index.json").write_text(
+        json.dumps(build_index(entries), indent=2, ensure_ascii=False), encoding="utf-8")
+    (ROOT / "docs" / "registry.md").write_text(render_markdown(entries), encoding="utf-8")
+    print(f"wrote {len(entries)} entries + index.json + docs/registry.md")
+
+
+if __name__ == "__main__":
+    main()

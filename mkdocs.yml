@@ -38,6 +38,7 @@ nav:
   - Home: index.md
   - Quickstart: quickstart.md
   - How it works: how-it-works.md
+  - Registry: registry.md
   - Compose & reproduce: compose.md
   - The hard problems it solved: CHALLENGES.md
 
@@ -59,7 +60,6 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 exclude_docs: |
-  DEMO_SCRIPT.md
   PUBLISHING.md
 
 extra:

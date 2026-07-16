@@ -1,0 +1,22 @@
+name: dmasif_site
+title: dMaSIF
+domain: Protein interface (surface, GPU)
+summary: Differentiable molecular-surface interface prediction, built and run on GPU.
+repo_url: https://github.com/FreyrS/dMaSIF
+paper: Sverrisson et al., CVPR 2021 — dMaSIF
+era: 2021 · Py3.6 · torch cu111 · PyKeOps · GPU
+license: CC BY-NC-ND
+base_image: lazarus/dmasif:site-ready
+gpu: true
+image_public: false
+from_url: false
+turns: 51
+sanity_metric: ROCAUC
+sanity_threshold: 0.65
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/dmasif_site_contract
+added: '2026-07-08'

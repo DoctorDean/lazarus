@@ -43,3 +43,6 @@ anthropic_key*
 
 # MkDocs build output
 site/
+
+# benchmark run artifacts (results.json IS tracked)
+benchmark/output/

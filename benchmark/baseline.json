@@ -1,0 +1,20 @@
+[
+  {
+    "repo_url": "https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer",
+    "naive_runs": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 44.15547013282776,
+    "log_tail": "===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/iferres/simurg",
+    "naive_runs": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 196.26035809516907,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/simurg’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpXmRRKb/file1e925223ecf/simurg_0.2.1.tar.gz’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  }
+]

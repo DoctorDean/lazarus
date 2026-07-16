@@ -223,6 +223,7 @@ async def scout(
     model: Optional[str] = None,
     cli_path: Optional[str] = None,
     max_turns: int = 30,
+    hint: str = "",
     on_text=None,
 ) -> ResurrectionPlan:
     """Investigate ``repo_url`` on the web and return a validated plan.
@@ -249,6 +250,8 @@ async def scout(
         f"Investigate this repository and produce its resurrection plan as the "
         f"specified JSON block: {repo_url}"
     )
+    if hint:
+        prompt += f"\n\nIMPORTANT CORRECTION: {hint}"
     final_text = ""
     async for msg in query(prompt=prompt, options=options):
         if isinstance(msg, AssistantMessage):

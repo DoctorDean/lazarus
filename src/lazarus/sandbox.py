@@ -6,7 +6,7 @@ step so a later traceback never forces you to re-pay a 40-minute build.
 
 Local vs. remote is handled by Docker's own transport rather than by us: a
 :class:`DockerClient` with ``docker_host=None`` drives the local daemon
-(OrbStack on the Mac); with ``docker_host="ssh://dean@100.x.y.z"`` it drives
+(OrbStack on the Mac); with ``docker_host="ssh://you@your-gpu-box"`` it drives
 the A4500 box over Tailscale SSH. Every command is the same ``docker ...``
 invocation either way.
 

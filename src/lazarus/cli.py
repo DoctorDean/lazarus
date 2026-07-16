@@ -161,6 +161,62 @@ def cmd_run(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_registry(args: argparse.Namespace) -> int:
+    from lazarus import registry as reg
+
+    try:
+        catalog = reg.load_catalog(args.registry)
+    except Exception as exc:  # noqa: BLE001
+        print(f"could not load registry: {exc}", file=sys.stderr)
+        return 1
+
+    if getattr(args, "name", None):  # show one
+        try:
+            e = reg.get(catalog, args.name)
+        except KeyError as exc:
+            print(exc, file=sys.stderr)
+            return 1
+        print(f"{e.title}  ({e.name})")
+        print(f"  {e.summary}")
+        print(f"  domain   : {e.domain}")
+        print(f"  source   : {e.repo_url}  ·  {e.license}")
+        print(f"  stack    : {e.era}" + ("  ·  GPU" if e.gpu else ""))
+        print(f"  sanity   : {e.sanity_str()}")
+        if e.reproduced:
+            print(f"  reproduced: {e.reproduced_metric} {e.reproduced_measured} vs {e.reproduced_reported}")
+        print(f"  revived  : {e.turns} turns" + ("  ·  from a bare URL" if e.from_url else ""))
+        if e.giveback_pr:
+            print(f"  gave back: {e.giveback_pr}")
+        print(f"  paper    : {e.paper}")
+        print(f"\n  pull it  : lazarus pull {e.name}")
+        return 0
+
+    # list
+    print(f"{len(catalog)} revived tools in the registry:\n")
+    for e in catalog:
+        tag = "URL" if e.from_url else "   "
+        print(f"  {e.title:<12} {tag}  {e.domain:<34}  {e.headline()}")
+    print("\n  lazarus registry show <name>   ·   lazarus pull <name>")
+    return 0
+
+
+def cmd_pull(args: argparse.Namespace) -> int:
+    from lazarus import registry as reg
+
+    try:
+        out = reg.pull(args.name, dest=args.dest, source=args.registry)
+        catalog = reg.load_catalog(args.registry)
+        e = reg.get(catalog, args.name)
+    except (KeyError, RuntimeError, Exception) as exc:  # noqa: BLE001
+        print(f"pull failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"pulled {e.title} -> {out}/")
+    if not e.image_public:
+        print(f"note: the pinned image {e.base_image} isn't published yet — "
+              f"this is the contract (API + CLI + Dockerfile + smoke test) to rebuild it.")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="lazarus", description=__doc__)
     parser.add_argument("--version", action="version", version=f"lazarus {__version__}")
@@ -198,6 +254,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--docker-host", default=None, help="e.g. ssh://user@host to run on a remote/GPU box")
     p_run.add_argument("--out", default="pipeline-output", help="output directory")
     p_run.set_defaults(func=cmd_run)
+
+    p_reg = sub.add_parser("registry", help="browse the registry of revived tools")
+    p_reg.add_argument("name", nargs="?", help="show one tool by name (omit to list all)")
+    p_reg.add_argument("--registry", default=None,
+                       help="registry source: a local dir, an index.json, or a URL (default: auto)")
+    p_reg.set_defaults(func=cmd_registry)
+
+    p_pull = sub.add_parser("pull", help="fetch a revived tool's contract from the registry")
+    p_pull.add_argument("name", help="tool name, e.g. diffdock_blind_docking")
+    p_pull.add_argument("--dest", default=".", help="where to write the contract bundle")
+    p_pull.add_argument("--registry", default=None, help="registry source (default: auto)")
+    p_pull.set_defaults(func=cmd_pull)
 
     return parser
 

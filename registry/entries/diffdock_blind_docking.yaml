@@ -1,0 +1,23 @@
+name: diffdock_blind_docking
+title: DiffDock
+domain: Molecular docking
+summary: Blind docking — protein + ligand → ranked, confidence-scored 3D poses (diffusion
+  model).
+repo_url: https://github.com/gcorso/DiffDock
+paper: Corso et al., ICLR 2023 — DiffDock
+era: 2023 · PyTorch diffusion · ESM-2 · GPU
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-diffdock:site-ready
+gpu: true
+image_public: true
+from_url: true
+turns: 57
+sanity_metric: rmsd
+sanity_threshold: 2.0
+sanity_direction: below
+reproduced_metric: top-1 success rate (<2Å)
+reproduced_reported: 0.4
+reproduced_measured: 0.375
+giveback_pr: null
+contract: examples/diffdock_contract
+added: '2026-07-10'
