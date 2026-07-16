@@ -7,7 +7,7 @@ repo_url: https://github.com/LPDI-EPFL/masif
 paper: Gainza et al., Nature Methods 2020 — MaSIF
 era: 2020 · Py3.6 · TF 1.12 · MSMS/APBS
 license: Apache-2.0
-base_image: lazarus/masif:site-ready
+base_image: ghcr.io/doctordean/lazarus-masif:site-ready
 gpu: false
 image_public: false
 from_url: false

@@ -7,7 +7,7 @@ repo_url: https://github.com/jertubiana/ScanNet
 paper: Tubiana et al., Nature Methods 2022 — ScanNet
 era: 2022 · Py3.6 · TF 1.14 · Keras
 license: Apache-2.0
-base_image: lazarus/scannet:ppi-noMSA-proven
+base_image: ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven
 gpu: false
 image_public: false
 from_url: false

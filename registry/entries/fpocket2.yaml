@@ -6,7 +6,7 @@ repo_url: https://fpocket.sourceforge.net
 paper: Le Guilloux et al., BMC Bioinformatics 2009 — fpocket
 era: 2010 C · built on modern GCC
 license: MIT
-base_image: lazarus/fpocket:working
+base_image: ghcr.io/doctordean/lazarus-fpocket:working
 gpu: false
 image_public: false
 from_url: false

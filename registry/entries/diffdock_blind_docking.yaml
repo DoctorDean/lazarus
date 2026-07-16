@@ -7,7 +7,7 @@ repo_url: https://github.com/gcorso/DiffDock
 paper: Corso et al., ICLR 2023 — DiffDock
 era: 2023 · PyTorch diffusion · ESM-2 · GPU
 license: MIT
-base_image: lazarus/diffdock:site-ready
+base_image: ghcr.io/doctordean/lazarus-diffdock:site-ready
 gpu: true
 image_public: false
 from_url: true

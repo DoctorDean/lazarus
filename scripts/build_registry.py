@@ -26,7 +26,7 @@ ENTRIES = [
         repo_url="https://github.com/LPDI-EPFL/masif",
         paper="Gainza et al., Nature Methods 2020 — MaSIF",
         era="2020 · Py3.6 · TF 1.12 · MSMS/APBS", license="Apache-2.0",
-        base_image="lazarus/masif:site-ready", gpu=False, from_url=False, turns=18,
+        base_image="ghcr.io/doctordean/lazarus-masif:site-ready", gpu=False, from_url=False, turns=18,
         sanity_metric="roc_auc", sanity_threshold=0.8, sanity_direction="above",
         reproduced_metric="median ROC-AUC", reproduced_reported=0.85, reproduced_measured=0.82,
         giveback_pr="https://github.com/LPDI-EPFL/masif/pull/93",
@@ -38,7 +38,7 @@ ENTRIES = [
         repo_url="https://github.com/jertubiana/ScanNet",
         paper="Tubiana et al., Nature Methods 2022 — ScanNet",
         era="2022 · Py3.6 · TF 1.14 · Keras", license="Apache-2.0",
-        base_image="lazarus/scannet:ppi-noMSA-proven", gpu=False, from_url=False, turns=19,
+        base_image="ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven", gpu=False, from_url=False, turns=19,
         sanity_metric="ROC_AUC", sanity_threshold=0.7, sanity_direction="above",
         giveback_pr="https://github.com/jertubiana/ScanNet/pull/16",
         contract="examples/scannet_ppi_contract", added="2026-07-08",
@@ -49,6 +49,8 @@ ENTRIES = [
         repo_url="https://github.com/FreyrS/dMaSIF",
         paper="Sverrisson et al., CVPR 2021 — dMaSIF",
         era="2021 · Py3.6 · torch cu111 · PyKeOps · GPU", license="CC BY-NC-ND",
+        # NOT published to GHCR: CC BY-NC-ND forbids redistributing a derivative image.
+        # Users rebuild locally via Lazarus; see docs/IMAGES.md.
         base_image="lazarus/dmasif:site-ready", gpu=True, from_url=False, turns=51,
         sanity_metric="ROCAUC", sanity_threshold=0.65, sanity_direction="above",
         contract="examples/dmasif_site_contract", added="2026-07-08",
@@ -59,7 +61,7 @@ ENTRIES = [
         repo_url="https://fpocket.sourceforge.net",
         paper="Le Guilloux et al., BMC Bioinformatics 2009 — fpocket",
         era="2010 C · built on modern GCC", license="MIT",
-        base_image="lazarus/fpocket:working", gpu=False, from_url=False, turns=32,
+        base_image="ghcr.io/doctordean/lazarus-fpocket:working", gpu=False, from_url=False, turns=32,
         sanity_metric="pockets", sanity_threshold=1, sanity_direction="above",
         contract="examples/fpocket2_contract", added="2026-07-08",
     ),
@@ -69,6 +71,8 @@ ENTRIES = [
         repo_url="https://github.com/davek44/Basset",
         paper="Kelley et al., Genome Research 2016 — Basset",
         era="2016 · Lua Torch7", license="see source repo",
+        # NOT published to GHCR pending an upstream license check (repo states none clearly).
+        # Users rebuild locally via Lazarus; see docs/IMAGES.md.
         base_image="lazarus/basset:site-ready", gpu=False, from_url=True, turns=48,
         sanity_metric="min_perseq_std", sanity_threshold=0.01, sanity_direction="above",
         reproduced_metric="mean AUROC (164 targets)", reproduced_reported=0.895, reproduced_measured=0.894,
@@ -80,7 +84,7 @@ ENTRIES = [
         repo_url="https://github.com/gcorso/DiffDock",
         paper="Corso et al., ICLR 2023 — DiffDock",
         era="2023 · PyTorch diffusion · ESM-2 · GPU", license="MIT",
-        base_image="lazarus/diffdock:site-ready", gpu=True, from_url=True, turns=57,
+        base_image="ghcr.io/doctordean/lazarus-diffdock:site-ready", gpu=True, from_url=True, turns=57,
         sanity_metric="rmsd", sanity_threshold=2.0, sanity_direction="below",
         reproduced_metric="top-1 success rate (<2Å)", reproduced_reported=0.40, reproduced_measured=0.375,
         contract="examples/diffdock_contract", added="2026-07-10",
