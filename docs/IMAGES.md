@@ -48,7 +48,7 @@ lazarus run <pipeline.yaml> --input structure=4ZQK.pdb --docker-host ssh://you@g
 
 ## Publishing images (maintainers)
 
-Images are pushed with [`scripts/publish_images.sh`](../scripts/publish_images.sh). Auth is
+Images are pushed with [`scripts/publish_images.sh`](https://github.com/DoctorDean/lazarus/blob/main/scripts/publish_images.sh). Auth is
 yours to provide — the script never handles credentials.
 
 1. Authenticate to GHCR on the host that holds the images (create a PAT with `write:packages`):
@@ -61,7 +61,7 @@ yours to provide — the script never handles credentials.
    ```
 3. In the GHCR web UI, set each new package's visibility to **Public**.
 4. Reflect it in the registry: add `image_public=True` to those entries in
-   [`scripts/build_registry.py`](../scripts/build_registry.py) and rerun it
+   [`scripts/build_registry.py`](https://github.com/DoctorDean/lazarus/blob/main/scripts/build_registry.py) and rerun it
    (`python scripts/build_registry.py`).
 
 Only add an image whose upstream license permits redistribution. When in doubt, leave it as a

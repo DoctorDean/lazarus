@@ -39,6 +39,7 @@ nav:
   - Quickstart: quickstart.md
   - How it works: how-it-works.md
   - Registry: registry.md
+  - Component images: IMAGES.md
   - Compose & reproduce: compose.md
   - The hard problems it solved: CHALLENGES.md
 
