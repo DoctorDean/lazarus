@@ -106,13 +106,19 @@
   .gpu{color:var(--gold);font-size:.68rem;border:1px solid rgba(226,182,88,.4);border-radius:5px;padding:0 .35rem;margin-left:.35rem}
   footer{margin-top:2.4rem;color:var(--dim);font-size:.78rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
   .spin{display:inline-block;animation:sp 1.1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+  .pill{display:inline-block;margin-left:.5rem;font-size:.62rem;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);border:1px solid rgba(226,182,88,.5);
+    border-radius:999px;padding:.12rem .5rem;vertical-align:middle}
+  .notice{background:rgba(226,182,88,.09);border:1px solid rgba(226,182,88,.35);border-radius:10px;
+    padding:.6rem .8rem;font-size:.82rem;color:#e7d3a3;line-height:1.4;margin-bottom:.9rem}
+  .notice b{color:var(--gold)}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div>
-      <div class="eyebrow">Lazarus · resurrection engine</div>
+      <div class="eyebrow">Lazarus · resurrection engine <span class="pill">Preview</span></div>
       <h1>Bring a <span class="g">dead repo</span> back to life</h1>
       <div class="sub">Point it at a GitHub URL. Lazarus reads the repo and its paper, rebuilds the
         environment in a sandbox, and turns it into a callable, verified component.</div>
@@ -128,6 +134,9 @@
     <!-- LEFT: try it -->
     <div class="card">
       <h2>Resurrect a repository</h2>
+      <div class="notice"><b>Preview.</b> This replays the agent's <b>real recorded</b> resurrections
+        from our benchmark — snappy and reliable for a demo. Running Lazarus <b>live</b> against your
+        own Docker host (CPU or GPU) is on the way; for now, pick a ✓ repo to watch a real run.</div>
       <div class="hint">Search GitHub or paste a URL. ✓ = we have a real recorded run to replay.</div>
       <div class="field">
         <div class="row">
