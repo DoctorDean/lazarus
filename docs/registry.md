@@ -47,7 +47,6 @@ Blind docking — protein + ligand → ranked, confidence-scored 3D poses (diffu
 lazarus pull diffdock_blind_docking
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-diffdock:site-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## dMaSIF  <small>`dmasif_site`</small>
 
@@ -79,7 +78,6 @@ Detect and rank druggable pockets on a protein structure (Voronoi / alpha-sphere
 lazarus pull fpocket2
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-fpocket:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## MaSIF-site  <small>`masif_site`</small>
 
@@ -96,7 +94,6 @@ Predict per-residue protein-interaction-site probability from a molecular surfac
 lazarus pull masif_site
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-masif:site-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## ScanNet  <small>`scannet_ppi_binding_sites`</small>
 
@@ -113,4 +110,3 @@ Per-residue protein–protein binding-site probability from one structure (struc
 lazarus pull scannet_ppi_binding_sites
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.

@@ -9,7 +9,7 @@ era: 2020 · Py3.6 · TF 1.12 · MSMS/APBS
 license: Apache-2.0
 base_image: ghcr.io/doctordean/lazarus-masif:site-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: false
 turns: 18
 sanity_metric: roc_auc

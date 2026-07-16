@@ -9,7 +9,7 @@ era: 2023 · PyTorch diffusion · ESM-2 · GPU
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-diffdock:site-ready
 gpu: true
-image_public: false
+image_public: true
 from_url: true
 turns: 57
 sanity_metric: rmsd

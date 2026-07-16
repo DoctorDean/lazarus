@@ -9,7 +9,7 @@ era: 2022 · Py3.6 · TF 1.14 · Keras
 license: Apache-2.0
 base_image: ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven
 gpu: false
-image_public: false
+image_public: true
 from_url: false
 turns: 19
 sanity_metric: ROC_AUC

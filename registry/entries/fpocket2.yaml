@@ -8,7 +8,7 @@ era: 2010 C · built on modern GCC
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-fpocket:working
 gpu: false
-image_public: false
+image_public: true
 from_url: false
 turns: 32
 sanity_metric: pockets
