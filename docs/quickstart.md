@@ -22,6 +22,20 @@
 
 Prefer zero install? **[Open the notebook in Colab](https://colab.research.google.com/github/DoctorDean/lazarus/blob/main/notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb)** — a 2-minute tour with no Docker or GPU.
 
+## Start here: pull a revived tool from the registry
+
+If someone already revived the tool you need, don't re-revive it — pull its contract (an
+importable module, a CLI, a pinned container, and the smoke test that proves it runs):
+
+```bash
+lazarus registry                          # browse what's already revived
+lazarus pull scannet_ppi_binding_sites    # fetch its contract bundle
+```
+
+The four permissively-licensed tools also ship a public image on GHCR — e.g.
+`docker pull ghcr.io/doctordean/lazarus-fpocket:working` (see [Component images](IMAGES.md)).
+Need something that isn't in the registry yet? Revive it yourself below.
+
 ## 1. Pin dependencies to a repo's commit era
 
 The single biggest reason old code "won't install" is that `pip` gives you *today's* versions.

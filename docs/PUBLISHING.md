@@ -18,12 +18,12 @@ stored in the repo or in GitHub secrets. You cut a GitHub Release; the
 ## Cut a release
 
 ```bash
-# bump the version in pyproject.toml (e.g. 0.1.0 -> 0.1.1), commit, then:
-git tag v0.1.0
-git push origin v0.1.0
+# bump the version in pyproject.toml (e.g. 0.2.0 -> 0.3.0), commit, then:
+git tag v0.3.0
+git push origin v0.3.0
 ```
 
-Then on GitHub: *Releases → Draft a new release → choose tag `v0.1.0` → Publish*.
+Then on GitHub: *Releases → Draft a new release → choose tag `v0.3.0` → Publish*.
 The `publish` workflow runs, builds the sdist + wheel, and uploads to PyPI. Within a
 minute `pip install lazarus-bio` serves the new version.
 

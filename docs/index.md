@@ -33,7 +33,21 @@ pipelines, and **gives the fixes back** to the community.
 - **Give back** — the fixes (rotted URLs, broken paths, a 15-year-old undefined-behaviour bug)
   become maintainer-ready **pull requests** with CI, so the method can't silently rot again.
 
-## Five dead repos, resurrected autonomously
+And a **[registry](registry.md)** of everything already revived, so you can `lazarus pull` a tool
+instead of re-reviving it.
+
+## Measured — most of these repos are dead, and Lazarus revived them all
+
+On a **principled, seeded random sample of 20** *Bioinformatics* tools (2018–2021):
+
+- **85% don't install or run on their own today** (95% CI 64–95%)
+- **Lazarus revived 100% of the dead ones** — 17/17 (95% CI 82–100%)
+- **5 reproduced the original paper's reported metric**
+
+Nothing is cherry-picked — the frame, seed, per-repo outcomes, and the runnable harness are in
+[`benchmark/`](https://github.com/DoctorDean/lazarus/tree/main/benchmark).
+
+## Six dead repos, resurrected autonomously
 
 | Repo | Era / stack | Result |
 |---|---|---|
@@ -42,10 +56,14 @@ pipelines, and **gives the fixes back** to the community.
 | **dMaSIF** | torch cu111 · PyKeOps · **GPU** | binding sites, ROC-AUC 0.8390 |
 | **fpocket** | **2010 C** on modern GCC | 3 druggable pockets |
 | **Basset** | **2016 Lua Torch7** · genomics | from a URL → reproduced the paper, AUROC 0.894 vs 0.895 |
+| **DiffDock** | **2023** PyTorch diffusion · ESM-2 · **GPU** | blind docking → reproduced ~40% top-1 (<2Å) |
 
 Each was revived from its own dead environment using only general heuristics — no repo-specific
 notes — and emits a package that passes its own smoke test standalone. The hard-won details are in
 [the hard problems it solved](CHALLENGES.md).
+
+Prefer to just *try* it? The **[dashboard](https://github.com/DoctorDean/lazarus/tree/main/demo/dashboard)**
+lets you search a repo, watch a recorded resurrection replay, and browse the registry.
 
 ## Install
 

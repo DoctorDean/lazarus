@@ -17,7 +17,7 @@
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT" />
 </p>
 
-<p align="center"><em>New here? <a href="notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb">Open the notebook in Colab</a> — a 2-minute, zero-setup tour (no Docker, no GPU): run the dependency pinner live, inspect the four revived tools, and see the binder-triage result rendered in 3D.</em></p>
+<p align="center"><em>New here? <a href="notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb">Open the notebook in Colab</a> — a 2-minute, zero-setup tour (no Docker, no GPU): run the dependency pinner live, inspect the revived tools, and see the binder-triage result rendered in 3D.</em></p>
 
 ---
 
