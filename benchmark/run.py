@@ -246,6 +246,33 @@ def provisional_entry(contract, plan, result: BenchmarkResult, added: str):
     )
 
 
+def _force_remove(client, name, *, budget_s: float = 120.0, attempt_timeout: float = 30.0,
+                  poll: float = 3.0, stop=None) -> bool:
+    """Force-remove container ``name``, retrying until it's gone or ``budget_s`` elapses.
+
+    The wall-clock watchdog can't rely on a single ``docker rm -f``: over a flaky
+    ``ssh://`` host that one call can fail or hang, and the watchdog swallows the
+    error — so a single bad kill lets a capped run continue unbounded (this is how a
+    run reached 11.7h under a 90m cap). Retry with a per-attempt timeout instead, and
+    treat "No such container" as success (already gone). Returns True once confirmed
+    removed. ``stop`` is an optional predicate: if it returns True (the run finished
+    on its own) we give up early.
+    """
+    import time
+    deadline = time.time() + budget_s
+    while time.time() < deadline:
+        if stop is not None and stop():
+            return False
+        try:
+            cr = client.run(["rm", "-f", name], timeout=attempt_timeout)
+            if cr.ok or "No such container" in (cr.stderr or ""):
+                return True
+        except Exception:  # noqa: BLE001 — a hung/failed kill just means: retry
+            pass
+        time.sleep(poll)
+    return False
+
+
 # --------------------------------------------------------------------------
 # The real run (drives the agent; not exercised by unit tests)
 # --------------------------------------------------------------------------
@@ -317,11 +344,13 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
         if done.wait(timeout_s):        # returns True if the run finished in time
             return
         fired.set()
-        try:
-            if r.sandbox is not None:
-                r.sandbox.stop()        # docker rm -f — interrupts the in-container command
-        except Exception:  # noqa: BLE001
-            pass
+        box = r.sandbox
+        if box is not None:
+            # bounded, retried force-remove by name — a single rm over a dropped
+            # ssh:// can fail/hang, and one swallowed failure would let the capped
+            # run continue unbounded. Keep trying until the container is gone.
+            if _force_remove(box.client, box.name, stop=done.is_set):
+                box.started = False
 
     wd = threading.Thread(target=_watchdog, daemon=True)
     wd.start()

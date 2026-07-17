@@ -68,6 +68,36 @@ def test_results_io_roundtrip(tmp_path):
     assert run.already_done(back, "u/a") and not run.already_done(back, "u/b")
 
 
+def test_force_remove_retries_and_handles_flaky_kill():
+    class _CR:
+        def __init__(self, ok, stderr=""):
+            self.ok, self.stderr = ok, stderr
+    class _Client:
+        def __init__(self, results):
+            self.results, self.calls = list(results), 0
+        def run(self, args, **kw):
+            self.calls += 1
+            r = self.results[min(self.calls - 1, len(self.results) - 1)]
+            if isinstance(r, Exception):
+                raise r
+            return r
+    # transient failures (non-ok rm) then success → keeps retrying, returns True
+    c = _Client([_CR(False), _CR(False), _CR(True)])
+    assert run._force_remove(c, "box", budget_s=1.0, poll=0) is True and c.calls == 3
+    # a hung kill (raises) then success → the swallow-and-retry path still wins
+    c = _Client([RuntimeError("ssh timeout"), _CR(True)])
+    assert run._force_remove(c, "box", budget_s=1.0, poll=0) is True
+    # "No such container" = already gone → success on the first attempt
+    c = _Client([_CR(False, stderr="Error: No such container: box")])
+    assert run._force_remove(c, "box", budget_s=1.0, poll=0) is True and c.calls == 1
+    # never succeeds → gives up at the budget (no infinite loop)
+    c = _Client([_CR(False)])
+    assert run._force_remove(c, "box", budget_s=0.05, poll=0) is False
+    # run finished on its own (stop() True) → bail before issuing any rm
+    c = _Client([_CR(True)])
+    assert run._force_remove(c, "box", budget_s=1.0, poll=0, stop=lambda: True) is False and c.calls == 0
+
+
 def test_collect_urls_merges_sources_and_dedups(tmp_path):
     repos = tmp_path / "repos.txt"
     repos.write_text("https://github.com/o/a  # keep\n\n# comment only\nhttps://github.com/o/b\n")
