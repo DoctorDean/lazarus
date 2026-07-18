@@ -40,6 +40,7 @@ nav:
   - How it works: how-it-works.md
   - Registry: registry.md
   - Component images: IMAGES.md
+  - Decay check: decay-check.md
   - Compose & reproduce: compose.md
   - The hard problems it solved: CHALLENGES.md
 

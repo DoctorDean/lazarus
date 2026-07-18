@@ -4,6 +4,32 @@ All notable changes to Lazarus (`lazarus-bio`) are documented here. The format f
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.3.0] — 2026-07-18
+
+### Added
+- **`lazarus decay-check <url>`** — an agent-free "does this repo still install and run today?"
+  check (the `naive_runs` decay signal), shipped in the package. Clone → install (conda/pip/R,
+  no repair) → run a shipped example / README usage / import → reason-coded verdict. Two
+  sandboxes: `host` (venv / temp R-lib — light) and `docker` (`continuumio/miniconda3` /
+  `rocker/r-ver` — strict benchmark parity). Flags: `--sandbox`, `--fail-on-decay`, `--json`.
+- **Decay-check GitHub Action** (`DoctorDean/lazarus/actions/decay-check@v0.3.0`) — run the
+  check in any repo's CI on the repo's own runner minutes; a reproducibility canary
+  (`fail-on-decay`) or a survey. Emits `naive-runs`/`stage`/`reason` outputs + a job summary.
+- **Registry grew 6 → 13.** Promoted permissively-licensed benchmark revivals with verified
+  contracts: DeepLatentMicrobiome, HiTEA, DnaFeaturesViewer, CoCoNet, EquiDock, EquiBind (all
+  pullable from GHCR), plus Sequoya (rebuild-locally, image too large to publish).
+- **Contributor on-ramp** — guided issue forms (request a repo · contribute a tool · report a
+  failed revival · bug), a PR template, and a "good first issues" list in CONTRIBUTING.
+
+### Fixed
+- **Pulled contracts are now pull-and-run.** Public tools' contracts referenced the local build
+  tag; they now point at their GHCR image, so `lazarus pull <tool>` → run works for anyone
+  (verified end-to-end).
+
+### Changed
+- Docs site brought up to date with v0.2+ (benchmark headline, registry/pull, dashboard,
+  component images, decay check).
+
 ## [0.2.0] — 2026-07-17
 
 🏆 Winner, Build track — Claude Science hackathon.

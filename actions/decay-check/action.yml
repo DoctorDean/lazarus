@@ -1,0 +1,74 @@
+name: 'Lazarus decay-check'
+description: 'Does this repo still install and run today? An agent-free reproducibility check.'
+author: 'Lazarus'
+branding:
+  icon: 'activity'
+  color: 'green'
+
+inputs:
+  repo:
+    description: 'GitHub repo URL to check. Defaults to the repository running the workflow.'
+    required: false
+    default: ''
+  sandbox:
+    description: 'host (light — runs on the runner) or docker (strict — a fresh container).'
+    required: false
+    default: 'host'
+  fail-on-decay:
+    description: 'Fail the job if the repo no longer runs (turn the check into a CI gate).'
+    required: false
+    default: 'false'
+  timeout:
+    description: 'Hard wall-clock cap in seconds.'
+    required: false
+    default: '1800'
+  python-version:
+    description: 'Python used for the host sandbox venv and the lazarus-bio install.'
+    required: false
+    default: '3.11'
+  version:
+    description: 'pip requirement for the CLI. Pin it in production, e.g. lazarus-bio==0.3.0.'
+    required: false
+    default: 'lazarus-bio>=0.3.0'
+
+outputs:
+  naive-runs:
+    description: 'true if the repo installs and runs its own example today; false if not.'
+    value: ${{ steps.check.outputs.naive_runs }}
+  stage:
+    description: 'Where it stopped: clone | install | example | timeout.'
+    value: ${{ steps.check.outputs.stage }}
+  reason:
+    description: 'The reason code, e.g. pip_install_failed, R_install_failed, ran_ok.'
+    value: ${{ steps.check.outputs.reason }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Install lazarus-bio
+      shell: bash
+      run: pip install --quiet "${{ inputs.version }}"
+    - name: Decay check
+      id: check
+      shell: bash
+      env:
+        REPO: ${{ inputs.repo }}
+        SANDBOX: ${{ inputs.sandbox }}
+        TIMEOUT: ${{ inputs.timeout }}
+        FAIL_ON_DECAY: ${{ inputs.fail-on-decay }}
+        GH_REPO: ${{ github.repository }}
+      run: |
+        set +e
+        [ -z "$REPO" ] && REPO="https://github.com/$GH_REPO"
+        FLAGS="--sandbox $SANDBOX --timeout $TIMEOUT --json"
+        [ "$FAIL_ON_DECAY" = "true" ] && FLAGS="$FLAGS --fail-on-decay"
+        echo "::group::lazarus decay-check $REPO $FLAGS"
+        lazarus decay-check "$REPO" $FLAGS | tee "$RUNNER_TEMP/decay.json"
+        CODE=${PIPESTATUS[0]}
+        echo "::endgroup::"
+        python "$GITHUB_ACTION_PATH/summarize.py" "$RUNNER_TEMP/decay.json"
+        exit $CODE

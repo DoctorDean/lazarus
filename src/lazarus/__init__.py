@@ -13,7 +13,7 @@ from importlib.metadata import PackageNotFoundError, version as _pkg_version
 try:  # single source of truth is the installed package metadata (pyproject)
     __version__ = _pkg_version("lazarus-bio")
 except PackageNotFoundError:  # running from a source tree that isn't installed
-    __version__ = "0.2.0"
+    __version__ = "0.3.0"
 
 from lazarus.pinner import (
     ReleaseInfo,
