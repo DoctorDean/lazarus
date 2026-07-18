@@ -1,6 +1,6 @@
 name: scannet_ppi_binding_sites
 repo_url: https://github.com/jertubiana/ScanNet
-base_image: lazarus/scannet:ppi-noMSA-proven
+base_image: ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven
 entrypoint: 'set -e
 
   cd /ScanNet

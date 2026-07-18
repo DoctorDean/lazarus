@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/dnafeaturesviewer:genbank-plot-ready"
+IMAGE = "ghcr.io/doctordean/lazarus-dnafeaturesviewer:genbank-plot-ready"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /root/repo && python run_genbank_plot.py examples/example_sequence.gb /tmp/smoke 2>/dev/null | grep -oP 'feature_count=\\K[0-9]+' | awk '{print \"feature_count=\"$1}'"

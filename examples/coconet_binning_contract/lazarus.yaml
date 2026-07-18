@@ -1,6 +1,6 @@
 name: coconet_binning
 repo_url: https://github.com/Puumanamana/CoCoNet
-base_image: lazarus/coconet:working
+base_image: ghcr.io/doctordean/lazarus-coconet:working
 entrypoint: "#!/bin/bash\nset -euo pipefail\n# $INPUT is a directory containing assembly.fasta\
   \ plus one or more *.bam (with .bai) files.\n# $OUTDIR is where CoCoNet writes its\
   \ results (bins_*.csv is the headline output).\nmkdir -p \"$OUTDIR\"\ncoconet run\

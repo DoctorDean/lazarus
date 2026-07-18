@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/diffdock:site-ready"
+IMAGE = "ghcr.io/doctordean/lazarus-diffdock:site-ready"
 PLATFORM = "linux/amd64"
 GPUS = "all"  # e.g. "all" to pass GPUs, or None
 COMMAND = "/home/appuser/bin/micromamba run -n diffdock python /home/appuser/DiffDock/lazarus_smoke.py"

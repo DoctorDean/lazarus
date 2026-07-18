@@ -1,6 +1,6 @@
 name: deeplatentmicrobiome_env2otu
 repo_url: https://github.com/jorgemf/DeepLatentMicrobiome
-base_image: lazarus/dlm:working
+base_image: ghcr.io/doctordean/lazarus-dlm:working
 entrypoint: "#!/bin/bash\nset -e\n# Predict the 717-OTU rhizosphere microbiome from\
   \ 3 environmental features\n# (age, Temperature, Precipitation3Days) using the shipped\
   \ pretrained\n# encoder_domain + decoder. Optionally override the metadata CSV via\

@@ -1,6 +1,6 @@
 name: dnafeaturesviewer_genbank_plot
 repo_url: https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer
-base_image: lazarus/dnafeaturesviewer:genbank-plot-ready
+base_image: ghcr.io/doctordean/lazarus-dnafeaturesviewer:genbank-plot-ready
 entrypoint: cd /root/repo && python run_genbank_plot.py "$INPUT" "$OUTDIR"
 inputs:
 - name: INPUT

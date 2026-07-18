@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/dlm:working"
+IMAGE = "ghcr.io/doctordean/lazarus-dlm:working"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /root/repo/Src && python lazarus_infer.py 2>/dev/null | grep pearson_r"

@@ -1,6 +1,6 @@
 name: equibind_blind_docking
 repo_url: https://github.com/HannesStark/EquiBind
-base_image: lazarus/equibind:contract-ready
+base_image: ghcr.io/doctordean/lazarus-equibind:contract-ready
 entrypoint: bash /root/repo/lazarus_dock.sh "$INPUT" "$OUTDIR"
 inputs:
 - name: INPUT

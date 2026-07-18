@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/hitea:working"
+IMAGE = "ghcr.io/doctordean/lazarus-hitea:working"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /usr/local/bin && rm -rf /tmp/smoke && hitea -i examples/test.bam -e MboI -g hg38 -w /tmp/smoke -o test >/dev/null 2>&1 && echo num_candidate_insertions=$(grep -vcE '^#' /tmp/smoke/test.candidate.insertions.bed)"

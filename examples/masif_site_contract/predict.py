@@ -13,7 +13,7 @@ import sys
 import uuid
 from pathlib import Path
 
-IMAGE = "lazarus/masif:site-ready"
+IMAGE = "ghcr.io/doctordean/lazarus-masif:site-ready"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs (needs nvidia-container-toolkit), or None
 # In-container command template; $INPUT and $OUTDIR are substituted at runtime.

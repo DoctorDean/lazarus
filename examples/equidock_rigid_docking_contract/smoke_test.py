@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/equidock:working"
+IMAGE = "ghcr.io/doctordean/lazarus-equidock:working"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /root/repo && source activate equidock && export DGLBACKEND=pytorch && rm -rf test_sets_pdb/db5_equidock_results && EQUIDOCK_TARGET=1AVX python -m src.inference_rigid >/dev/null 2>&1 && python /root/ca_rmsd.py test_sets_pdb/db5_equidock_results/1AVX_l_b_EQUIDOCK.pdb /root/db5_equidock_results_REFERENCE/1AVX_l_b_EQUIDOCK.pdb 2>/dev/null | grep ligand_CA_RMSD"

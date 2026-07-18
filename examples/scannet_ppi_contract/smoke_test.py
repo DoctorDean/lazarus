@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/scannet:ppi-noMSA-proven"
+IMAGE = "ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven"
 PLATFORM = "linux/amd64"
 COMMAND = "cd /ScanNet && CHAIN=A INPUT=/ScanNet/PDB/4zqk.pdb OUTDIR=/ScanNet/predictions bash -c 'python predict_bindingsites.py \"${INPUT}_${CHAIN}\" --mode interface --noMSA --pdb --name 4ZQK_A --predictions_folder /ScanNet/predictions/' >/dev/null 2>&1; python sanity_check.py 2>/dev/null | grep ROC_AUC"
 METRIC = "ROC_AUC"

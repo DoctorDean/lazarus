@@ -13,7 +13,7 @@ import sys
 import uuid
 from pathlib import Path
 
-IMAGE = "lazarus/scannet:ppi-noMSA-proven"
+IMAGE = "ghcr.io/doctordean/lazarus-scannet:ppi-noMSA-proven"
 PLATFORM = "linux/amd64"
 # In-container command template; $INPUT and $OUTDIR are substituted at runtime.
 ENTRYPOINT = "set -e\ncd /ScanNet\nCHAIN=\"${CHAIN:-A}\"\nBASE=$(basename \"$INPUT\")\nBASE=\"${BASE%.*}\"\nNAME=\"${BASE}_${CHAIN}\"\nmkdir -p \"$OUTDIR\"\n# ScanNet chain syntax: <path/to/file.pdb>_<CHAIN>. Structure-only mode (--noMSA), single chain (--pdb).\npython predict_bindingsites.py \"${INPUT}_${CHAIN}\" --mode interface --noMSA --pdb --name \"$NAME\" --predictions_folder \"$OUTDIR/\"\n# Surface the per-residue CSV at a stable top-level path.\ncp \"$OUTDIR/${NAME}_(0-${CHAIN})_single_ScanNet_interface_noMSA/predictions_${NAME}.csv\" \"$OUTDIR/predictions_${NAME}.csv\"\necho \"Per-residue binding-site probabilities: $OUTDIR/predictions_${NAME}.csv\""

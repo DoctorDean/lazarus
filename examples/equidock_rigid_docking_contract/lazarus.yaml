@@ -1,6 +1,6 @@
 name: equidock_rigid_docking
 repo_url: https://github.com/octavian-ganea/equidock_public
-base_image: lazarus/equidock:working
+base_image: ghcr.io/doctordean/lazarus-equidock:working
 entrypoint: 'set -e
 
   source activate equidock

@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/masif:site-ready"
+IMAGE = "ghcr.io/doctordean/lazarus-masif:site-ready"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /masif/data/masif_site && ./data_prepare_one.sh --file /tmp/4ZQK.pdb 4ZQK_A >/dev/null 2>&1 && ./predict_site.sh 4ZQK_A >/dev/null 2>&1 && ./color_site.sh 4ZQK_A 2>&1 | grep -oE 'ROC AUC score for protein 4ZQK_A : [0-9.]+' | grep -oE '[0-9.]+$' | tail -1 | awk '{print \"roc_auc=\"$1}'"

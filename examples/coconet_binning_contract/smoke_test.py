@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/coconet:working"
+IMAGE = "ghcr.io/doctordean/lazarus-coconet:working"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "cd /workspace/repo && rm -rf output_test && coconet run --fasta tests/sim_data/assembly.fasta --bam tests/sim_data/*.bam --output output_test --threads 1 --n-train 64 --n-test 8 --batch-size 2 --min-prevalence 0 --test-ratio 0.2 --n-frags 5 --compo-neurons 8 4 --cover-neurons 8 4 --cover-kernel 2 --wsize 2 --wstep 2 >/dev/null 2>&1; echo n_contigs_assigned=$(cat output_test/bins_*.csv | wc -l)"

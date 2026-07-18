@@ -13,7 +13,7 @@ import sys
 import uuid
 from pathlib import Path
 
-IMAGE = "lazarus/diffdock:site-ready"
+IMAGE = "ghcr.io/doctordean/lazarus-diffdock:site-ready"
 PLATFORM = "linux/amd64"
 GPUS = "all"  # e.g. "all" to pass GPUs (needs nvidia-container-toolkit), or None
 # In-container command template; $INPUT and $OUTDIR are substituted at runtime.

@@ -1,6 +1,6 @@
 name: masif_site
 repo_url: https://github.com/LPDI-EPFL/masif
-base_image: lazarus/masif:site-ready
+base_image: ghcr.io/doctordean/lazarus-masif:site-ready
 entrypoint: '#!/bin/bash
 
   set -euo pipefail

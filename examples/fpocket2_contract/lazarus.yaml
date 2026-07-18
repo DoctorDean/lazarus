@@ -1,6 +1,6 @@
 name: fpocket2
 repo_url: https://sourceforge.net/projects/fpocket/files/fpocket2.tar.gz
-base_image: lazarus/fpocket:working
+base_image: ghcr.io/doctordean/lazarus-fpocket:working
 entrypoint: '#!/usr/bin/env bash
 
   # fpocket 2.0 (2010) pocket/cavity detection.

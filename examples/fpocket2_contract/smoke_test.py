@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/fpocket:working"
+IMAGE = "ghcr.io/doctordean/lazarus-fpocket:working"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "fpocket_run.sh /opt/fpocket/ref/4ZQK_A.pdb /tmp/smoke"

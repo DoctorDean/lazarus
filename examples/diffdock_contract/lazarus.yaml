@@ -1,6 +1,6 @@
 name: diffdock_blind_docking
 repo_url: https://github.com/gcorso/DiffDock
-base_image: lazarus/diffdock:site-ready
+base_image: ghcr.io/doctordean/lazarus-diffdock:site-ready
 entrypoint: "set -euo pipefail\ncd /home/appuser/DiffDock\n# INPUT: a DiffDock CSV\
   \ (columns: complex_name,protein_path,ligand_description,protein_sequence).\n# \
   \  protein_path = path to a receptor PDB; ligand_description = a SMILES string OR\

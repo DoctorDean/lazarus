@@ -1,6 +1,6 @@
 name: hitea
 repo_url: https://github.com/parklab/HiTea
-base_image: lazarus/hitea:working
+base_image: ghcr.io/doctordean/lazarus-hitea:working
 entrypoint: '#!/bin/bash
 
   set -euo pipefail

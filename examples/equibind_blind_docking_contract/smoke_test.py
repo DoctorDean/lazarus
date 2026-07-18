@@ -7,7 +7,7 @@ import re
 import subprocess
 import sys
 
-IMAGE = "lazarus/equibind:contract-ready"
+IMAGE = "ghcr.io/doctordean/lazarus-equibind:contract-ready"
 PLATFORM = "linux/amd64"
 GPUS = None  # e.g. "all" to pass GPUs, or None
 COMMAND = "bash /root/repo/lazarus_smoke.sh"
