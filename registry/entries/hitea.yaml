@@ -1,0 +1,23 @@
+name: hitea
+title: HiTEA
+domain: Transposable-element insertions (Hi-C)
+summary: Call non-reference transposable-element (Alu/L1/SVA) insertions from a Hi-C
+  BAM; emits a candidate-insertions BED + an HTML report.
+repo_url: https://github.com/parklab/HiTea
+paper: Chu, Nielsen et al., Nucleic Acids Research 2021 — HiTEA
+era: 2020 · Perl + R · bedtools
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-hitea:working
+gpu: false
+image_public: false
+from_url: true
+turns: 14
+sanity_metric: num_candidate_insertions
+sanity_threshold: 1
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/hitea_contract
+added: '2026-07-18'

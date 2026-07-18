@@ -1,0 +1,23 @@
+name: coconet_binning
+title: CoCoNet
+domain: Viral metagenome binning
+summary: Bin assembled viral contigs into genomes from composition + coverage with
+  a deep siamese network.
+repo_url: https://github.com/Puumanamana/CoCoNet
+paper: Arisdakessian et al., Bioinformatics 2021 — CoCoNet
+era: 2021 · Python · PyTorch
+license: Apache-2.0
+base_image: ghcr.io/doctordean/lazarus-coconet:working
+gpu: false
+image_public: false
+from_url: true
+turns: 30
+sanity_metric: n_contigs_assigned
+sanity_threshold: 9
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/coconet_binning_contract
+added: '2026-07-18'

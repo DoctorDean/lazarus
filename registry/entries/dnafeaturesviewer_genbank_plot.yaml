@@ -1,0 +1,22 @@
+name: dnafeaturesviewer_genbank_plot
+title: DnaFeaturesViewer
+domain: Sequence annotation plots
+summary: Render a GenBank record's annotated features as a linear feature map (PNG).
+repo_url: https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer
+paper: ''
+era: Python · Biopython · matplotlib
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-dnafeaturesviewer:genbank-plot-ready
+gpu: false
+image_public: false
+from_url: true
+turns: 15
+sanity_metric: feature_count
+sanity_threshold: 10
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/dnafeaturesviewer_genbank_plot_contract
+added: '2026-07-18'

@@ -1,0 +1,30 @@
+name: dnafeaturesviewer_genbank_plot
+repo_url: https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer
+base_image: lazarus/dnafeaturesviewer:genbank-plot-ready
+entrypoint: cd /root/repo && python run_genbank_plot.py "$INPUT" "$OUTDIR"
+inputs:
+- name: INPUT
+  type: file
+  description: A GenBank (.gb) file of a DNA sequence with annotated features
+outputs:
+- name: from_genbank.png
+  type: file
+  description: Linear matplotlib plot of the sequence's annotated features rendered
+    to PNG in $OUTDIR
+smoke:
+  description: Parse examples/example_sequence.gb via BiopythonTranslator().translate_record,
+    plot, and save PNG; assert >=10 features and a valid non-empty PNG.
+  command: cd /root/repo && python run_genbank_plot.py examples/example_sequence.gb
+    /tmp/smoke 2>/dev/null | grep -oP 'feature_count=\K[0-9]+' | awk '{print "feature_count="$1}'
+  metric: feature_count
+  threshold: 10
+  input_ref: examples/example_sequence.gb
+benchmark: null
+paper: ''
+commit: 049bbe4e3063e90ae9b0f88ac7e92f47b735d38a
+patches:
+- 'Added run_genbank_plot.py: generic wrapper around examples/from_genbank.py that
+  takes an arbitrary GenBank input path and output dir, forces the headless Agg matplotlib
+  backend, and prints feature_count/png_bytes/png_magic_ok.'
+platform: linux/amd64
+gpus: ''

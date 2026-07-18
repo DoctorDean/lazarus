@@ -26,6 +26,12 @@ MAP=(
   "lazarus/scannet:ppi-noMSA-proven|$NS/lazarus-scannet:ppi-noMSA-proven"
   "lazarus/fpocket:working|$NS/lazarus-fpocket:working"
   "lazarus/diffdock:site-ready|$NS/lazarus-diffdock:site-ready"
+  # promoted from the N=20 benchmark (permissive: MIT / Apache-2.0)
+  "lazarus/dlm:working|$NS/lazarus-dlm:working"
+  "lazarus/hitea:working|$NS/lazarus-hitea:working"
+  "lazarus/dnafeaturesviewer:genbank-plot-ready|$NS/lazarus-dnafeaturesviewer:genbank-plot-ready"
+  "lazarus/coconet:working|$NS/lazarus-coconet:working"
+  "lazarus/sequoya:nsgaii-ready|$NS/lazarus-sequoya:nsgaii-ready"
 )
 
 hostflag=(); [ -n "$SRC" ] && hostflag=(-H "$SRC")

@@ -1,0 +1,46 @@
+name: deeplatentmicrobiome_env2otu
+repo_url: https://github.com/jorgemf/DeepLatentMicrobiome
+base_image: lazarus/dlm:working
+entrypoint: "#!/bin/bash\nset -e\n# Predict the 717-OTU rhizosphere microbiome from\
+  \ 3 environmental features\n# (age, Temperature, Precipitation3Days) using the shipped\
+  \ pretrained\n# encoder_domain + decoder. Optionally override the metadata CSV via\
+  \ $INPUT;\n# defaults to the repo-shipped Datasets/. Outputs land in $OUTDIR.\n\
+  cd /root/repo/Src\nmkdir -p \"$OUTDIR\"\nif [ -n \"$INPUT\" ] && [ -f \"$INPUT\"\
+  \ ]; then\n  export META_FILE=\"$INPUT\"\nfi\nexport OUTDIR=\"$OUTDIR\"\npython\
+  \ lazarus_infer.py"
+inputs:
+- name: INPUT
+  type: file
+  description: Optional metadata CSV (tab-separated, with X.SampleID, age, Temperature,
+    Precipitation3Days columns) overriding Datasets/metadata_table_all_80.csv. Omit
+    to use the repo-shipped dataset.
+outputs:
+- name: predicted_otus_test.tsv
+  type: file
+  description: Predicted 717-OTU relative-abundance table (softmax, sums to 1) for
+    the held-out test samples, OTUs x samples.
+smoke:
+  description: Reproduce the test split (random_state=42), predict OTU composition
+    from the 3 env features via encoder_domain->decoder, and report the mean per-sample
+    Pearson correlation vs TSS-normalized observed OTUs.
+  command: cd /root/repo/Src && python lazarus_infer.py 2>/dev/null | grep pearson_r
+  metric: pearson_r
+  threshold: 0.65
+  input_ref: ''
+benchmark:
+  description: Mean per-sample Pearson correlation between predicted and observed
+    (TSS-normalized) 717-OTU vectors on the 373 held-out maize rhizosphere test samples,
+    predicting from 3 environmental features.
+  metric: mean_per_sample_pearson_r
+  reported: 0.739
+  tolerance: 0.02
+  n: 373
+  source: Notebooks/reference_model_predictions_and_analysis.ipynb
+  command: ''
+  measured: 0.7368
+paper: Deep Latent Space model to predict the whole rhizosphere microbiome from environmental
+  features (Garcia-Jimenez et al., 2021)
+commit: 3ca4367f5b73db6eaf8a9dfe78e19829b02c69bb
+patches: []
+platform: linux/amd64
+gpus: ''

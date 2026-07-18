@@ -1,0 +1,24 @@
+name: sequoya_nsgaii_msa
+title: Sequoya
+domain: Multiple sequence alignment
+summary: Multi-objective (NSGA-II) multiple sequence alignment optimizing sum-of-pairs
+  and conserved columns.
+repo_url: https://github.com/benhid/Sequoya
+paper: 'Benítez-Hidalgo et al. — Sequoya: Multiobjective Multiple Sequence Alignment
+  in Python'
+era: 2020 · Py3.6 · jMetalPy
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-sequoya:nsgaii-ready
+gpu: false
+image_public: false
+from_url: true
+turns: 43
+sanity_metric: sum_of_pairs_delta_vs_initial
+sanity_threshold: 0
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/sequoya_nsgaii_msa_contract
+added: '2026-07-18'

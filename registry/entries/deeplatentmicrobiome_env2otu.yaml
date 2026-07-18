@@ -1,0 +1,24 @@
+name: deeplatentmicrobiome_env2otu
+title: DeepLatentMicrobiome
+domain: Microbiome — environment → OTUs
+summary: Predict a 717-OTU rhizosphere microbiome from 3 environmental features (age,
+  temperature, precipitation) via a pretrained latent-space encoder/decoder.
+repo_url: https://github.com/jorgemf/DeepLatentMicrobiome
+paper: Garcia-Jimenez et al., Bioinformatics 2021 — Deep latent space model for the
+  rhizosphere microbiome
+era: 2021 · Python · TF/Keras
+license: Apache-2.0
+base_image: ghcr.io/doctordean/lazarus-dlm:working
+gpu: false
+image_public: false
+from_url: true
+turns: 25
+sanity_metric: pearson_r
+sanity_threshold: 0.65
+sanity_direction: above
+reproduced_metric: mean per-sample Pearson r (n=373)
+reproduced_reported: 0.739
+reproduced_measured: 0.7368
+giveback_pr: null
+contract: examples/deeplatentmicrobiome_env2otu_contract
+added: '2026-07-18'

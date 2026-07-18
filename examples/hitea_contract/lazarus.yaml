@@ -1,0 +1,55 @@
+name: hitea
+repo_url: https://github.com/parklab/HiTea
+base_image: lazarus/hitea:working
+entrypoint: '#!/bin/bash
+
+  set -euo pipefail
+
+  cd /usr/local/bin
+
+  mkdir -p "$OUTDIR"
+
+  hitea -i "$INPUT" -e MboI -g hg38 -w "$OUTDIR" -o test
+
+  echo "candidate insertions: $(grep -vcE ''^#'' "$OUTDIR/test.candidate.insertions.bed")
+  rows"
+
+  ls -la "$OUTDIR/test.candidate.insertions.bed" "$OUTDIR/HiTEA_Report.html"'
+inputs:
+- name: INPUT
+  type: file
+  description: Name-sorted Hi-C BAM (e.g. examples/test.bam), enzyme MboI, genome
+    hg38
+outputs:
+- name: test.candidate.insertions.bed
+  type: file
+  description: Non-reference TE (Alu/L1/SVA) insertion calls, one per data row; col7
+    is TE family
+- name: HiTEA_Report.html
+  type: file
+  description: Self-contained HTML QC/results report
+smoke:
+  description: Run HiTEA on the bundled test.bam and count TE-annotated candidate
+    insertions
+  command: cd /usr/local/bin && rm -rf /tmp/smoke && hitea -i examples/test.bam -e
+    MboI -g hg38 -w /tmp/smoke -o test >/dev/null 2>&1 && echo num_candidate_insertions=$(grep
+    -vcE '^#' /tmp/smoke/test.candidate.insertions.bed)
+  metric: num_candidate_insertions
+  threshold: 1
+  input_ref: ''
+benchmark:
+  description: End-to-end inference on the shipped name-sorted Hi-C BAM (examples/test.bam)
+    with hg38/MboI bundled references; count non-reference TE insertion calls in candidate.insertions.bed
+  metric: num_candidate_insertions
+  reported: 1
+  tolerance: 0
+  n: 1
+  source: repo test.sh success criterion (bed file >10 bytes, >=1 TE-family call)
+  command: ''
+  measured: 291
+paper: 'Chu, Nielsen et al. "HiTEA: a computational pipeline to identify non-reference
+  transposable element insertions in Hi-C data" (Nucleic Acids Research 2021)'
+commit: bundled Sep 2020 image copy at /usr/local/bin
+patches: []
+platform: linux/amd64
+gpus: ''
