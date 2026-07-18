@@ -20,7 +20,7 @@ check, and (where a benchmark exists) a reproduced paper number.
 | **HiTEA** | Transposable-element insertions (Hi-C) | 2020 · Perl + R · bedtools | smoke num_candidate_insertions ≥ 1 | ✅ |
 | **MaSIF-site** | Protein interaction sites | 2020 · Py3.6 · TF 1.12 · MSMS/APBS | **0.82 vs 0.85** (median ROC-AUC) | — |
 | **ScanNet** | Protein binding sites | 2022 · Py3.6 · TF 1.14 · Keras | smoke ROC_AUC ≥ 0.7 | — |
-| **Sequoya** | Multiple sequence alignment | 2020 · Py3.6 · jMetalPy | smoke sum_of_pairs_delta_vs_initial ≥ 0 | ✅ |
+| **Sequoya** | Multiple sequence alignment | 2020 · Py3.6 · jMetalPy | smoke sum_of_pairs_delta_vs_initial ≥ 0 | — |
 
 ---
 
@@ -54,7 +54,6 @@ Bin assembled viral contigs into genomes from composition + coverage with a deep
 lazarus pull coconet_binning
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-coconet:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## DeepLatentMicrobiome  <small>`deeplatentmicrobiome_env2otu`</small>
 
@@ -70,7 +69,6 @@ Predict a 717-OTU rhizosphere microbiome from 3 environmental features (age, tem
 lazarus pull deeplatentmicrobiome_env2otu
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-dlm:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## DiffDock  <small>`diffdock_blind_docking`</small>
 
@@ -116,7 +114,6 @@ Render a GenBank record's annotated features as a linear feature map (PNG).
 lazarus pull dnafeaturesviewer_genbank_plot
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-dnafeaturesviewer:genbank-plot-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## EquiBind  <small>`equibind_blind_docking`</small>
 
@@ -132,7 +129,6 @@ Geometric deep learning for drug binding structure prediction — blind-dock a l
 lazarus pull equibind_blind_docking
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-equibind:contract-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## EquiDock  <small>`equidock_rigid_docking`</small>
 
@@ -148,7 +144,6 @@ SE(3)-equivariant end-to-end rigid protein–protein docking — predict the doc
 lazarus pull equidock_rigid_docking
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-equidock:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## fpocket  <small>`fpocket2`</small>
 
@@ -179,7 +174,6 @@ Call non-reference transposable-element (Alu/L1/SVA) insertions from a Hi-C BAM;
 lazarus pull hitea
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-hitea:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## MaSIF-site  <small>`masif_site`</small>
 
@@ -220,11 +214,11 @@ Multi-objective (NSGA-II) multiple sequence alignment optimizing sum-of-pairs an
 - **Source:** [benhid/Sequoya](https://github.com/benhid/Sequoya) · MIT
 - **Stack:** 2020 · Py3.6 · jMetalPy
 - **Sanity check:** `sum_of_pairs_delta_vs_initial ≥ 0`
-- **Revived:** 43 autonomous agent-turns  ·  from a bare URL (Scout-planned)
+- **Revived:** None autonomous agent-turns
 - **Paper:** Benítez-Hidalgo et al. — Sequoya: Multiobjective Multiple Sequence Alignment in Python
 
 ```bash
 lazarus pull sequoya_nsgaii_msa
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-sequoya:nsgaii-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
+> ℹ️ The pinned image `lazarus/sequoya:nsgaii-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.

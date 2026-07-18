@@ -8,11 +8,11 @@ paper: 'Benítez-Hidalgo et al. — Sequoya: Multiobjective Multiple Sequence Al
   in Python'
 era: 2020 · Py3.6 · jMetalPy
 license: MIT
-base_image: ghcr.io/doctordean/lazarus-sequoya:nsgaii-ready
+base_image: lazarus/sequoya:nsgaii-ready
 gpu: false
 image_public: false
-from_url: true
-turns: 43
+from_url: false
+turns: null
 sanity_metric: sum_of_pairs_delta_vs_initial
 sanity_threshold: 0
 sanity_direction: above

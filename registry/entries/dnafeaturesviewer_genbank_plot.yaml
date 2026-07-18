@@ -8,7 +8,7 @@ era: Python · Biopython · matplotlib
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-dnafeaturesviewer:genbank-plot-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 15
 sanity_metric: feature_count

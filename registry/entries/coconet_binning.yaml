@@ -9,7 +9,7 @@ era: 2021 · Python · PyTorch
 license: Apache-2.0
 base_image: ghcr.io/doctordean/lazarus-coconet:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 30
 sanity_metric: n_contigs_assigned

@@ -10,7 +10,7 @@ era: 2022 · PyTorch · DGL · SE(3)
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-equidock:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 44
 sanity_metric: ligand_CA_RMSD_vs_reference_output

@@ -9,7 +9,7 @@ era: 2020 · Perl + R · bedtools
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-hitea:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 14
 sanity_metric: num_candidate_insertions

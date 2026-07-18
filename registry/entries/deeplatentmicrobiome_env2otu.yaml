@@ -10,7 +10,7 @@ era: 2021 · Python · TF/Keras
 license: Apache-2.0
 base_image: ghcr.io/doctordean/lazarus-dlm:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 25
 sanity_metric: pearson_r
