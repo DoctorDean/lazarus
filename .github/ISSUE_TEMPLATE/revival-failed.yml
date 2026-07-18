@@ -1,0 +1,38 @@
+name: "💥 Report a revival that failed"
+description: Lazarus couldn't revive a repo, or mishandled a decay pattern. These reports make the engine better.
+title: "Revival failed: <owner/repo>"
+labels: ["engine", "bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A repo Lazarus *couldn't* bring back is gold — it's how the Scout, pinner, and repair
+        loop improve. Share what you can.
+  - type: input
+    id: repo_url
+    attributes:
+      label: Repository URL
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where did it fail?
+      options:
+        - "Scout (couldn't draft a plan)"
+        - "Install / dependency resolution"
+        - "Build / binary chain"
+        - "Running the example"
+        - "Verification / sanity check"
+        - "Infra (sandbox/host, not the repo)"
+        - "Other / not sure"
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: What happened
+      description: The reason code + log tail if you have them (the benchmark harness prints both), or a description.
+    validations:
+      required: true

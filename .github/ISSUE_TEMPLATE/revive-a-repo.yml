@@ -1,0 +1,39 @@
+name: "🪦 Request a repo to revive"
+description: Suggest a dead/stale research repo you'd like Lazarus to bring back as a callable component.
+title: "Revive: <owner/repo>"
+labels: ["revive-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for pointing us at a repo worth resurrecting! First, check the
+        [registry](https://doctordean.github.io/lazarus/registry/) — it may already be there.
+  - type: input
+    id: repo_url
+    attributes:
+      label: Repository URL
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: input
+    id: paper
+    attributes:
+      label: Paper / citation (if any)
+      placeholder: "Author et al., Journal Year — Title"
+  - type: textarea
+    id: capability
+    attributes:
+      label: What capability should it expose?
+      description: The one "input → famous output" a revived version should run (e.g. "structure → per-residue binding-site probabilities").
+    validations:
+      required: true
+  - type: dropdown
+    id: gpu
+    attributes:
+      label: Does it need a GPU?
+      options: ["No / not sure", "Yes"]
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: Known decay (dead links, unpinned deps, old runtime), a test input, or why this one matters.

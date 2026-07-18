@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 Contributing guide
+    url: https://github.com/DoctorDean/lazarus/blob/main/CONTRIBUTING.md
+    about: How to add a registry entry, harden the revival engine, or give a fix back upstream.
+  - name: 🧬 Browse the registry
+    url: https://doctordean.github.io/lazarus/registry/
+    about: See what's already revived before requesting or adding a tool.

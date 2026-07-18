@@ -98,7 +98,22 @@ contract + recipe and let Lazarus rebuild the image locally.
 Match the surrounding code — it favors small, well-commented functions and clear names over
 cleverness. Comments explain *why*, not *what*. Keep diffs focused.
 
+## Good first issues
+
+No revival required — small, self-contained ways to help:
+
+- **Add a `CITATION.cff`** so Lazarus is citable from the repo sidebar.
+- **CI smoke test for the public images** — a job that `docker pull`s the four public GHCR
+  images so we notice immediately if one accidentally goes private.
+- **Show image availability in the dashboard** — surface `image_public` on the registry cards
+  (pullable from GHCR vs. rebuild-locally) in `demo/dashboard/`.
+- **Docs: a `lazarus pull` → run walkthrough** for one tool, end to end.
+- **Contribute a registry entry** for a tool you've revived (see [§1](#1-add-a-revived-tool-to-the-registry--the-highest-leverage-contribution)).
+
+Use the issue templates (Request a repo to revive · Contribute a tool · Report a revival that
+failed · Bug) to file something new.
+
 ## Questions
 
-Open an issue or start a discussion. First time? Look for issues labelled `good first issue` —
-adding a registry entry for a tool you've revived is a great one.
+Open an issue or start a discussion. First time? The list above is a good place to start —
+adding a registry entry for a tool you've revived is the highest-leverage one.

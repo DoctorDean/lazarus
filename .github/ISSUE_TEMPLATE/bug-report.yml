@@ -1,0 +1,23 @@
+name: "🐛 Bug report"
+description: Something in Lazarus (CLI, pinner, registry, compose, dashboard) is broken.
+title: "<short summary>"
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran, what you expected, and what you got (paste the error/traceback).
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `lazarus --version` or `pip show lazarus-bio`.
+      placeholder: "0.2.0"
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      placeholder: "macOS 14 · Python 3.12 · Docker via OrbStack"

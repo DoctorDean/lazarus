@@ -1,0 +1,42 @@
+name: "➕ Contribute a revived tool"
+description: You revived a repo (via `lazarus resurrect` or by hand) and want to add it to the registry.
+title: "Add to registry: <tool name>"
+labels: ["registry", "contribution"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Amazing — this is the highest-leverage contribution. The full steps are in
+        [CONTRIBUTING.md](https://github.com/DoctorDean/lazarus/blob/main/CONTRIBUTING.md).
+        Open this issue to coordinate, then send a PR that appends a `RegistryEntry` to
+        `scripts/build_registry.py` and regenerates the index.
+  - type: input
+    id: repo_url
+    attributes:
+      label: Source repository URL
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: Upstream license
+      description: Determines whether the image can be redistributed on GHCR or must be rebuilt locally.
+      placeholder: MIT / Apache-2.0 / CC BY-NC-ND / unclear
+    validations:
+      required: true
+  - type: textarea
+    id: sanity
+    attributes:
+      label: Sanity check it passes
+      description: The falsifiable check on a fresh input (e.g. "ROC_AUC ≥ 0.7", "pockets ≥ 1"), and the input you used.
+    validations:
+      required: true
+  - type: checkboxes
+    id: bar
+    attributes:
+      label: Readiness
+      options:
+        - label: It actually runs from its pinned image on a fresh input and passes its sanity check (not just "built once on my laptop").
+          required: true
+        - label: I've read CONTRIBUTING.md and can send a PR (or want help preparing one).
