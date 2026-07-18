@@ -217,6 +217,28 @@ def cmd_pull(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_decay_check(args: argparse.Namespace) -> int:
+    from lazarus.decaycheck import decay_check
+
+    r = decay_check(args.repo_url, sandbox=args.sandbox,
+                    docker_host=args.docker_host, timeout_s=args.timeout)
+    if args.json:
+        print(json.dumps(r.to_dict(), indent=2))
+    else:
+        if r.naive_runs is True:
+            verdict = "RUNS — installs and runs its own example today"
+        elif r.naive_runs is False:
+            verdict = "DECAYED — does not run on its own today"
+        else:
+            verdict = "INCONCLUSIVE — could not determine"
+        print(f"{r.repo_url}\n  {verdict}\n  stage/reason: {r.stage}/{r.reason}"
+              f"  ({r.lang}, {r.sandbox}, {r.wall_clock_s:.0f}s)")
+        if r.decayed:
+            print("  → Lazarus can revive it: https://doctordean.github.io/lazarus/")
+    # exit non-zero only when asked to gate on decay AND we have a definite 'decayed'
+    return 1 if (args.fail_on_decay and r.decayed) else 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="lazarus", description=__doc__)
     parser.add_argument("--version", action="version", version=f"lazarus {__version__}")
@@ -266,6 +288,19 @@ def build_parser() -> argparse.ArgumentParser:
     p_pull.add_argument("--dest", default=".", help="where to write the contract bundle")
     p_pull.add_argument("--registry", default=None, help="registry source (default: auto)")
     p_pull.set_defaults(func=cmd_pull)
+
+    p_decay = sub.add_parser(
+        "decay-check",
+        help="does a repo still install + run today? (agent-free; the decay signal)")
+    p_decay.add_argument("repo_url", help="a GitHub repo URL to check")
+    p_decay.add_argument("--sandbox", choices=("host", "docker"), default="host",
+                         help="host: run on this machine/runner (light); docker: fresh container (strict)")
+    p_decay.add_argument("--docker-host", default=None, help="e.g. ssh://user@host (docker sandbox only)")
+    p_decay.add_argument("--timeout", type=int, default=1800, help="hard wall-clock cap (s)")
+    p_decay.add_argument("--fail-on-decay", action="store_true",
+                         help="exit non-zero if the repo no longer runs (for CI gating)")
+    p_decay.add_argument("--json", action="store_true", help="emit the full result as JSON")
+    p_decay.set_defaults(func=cmd_decay_check)
 
     return parser
 
