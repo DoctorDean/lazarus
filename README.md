@@ -213,9 +213,11 @@ lazarus registry                              # list the revived tools
 lazarus pull scannet_ppi_binding_sites        # fetch its contract bundle
 ```
 
-Six tools are in today — **MaSIF-site, ScanNet, dMaSIF, fpocket, Basset, DiffDock** — each a
-callable brick backed by a pinned container image on **GHCR** (see [`docs/IMAGES.md`](docs/IMAGES.md)
-to run one). Adding a tool is a pull request: see [CONTRIBUTING.md](CONTRIBUTING.md).
+**13 tools** are in today — the protein-surface / docking / genomics hero set (MaSIF-site,
+ScanNet, dMaSIF, fpocket, Basset, DiffDock) plus benchmark revivals like **HiTEA,
+DnaFeaturesViewer, CoCoNet, EquiDock, and EquiBind** — most backed by a public, pullable image
+on **GHCR** (see [`docs/IMAGES.md`](docs/IMAGES.md) to run one). Adding a tool is a pull
+request: see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Try it — the dashboard
 
@@ -223,6 +225,23 @@ A public "try it" surface: search a GitHub repo, watch it come back to life, bro
 
 ```bash
 uvicorn demo.dashboard.app:app --port 8080    # → http://localhost:8080
+```
+
+## Is it dead? Measure it — `decay-check`
+
+The agent-free flip side of reviving: **does a repo still install and run today?** — the same
+signal behind the 85% number. No agent, no API key.
+
+```bash
+lazarus decay-check https://github.com/owner/repo      # RUNS / DECAYED + a reason code
+```
+
+It's also a **[GitHub Action](docs/decay-check.md)** — drop it in any repo's CI as a
+reproducibility canary that goes red the day the code stops running:
+
+```yaml
+- uses: DoctorDean/lazarus/actions/decay-check@v0.3.0
+  with: { fail-on-decay: true }
 ```
 
 ## Quickstart
@@ -263,11 +282,12 @@ Log in the `claude` CLI (subscription) or put `ANTHROPIC_API_KEY=...` in a gitig
 Working today: **Scout** (URL → resurrection plan) · pinner · Docker sandbox (local + `ssh://`
 remote + `--gpus`) · autonomous repair loop · capability locator · contract emitter (GPU-aware,
 with reproduction certificates) · **Lazarus Compose** · a **registry** of revived tools · a
-public **dashboard**. All three pillars landed — the curated hero set of **six** dead repos
-revived (protein + genomics + molecular docking), a three-way method comparison, a live
-binder-triage pipeline, reproduced paper benchmarks, and two give-back PRs — plus a
-**principled N=20 benchmark** (85% of the sample dead, 100% of the dead revived; see
-[`benchmark/`](benchmark/)). 66 passing tests, published to PyPI (`pip install lazarus-bio`).
+public **dashboard** · an agent-free **decay-check** (CLI + GitHub Action). All three pillars
+landed — a hero set of dead repos revived (protein + genomics + molecular docking), a three-way
+method comparison, a live binder-triage pipeline, reproduced paper benchmarks, and two give-back
+PRs — plus a **principled N=20 benchmark** (85% of the sample dead, 100% of the dead revived;
+see [`benchmark/`](benchmark/)) and a **registry grown to 13 tools**. 72 passing tests,
+published to PyPI (`pip install lazarus-bio`).
 
 **Contributions welcome** — add a repo, curate a registry entry, or file a revival that failed.
 Start at [CONTRIBUTING.md](CONTRIBUTING.md). Development happens on the `next` branch.

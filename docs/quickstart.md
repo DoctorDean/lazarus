@@ -36,6 +36,17 @@ The four permissively-licensed tools also ship a public image on GHCR — e.g.
 `docker pull ghcr.io/doctordean/lazarus-fpocket:working` (see [Component images](IMAGES.md)).
 Need something that isn't in the registry yet? Revive it yourself below.
 
+## Is it actually dead? — `decay-check`
+
+Before reviving, confirm the repo really doesn't run today (agent-free, no API key):
+
+```bash
+lazarus decay-check https://github.com/owner/repo     # RUNS / DECAYED + a reason code
+```
+
+Add `--sandbox docker` for a fresh-container check, or `--fail-on-decay` to gate CI. It's also
+a **[GitHub Action](decay-check.md)** — a reproducibility canary for your own repo.
+
 ## 1. Pin dependencies to a repo's commit era
 
 The single biggest reason old code "won't install" is that `pip` gives you *today's* versions.

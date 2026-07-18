@@ -33,8 +33,10 @@ pipelines, and **gives the fixes back** to the community.
 - **Give back** — the fixes (rotted URLs, broken paths, a 15-year-old undefined-behaviour bug)
   become maintainer-ready **pull requests** with CI, so the method can't silently rot again.
 
-And a **[registry](registry.md)** of everything already revived, so you can `lazarus pull` a tool
-instead of re-reviving it.
+And a **[registry](registry.md)** of everything already revived — **13 tools** today — so you
+can `lazarus pull` one instead of re-reviving it. The flip side ships too: **[`lazarus
+decay-check`](decay-check.md)** answers "does a repo still run today?" agent-free — as a CLI
+and a GitHub Action.
 
 ## Measured — most of these repos are dead, and Lazarus revived them all
 
@@ -47,7 +49,7 @@ On a **principled, seeded random sample of 20** *Bioinformatics* tools (2018–2
 Nothing is cherry-picked — the frame, seed, per-repo outcomes, and the runnable harness are in
 [`benchmark/`](https://github.com/DoctorDean/lazarus/tree/main/benchmark).
 
-## Six dead repos, resurrected autonomously
+## Six of them, up close
 
 | Repo | Era / stack | Result |
 |---|---|---|
