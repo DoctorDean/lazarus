@@ -31,7 +31,11 @@ MAP=(
   "lazarus/hitea:working|$NS/lazarus-hitea:working"
   "lazarus/dnafeaturesviewer:genbank-plot-ready|$NS/lazarus-dnafeaturesviewer:genbank-plot-ready"
   "lazarus/coconet:working|$NS/lazarus-coconet:working"
-  "lazarus/sequoya:nsgaii-ready|$NS/lazarus-sequoya:nsgaii-ready"
+  # SE(3)-equivariant docking, MIT (from the comp-bio pilot)
+  "lazarus/equidock:working|$NS/lazarus-equidock:working"
+  "lazarus/equibind:contract-ready|$NS/lazarus-equibind:contract-ready"
+  # HELD pending an image slim (54.5 GB is impractical to publish/pull):
+  # "lazarus/sequoya:nsgaii-ready|$NS/lazarus-sequoya:nsgaii-ready"
 )
 
 hostflag=(); [ -n "$SRC" ] && hostflag=(-H "$SRC")

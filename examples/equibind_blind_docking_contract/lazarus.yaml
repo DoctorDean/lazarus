@@ -1,0 +1,44 @@
+name: equibind_blind_docking
+repo_url: https://github.com/HannesStark/EquiBind
+base_image: lazarus/equibind:contract-ready
+entrypoint: bash /root/repo/lazarus_dock.sh "$INPUT" "$OUTDIR"
+inputs:
+- name: INPUT
+  type: file|dir
+  description: Either a complex protein .pdb file (protein chains + crystal-ligand
+    HETATM records; the largest non-solvent/non-ion HETATM residue is auto-selected
+    as the ligand and split out), OR a directory in EquiBind's native format containing
+    a *protein*.pdb receptor and a *ligand*.{sdf,mol2,pdb,pdbqt} file.
+outputs:
+- name: docked_ligand.sdf
+  type: file
+  description: EquiBind's predicted bound 3D pose of the ligand as an RDKit-parseable
+    .sdf, written into $OUTDIR.
+smoke:
+  description: Download PDB 6MOA, blind-dock the JW4 ligand with the pretrained flexible_self_docking
+    checkpoint, and verify the predicted ligand heavy-atom centroid is within 10 A
+    of the crystal ligand centroid (proves the true binding pocket was found, not
+    a floating/NaN pose).
+  command: bash /root/repo/lazarus_smoke.sh
+  metric: ligand_centroid_distance_A
+  threshold: 10
+  input_ref: https://files.rcsb.org/download/6MOA.pdb
+benchmark: null
+paper: "St\xE4rk et al., \"EquiBind: Geometric Deep Learning for Drug Binding Structure\
+  \ Prediction\" (ICML 2022)"
+commit: 4cb1b4c562dae914780154518a6b915bb4cba658
+patches:
+- Built conda env from environment_cpuonly.yml (python 3.7, torch 1.10 cpu, dgl, rdkit,
+  openbabel, biopython).
+- Cleared the executable-stack ELF flag on torch/dgl shared objects (patchelf --clear-execstack)
+  to work around the hardened-kernel 'cannot enable executable stack' import failure
+  on libtorch_cpu.so.
+- Replaced the too-new solver-resolved dgl 2.0.0 (requires PyTorch>=1.13) with the
+  torch-1.10-compatible dgl==0.9.0 CPU wheel from data.dgl.ai.
+- Pinned pyaml==21.10.1 (the solver pulled pyaml 23.x which uses the 3.8 walrus operator
+  and fails to import under Python 3.7).
+- Added lazarus_dock.sh entrypoint that splits a complex PDB into receptor.pdb + crystal-ligand
+  .sdf (via OpenBabel, adding hydrogens) and runs configs_clean/inference.yml, exporting
+  the docked pose.
+platform: linux/amd64
+gpus: ''

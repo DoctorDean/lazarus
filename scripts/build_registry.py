@@ -143,6 +143,29 @@ ENTRIES = [
         sanity_metric="sum_of_pairs_delta_vs_initial", sanity_threshold=0, sanity_direction="above",
         contract="examples/sequoya_nsgaii_msa_contract", added="2026-07-18",
     ),
+    # --- SE(3)-equivariant docking, MIT (from the earlier comp-bio pilot) ---
+    RegistryEntry(
+        name="equidock_rigid_docking", title="EquiDock",
+        domain="Rigid protein–protein docking",
+        summary="SE(3)-equivariant end-to-end rigid protein–protein docking — predict the docked complex in one shot, no candidate sampling.",
+        repo_url="https://github.com/octavian-ganea/equidock_public",
+        paper="Ganea et al., ICLR 2022 — EquiDock: Independent SE(3)-Equivariant Models for End-to-End Rigid Protein Docking",
+        era="2022 · PyTorch · DGL · SE(3)", license="MIT",
+        base_image="ghcr.io/doctordean/lazarus-equidock:working", gpu=False, from_url=True, turns=44,
+        sanity_metric="ligand_CA_RMSD_vs_reference_output", sanity_threshold=2, sanity_direction="below",
+        contract="examples/equidock_rigid_docking_contract", added="2026-07-18",
+    ),
+    RegistryEntry(
+        name="equibind_blind_docking", title="EquiBind",
+        domain="Blind protein–ligand docking",
+        summary="Geometric deep learning for drug binding structure prediction — blind-dock a ligand into a protein in a single forward pass.",
+        repo_url="https://github.com/HannesStark/EquiBind",
+        paper="Stärk et al., ICML 2022 — EquiBind: Geometric Deep Learning for Drug Binding Structure Prediction",
+        era="2022 · PyTorch · DGL · SE(3)", license="MIT",
+        base_image="ghcr.io/doctordean/lazarus-equibind:contract-ready", gpu=False, from_url=True, turns=32,
+        sanity_metric="ligand_centroid_distance_A", sanity_threshold=10, sanity_direction="below",
+        contract="examples/equibind_blind_docking_contract", added="2026-07-18",
+    ),
 ]
 
 

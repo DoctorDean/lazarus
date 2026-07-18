@@ -4,7 +4,7 @@ A living archive of tools Lazarus has brought back from the dead — each revive
 from its source repo into a callable, containerised brick with a verified sanity
 check, and (where a benchmark exists) a reproduced paper number.
 
-**11 revived tools.** Pull any of them: `lazarus pull <name>`.
+**13 revived tools.** Pull any of them: `lazarus pull <name>`.
 
 | Tool | Domain | Era / stack | Result | From a URL |
 |---|---|---|---|:--:|
@@ -14,6 +14,8 @@ check, and (where a benchmark exists) a reproduced paper number.
 | **DiffDock** | Molecular docking | 2023 · PyTorch diffusion · ESM-2 · GPU | **0.375 vs 0.4** (top-1 success rate (<2Å)) | ✅ |
 | **dMaSIF** | Protein interface (surface, GPU) | 2021 · Py3.6 · torch cu111 · PyKeOps · GPU | smoke ROCAUC ≥ 0.65 | — |
 | **DnaFeaturesViewer** | Sequence annotation plots | Python · Biopython · matplotlib | smoke feature_count ≥ 10 | ✅ |
+| **EquiBind** | Blind protein–ligand docking | 2022 · PyTorch · DGL · SE(3) | smoke ligand_centroid_distance_A < 10 | ✅ |
+| **EquiDock** | Rigid protein–protein docking | 2022 · PyTorch · DGL · SE(3) | smoke ligand_CA_RMSD_vs_reference_output < 2 | ✅ |
 | **fpocket** | Druggable pocket detection | 2010 C · built on modern GCC | smoke pockets ≥ 1 | — |
 | **HiTEA** | Transposable-element insertions (Hi-C) | 2020 · Perl + R · bedtools | smoke num_candidate_insertions ≥ 1 | ✅ |
 | **MaSIF-site** | Protein interaction sites | 2020 · Py3.6 · TF 1.12 · MSMS/APBS | **0.82 vs 0.85** (median ROC-AUC) | — |
@@ -115,6 +117,38 @@ lazarus pull dnafeaturesviewer_genbank_plot
 ```
 
 > ℹ️ The pinned image `ghcr.io/doctordean/lazarus-dnafeaturesviewer:genbank-plot-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
+
+## EquiBind  <small>`equibind_blind_docking`</small>
+
+Geometric deep learning for drug binding structure prediction — blind-dock a ligand into a protein in a single forward pass.
+
+- **Source:** [HannesStark/EquiBind](https://github.com/HannesStark/EquiBind) · MIT
+- **Stack:** 2022 · PyTorch · DGL · SE(3)
+- **Sanity check:** `ligand_centroid_distance_A < 10`
+- **Revived:** 32 autonomous agent-turns  ·  from a bare URL (Scout-planned)
+- **Paper:** Stärk et al., ICML 2022 — EquiBind: Geometric Deep Learning for Drug Binding Structure Prediction
+
+```bash
+lazarus pull equibind_blind_docking
+```
+
+> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-equibind:contract-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
+
+## EquiDock  <small>`equidock_rigid_docking`</small>
+
+SE(3)-equivariant end-to-end rigid protein–protein docking — predict the docked complex in one shot, no candidate sampling.
+
+- **Source:** [octavian-ganea/equidock_public](https://github.com/octavian-ganea/equidock_public) · MIT
+- **Stack:** 2022 · PyTorch · DGL · SE(3)
+- **Sanity check:** `ligand_CA_RMSD_vs_reference_output < 2`
+- **Revived:** 44 autonomous agent-turns  ·  from a bare URL (Scout-planned)
+- **Paper:** Ganea et al., ICLR 2022 — EquiDock: Independent SE(3)-Equivariant Models for End-to-End Rigid Protein Docking
+
+```bash
+lazarus pull equidock_rigid_docking
+```
+
+> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-equidock:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## fpocket  <small>`fpocket2`</small>
 

@@ -1,0 +1,97 @@
+name: equidock_rigid_docking
+repo_url: https://github.com/octavian-ganea/equidock_public
+base_image: lazarus/equidock:working
+entrypoint: 'set -e
+
+  source activate equidock
+
+  export DGLBACKEND=pytorch
+
+  cd /root/repo
+
+
+  # Derive the DB5 target id from the input ligand PDB filename (e.g. 1AVX_l_b.pdb
+  -> 1AVX)
+
+  BASE=$(basename "$INPUT")
+
+  TARGET=${BASE%_l_b.pdb}
+
+
+  # Stage the provided (randomly rotated/translated) unbound ligand into the DB5 test
+  input dir.
+
+  # The matching receptor / ground-truth complex must exist in
+
+  # test_sets_pdb/db5_test_random_transformed/complexes/ (shipped for DB5 targets).
+
+  cp "$INPUT" test_sets_pdb/db5_test_random_transformed/random_transformed/"$BASE"
+
+
+  # create_dir() refuses to overwrite an existing results dir, so clear it first.
+
+  rm -rf test_sets_pdb/db5_equidock_results
+
+
+  # Predict the rigid docking pose for this single target (CPU, dataset=db5, remove_clashes=False).
+
+  EQUIDOCK_TARGET="$TARGET" python -m src.inference_rigid
+
+
+  # Publish the transformed (docked) ligand PDB.
+
+  mkdir -p "$OUTDIR"
+
+  cp test_sets_pdb/db5_equidock_results/"${TARGET}"_l_b_EQUIDOCK.pdb "$OUTDIR"/
+
+  echo "Docked ligand pose written to $OUTDIR/${TARGET}_l_b_EQUIDOCK.pdb"'
+inputs:
+- name: INPUT
+  type: pdb
+  description: Unbound ligand PDB (randomly rotated/translated), named <TARGET>_l_b.pdb,
+    e.g. test_sets_pdb/db5_test_random_transformed/random_transformed/1AVX_l_b.pdb.
+    The matching receptor/ground-truth complex <TARGET>_{l,r}_b_COMPLEX.pdb must exist
+    under test_sets_pdb/db5_test_random_transformed/complexes/ (shipped for DB5 targets).
+outputs:
+- name: <TARGET>_l_b_EQUIDOCK.pdb
+  type: pdb
+  description: Predicted rigid docking pose of the ligand (rotation+translation applied)
+    that assembles it into the bound complex with the receptor.
+smoke:
+  description: Regenerate 1AVX docked ligand pose (db5, remove_clashes=False) and
+    compute CA-atom RMSD (no re-alignment) vs the repo's shipped reference output.
+    Must be < 2.0 A (ideally ~0), proving model+weights+graph pipeline reproduce the
+    authors' published pose.
+  command: cd /root/repo && source activate equidock && export DGLBACKEND=pytorch
+    && rm -rf test_sets_pdb/db5_equidock_results && EQUIDOCK_TARGET=1AVX python -m
+    src.inference_rigid >/dev/null 2>&1 && python /root/ca_rmsd.py test_sets_pdb/db5_equidock_results/1AVX_l_b_EQUIDOCK.pdb
+    /root/db5_equidock_results_REFERENCE/1AVX_l_b_EQUIDOCK.pdb 2>/dev/null | grep
+    ligand_CA_RMSD
+  metric: ligand_CA_RMSD_vs_reference_output
+  threshold: 2
+  input_ref: test_sets_pdb/db5_test_random_transformed/random_transformed/1AVX_l_b.pdb
+benchmark:
+  description: 'Corroboration: Complex-RMSD (CA) of the predicted 1AVX pose vs the
+    ground-truth bound complex via src.test_all_methods.eval_pdb_outputset. Single-target
+    value; paper reports a DB5 median Complex-RMSD around 14 A.'
+  metric: complex_rmsd_CA_1AVX
+  reported: 14.1
+  tolerance: 10
+  n: 1
+  source: EquiDock paper, DB5 test set (median CRMSD)
+  command: ''
+  measured: 18.000393
+paper: 'EquiDock: Independent SE(3)-Equivariant Models for End-to-End Rigid Protein
+  Docking (Ganea et al., ICLR 2022)'
+commit: HEAD (--depth 1 clone of master, 2026-07-13)
+patches:
+- 'src/inference_rigid.py: dataset ''dips'' -> ''db5'' (match shipped db5 reference
+  outputs + db5 checkpoint)'
+- 'src/inference_rigid.py: removed hardcoded personal debug paths input_dir/ground_truth_dir/output_dir
+  = ''./test_sets_pdb/jean/'' and ''jean_out'', reverting to the real DB5 test directories'
+- 'src/inference_rigid.py: uncommented create_dir(output_dir) so the output directory
+  is created'
+- 'src/inference_rigid.py: added optional EQUIDOCK_TARGET env-var filter to run inference
+  on a single target (1AVX)'
+platform: linux/amd64
+gpus: ''
