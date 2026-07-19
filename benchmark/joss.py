@@ -54,6 +54,23 @@ def github_slug(repo_url: str) -> str | None:
     return f"{m.group(1)}/{m.group(2).rstrip('.').removesuffix('.git')}"
 
 
+_MANIFESTS = {"requirements.txt", "setup.py", "pyproject.toml", "setup.cfg",
+              "environment.yml", "Pipfile", "DESCRIPTION"}
+
+
+def has_install_manifest(slug: str, timeout: float = 15) -> bool:
+    """True if the repo root carries a Python/R install manifest. Screens out non-packages
+    (Snakemake workflows, C/C++/CMake tools, mislabeled languages) that decay-check can't
+    meaningfully install — so a DECAYED verdict is real decay, not an unsupported build."""
+    try:
+        req = urllib.request.Request(f"https://api.github.com/repos/{slug}/contents", headers=UA)
+        with urllib.request.urlopen(req, timeout=timeout) as r:  # noqa: S310
+            items = json.loads(r.read())
+        return bool({it.get("name", "") for it in items if isinstance(it, dict)} & _MANIFESTS)
+    except Exception:  # noqa: BLE001 (404 / rate-limit / private → treat as no manifest)
+        return False
+
+
 def iter_published(max_pages: int = 400):
     """Yield accepted JOSS papers, newest first, one page (20) at a time."""
     for page in range(1, max_pages + 1):
@@ -67,11 +84,14 @@ def iter_published(max_pages: int = 400):
         time.sleep(0.3)
 
 
-def sample(n: int, seed: int, year_min: int | None, allowed_langs: set | None = None) -> tuple[list, dict]:
+def sample(n: int, seed: int, year_min: int | None, allowed_langs: set | None = None,
+           require_manifest: bool = True) -> tuple[list, dict]:
     """A seeded random sample of github-hosted, public JOSS papers (with domain metadata).
 
     ``allowed_langs`` (lowercased) filters to repos whose *primary* language decay-check can
-    install (Python/R). Keeps "cross-domain" honest: many domains, one install ecosystem —
+    install (Python/R). ``require_manifest`` additionally screens to repos with an actual
+    Python/R install manifest at the root (drops Snakemake workflows, C/C++ tools, mislabeled
+    languages). Together they keep "cross-domain" honest: many domains, one install ecosystem —
     so a DECAYED verdict is real decay, not an unsupported build system.
     """
     pool, lang_skip = [], 0
@@ -94,7 +114,7 @@ def sample(n: int, seed: int, year_min: int | None, allowed_langs: set | None = 
                 continue
         pool.append((slug, p))
     random.Random(seed).shuffle(pool)
-    included, seen = [], set()
+    included, seen, manifest_skip = [], set(), 0
     for slug, p in pool:
         if len(included) >= n:
             break
@@ -102,6 +122,9 @@ def sample(n: int, seed: int, year_min: int | None, allowed_langs: set | None = 
             continue
         seen.add(slug.lower())
         if not repo_public(slug):
+            continue
+        if require_manifest and not has_install_manifest(slug):
+            manifest_skip += 1
             continue
         tags, langs = _csv(p.get("tags")), _csv(p.get("languages"))
         included.append({
@@ -116,6 +139,7 @@ def sample(n: int, seed: int, year_min: int | None, allowed_langs: set | None = 
         "top_tags": Counter(t for s in included for t in s["tags"]).most_common(12),
         "top_languages": Counter(l for s in included for l in s["languages"]).most_common(12),
         "pool_size": len(pool), "language_filtered_out": lang_skip,
+        "manifest_screened_out": manifest_skip,
     }
     return included, spread
 
@@ -128,13 +152,16 @@ def main(argv=None) -> int:
     ap.add_argument("--languages", default="Python,R,Jupyter Notebook",
                     help="keep only repos whose primary language is one of these "
                          "(what decay-check can install); empty string = no filter")
+    ap.add_argument("--no-manifest-screen", action="store_true",
+                    help="don't require a Python/R install manifest at the repo root")
     ap.add_argument("--out", default="benchmark/frame_joss.json")
     args = ap.parse_args(argv)
 
     allowed = {s.strip().lower() for s in args.languages.split(",") if s.strip()} or None
-    print(f"enumerating JOSS published papers… (languages={sorted(allowed) if allowed else 'all'})",
-          file=sys.stderr, flush=True)
-    included, spread = sample(args.n, args.seed, args.year_min, allowed)
+    print(f"enumerating JOSS published papers… (languages={sorted(allowed) if allowed else 'all'}, "
+          f"manifest_screen={not args.no_manifest_screen})", file=sys.stderr, flush=True)
+    included, spread = sample(args.n, args.seed, args.year_min, allowed,
+                              require_manifest=not args.no_manifest_screen)
     out = {"frame": "JOSS (reviewed scientific software; cross-domain, repo-guaranteed)",
            "seed": args.seed, "year_min": args.year_min, "languages": sorted(allowed) if allowed else "all",
            "n": len(included), "domain_spread": spread, "sample": included}

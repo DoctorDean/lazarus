@@ -176,7 +176,8 @@ fi
 class NaiveResult:
     repo_url: str
     naive_runs: Optional[bool] = None
-    stage: str = ""
+    installed: Optional[bool] = None   # did install SUCCEED? (robust decay signal; less
+    stage: str = ""                     # noisy than naive_runs, which also needs a runnable example)
     reason: str = ""
     lang: str = ""
     wall_clock_s: float = 0.0
@@ -235,6 +236,11 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
         except Exception:  # noqa: BLE001
             pass
     res.wall_clock_s = time.time() - t0
+    # install SUCCEEDED iff we got past install to running the example. This is the robust
+    # decay signal — naive_runs additionally requires a runnable example, which over-reports
+    # decay on repos whose example needs args/data/credentials (see the JOSS pilot).
+    if res.stage:
+        res.installed = res.stage == "example"
     return res
 
 
