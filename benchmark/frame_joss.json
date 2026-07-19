@@ -1,0 +1,351 @@
+{
+  "frame": "JOSS (reviewed scientific software; cross-domain, repo-guaranteed)",
+  "seed": 42,
+  "year_min": 2018,
+  "n": 15,
+  "domain_spread": {
+    "top_tags": [
+      [
+        "python",
+        3
+      ],
+      [
+        "Python",
+        1
+      ],
+      [
+        "Scanning Tunneling Microscopy",
+        1
+      ],
+      [
+        "STM",
+        1
+      ],
+      [
+        "Automation",
+        1
+      ],
+      [
+        "Earth Engine",
+        1
+      ],
+      [
+        "Cartopy",
+        1
+      ],
+      [
+        "Matplotlib",
+        1
+      ],
+      [
+        "cheminformatics",
+        1
+      ],
+      [
+        "MLIPs",
+        1
+      ],
+      [
+        "ASE",
+        1
+      ],
+      [
+        "RDKit",
+        1
+      ]
+    ],
+    "top_languages": [
+      [
+        "Python",
+        10
+      ],
+      [
+        "Jupyter Notebook",
+        2
+      ],
+      [
+        "C",
+        1
+      ],
+      [
+        "Julia",
+        1
+      ],
+      [
+        "R",
+        1
+      ],
+      [
+        "Rust",
+        1
+      ],
+      [
+        "TypeScript",
+        1
+      ]
+    ],
+    "pool_size": 3257
+  },
+  "sample": [
+    {
+      "repo_url": "https://github.com/New-Horizons-SPM/scanbot",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Scanbot: An STM Automation Bot",
+      "year": 2016,
+      "doi": "10.21105/joss.06028",
+      "tags": [
+        "Python",
+        "Scanning Tunneling Microscopy",
+        "STM",
+        "Automation"
+      ],
+      "languages": []
+    },
+    {
+      "repo_url": "https://github.com/kmarkert/cartoee",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "cartoee: Publication quality maps using Earth Engine",
+      "year": 2016,
+      "doi": "10.21105/joss.01207",
+      "tags": [
+        "Earth Engine",
+        "Cartopy",
+        "Matplotlib"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/zincware/rdkit2ase",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "molify: Molecular Structure Interface",
+      "year": 2016,
+      "doi": "10.21105/joss.08829",
+      "tags": [
+        "cheminformatics",
+        "MLIPs",
+        "ASE",
+        "RDKit",
+        "PACKMOL",
+        "NetworkX"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/swiss-seismological-service/DUGseis",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "DUGseis: A Python package for real-time and post-processing of picoseismicity",
+      "year": 2016,
+      "doi": "10.21105/joss.06768",
+      "tags": [
+        "ObsPy",
+        "induced seismicity",
+        "picoseismicity",
+        "fluid injection",
+        "hydraulic stimulation"
+      ],
+      "languages": [
+        "Python",
+        "C"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/PyTorchLightning/metrics",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "TorchMetrics - Measuring Reproducibility in PyTorch",
+      "year": 2016,
+      "doi": "10.21105/joss.04101",
+      "tags": [
+        "python",
+        "deep learning",
+        "pytorch"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/colmduff/OptiGob",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "OptiGob: A decision support tool for Agriculture, Forestry and Other Land Use transitions",
+      "year": 2016,
+      "doi": "10.21105/joss.09271",
+      "tags": [
+        "Land use change",
+        "climate change",
+        "environmental impact"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/elsoroka/Satisfiability.jl",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Satisfiability.jl: Satisfiability Modulo Theories in Julia",
+      "year": 2016,
+      "doi": "10.21105/joss.06757",
+      "tags": [
+        "formal verification",
+        "satisfiability modulo theories"
+      ],
+      "languages": [
+        "Julia"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/tenemark/mikecalsetup",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "mikecalsetup: an open-source python tool for automatically creating calibration setups of MIKE SHE models in PEST or OSTRICH",
+      "year": 2016,
+      "doi": "10.21105/joss.05548",
+      "tags": [
+        "Calibration",
+        "MIKESHE",
+        "OSTRICH",
+        "PEST"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/JamesPaynter/PyGRB",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyGRB: A pure Python gamma-ray burst analysis package.",
+      "year": 2016,
+      "doi": "10.21105/joss.02536",
+      "tags": [
+        "python",
+        "astrophysics",
+        "cosmology",
+        "gamma-ray bursts",
+        "gravitational lensing"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/PGijsbers/GAMA",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "GAMA: Genetic Automated Machine learning Assistant",
+      "year": 2016,
+      "doi": "10.21105/joss.01132",
+      "tags": [
+        "AutoML",
+        "evolutionary algorithm",
+        "genetic programming"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/gasparl/possa",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "POSSA: Power simulation for sequential analyses and multiple hypotheses",
+      "year": 2016,
+      "doi": "10.21105/joss.04643",
+      "tags": [
+        "r",
+        "statistical power",
+        "simulation",
+        "sequential design",
+        "multiple hypotheses",
+        "multiple testing"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/LLNL/popclass",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "popclass: A Python Package for Classifying Microlensing Events",
+      "year": 2016,
+      "doi": "10.21105/joss.07769",
+      "tags": [
+        "astronomy",
+        "Milky Way",
+        "black hole"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/otvam/pypeec",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyPEEC: A 3D Quasi-Magnetostatic Solver using an FFT-Accelerated PEEC Method with Voxelization",
+      "year": 2016,
+      "doi": "10.21105/joss.06644",
+      "tags": [
+        "fft acceleration",
+        "quasi magnetostatic",
+        "power electronics",
+        "peec",
+        "voxel",
+        "maxwell",
+        "python",
+        "magnetics"
+      ],
+      "languages": []
+    },
+    {
+      "repo_url": "https://github.com/tensorly/viz",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "TLViz: Visualising and analysing tensor decomposition models with Python",
+      "year": 2016,
+      "doi": "10.21105/joss.04754",
+      "tags": [
+        "tensor decompositions",
+        "data mining",
+        "data visualisation",
+        "TensorLy"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pqzk-labs/solana-pqzk-fullchain",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "solana-pqzk-fullchain: Full on-chain verification of ZK-STARK proofs and post-quantum signatures on Solana",
+      "year": 2016,
+      "doi": "10.21105/joss.09923",
+      "tags": [
+        "Solana",
+        "zero-knowledge proofs",
+        "STARK",
+        "post-quantum cryptography",
+        "SLH-DSA (SPHINCS+)",
+        "ML-KEM (Kyber)"
+      ],
+      "languages": [
+        "Rust",
+        "TypeScript"
+      ]
+    }
+  ]
+}
