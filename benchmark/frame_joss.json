@@ -2,55 +2,60 @@
   "frame": "JOSS (reviewed scientific software; cross-domain, repo-guaranteed)",
   "seed": 42,
   "year_min": 2018,
+  "languages": [
+    "jupyter notebook",
+    "python",
+    "r"
+  ],
   "n": 15,
   "domain_spread": {
     "top_tags": [
       [
-        "python",
-        3
+        "genomics",
+        2
       ],
       [
-        "Python",
+        "astronomy",
+        2
+      ],
+      [
+        "JAX",
+        2
+      ],
+      [
+        "Snakemake",
+        2
+      ],
+      [
+        "bedtools",
         1
       ],
       [
-        "Scanning Tunneling Microscopy",
+        "data analysis",
         1
       ],
       [
-        "STM",
+        "metaprogramming",
         1
       ],
       [
-        "Automation",
+        "astrophysics",
         1
       ],
       [
-        "Earth Engine",
+        "radiative transfer",
         1
       ],
       [
-        "Cartopy",
+        "non-LTE",
         1
       ],
       [
-        "Matplotlib",
+        "escape probability",
         1
       ],
       [
-        "cheminformatics",
-        1
-      ],
-      [
-        "MLIPs",
-        1
-      ],
-      [
-        "ASE",
-        1
-      ],
-      [
-        "RDKit",
+        "line emission",
         1
       ]
     ],
@@ -60,183 +65,143 @@
         10
       ],
       [
+        "R",
+        6
+      ],
+      [
         "Jupyter Notebook",
         2
       ],
       [
-        "C",
+        "HyPhy",
         1
       ],
       [
-        "Julia",
-        1
-      ],
-      [
-        "R",
-        1
-      ],
-      [
-        "Rust",
-        1
-      ],
-      [
-        "TypeScript",
+        "C++",
         1
       ]
     ],
-    "pool_size": 3257
+    "pool_size": 2436,
+    "language_filtered_out": 821
   },
   "sample": [
     {
-      "repo_url": "https://github.com/New-Horizons-SPM/scanbot",
+      "repo_url": "https://github.com/PhanstielLab/bedtoolsr",
       "venue": "JOSS",
       "reviewed_software": true,
-      "title": "Scanbot: An STM Automation Bot",
+      "title": "Bedtoolsr: An R package for genomic data analysis and manipulation",
       "year": 2016,
-      "doi": "10.21105/joss.06028",
+      "doi": "10.21105/joss.01742",
       "tags": [
-        "Python",
-        "Scanning Tunneling Microscopy",
-        "STM",
-        "Automation"
-      ],
-      "languages": []
-    },
-    {
-      "repo_url": "https://github.com/kmarkert/cartoee",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "cartoee: Publication quality maps using Earth Engine",
-      "year": 2016,
-      "doi": "10.21105/joss.01207",
-      "tags": [
-        "Earth Engine",
-        "Cartopy",
-        "Matplotlib"
+        "bedtools",
+        "genomics",
+        "data analysis",
+        "metaprogramming"
       ],
       "languages": [
+        "R",
         "Python"
       ]
     },
     {
-      "repo_url": "https://github.com/zincware/rdkit2ase",
+      "repo_url": "https://github.com/gica3618/pythonradex",
       "venue": "JOSS",
       "reviewed_software": true,
-      "title": "molify: Molecular Structure Interface",
+      "title": "pythonradex: a fast Python re-implementation of RADEX with extended functionality",
       "year": 2016,
-      "doi": "10.21105/joss.08829",
+      "doi": "10.21105/joss.09233",
       "tags": [
-        "cheminformatics",
-        "MLIPs",
-        "ASE",
-        "RDKit",
-        "PACKMOL",
-        "NetworkX"
-      ],
-      "languages": [
-        "Python"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/swiss-seismological-service/DUGseis",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "DUGseis: A Python package for real-time and post-processing of picoseismicity",
-      "year": 2016,
-      "doi": "10.21105/joss.06768",
-      "tags": [
-        "ObsPy",
-        "induced seismicity",
-        "picoseismicity",
-        "fluid injection",
-        "hydraulic stimulation"
-      ],
-      "languages": [
-        "Python",
-        "C"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/PyTorchLightning/metrics",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "TorchMetrics - Measuring Reproducibility in PyTorch",
-      "year": 2016,
-      "doi": "10.21105/joss.04101",
-      "tags": [
-        "python",
-        "deep learning",
-        "pytorch"
-      ],
-      "languages": [
-        "Python"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/colmduff/OptiGob",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "OptiGob: A decision support tool for Agriculture, Forestry and Other Land Use transitions",
-      "year": 2016,
-      "doi": "10.21105/joss.09271",
-      "tags": [
-        "Land use change",
-        "climate change",
-        "environmental impact"
-      ],
-      "languages": [
-        "Jupyter Notebook",
-        "Python"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/elsoroka/Satisfiability.jl",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "Satisfiability.jl: Satisfiability Modulo Theories in Julia",
-      "year": 2016,
-      "doi": "10.21105/joss.06757",
-      "tags": [
-        "formal verification",
-        "satisfiability modulo theories"
-      ],
-      "languages": [
-        "Julia"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/tenemark/mikecalsetup",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "mikecalsetup: an open-source python tool for automatically creating calibration setups of MIKE SHE models in PEST or OSTRICH",
-      "year": 2016,
-      "doi": "10.21105/joss.05548",
-      "tags": [
-        "Calibration",
-        "MIKESHE",
-        "OSTRICH",
-        "PEST"
-      ],
-      "languages": [
-        "Python"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/JamesPaynter/PyGRB",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "PyGRB: A pure Python gamma-ray burst analysis package.",
-      "year": 2016,
-      "doi": "10.21105/joss.02536",
-      "tags": [
-        "python",
+        "astronomy",
         "astrophysics",
-        "cosmology",
-        "gamma-ray bursts",
-        "gravitational lensing"
+        "radiative transfer",
+        "non-LTE",
+        "escape probability",
+        "line emission"
       ],
       "languages": [
         "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/cjbarrie/academictwitteR",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "academictwitteR: an R package to access the Twitter Academic Research Product Track v2 API endpoint",
+      "year": 2016,
+      "doi": "10.21105/joss.03272",
+      "tags": [
+        "twitter",
+        "social media",
+        "API"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/kazewong/flowMC",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "flowMC: Normalizing flow enhanced sampling package for probabilistic inference in JAX",
+      "year": 2016,
+      "doi": "10.21105/joss.05021",
+      "tags": [
+        "Bayesian Inference",
+        "Machine Learning",
+        "JAX"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/jeffmacinnes/mobileGazeMapping",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Mobile Gaze Mapping: A Python package for mapping mobile gaze data to a fixed target stimulus",
+      "year": 2016,
+      "doi": "10.21105/joss.00984",
+      "tags": [
+        "openCV",
+        "computer vision",
+        "eye tracking",
+        "mobile eye tracking"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/atmoschem/eixport",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "eixport: An R package to export emissions to atmospheric models",
+      "year": 2016,
+      "doi": "10.21105/joss.00607",
+      "tags": [
+        "eixport",
+        "emissions",
+        "air quality model"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/aglucaci/Analysis-of-Orthologous-Collections",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "AOC: A Snakemake workflow for the characterization of natural selection in protein-coding genes",
+      "year": 2016,
+      "doi": "10.21105/joss.09872",
+      "tags": [
+        "Snakemake",
+        "Molecular Evolution",
+        "Bioinformatics"
+      ],
+      "languages": [
+        "Python",
+        "HyPhy"
       ]
     },
     {
@@ -257,94 +222,123 @@
       ]
     },
     {
-      "repo_url": "https://github.com/gasparl/possa",
+      "repo_url": "https://github.com/ScionResearch/genomesizeR",
       "venue": "JOSS",
       "reviewed_software": true,
-      "title": "POSSA: Power simulation for sequential analyses and multiple hypotheses",
+      "title": "genomesizeR: An R package for genome size prediction",
       "year": 2016,
-      "doi": "10.21105/joss.04643",
+      "doi": "10.21105/joss.08759",
       "tags": [
-        "r",
-        "statistical power",
-        "simulation",
-        "sequential design",
-        "multiple hypotheses",
-        "multiple testing"
+        "molecular ecology"
       ],
       "languages": [
         "R"
       ]
     },
     {
-      "repo_url": "https://github.com/LLNL/popclass",
+      "repo_url": "https://github.com/mmrabe/hypr",
       "venue": "JOSS",
       "reviewed_software": true,
-      "title": "popclass: A Python Package for Classifying Microlensing Events",
+      "title": "hypr: An R package for hypothesis-driven contrast coding",
       "year": 2016,
-      "doi": "10.21105/joss.07769",
+      "doi": "10.21105/joss.02134",
+      "tags": [
+        "psychology",
+        "linguistics",
+        "linear regression",
+        "linear model",
+        "statistics",
+        "research methods",
+        "research hypotheses"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/barricklab/seabreeze",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "seabreeze: A Pipeline for Analyzing Structural Variation Between Bacterial Genome Assemblies",
+      "year": 2016,
+      "doi": "10.21105/joss.08065",
+      "tags": [
+        "structural variation",
+        "experimental evolution",
+        "bacterial genomics",
+        "Snakemake"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/genome/bam-readcount",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Bam-readcount - rapid generation of basepair-resolution sequence metrics",
+      "year": 2016,
+      "doi": "10.21105/joss.03722",
+      "tags": [
+        "genomics",
+        "cpp",
+        "sequencing"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ThibaultFillion/strengths",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "STReNGTHS, a Python package to model and simulate complex reaction-diffusion systems",
+      "year": 2016,
+      "doi": "10.21105/joss.06495",
+      "tags": [],
+      "languages": [
+        "Python",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/steven-murray/hankel",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "hankel: A Python library for performing simple and accurate Hankel transformations",
+      "year": 2016,
+      "doi": "10.21105/joss.01397",
       "tags": [
         "astronomy",
-        "Milky Way",
-        "black hole"
+        "numerical analysis"
       ],
       "languages": [
+        "Jupyter Notebook",
         "Python"
       ]
     },
     {
-      "repo_url": "https://github.com/otvam/pypeec",
+      "repo_url": "https://github.com/darrenjw/jax-smfsb",
       "venue": "JOSS",
       "reviewed_software": true,
-      "title": "PyPEEC: A 3D Quasi-Magnetostatic Solver using an FFT-Accelerated PEEC Method with Voxelization",
+      "title": "jax-smfsb: A Python library for stochastic systems biology modelling and inference",
       "year": 2016,
-      "doi": "10.21105/joss.06644",
+      "doi": "10.21105/joss.07491",
       "tags": [
-        "fft acceleration",
-        "quasi magnetostatic",
-        "power electronics",
-        "peec",
-        "voxel",
-        "maxwell",
-        "python",
-        "magnetics"
-      ],
-      "languages": []
-    },
-    {
-      "repo_url": "https://github.com/tensorly/viz",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "TLViz: Visualising and analysing tensor decomposition models with Python",
-      "year": 2016,
-      "doi": "10.21105/joss.04754",
-      "tags": [
-        "tensor decompositions",
-        "data mining",
-        "data visualisation",
-        "TensorLy"
+        "JAX",
+        "systems biology",
+        "stochastic modelling",
+        "reaction networks",
+        "SBML",
+        "Gillespie algorithm",
+        "Bayesian inference",
+        "high-performance",
+        "parallel",
+        "GPU",
+        "reaction-diffusion"
       ],
       "languages": [
         "Python"
-      ]
-    },
-    {
-      "repo_url": "https://github.com/pqzk-labs/solana-pqzk-fullchain",
-      "venue": "JOSS",
-      "reviewed_software": true,
-      "title": "solana-pqzk-fullchain: Full on-chain verification of ZK-STARK proofs and post-quantum signatures on Solana",
-      "year": 2016,
-      "doi": "10.21105/joss.09923",
-      "tags": [
-        "Solana",
-        "zero-knowledge proofs",
-        "STARK",
-        "post-quantum cryptography",
-        "SLH-DSA (SPHINCS+)",
-        "ML-KEM (Kyber)"
-      ],
-      "languages": [
-        "Rust",
-        "TypeScript"
       ]
     }
   ]

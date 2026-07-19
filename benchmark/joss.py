@@ -67,9 +67,14 @@ def iter_published(max_pages: int = 400):
         time.sleep(0.3)
 
 
-def sample(n: int, seed: int, year_min: int | None) -> tuple[list, dict]:
-    """A seeded random sample of github-hosted, public JOSS papers (with domain metadata)."""
-    pool = []
+def sample(n: int, seed: int, year_min: int | None, allowed_langs: set | None = None) -> tuple[list, dict]:
+    """A seeded random sample of github-hosted, public JOSS papers (with domain metadata).
+
+    ``allowed_langs`` (lowercased) filters to repos whose *primary* language decay-check can
+    install (Python/R). Keeps "cross-domain" honest: many domains, one install ecosystem —
+    so a DECAYED verdict is real decay, not an unsupported build system.
+    """
+    pool, lang_skip = [], 0
     for p in iter_published():
         if p.get("state") != "accepted":
             continue
@@ -80,8 +85,14 @@ def sample(n: int, seed: int, year_min: int | None) -> tuple[list, dict]:
         if year_min and yr < year_min:
             continue
         slug = github_slug(p.get("software_repository", ""))
-        if slug:
-            pool.append((slug, p))
+        if not slug:
+            continue
+        if allowed_langs is not None:
+            primary = (_csv(p.get("languages")) or [""])[0].lower()
+            if primary not in allowed_langs:
+                lang_skip += 1
+                continue
+        pool.append((slug, p))
     random.Random(seed).shuffle(pool)
     included, seen = [], set()
     for slug, p in pool:
@@ -104,7 +115,7 @@ def sample(n: int, seed: int, year_min: int | None) -> tuple[list, dict]:
     spread = {
         "top_tags": Counter(t for s in included for t in s["tags"]).most_common(12),
         "top_languages": Counter(l for s in included for l in s["languages"]).most_common(12),
-        "pool_size": len(pool),
+        "pool_size": len(pool), "language_filtered_out": lang_skip,
     }
     return included, spread
 
@@ -114,14 +125,19 @@ def main(argv=None) -> int:
     ap.add_argument("--n", type=int, default=30)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--year-min", type=int, default=2018)
+    ap.add_argument("--languages", default="Python,R,Jupyter Notebook",
+                    help="keep only repos whose primary language is one of these "
+                         "(what decay-check can install); empty string = no filter")
     ap.add_argument("--out", default="benchmark/frame_joss.json")
     args = ap.parse_args(argv)
 
-    print("enumerating JOSS published papers…", file=sys.stderr, flush=True)
-    included, spread = sample(args.n, args.seed, args.year_min)
+    allowed = {s.strip().lower() for s in args.languages.split(",") if s.strip()} or None
+    print(f"enumerating JOSS published papers… (languages={sorted(allowed) if allowed else 'all'})",
+          file=sys.stderr, flush=True)
+    included, spread = sample(args.n, args.seed, args.year_min, allowed)
     out = {"frame": "JOSS (reviewed scientific software; cross-domain, repo-guaranteed)",
-           "seed": args.seed, "year_min": args.year_min, "n": len(included),
-           "domain_spread": spread, "sample": included}
+           "seed": args.seed, "year_min": args.year_min, "languages": sorted(allowed) if allowed else "all",
+           "n": len(included), "domain_spread": spread, "sample": included}
     Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     Path(args.out).write_text(json.dumps(out, indent=2, ensure_ascii=False))
     print(f"\nwrote {args.out}: {len(included)} JOSS repos (pool {spread['pool_size']})",
