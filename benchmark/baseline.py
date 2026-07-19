@@ -125,7 +125,7 @@ elif [ -f DESCRIPTION ]; then
   RPKG=$(grep -i '^Package:' DESCRIPTION | head -1 | sed 's/[Pp]ackage:[[:space:]]*//' | tr -d '\r')
   # install AND verify the package is actually available (install_local only *warns* on a
   # failed build, so a missing package after install is a real install failure).
-  timeout 1200 Rscript -e "if(!requireNamespace('remotes',quietly=TRUE))install.packages('remotes',repos='https://cloud.r-project.org'); remotes::install_local('.',dependencies=TRUE,upgrade='never'); if(!requireNamespace('$RPKG',quietly=TRUE)) quit(status=3)" >/tmp/inst.log 2>&1 || { echo "INSTLOG:"; tail -4 /tmp/inst.log; verdict 0 install R_install_failed; }
+  timeout 1200 Rscript -e "if(!requireNamespace('remotes',quietly=TRUE))install.packages('remotes',repos='https://cloud.r-project.org'); remotes::install_local('.',dependencies=TRUE,upgrade='never',build=FALSE); if(!requireNamespace('$RPKG',quietly=TRUE)) quit(status=3)" >/tmp/inst.log 2>&1 || { echo "INSTLOG:"; tail -4 /tmp/inst.log; verdict 0 install R_install_failed; }
 else
   verdict 0 install no_install_manifest
 fi
@@ -236,11 +236,15 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
         except Exception:  # noqa: BLE001
             pass
     res.wall_clock_s = time.time() - t0
-    # install SUCCEEDED iff we got past install to running the example. This is the robust
-    # decay signal — naive_runs additionally requires a runnable example, which over-reports
-    # decay on repos whose example needs args/data/credentials (see the JOSS pilot).
-    if res.stage:
-        res.installed = res.stage == "example"
+    # install SUCCEEDED iff we reached the example stage; FAILED at clone/install; and is
+    # INCONCLUSIVE (None) on timeout/error — those are excluded from the decay denominator,
+    # not miscounted as decayed. `installed` is the robust decay signal (naive_runs also needs
+    # a runnable example, which over-reports decay when the example needs args/data — see pilot).
+    if res.stage == "example":
+        res.installed = True
+    elif res.stage in ("install", "clone"):
+        res.installed = False
+    # else timeout/error/unknown → installed stays None (inconclusive)
     return res
 
 
