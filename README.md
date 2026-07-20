@@ -21,6 +21,14 @@
 
 ---
 
+## Contents
+
+- **Overview** — [The wall](#the-wall) · [What Lazarus does](#what-lazarus-does)
+- **Evidence** — [Four dead repos, resurrected](#proof--four-dead-repos-resurrected-autonomously) · [Reproduces the paper](#reproduces-the-paper) · [Measured — the N=20 benchmark](#measured--most-of-these-repos-are-dead-and-lazarus-revived-them-all)
+- **How it works** — [The five organs](#how-it-works--five-organs) · [Point it at a URL](#point-it-at-a-url--it-writes-its-own-plan) · [Runs anywhere](#runs-on-a-laptop-executes-anywhere)
+- **Use it** — [Registry &amp; pull](#the-registry--pull-a-revived-tool) · [Dashboard](#try-it--the-dashboard) · [`decay-check`](#is-it-dead-measure-it--decay-check) · [Compose pipelines](#compose--an-in-silico-pipeline-from-revived-bricks) · [Give back](#give-back)
+- **Get started** — [Quickstart](#quickstart) · [Status](#status) · [License](#license)
+
 ## The wall
 
 Computational science has a reproducibility problem. A huge fraction of published methods
