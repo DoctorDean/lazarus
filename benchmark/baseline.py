@@ -207,10 +207,19 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
         if done.wait(timeout_s):
             return
         fired.set()
-        try:
-            sb.stop()
-        except Exception:  # noqa: BLE001
-            pass
+        # A single `docker rm -f` over a flaky ssh:// can hang or fail, and one swallowed
+        # failure lets the capped run continue unbounded (observed: a repo stuck 2.5h under a
+        # 30m cap). Force-remove by name with a per-attempt timeout, retried until it's gone.
+        deadline = time.time() + 180
+        while time.time() < deadline and not done.is_set():
+            try:
+                cr = client.run(["rm", "-f", sb.name], timeout=30)
+                if cr.ok or "No such container" in (cr.stderr or ""):
+                    sb.started = False
+                    return
+            except Exception:  # noqa: BLE001 — a hung/failed kill just means: retry
+                pass
+            time.sleep(3)
 
     threading.Thread(target=_watchdog, daemon=True).start()
     try:
