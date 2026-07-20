@@ -242,6 +242,8 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
     # a runnable example, which over-reports decay when the example needs args/data — see pilot).
     if res.stage == "example":
         res.installed = True
+    elif res.reason == "no_install_manifest":
+        res.installed = None   # not a standard installable package (workflow/C++/subdir) → N/A, excluded
     elif res.stage in ("install", "clone"):
         res.installed = False
     # else timeout/error/unknown → installed stays None (inconclusive)

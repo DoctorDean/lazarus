@@ -1,0 +1,152 @@
+[
+  {
+    "repo_url": "https://github.com/PhanstielLab/bedtoolsr",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 119.77378702163696,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gica3618/pythonradex",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 69.2445776462555,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 2\n    doi = {10.21105/joss.09233},\n           ^^^^^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cjbarrie/academictwitteR",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 973.0338921546936,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"Get started\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (academictwitteR)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\nError response from daemon: No such exec instance: 9892301618f617e443e570f50bac4c6fc4e59c268b2509a1517d739d32de3a91\n"
+  },
+  {
+    "repo_url": "https://github.com/kazewong/flowMC",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 891.2217710018158,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\nError response from daemon: No such exec instance: 8a3ee6f64184ccc41439e0b056bffbc817cdb42e20510e3e22dcf99fe03ea57b\n"
+  },
+  {
+    "repo_url": "https://github.com/jeffmacinnes/mobileGazeMapping",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 18.695932865142822,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/atmoschem/eixport",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 262.81012415885925,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/eixport’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/Rtmp5CL2zo/file1ec74c7d8b1/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PGijsbers/GAMA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 72.8954689502716,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ScionResearch/genomesizeR",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 650.2056970596313,
+    "log_tail": "INSTLOG:\n2: In i.p(...) :\n  installation of package ‘/tmp/RtmpAPeqan/file1ec676fbd56’ had non-zero exit status\n3: In i.p(...) :\n  installation of package ‘/tmp/RtmpAPeqan/file1ec74a9858/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mmrabe/hypr",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 121.4415500164032,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"To assign\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (hypr)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/barricklab/seabreeze",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 91.71432781219482,
+    "log_tail": "RAN: python -c 'import src'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ThibaultFillion/strengths",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 31.929648876190186,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/steven-murray/hankel",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 45.66055083274841,
+    "log_tail": "RAN: python -c 'import hankel'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/darrenjw/jax-smfsb",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 73.16621279716492,
+    "log_tail": "RAN: python demos/abc-cal.py\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/demos/abc-cal.py\", line 5, in <module>\n    import jsmfsb\n  File \"/opt/conda/lib/python3.14/site-packages/jsmfsb/__init__.py\", line 1, in <module>\n    from jsmfsb.spn import *\n  File \"/opt/conda/lib/python3.14/site-packages/jsmfsb/spn.py\", line 5, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/nhejazi/haldensify",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 264.61118602752686,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/haldensify’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/Rtmpkaxkbq/file1ec737736c6/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/sjbeckett/localcovid19now",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 530.4428269863129,
+    "log_tail": "INSTLOG:\nWarning messages:\n1: In i.p(...) : installation of package ‘tmap’ had non-zero exit status\n2: In i.p(...) :\n  installation of package ‘/tmp/Rtmp2BUM2o/file1ec5194d875/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  }
+]
