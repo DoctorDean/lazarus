@@ -7,69 +7,85 @@
     "python",
     "r"
   ],
-  "n": 15,
+  "n": 150,
   "domain_spread": {
     "top_tags": [
       [
-        "genomics",
-        2
+        "python",
+        12
       ],
       [
         "astronomy",
-        2
+        11
       ],
       [
-        "JAX",
-        2
+        "machine learning",
+        10
       ],
       [
-        "Snakemake",
-        2
+        "Machine Learning",
+        5
       ],
       [
-        "bedtools",
-        1
+        "natural language processing",
+        5
       ],
       [
-        "data analysis",
-        1
+        "statistics",
+        4
       ],
       [
-        "metaprogramming",
-        1
+        "phylogenetics",
+        4
       ],
       [
-        "astrophysics",
-        1
+        "bioinformatics",
+        4
       ],
       [
-        "radiative transfer",
-        1
+        "geospatial",
+        4
       ],
       [
-        "non-LTE",
-        1
+        "remote sensing",
+        3
       ],
       [
-        "escape probability",
-        1
+        "optimization",
+        3
       ],
       [
-        "line emission",
-        1
+        "time series",
+        3
       ]
     ],
     "top_languages": [
       [
         "Python",
-        10
+        112
       ],
       [
         "R",
-        6
+        40
       ],
       [
         "Jupyter Notebook",
+        28
+      ],
+      [
+        "C++",
+        13
+      ],
+      [
+        "JavaScript",
+        7
+      ],
+      [
+        "C",
+        5
+      ],
+      [
+        "SCSS",
         2
       ],
       [
@@ -77,12 +93,25 @@
         1
       ],
       [
-        "C++",
+        "Vim Snippet",
+        1
+      ],
+      [
+        "Mako",
+        1
+      ],
+      [
+        "Cython",
+        1
+      ],
+      [
+        "TypeScript",
         1
       ]
     ],
     "pool_size": 2436,
-    "language_filtered_out": 821
+    "language_filtered_out": 821,
+    "manifest_screened_out": 0
   },
   "sample": [
     {
@@ -336,6 +365,2424 @@
         "parallel",
         "GPU",
         "reaction-diffusion"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/nhejazi/haldensify",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "haldensify: Highly adaptive lasso conditional density estimation in R",
+      "year": 2016,
+      "doi": "10.21105/joss.04522",
+      "tags": [
+        "machine learning",
+        "causal inference",
+        "conditional density estimation",
+        "generalized propensity score",
+        "inverse probability weighting",
+        "semiparametric inference"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/sjbeckett/localcovid19now",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "localcovid19now: processing and mapping COVID-19 case data at subnational scales",
+      "year": 2016,
+      "doi": "10.21105/joss.04898",
+      "tags": [
+        "epidemiology",
+        "COVID-19",
+        "mapping"
+      ],
+      "languages": [
+        "R",
+        "Vim Snippet"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/obss/jury",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Jury: A Comprehensive Evaluation Toolkit",
+      "year": 2016,
+      "doi": "10.21105/joss.06452",
+      "tags": [
+        "natural-language-generation",
+        "evaluation",
+        "metrics",
+        "natural-language-processing"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/jfjlaros/bin-parser",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "General binary file parser.",
+      "year": 2016,
+      "doi": "10.21105/joss.00766",
+      "tags": [
+        "binary",
+        "parser",
+        "yaml",
+        "json",
+        "read write"
+      ],
+      "languages": [
+        "Python",
+        "JavaScript"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/levuvietphong/pyTCR",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "pyTCR: A tropical cyclone rainfall model for python",
+      "year": 2016,
+      "doi": "10.21105/joss.08074",
+      "tags": [
+        "xarray",
+        "geopandas",
+        "cartopy",
+        "netcdf4"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ropensci/weathercan",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "weathercan: Download and format weather data from Environment and Climate Change Canada",
+      "year": 2016,
+      "doi": "10.21105/joss.00571",
+      "tags": [
+        "data",
+        "weather",
+        "Canada",
+        "meteorology"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Turlure-Nael-23018992/SkyRank",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SkyRank: a unified toolkit for Skyline ranking, benchmarking, and visualization",
+      "year": 2016,
+      "doi": "10.21105/joss.08834",
+      "tags": [
+        "skyline",
+        "multi-criteria decision making",
+        "ranking",
+        "information retrieval",
+        "pagerank"
+      ],
+      "languages": [
+        "Python",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/wilsonrljr/sysidentpy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SysIdentPy: A Python package for System Identification using NARMAX models",
+      "year": 2016,
+      "doi": "10.21105/joss.02384",
+      "tags": [
+        "System Identification",
+        "NARMAX",
+        "Dynamical Systems",
+        "Model Structure Selection"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/tresoldi/ngesh",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Ngesh: a Python library for synthetic phylogenetic data",
+      "year": 2016,
+      "doi": "10.21105/joss.03173",
+      "tags": [
+        "phylogenetics",
+        "random phylogenetic tree",
+        "phylogenetic tree simulation",
+        "synthetic data"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/terminological/dtrackr",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "dtrackr: An R package for tracking the provenance of data",
+      "year": 2016,
+      "doi": "10.21105/joss.04707",
+      "tags": [
+        "data pipeline",
+        "consort diagram",
+        "strobe statement",
+        "data quality",
+        "reproducible research"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/dspelaez/extended-wdm",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "EWDM: A wavelet-based method for estimating directional spectra of ocean waves",
+      "year": 2016,
+      "doi": "10.21105/joss.07942",
+      "tags": [
+        "python",
+        "physical oceanography",
+        "ocean surface waves",
+        "directional wave spectra",
+        "continuous wavelet transform"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ezsolti/feign",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "feign: a Python package to estimate geometric efficiency in passive gamma spectroscopy measurements of nuclear fuel",
+      "year": 2016,
+      "doi": "10.21105/joss.01650",
+      "tags": [
+        "nuclear safeguards",
+        "gamma spectroscopy",
+        "ray tracing"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Ayuei/DeBEIR",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "DeBEIR: A Python Package for Dense Bi-Encoder Information Retrieval",
+      "year": 2016,
+      "doi": "10.21105/joss.05017",
+      "tags": [
+        "information retrieval",
+        "dense retrieval",
+        "bi-encoder",
+        "transformers",
+        "pytorch",
+        "python",
+        "deep learning",
+        "neural networks",
+        "machine learning",
+        "natural language processing"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/SMTG-UCL/surfaxe",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Surfaxe: Systematic surface calculations",
+      "year": 2016,
+      "doi": "10.21105/joss.03171",
+      "tags": [
+        "materials design",
+        "high-throughput screening",
+        "surfaces"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/wilsoncai1992/data.adapt.multi.test",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "adaptest: Data-Adaptive Statistics for High-Dimensional Testing in R",
+      "year": 2016,
+      "doi": "10.21105/joss.00161",
+      "tags": [
+        "R language",
+        "data-adaptive statistics",
+        "data mining",
+        "multiple testing",
+        "computational biology",
+        "bioinformatics",
+        "targeted learning"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/johannes-titz/passt",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "passt: An R implementation of the Probability Associator Time (PASS-T) model",
+      "year": 2016,
+      "doi": "10.21105/joss.01900",
+      "tags": [
+        "judgments of frequency",
+        "judgments of duration",
+        "PASS-T",
+        "artificial neural network"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/MillionConcepts/pdr",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PDR: The Planetary Data Reader",
+      "year": 2016,
+      "doi": "10.21105/joss.07256",
+      "tags": [
+        "planetary science"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/gavinsimpson/gratia",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "gratia: An R package for exploring generalized additive models",
+      "year": 2016,
+      "doi": "10.21105/joss.06962",
+      "tags": [
+        "splines",
+        "generalized additive models",
+        "posterior simulation"
+      ],
+      "languages": [
+        "R",
+        "SCSS"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/atzberg/mlmod",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MLMOD: Machine Learning Methods for Data-Driven Modeling in LAMMPS",
+      "year": 2016,
+      "doi": "10.21105/joss.05620",
+      "tags": [
+        "machine learning",
+        "dynamics"
+      ],
+      "languages": [
+        "Python",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/mathLab/PyDMD",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyDMD: Python Dynamic Mode Decomposition",
+      "year": 2016,
+      "doi": "10.21105/joss.00530",
+      "tags": [
+        "Dynamic mode decomposition",
+        "DMD",
+        "Multiresolution DMD",
+        "Compressed DMD",
+        "Forward Backward DMD"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/canimus/cuallee",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "cuallee: A Python package for data quality checks across multiple DataFrame APIs",
+      "year": 2016,
+      "doi": "10.21105/joss.06684",
+      "tags": [
+        "python",
+        "data quality",
+        "data checks",
+        "data unit tests",
+        "data pipelines",
+        "data validation",
+        "data observability",
+        "data lake",
+        "pyspark",
+        "duckdb",
+        "pandas",
+        "snowpark",
+        "polars",
+        "big data"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/fjprichard/PyAFBF",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyAFBF: a Python library for sampling image textures from the anisotropic fractional Brownian field.",
+      "year": 2016,
+      "doi": "10.21105/joss.03821",
+      "tags": [
+        "mathematics",
+        "texture synthesis",
+        "image processing",
+        "probability",
+        "statistics",
+        "fractional Brownian field"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/kebschulllab/Dissecting-Atlas-Registered-Tissue",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "DART: A GUI Pipeline for Aligning Histological Brain Sections to 3D Atlases and Automating Laser Microdissection",
+      "year": 2016,
+      "doi": "10.21105/joss.09109",
+      "tags": [
+        "neuroscience",
+        "laser dissection",
+        "atlas",
+        "GUI"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "C",
+        "C++",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/xiangfstats/GenieR",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "genieR: An R package for inference of demographic history of phylogenies",
+      "year": 2016,
+      "doi": "10.21105/joss.00634",
+      "tags": [
+        "demographic history",
+        "phylogeny",
+        "coalescent models"
+      ],
+      "languages": [
+        "R",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/deniederhut/niacin",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "niacin: A Python package for text data enrichment",
+      "year": 2016,
+      "doi": "10.21105/joss.02136",
+      "tags": [
+        "data augmentation",
+        "natural language processing",
+        "machine learning"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Cosmoglobe/zodipy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "ZodiPy: A Python package for zodiacal light simulations",
+      "year": 2016,
+      "doi": "10.21105/joss.06648",
+      "tags": [
+        "astronomy",
+        "cosmology",
+        "zodiacal light",
+        "interplanetary dust"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/andrewthomasjones/logKDE",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "logKDE: log-transformed kernel density estimation",
+      "year": 2016,
+      "doi": "10.21105/joss.00870",
+      "tags": [
+        "data visualization",
+        "exploratory data analysis",
+        "non-parametric",
+        "positive data",
+        "probability density function"
+      ],
+      "languages": [
+        "R",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/IBT-FMI/COSplay",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "COSplay: Contrast Optimized Stimulation Player",
+      "year": 2016,
+      "doi": "10.21105/joss.01171",
+      "tags": [
+        "bids",
+        "optogenetics",
+        "electrophysiology",
+        "sensory-stimulation",
+        "trigger-events",
+        "fMRI",
+        "stimulus-evoked",
+        "Bruker",
+        "ParaVision",
+        "contrast-optimized-stimulation",
+        "lab-equipment",
+        "TTL",
+        "BNC"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/radwinskis/RadGEEToolbox",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "RadGEEToolbox: Streamlined Multispectral &amp; SAR Analysis for Google Earth Engine",
+      "year": 2016,
+      "doi": "10.21105/joss.08164",
+      "tags": [
+        "remote sensing",
+        "geospatial",
+        "landscape evolution",
+        "Google Earth Engine"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ropensci/c3dr",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "c3dr: An R Package to Read and Write C3D Motion Capture Files",
+      "year": 2016,
+      "doi": "10.21105/joss.09951",
+      "tags": [
+        "C3D",
+        "biomechanics",
+        "kinematics",
+        "motion capture"
+      ],
+      "languages": [
+        "R",
+        "C++",
+        "C"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/bcgsc/btllib",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "btllib: A C++ library with Python interface for efficient genomic sequence processing",
+      "year": 2016,
+      "doi": "10.21105/joss.04720",
+      "tags": [
+        "C++",
+        "bioinformatics",
+        "algorithms",
+        "data structures",
+        "genome",
+        "bloom filter"
+      ],
+      "languages": [
+        "Python",
+        "C",
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/gdslab/data-to-science",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Data-to-Science (D2S): An open-source ecosystem for collaborative geospatial data science research",
+      "year": 2016,
+      "doi": "10.21105/joss.09497",
+      "tags": [
+        "Geospatial data management",
+        "Uncrewed Aerial System",
+        "TypeScript"
+      ],
+      "languages": [
+        "Python",
+        "Mako"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/jbussemaker/SBArchOpt",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SBArchOpt: Surrogate-Based Architecture Optimization",
+      "year": 2016,
+      "doi": "10.21105/joss.05564",
+      "tags": [
+        "optimization",
+        "engineering",
+        "system architecture optimization",
+        "MBSE",
+        "surrogate-based optimization",
+        "Bayesian optimization",
+        "multi-objective optimization"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/AlexPof/opycleid",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Opycleid: A Python package for transformational music theory",
+      "year": 2016,
+      "doi": "10.21105/joss.00981",
+      "tags": [
+        "music-theory",
+        "category-theory",
+        "chords"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/akoyamp/geopolrisk-py",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "geopolrisk-py: A Python-Based Library to Operationalize the Geopolitical Supply Risk Method for use in Life Cycle Assessment and Comparative Risk Assessment",
+      "year": 2016,
+      "doi": "10.21105/joss.09600",
+      "tags": [
+        "Criticality",
+        "LCA",
+        "Imports",
+        "Raw material",
+        "Market concentration",
+        "Abiotic Resources"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/4DModeller/fdmr",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "4DModeller: a spatio-temporal modelling package",
+      "year": 2016,
+      "doi": "10.21105/joss.07047",
+      "tags": [
+        "spatio-temporal modelling",
+        "Bayesian inference",
+        "INLA",
+        "inlabru"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/for-ai/rl",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "RL: Generic reinforcement learning codebase in TensorFlow",
+      "year": 2016,
+      "doi": "10.21105/joss.01524",
+      "tags": [
+        "Reinforcement Learning",
+        "Tensorflow",
+        "Gym"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/MIT-PSFC/disruption-py",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "DisruptionPy: An open-source physics-based scientific framework for disruption analysis of fusion plasmas",
+      "year": 2016,
+      "doi": "10.21105/joss.09364",
+      "tags": [
+        "python",
+        "plasma physics",
+        "disruptions",
+        "nuclear fusion",
+        "magnetic confinement"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/tesselle/aion",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "aion: An R Package to Represent Archaeological Time Series",
+      "year": 2016,
+      "doi": "10.21105/joss.06210",
+      "tags": [
+        "archaeology",
+        "time series",
+        "chronology"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/RadioAstronomySoftwareGroup/pyradiosky",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "pyradiosky: A Python package for Radio Sky Models",
+      "year": 2016,
+      "doi": "10.21105/joss.06503",
+      "tags": [
+        "astronomy",
+        "radio astronomy",
+        "21cm cosmology"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/xianggebenben/GraphSL",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "GraphSL: An Open-Source Library for Graph Source Localization Approaches and Benchmark Datasets",
+      "year": 2016,
+      "doi": "10.21105/joss.06796",
+      "tags": [
+        "Graph Diffusion",
+        "Graph Source Localization",
+        "Prescribed Methods",
+        "GNN Methods",
+        "Benchmark"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/diningphil/PyDGN",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyDGN: a Python Library for Flexible and Reproducible Research on Deep Learning for Graphs",
+      "year": 2016,
+      "doi": "10.21105/joss.05713",
+      "tags": [
+        "Machine Learning",
+        "Graph Networks",
+        "Deep Learning for Graphs"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/PhanstielLab/coralp",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "CoralP: Flexible visualization of the human phosphatome",
+      "year": 2016,
+      "doi": "10.21105/joss.01837",
+      "tags": [
+        "R shiny",
+        "D3.js",
+        "phosphatase",
+        "phosphatome"
+      ],
+      "languages": [
+        "R",
+        "JavaScript"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/PyEllips/pyElli",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "pyElli: An open source ellipsometry analysis tool for FAIR data",
+      "year": 2016,
+      "doi": "10.21105/joss.08503",
+      "tags": [
+        "spectroscopy",
+        "ellipsometry",
+        "solid state physics",
+        "transfer matrix method"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/uw-comphys/openccm",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "OpenCCM: An Open-Source Continuous Compartmental Modelling Package",
+      "year": 2016,
+      "doi": "10.21105/joss.06963",
+      "tags": [
+        "compartmental modelling",
+        "reduced order modelling",
+        "model order reduction",
+        "computational fluid dynamics"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ericfell/rfbzero",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "RFBzero: A Python package for zero-dimensional simulation of redox flow battery cycling",
+      "year": 2016,
+      "doi": "10.21105/joss.06537",
+      "tags": [
+        "electrochemistry",
+        "redox flow batteries",
+        "capacity fade"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pyamg/pyamg",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyAMG: Algebraic Multigrid Solvers in Python",
+      "year": 2016,
+      "doi": "10.21105/joss.04142",
+      "tags": [
+        "algebraic multigrid",
+        "preconditioning",
+        "sparse matrix",
+        "Krylov",
+        "iterative methods"
+      ],
+      "languages": [
+        "Python",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/engyasin/Offline_MOT",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "OfflineMOT: A Python package for multiple objects detection and tracking from bird view stationary drone videos",
+      "year": 2016,
+      "doi": "10.21105/joss.04099",
+      "tags": [
+        "Multiple objects tracking",
+        "Traffic trajectories",
+        "Objects detection",
+        "Drone video analysis"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Narayana-Rao/SAR-tools",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PolSAR tools: A QGIS plugin for generating SAR descriptors",
+      "year": 2016,
+      "doi": "10.21105/joss.02970",
+      "tags": [
+        "SAR",
+        "QGIS",
+        "Vegetation indices",
+        "Polarimetric decompositions"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/equib/pyEQUIB",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "pyEQUIB Python Package, an addendum to proEQUIB: IDL Library for Plasma Diagnostics and Abundance Analysis",
+      "year": 2016,
+      "doi": "10.21105/joss.02798",
+      "tags": [
+        "python",
+        "astrophysics",
+        "gaseous nebulae",
+        "plasma diagnostics",
+        "abundance analysis"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/AlidesChimin/SATA",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "ATAS - Academic Text Analysis System",
+      "year": 2016,
+      "doi": "10.21105/joss.08599",
+      "tags": [
+        "NLP",
+        "Content Analysis",
+        "Humanities",
+        "Text Analysis",
+        "Geography"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/DTUComputeStatisticsAndDataAnalysis/MBPLS",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Multiblock PLS: Block dependent prediction modeling for Python",
+      "year": 2016,
+      "doi": "10.21105/joss.01190",
+      "tags": [
+        "multivariate statistics",
+        "data fusion",
+        "latent variables",
+        "exploratory analysis",
+        "data integration",
+        "MB-PLS"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pySRURGS/pySRURGS",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "pySRURGS - a python package for symbolic regression by uniform random global search",
+      "year": 2016,
+      "doi": "10.21105/joss.01675",
+      "tags": [
+        "symbolic regression",
+        "regression analysis",
+        "random search",
+        "genetic programming"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/fat-forensics/fat-forensics",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "FAT Forensics: A Python Toolbox for Implementing and\nDeploying Fairness, Accountability and Transparency\nAlgorithms in Predictive Systems",
+      "year": 2016,
+      "doi": "10.21105/joss.01904",
+      "tags": [
+        "Fairness",
+        "Accountability",
+        "Transparency",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Software",
+        "Python Toolbox"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/weecology/portalcasting",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "portalcasting: Supporting automated forecasting of rodent populations",
+      "year": 2016,
+      "doi": "10.21105/joss.03220",
+      "tags": [
+        "Portal Project",
+        "forecasting"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/brocklab/pycashier",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Pycashier: cash in on DNA barcode tags",
+      "year": 2016,
+      "doi": "10.21105/joss.06891",
+      "tags": [
+        "python",
+        "sequencing",
+        "DNA barcoding",
+        "pipeline"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/morrowcj/remotePARTS",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "remotePARTS: Spatiotemporal autoregression analyses for large data sets",
+      "year": 2016,
+      "doi": "10.21105/joss.07937",
+      "tags": [
+        "remote sensing",
+        "statistics",
+        "hypothesis testing",
+        "spatiotemporal autocorrelation"
+      ],
+      "languages": [
+        "R",
+        "C++",
+        "C"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pfeinsper/drone-swarm-search",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "DSSE: An environment for simulation of reinforcement learning-empowered drone swarm maritime search and rescue missions",
+      "year": 2016,
+      "doi": "10.21105/joss.06746",
+      "tags": [
+        "PettingZoo",
+        "reinforcement learning",
+        "multi-agent",
+        "drone swarms",
+        "maritime search and rescue",
+        "shipwrecked people"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pangeo-data/climpred",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "climpred: Verification of weather and climate forecasts",
+      "year": 2016,
+      "doi": "10.21105/joss.02781",
+      "tags": [
+        "python",
+        "climate",
+        "forecasting",
+        "geospatial",
+        "big data"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/rikenbit/nnTensor",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "nnTensor: An R package for non-negative matrix/tensor decomposition",
+      "year": 2016,
+      "doi": "10.21105/joss.05015",
+      "tags": [
+        "non-negative matrix factorization",
+        "non-negative tensor decomposition",
+        "dimension reduction"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/cbyrohl/scida",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "scida: scalable analysis for scientific big data",
+      "year": 2016,
+      "doi": "10.21105/joss.06064",
+      "tags": [
+        "simulations",
+        "i/o",
+        "point clouds"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Santiso-Group/despasito",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "DESPASITO: A Python Package for SAFT EOS Parametrization and Thermodynamic Calculations",
+      "year": 2016,
+      "doi": "10.21105/joss.07365",
+      "tags": [
+        "thermodynamics",
+        "equations of state",
+        "saft",
+        "coarse-grain"
+      ],
+      "languages": [
+        "Python",
+        "Cython"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/terrytangyuan/autoplotly",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "autoplotly: An R package for automatic generation of interactive visualizations for statistical results",
+      "year": 2016,
+      "doi": "10.21105/joss.00657",
+      "tags": [
+        "interactive data visualization",
+        "statistics",
+        "time series",
+        "survival analysis",
+        "clustering",
+        "machine learning"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/SMRuggiero/sbmltoodepy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SBMLtoODEpy: A software program for converting SBML models into ODE models in Python",
+      "year": 2016,
+      "doi": "10.21105/joss.01643",
+      "tags": [
+        "Python",
+        "Systems Biology",
+        "Modeling"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "JavaScript"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/fatiando/verde",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Verde: Processing and gridding spatial data using Green’s functions",
+      "year": 2016,
+      "doi": "10.21105/joss.00957",
+      "tags": [
+        "python",
+        "geophysics",
+        "geospatial"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Materials-Consortia/optimade-python-tools",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "optimade-python-tools: a Python library for serving and consuming materials data via OPTIMADE APIs",
+      "year": 2016,
+      "doi": "10.21105/joss.03458",
+      "tags": [
+        "REST API",
+        "JSON:API",
+        "OPTIMADE API",
+        "crystallography",
+        "density-functional theory",
+        "ab initio",
+        "materials discovery",
+        "databases"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/rasbt/mlxtend",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MLxtend: Providing machine learning and data science utilities and extensions to Python's scientific computing stack",
+      "year": 2016,
+      "doi": "10.21105/joss.00638",
+      "tags": [
+        "machine learning",
+        "data science",
+        "association rule mining",
+        "ensemble learning",
+        "feature selection"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/coendevente/SlicerNNInteractive",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SlicerNNInteractive: A 3D Slicer extension for nnInteractive",
+      "year": 2016,
+      "doi": "10.21105/joss.09003",
+      "tags": [
+        "Slicer",
+        "nnInteractive",
+        "Efficient annotation"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/SWIFTSIM/SOAP",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SOAP: A Python Package for Calculating the Properties of Galaxies and Halos Formed in Cosmological Simulations",
+      "year": 2016,
+      "doi": "10.21105/joss.08252",
+      "tags": [
+        "astronomy"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/laura-hetzel/MeDUSA",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MeDUSA: Taming your metabolic datasets using an R-package for data processing of Direct Infusion Untarged Single-cell Analysis",
+      "year": 2016,
+      "doi": "10.21105/joss.08993",
+      "tags": [
+        "Single-Cell Metabalomics",
+        "Mass Spectrometry",
+        "Metabolomics",
+        "Data Analytics"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/babinyurii/recan",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Recan: Python tool for analysis of recombination events in viral genomes",
+      "year": 2016,
+      "doi": "10.21105/joss.02014",
+      "tags": [
+        "virology",
+        "recombination"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/flor14/paper",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "shinyssd v1.0: Species Sensitivity Distributions for Ecotoxicological Risk Assessment",
+      "year": 2016,
+      "doi": "10.21105/joss.00785",
+      "tags": [
+        "ecotoxicological risk assessment",
+        "shiny app",
+        "toxicology",
+        "environmental managment"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/geoelements/gns",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "GNS: A generalizable Graph Neural Network-based simulator for particulate and fluid modeling",
+      "year": 2016,
+      "doi": "10.21105/joss.05025",
+      "tags": [
+        "machine learning",
+        "simulation"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/LLNL/SSAPy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SSAPy - Space Situational Awareness for Python",
+      "year": 2016,
+      "doi": "10.21105/joss.08147",
+      "tags": [
+        "Python",
+        "space domain awareness",
+        "orbits",
+        "cislunar space"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "C"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/johannes-titz/cofad",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "cofad: An R package and shiny app for contrast analysis",
+      "year": 2016,
+      "doi": "10.21105/joss.03822",
+      "tags": [
+        "contrast analysis",
+        "factorial design",
+        "shiny"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/alan-turing-institute/autoemulate",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "AutoEmulate: A Python package for semi-automated emulation",
+      "year": 2016,
+      "doi": "10.21105/joss.07626",
+      "tags": [
+        "Surrogate modelling",
+        "Emulation",
+        "Simulation",
+        "Machine Learning",
+        "Gaussian Processes",
+        "Neural Processes"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/indralab/adeft",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Adeft: Acromine-based Disambiguation of Entities from Text with applications to the biomedical literature",
+      "year": 2016,
+      "doi": "10.21105/joss.01708",
+      "tags": [
+        "natural language processing",
+        "text mining",
+        "named entity disambiguation",
+        "acronyms",
+        "Acromine"
+      ],
+      "languages": [
+        "Python",
+        "JavaScript",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/IslasGECI/nerd",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "NERD: Numerical Estimation of Rodenticide Density",
+      "year": 2016,
+      "doi": "10.21105/joss.06736",
+      "tags": [
+        "aerial broadcast",
+        "bait bucket",
+        "rodent eradication",
+        "rodenticide bait density"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pyvisa/pyvisa",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyVISA: the Python instrumentation package",
+      "year": 2016,
+      "doi": "10.21105/joss.05304",
+      "tags": [
+        "instrumentation",
+        "VISA",
+        "measurement",
+        "acquisition",
+        "experiment control",
+        "hardware communication",
+        "GPIB",
+        "SERIAL",
+        "TCP/IP",
+        "USBTMC",
+        "VXI",
+        "PXI"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/loftytopping/PyBox",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": " PyBox: An automated box-model generator for atmospheric chemistry and aerosol simulations.",
+      "year": 2016,
+      "doi": "10.21105/joss.00755",
+      "tags": [
+        "Atmosphere",
+        "Air-quality",
+        "Climate",
+        "Chemistry",
+        "Aerosol",
+        "Fortran"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/dgasmith/opt_einsum",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "opt\\_einsum - A Python package for optimizing contraction order for einsum-like expressions",
+      "year": 2016,
+      "doi": "10.21105/joss.00753",
+      "tags": [
+        "array",
+        "tensors",
+        "optimization",
+        "phylogenetics",
+        "natural selection",
+        "molecular evolution"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/oleksulkowski/Syn-CpG-Spacer",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Syn-CpG-Spacer: A Panel web app for synonymous recoding of viral genomes with CpG dinucleotides",
+      "year": 2016,
+      "doi": "10.21105/joss.06332",
+      "tags": [
+        "virology",
+        "molecular biology",
+        "genetics",
+        "dinucleotide",
+        "CpG",
+        "genome recoding"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/DOE-NCI-MOSSAIC/FrESCO",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "FrESCO: Framework for Exploring Scalable Computational Oncology",
+      "year": 2016,
+      "doi": "10.21105/joss.05345",
+      "tags": [
+        "bioinformatics",
+        "natural language processing",
+        "deep learning",
+        "computational oncology"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/jessecambon/tidygeocoder",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "tidygeocoder: An R package for geocoding",
+      "year": 2016,
+      "doi": "10.21105/joss.03544",
+      "tags": [
+        "geocoding",
+        "geospatial"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/quanteda/quanteda",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "quanteda: An R package for the quantitative analysis of textual data",
+      "year": 2016,
+      "doi": "10.21105/joss.00774",
+      "tags": [
+        "text mining",
+        "natural language processing"
+      ],
+      "languages": [
+        "R",
+        "JavaScript",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/SHF-NAILResearchGroup/HINA",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "HINA: A Learning Analytics Tool for Heterogenous Interaction Network Analysis in Python",
+      "year": 2016,
+      "doi": "10.21105/joss.08299",
+      "tags": [
+        "Learning Analytics",
+        "Heterogenous Interactions",
+        "Complex Networks",
+        "Dashboard"
+      ],
+      "languages": [
+        "Python",
+        "JavaScript",
+        "TypeScript"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Blue-Matter/RPC",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Reference Point Calculator (RPC): A Shiny app for exploration of limit reference points for fisheries management",
+      "year": 2016,
+      "doi": "10.21105/joss.05418",
+      "tags": [
+        "reference points",
+        "population dynamics",
+        "fisheries science",
+        "management strategy evaluation"
+      ],
+      "languages": [
+        "R",
+        "Less",
+        "SCSS"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/grant-m-s/astronomicAL",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "AstronomicAL: an interactive dashboard for visualisation, integration and classification of data with Active Learning",
+      "year": 2016,
+      "doi": "10.21105/joss.03635",
+      "tags": [
+        "astronomy",
+        "machine learning",
+        "active learning",
+        "labelling",
+        "classification",
+        "software"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pyplati/platipy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PlatiPy: Processing Library and Analysis Toolkit for Medical Imaging in Python",
+      "year": 2016,
+      "doi": "10.21105/joss.05374",
+      "tags": [
+        "medical image analysis",
+        "radiotherapy",
+        "visualisation",
+        "DICOM"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/hema-ted/pyzfs",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyZFS: A Python package for first-principles calculations of zero-field splitting tensors",
+      "year": 2016,
+      "doi": "10.21105/joss.02160",
+      "tags": [
+        "materials science",
+        "electron spin",
+        "zero field splitting",
+        "density functional theory",
+        "point defects"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/schochastics/netrankr",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "netrankr: An R package for total, partial, and probabilistic rankings in networks",
+      "year": 2016,
+      "doi": "10.21105/joss.04563",
+      "tags": [
+        "network analysis",
+        "network centrality",
+        "partial orders"
+      ],
+      "languages": [
+        "R",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ml-evs/matador",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "matador: a Python library for analysing, curating and performing high-throughput density-functional theory calculations",
+      "year": 2016,
+      "doi": "10.21105/joss.02563",
+      "tags": [
+        "density-functional theory",
+        "ab initio",
+        "crystal structure prediction",
+        "materials discovery",
+        "databases",
+        "castep",
+        "quantum espresso",
+        "mongodb"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/hannes-holey/GaPFlow",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "GaPFlow: Gap-averaged flow simulations with Gaussian process regression",
+      "year": 2016,
+      "doi": "10.21105/joss.09645",
+      "tags": [
+        "Multiscale simulations",
+        "Gaussian process regression",
+        "Lubrication"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/pnnl/ConStrain",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Control Strainer (ConStrain): a data-driven control verification framework",
+      "year": 2016,
+      "doi": "10.21105/joss.08083",
+      "tags": [
+        "python",
+        "energy",
+        "building",
+        "control",
+        "simulation",
+        "hvac"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/areenberg/MDPSolver",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MDPSolver: An Efficient Solver for Markov Decision Processes",
+      "year": 2016,
+      "doi": "10.21105/joss.07544",
+      "tags": [
+        "Markov Decision Process",
+        "Optimization",
+        "Stochasticity",
+        "Dynamic Programming"
+      ],
+      "languages": [
+        "Python",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/MichielsenM/FOAM",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Foam: A Python package for forward asteroseismic modelling of gravity modes",
+      "year": 2016,
+      "doi": "10.21105/joss.05884",
+      "tags": [
+        "astronomy",
+        "stellar astrophysics",
+        "asteroseismology"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/cddesja/profileR",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "profileR: An R package for profile analysis",
+      "year": 2016,
+      "doi": "10.21105/joss.01941",
+      "tags": [
+        "profile analysis",
+        "psychometrics",
+        "measurement",
+        "multivariate statistics"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/kevin-tofu/scikit-topt",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Scikit-Topt: A Python Library for Algorithm Development in Topology Optimization",
+      "year": 2016,
+      "doi": "10.21105/joss.09092",
+      "tags": [
+        "topology optimization",
+        "finite element method"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/qurit/rt-utils",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "RT-utils: A Minimal Python Library for RT-struct Manipulation",
+      "year": 2016,
+      "doi": "10.21105/joss.07361",
+      "tags": [
+        "RT-struct",
+        "Radiotherapy structures",
+        "mask",
+        "DICOM",
+        "image segmentation"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/matthiasdemuzere/w2w",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "W2W: A Python package that injects WUDAPT's Local Climate Zone information in WRF",
+      "year": 2016,
+      "doi": "10.21105/joss.04432",
+      "tags": [
+        "WUDAPT",
+        "WRF",
+        "Local Climate Zones",
+        "Urban canopy parameters",
+        "Climate modeling"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/keurfonluu/toughio",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "toughio: Pre- and post-processing Python library for TOUGH",
+      "year": 2016,
+      "doi": "10.21105/joss.02412",
+      "tags": [
+        "tough2",
+        "tough3",
+        "preprocessing",
+        "postprocessing",
+        "io"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/openscilab/pymilo",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PyMilo: A Python Library for ML I/O",
+      "year": 2016,
+      "doi": "10.21105/joss.08858",
+      "tags": [
+        "Machine Learning",
+        "Model Deployment",
+        "Model Serialization",
+        "Transparency",
+        "MLOPS"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/AgatheSenellart/MultiVae",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MultiVae: A Python package for Multimodal Variational Autoencoders on Partial Datasets.",
+      "year": 2016,
+      "doi": "10.21105/joss.07996",
+      "tags": [
+        "Pytorch",
+        "Variational Autoencoders",
+        "Multimodality",
+        "Missing data"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ToyotaCRDL/mahos",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MAHOS: Measurement Automation Handling and Orchestration System",
+      "year": 2016,
+      "doi": "10.21105/joss.05938",
+      "tags": [
+        "instrumentation",
+        "measurement automation",
+        "laboratory automation",
+        "distributed systems",
+        "solid-state color center"
+      ],
+      "languages": [
+        "Python",
+        "C++"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/michellab/BioSimSpace",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "BioSimSpace: An interoperable Python framework for biomolecular simulation",
+      "year": 2016,
+      "doi": "10.21105/joss.01831",
+      "tags": [
+        "biomolecular-simulation",
+        "computational-chemistry",
+        "computational-physics",
+        "computational-biology",
+        "interoperability",
+        "molecular dynamics",
+        "reproducibility"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/lllangWV/ParquetDB",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "ParquetDB: A Lightweight Python Parquet-Based Database",
+      "year": 2016,
+      "doi": "10.21105/joss.07932",
+      "tags": [
+        "Apache Parquet",
+        "Database",
+        "Big Data",
+        "Pyarrow"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/simonGreenhill/Treemaker",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "treemaker:  A Python tool for constructing a Newick formatted tree from a set of classifications.",
+      "year": 2016,
+      "doi": "10.21105/joss.01040",
+      "tags": [
+        "phylogenetics",
+        "newick",
+        "tree"
+      ],
+      "languages": [
+        "R",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/thesketh/pygen-structures",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "pygen-structures: A Python package to generate 3D molecular structures for simulations using the CHARMM forcefield",
+      "year": 2016,
+      "doi": "10.21105/joss.02157",
+      "tags": [
+        "python",
+        "computational chemistry",
+        "chemistry",
+        "molecular dynamics"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/soraxas/sbp-env",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "sbp-env: A Python Package for Sampling-based Motion Planner and Samplers",
+      "year": 2016,
+      "doi": "10.21105/joss.03782",
+      "tags": [
+        "motion planning",
+        "sampling-based planner",
+        "robotics"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/bmorris3/aesop",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "aesop: ARC Echelle Spectroscopic Observation Pipeline",
+      "year": 2016,
+      "doi": "10.21105/joss.00854",
+      "tags": [
+        "astronomy",
+        "spectroscopy"
+      ],
+      "languages": [
+        "Python",
+        "Common Lisp",
+        "eC",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/rhenkin/visxhclust",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "visxhclust: An R Shiny package for visual exploration of hierarchical clustering",
+      "year": 2016,
+      "doi": "10.21105/joss.04074",
+      "tags": [
+        "clustering",
+        "interactive visualization",
+        "visual analytics",
+        "Shiny"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/vsoch/helpme",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "HelpMe Command Line Helper Utility",
+      "year": 2016,
+      "doi": "10.21105/joss.00775",
+      "tags": [
+        "Docker",
+        "github",
+        "uservoice",
+        "support",
+        "hpc",
+        "computing"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/sjspielman/phyphy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "phyphy: Python package for facilitating the execution and parsing of HyPhy standard analyses",
+      "year": 2016,
+      "doi": "10.21105/joss.00514",
+      "tags": [
+        "comparative sequence analysis",
+        "bioinformatics",
+        "viral evolution",
+        "phylogenetics",
+        "natural selection",
+        "molecular evolution"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/TDAmeritrade/stumpy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "STUMPY: A Powerful and Scalable Python Library for Time Series Data Mining",
+      "year": 2016,
+      "doi": "10.21105/joss.01504",
+      "tags": [
+        "time series analysis",
+        "data science",
+        "anomaly detection",
+        "pattern matching",
+        "machine learning"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/limengbinggz/ddtlcm",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "ddtlcm: An R package for overcoming weak separation in Bayesian latent class analysis via tree-regularization",
+      "year": 2016,
+      "doi": "10.21105/joss.06220",
+      "tags": [
+        "Dirichlet diffusion tree",
+        "latent class model",
+        "ddtlcm",
+        "nutrition epidemiology"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/bge-barcoding/gene_fetch",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Gene Fetch: A Python tool for sequence retrieval from GenBank across the tree of life",
+      "year": 2016,
+      "doi": "10.21105/joss.08456",
+      "tags": [
+        "Bioinformatics",
+        "Genomics",
+        "Biodiversity Genomics",
+        "Barcoding"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/DahyannAraya/copernicus-seasonal-forecast-tools",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Copernicus Seasonal Forecast Tools Package: Bridging Seasonal Climate Predictions and Impact Models for Operational Risk Assessment",
+      "year": 2016,
+      "doi": "10.21105/joss.08827",
+      "tags": [
+        "Seasonal forecasts",
+        "Copernicus Climate Data Store",
+        "CDS",
+        "CLIMADA",
+        "Climate hazard modeling",
+        "Impact-based forecasting",
+        "Climate risk assessment",
+        "Climate adaptation",
+        "Open-source software"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ADSCIAN/ssalib",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SSALib: a Python Library for Time Series Decomposition using Singular Spectrum Analysis",
+      "year": 2016,
+      "doi": "10.21105/joss.08600",
+      "tags": [
+        "time series",
+        "Singular Spectrum Analysis",
+        "Singular Value Decomposition",
+        "time series decomposition"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/kyleaoman/martini",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "MARTINI: Mock Array Radio Telescope Interferometry of the Neutral ISM",
+      "year": 2016,
+      "doi": "10.21105/joss.06860",
+      "tags": [
+        "astronomy",
+        "simulations"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/mikejohnson51/AHGestimation",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "AHGestimation: An R package for computing robust, mass preserving hydraulic geometries and rating curves",
+      "year": 2016,
+      "doi": "10.21105/joss.06145",
+      "tags": [
+        "hydrology",
+        "AHG",
+        "optimization",
+        "hydraulics"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/zabore/riskclustr",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "riskclustr: Functions to Study Etiologic Heterogeneity",
+      "year": 2016,
+      "doi": "10.21105/joss.01269",
+      "tags": [
+        "biostatistics",
+        "epidemiology",
+        "etiologic heterogeneity",
+        "clustering",
+        "disease subtypes",
+        "multinomial logistic regression",
+        "polytomous logistic regression"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/aiidateam/kiwipy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "kiwiPy: Robust, high-volume, messaging for big-data and computational science workflows",
+      "year": 2016,
+      "doi": "10.21105/joss.02351",
+      "tags": [
+        "python",
+        "high-throughput computing",
+        "message broker",
+        "scientific workflows",
+        "fault-tolerant computing"
+      ],
+      "languages": [
+        "Python",
+        "Jupyter Notebook"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/thraraujo/pysymmpol",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "PySymmPol - Symmetric Polynomials",
+      "year": 2016,
+      "doi": "10.21105/joss.06724",
+      "tags": [
+        "Combinatorics",
+        "Physics"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/noraeisner/LATTE",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "LATTE: Lightcurve Analysis Tool for Transiting Exoplanets",
+      "year": 2016,
+      "doi": "10.21105/joss.02101",
+      "tags": [
+        "astronomy",
+        "TESS",
+        "exoplanets",
+        "transit"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/earthlab/earthpy",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "EarthPy: A Python package that makes it easier to explore and plot raster and vector data using open source Python tools.",
+      "year": 2016,
+      "doi": "10.21105/joss.01886",
+      "tags": [
+        "gis",
+        "raster data",
+        "vector data",
+        "remote sensing"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/survey-methods/samplics",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "samplics: a Python Package for selecting, weighting and analyzing data from complex sampling designs.",
+      "year": 2016,
+      "doi": "10.21105/joss.03376",
+      "tags": [
+        "Survey sampling",
+        "small area estimation",
+        "Official statistics"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/springer-math/Mathematics-of-Epidemics-on-Networks",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "EoN (Epidemics on Networks): a fast, flexible Python package for simulation, analytic approximation, and analysis of epidemics on networks",
+      "year": 2016,
+      "doi": "10.21105/joss.01731",
+      "tags": [
+        "SIR",
+        "SIS",
+        "Epidemic",
+        "Network",
+        "Stochastic simulation"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/bioAI-Oslo/Spikeometric",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Spikeometric: Linear Non-Linear Cascade Spiking Neural Networks with Pytorch Geometric",
+      "year": 2016,
+      "doi": "10.21105/joss.05451",
+      "tags": [
+        "python",
+        "computational neuroscience",
+        "machine learning",
+        "spiking neural networks",
+        "generalized linear models",
+        "linear non-linear poisson models"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/MikeSWang/Triumvirate",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Triumvirate: A Python/C++ package for three-point clustering measurements",
+      "year": 2016,
+      "doi": "10.21105/joss.05571",
+      "tags": [
+        "C++",
+        "Cython",
+        "cosmology",
+        "astronomy"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/markheckmann/OpenRepGrid",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "OpenRepGrid: An R Package for the Analysis of Repertory Grid Data",
+      "year": 2016,
+      "doi": "10.21105/joss.06918",
+      "tags": [
+        "Repertory grid technique",
+        "Personal Construct Psychology",
+        "R package"
+      ],
+      "languages": [
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/Yu-Group/simChef",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "simChef: High-quality data science simulations in R",
+      "year": 2016,
+      "doi": "10.21105/joss.06156",
+      "tags": [
+        "simulations",
+        "data science"
+      ],
+      "languages": [
+        "R",
+        "JavaScript"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/amirivojdan/shekar",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Shekar: A Python Toolkit for Persian Natural Language Processing",
+      "year": 2016,
+      "doi": "10.21105/joss.09128",
+      "tags": [
+        "Natural Language Processing",
+        "Persian Language",
+        "Text Processing",
+        "Computational Linguistics",
+        "Open Source Software"
+      ],
+      "languages": [
+        "Jupyter Notebook",
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/nedRad88/SCALAR",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "SCALAR - A Platform for Real-time Machine Learning Competitions on Data Streams",
+      "year": 2016,
+      "doi": "10.21105/joss.02676",
+      "tags": [
+        "Stream Data Mining",
+        "Real-time Machine Learning",
+        "Information Flow Processing"
+      ],
+      "languages": [
+        "Python",
+        "Java",
+        "R"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/ybayle/Scyland3D",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Scyland3D: Processing 3D landmarks",
+      "year": 2016,
+      "doi": "10.21105/joss.01262",
+      "tags": [
+        "3D geometric morphometrics",
+        "shape analysis",
+        "Landmark"
+      ],
+      "languages": [
+        "Python"
+      ]
+    },
+    {
+      "repo_url": "https://github.com/szymon-datalions/pyinterpolate",
+      "venue": "JOSS",
+      "reviewed_software": true,
+      "title": "Pyinterpolate: Spatial interpolation in Python for point measurements and aggregated datasets",
+      "year": 2016,
+      "doi": "10.21105/joss.02869",
+      "tags": [
+        "spatial statistics",
+        "spatial interpolation",
+        "Poisson Kriging",
+        "Semivariogram Deconvolution",
+        "public health"
       ],
       "languages": [
         "Python"
