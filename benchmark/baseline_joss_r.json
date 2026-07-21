@@ -1,0 +1,342 @@
+[
+  {
+    "repo_url": "https://github.com/PhanstielLab/bedtoolsr",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 144.89420199394226,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cjbarrie/academictwitteR",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 298.7008469104767,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"Get started\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (academictwitteR)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/atmoschem/eixport",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 258.22707772254944,
+    "log_tail": "RAN: Rscript -e 'library(eixport)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ScionResearch/genomesizeR",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 691.6278619766235,
+    "log_tail": "INSTLOG:\n2: In i.p(...) :\n  installation of package ‘/tmp/RtmpqJY0T9/file1a75db0d84’ had non-zero exit status\n3: In i.p(...) :\n  installation of package ‘/tmp/RtmpqJY0T9/file1a740f87ff5/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mmrabe/hypr",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 117.76670384407043,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"To assign\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (hypr)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/nhejazi/haldensify",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 311.19664311408997,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/haldensify’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/Rtmp2OTm8a/file1a761b28ebd/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/sjbeckett/localcovid19now",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 616.6893398761749,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError in LoadData(\"LoadUS\") : could not find function \"LoadData\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (localcovid19now)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ropensci/weathercan",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 379.38750290870667,
+    "log_tail": "RAN: Rscript vignettes/precompile.R\nEXLOG_TAIL:\nprocessing file: vignettes/interpolate_data.Rmd.orig\noutput file: vignettes/interpolate_data.Rmd\n\n\n\nprocessing file: vignettes/normals.Rmd.orig\nQuitting from lines 104-112 (vignettes/normals.Rmd.orig) \nError in n$normals : object of type 'closure' is not subsettable\nCalls: knit ... inline_exec -> hook_eval -> withVisible -> eval -> eval -> ncol\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (weathercan)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/terminological/dtrackr",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 282.28421807289124,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/dtrackr’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpnKl0sa/file1a74e76933e/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/wilsoncai1992/data.adapt.multi.test",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 411.29929995536804,
+    "log_tail": "RAN: Rscript -e 'library(adaptest)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/johannes-titz/passt",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 220.8165898323059,
+    "log_tail": "RAN: Rscript -e 'library(passt)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gavinsimpson/gratia",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 471.4133040904999,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/gratia’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpcsKita/file1a71987046c/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/xiangfstats/GenieR",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 171.86792612075806,
+    "log_tail": "RAN: Rscript -e 'library(genieR)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/andrewthomasjones/logKDE",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 134.84999799728394,
+    "log_tail": "RAN: Rscript -e 'library(logKDE)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/4DModeller/fdmr",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 581.710058927536,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/fdmr’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpQ65t3b/file1a752f5dd06/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/tesselle/aion",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 119.8088870048523,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/aion’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpYOEHOd/file1a72fbb6ede/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PhanstielLab/coralp",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 316.3353440761566,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/coralp’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpAt39rc/file1a77f31b072/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/weecology/portalcasting",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 378.429811000824,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/portalcasting’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpDMI9Zc/file1a76d009f87/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/morrowcj/remotePARTS",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 431.6247618198395,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected ',' in \"Then,\"\nExecution halted\nINSTLOG_TAIL:\n** checking absolute paths in shared objects and dynamic libraries\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (remotePARTS)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/rikenbit/nnTensor",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 238.26829290390015,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/nnTensor’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpiZN0La/file1a71456434f/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/terrytangyuan/autoplotly",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 230.92357182502747,
+    "log_tail": "RAN: Rscript -e 'library(autoplotly)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/laura-hetzel/MeDUSA",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 188.79487419128418,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/flor14/paper",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 44.19921684265137,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/johannes-titz/cofad",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 345.2607522010803,
+    "log_tail": "RAN: Rscript -e 'library(cofad)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jessecambon/tidygeocoder",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 251.02732586860657,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"In this\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (tidygeocoder)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/quanteda/quanteda",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 290.02298188209534,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/quanteda’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/Rtmp3EOuMb/file1a758e67f89/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Blue-Matter/RPC",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 579.0453250408173,
+    "log_tail": "INSTLOG:\n1: In i.p(...) :\n  installation of package ‘/tmp/RtmpTBJ9Nd/remotes1a71b2f0551/Blue-Matter-MSEextra-c237e41’ had non-zero exit status\n2: In i.p(...) :\n  installation of package ‘/tmp/RtmpTBJ9Nd/file1a7330856d/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/schochastics/netrankr",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 242.8321979045868,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected '<' in \"<\"\nExecution halted\nINSTLOG_TAIL:\n** checking absolute paths in shared objects and dynamic libraries\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (netrankr)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cddesja/profileR",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 203.30009388923645,
+    "log_tail": "RAN: Rscript -e 'library(profileR)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/rhenkin/visxhclust",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 423.25308322906494,
+    "log_tail": "RAN: Rscript -e 'library(visxhclust)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/limengbinggz/ddtlcm",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 1121.2883310317993,
+    "log_tail": "INSTLOG:\nWarning messages:\n1: In i.p(...) : installation of package ‘ggtree’ had non-zero exit status\n2: In i.p(...) :\n  installation of package ‘/tmp/RtmpYI8Fnd/file1a74be5efbc/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\nError response from daemon: No such exec instance: 197531e5ddea3a6e9bcaab44c26eac6c2d4ec57be9f245b44c641c94180f4caa\n"
+  },
+  {
+    "repo_url": "https://github.com/zabore/riskclustr",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 942.7366302013397,
+    "log_tail": "RAN: Rscript -e 'library(riskclustr)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\nError response from daemon: No such exec instance: f064f4db8853471fad214a232a717e4c218fc62d92b348143493bce05d07ae5d\n"
+  },
+  {
+    "repo_url": "https://github.com/markheckmann/OpenRepGrid",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 486.56345295906067,
+    "log_tail": "RAN: Rscript demo/OpenRepGrid.r\nEXLOG_TAIL:\nError in biplot2d(feixas2004) : could not find function \"biplot2d\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (OpenRepGrid)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Yu-Group/simChef",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 552.6440308094025,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  }
+]

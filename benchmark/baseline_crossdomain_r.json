@@ -1,0 +1,132 @@
+[
+  {
+    "repo_url": "https://github.com/JingXieMIZZOU/BLMRM",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 241.46144104003906,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/BLMRM’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpE3VMvU/file1a3432a20e0/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Wen-YiYu/BEXCIS",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 34.694406032562256,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gkumar09/iSeqQC",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 38.024090051651,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ezer/NITPicker",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 400.6172893047333,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/NITPicker’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpCkiCQb/file1a71c2cf544/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/LupienLab/SMURF",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 38.806188106536865,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/huynguyen250896/DrGA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 108.85601902008057,
+    "log_tail": "INSTLOG:\nIn addition: Warning message:\nIn system(full, intern = TRUE, ignore.stderr = quiet) :\n  running command ''/usr/bin/git' ls-remote https://git.bioconductor.org/packages/GO.db RELEASE_3_23 2>/dev/null' had status 128\nExecution halted\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/alexcis95/PhenoExam",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 331.2820920944214,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/PhenoExam’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpTAWv6W/file1a46fdf99ac/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/marcos-diazg/musica",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 34.783445835113525,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/fumi-github/omicwas",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 257.9567611217499,
+    "log_tail": "RAN: Rscript -e 'library(omicwas)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/inzilico/imputeqc",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 181.36653685569763,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/imputeqc’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpAXFZ6W/file1a434c3039b/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/hippo-yf/MUREN",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 68.48971176147461,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SchulzLab/Triangulate",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 173.53082990646362,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/overton-group/eHDPrep",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 378.4285509586334,
+    "log_tail": "INSTLOG:\n* removing ‘/usr/local/lib/R/site-library/eHDPrep’\nWarning message:\nIn i.p(...) :\n  installation of package ‘/tmp/RtmpViEdtd/file1a7139ce8f2/repo’ had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  }
+]
