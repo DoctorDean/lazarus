@@ -187,7 +187,8 @@ class NaiveResult:
         return asdict(self)
 
 
-def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int = 1800) -> NaiveResult:
+def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int = 1800,
+                  r_image: Optional[str] = None) -> NaiveResult:
     from lazarus.sandbox import DockerClient, Sandbox, find_docker
 
     slug = "/".join(repo_url.rstrip("/").split("/")[-2:])
@@ -199,7 +200,8 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
               .replace("README_B64", b64).replace("PRIMARY_LANG", lang))
     t0 = time.time()
     client = DockerClient(binary=find_docker(), docker_host=docker_host)
-    sb = Sandbox(client, base_image_for(lang), workdir="/")
+    image = r_image if (lang == "r" and r_image) else base_image_for(lang)
+    sb = Sandbox(client, image, workdir="/")
     fired = threading.Event()
     done = threading.Event()
 
@@ -265,6 +267,8 @@ def main(argv=None) -> int:
     ap.add_argument("--url", action="append", help="a single repo (repeatable); overrides --frame")
     ap.add_argument("--docker-host", default=None)
     ap.add_argument("--timeout", type=int, default=1800)
+    ap.add_argument("--r-image", default=None,
+                    help="override the R base image, e.g. lazarus/r-sysdeps:4.2.0 (with common system libs)")
     ap.add_argument("--out", default="benchmark/baseline.json")
     args = ap.parse_args(argv)
 
@@ -278,7 +282,7 @@ def main(argv=None) -> int:
         if url in done_urls:
             print(f"skip (done): {url}"); continue
         print(f"\n=== baseline: {url} ===", flush=True)
-        r = naive_run_one(url, docker_host=args.docker_host, timeout_s=args.timeout)
+        r = naive_run_one(url, docker_host=args.docker_host, timeout_s=args.timeout, r_image=args.r_image)
         rows = [x for x in rows if x["repo_url"] != url] + [r.to_dict()]
         Path(args.out).write_text(json.dumps(rows, indent=2, ensure_ascii=False))
         print(f"  -> naive_runs={r.naive_runs}  ({r.stage}/{r.reason}, {r.lang}, {r.wall_clock_s:.0f}s)")
