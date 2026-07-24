@@ -59,6 +59,30 @@ def test_interpret_smoke_verdicts_and_metrics():
     assert run.interpret_smoke(noise, "pearson_r", 0.9) is True
 
 
+def test_interpret_smoke_scientific_notation_and_deviation_metrics():
+    """Cross-domain pilot false-negatives: the number regex dropped exponents (a
+    passing 1.27e-15 read as 1.275), and deviation-type metrics (aard/diff/residual)
+    weren't recognised as lower-is-better, so an excellent 0.033 read as a fail."""
+    # (1) scientific notation must be parsed whole, not truncated to the mantissa
+    assert run.interpret_smoke("reconstruction_relative_l2_error=1.2751e-15",
+                               "reconstruction_relative_l2_error", 1e-06) is True   # ssalib
+    assert run.interpret_smoke("relative_residual=1.66e-11",
+                               "relative_residual", 1e-08) is True                  # pyamg
+    assert run.interpret_smoke("max_abs_diff_FRC_URB2D=5.96e-08",
+                               "max_abs_diff_FRC_URB2D", 1e-04) is True             # w2w
+    # a genuinely-too-large sci-notation value still fails (not just "any exponent passes")
+    assert run.interpret_smoke("relative_residual=3.0e-02", "relative_residual", 1e-08) is False
+    # (2) deviation/difference metrics are lower-is-better even without an "error" token
+    assert run.interpret_smoke("aard_vapor_pressure=0.032578",
+                               "aard_vapor_pressure", 0.15) is True                 # despasito
+    assert run.interpret_smoke("MAX_RELATIVE_DIFF_VS_DIRBE=9.2e-03",
+                               "MAX_RELATIVE_DIFF_VS_DIRBE", 0.01) is True          # zodipy
+    # higher-is-better metrics are unaffected by the new vocabulary
+    assert run.interpret_smoke("r_squared=0.99999", "r_squared", 0.99) is True
+    assert run.interpret_smoke("compliance_reduction_ratio=0.1266",
+                               "compliance_reduction_ratio", 0.1) is True
+
+
 def test_results_io_roundtrip(tmp_path):
     p = tmp_path / "results.json"
     rows = [run.BenchmarkResult(repo_url="u/a", outcome="revived").to_dict()]

@@ -121,7 +121,12 @@ def classify(*, completed: bool, is_error: bool, contract_emitted: bool,
 # confirm WE see it pass. No agent, no rebuild: it reuses the snapshot the
 # resurrection already produced, so it's one short container run, not a redo.
 # --------------------------------------------------------------------------
-_LOWER_IS_BETTER = ("rmsd", "loss", "mae", "mse", "error", "distance", "perplexity")
+_LOWER_IS_BETTER = ("rmsd", "loss", "mae", "mse", "error", "distance", "perplexity",
+                    "residual", "deviation", "aard", "diff")  # deviation/difference metrics
+# Number pattern that ALSO matches scientific notation (e.g. 1.27e-15). The prior
+# `-?\d+(?:\.\d+)?` silently dropped the exponent, so a passing 1.27e-15 was read as
+# 1.275 and failed a <=1e-6 threshold — a false-negative on an otherwise-clean revival.
+_NUM = r"-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?"
 
 
 def interpret_smoke(output: str, metric: Optional[str] = None,
@@ -141,9 +146,9 @@ def interpret_smoke(output: str, metric: Optional[str] = None,
         return False
     # no explicit verdict → compare the metric to its threshold
     if metric and threshold is not None:
-        m = re.search(rf"{re.escape(metric)}\s*[=:]\s*(-?\d+(?:\.\d+)?)", output, re.I)
+        m = re.search(rf"{re.escape(metric)}\s*[=:]\s*({_NUM})", output, re.I)
         if not m:  # fall back to the last number printed
-            nums = re.findall(r"-?\d+(?:\.\d+)?", output)
+            nums = re.findall(_NUM, output)
             m = nums[-1] if nums else None
             val = float(m) if m else None
         else:

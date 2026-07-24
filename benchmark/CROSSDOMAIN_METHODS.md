@@ -57,8 +57,43 @@ retried, per-attempt-timeout watchdog enforces a 30-min per-repo cap.
 - Enriched-base correction: JOSS-R 53%→38% (5 syslib recoveries); EPMC-R 75%→75% (all genuine).
 - Merged final data: `baseline_joss_final.json`, `baseline_crossdomain_final.json` (R rows = enriched).
 
+## Cross-domain revival pilot (companion to the decay measurement)
+The decay study shows rot is broad; this pilot shows the **agent revives past biology**. We drew
+**12 JOSS repos that were install-decay=False** (dead on their own install today), one per distinct
+**non-bio** domain, and ran the *same* Track-1 agent harness (`benchmark/run.py`, identical config:
+`--max-turns 90 --timeout 5400`, no `--model` override, independent smoke re-verification on, no
+auto-land). Manifest: `benchmark/revival_crossdomain_repos.txt`; results: `benchmark/results_crossdomain.json`.
+
+| metric | value |
+|---|---|
+| revived (installs + shipped example runs, WE re-verify the smoke) | **11/12 = 92%** (Wilson [65–99]) |
+| of which *reproduced* a reported number (±15%) | 4 (zodipy, PyBox, pySRURGS, AHGestimation) |
+| independently verified by our own smoke re-run | 11/11 |
+| not revived | 1 — RadGEEToolbox, **data-gated** on Google Earth Engine credentials (external auth, not decay/code) |
+
+Domains covered: numerical linear algebra, astronomy, atmospheric chemistry, topology optimisation,
+time-series decomposition, thermodynamics, symbolic regression, urban climate, plasma physics,
+DFT/materials, remote sensing, and hydrology (**R** — the cross-language case). Total ≈ $10, ~median
+$0.7/repo. w2w needed one retry (a transient Scout structured-output miss — `infra-failed`, retryable).
+
+### Verifier correction (`interpret_smoke`)
+Independent verification (the harness re-runs the emitted smoke and applies *its own* pass/fail, never
+the agent's) initially mis-scored **ssalib** and **despasito** as `runs-unverified`. Both were
+**false negatives** from two real bugs in `interpret_smoke`, now fixed (+ unit tests):
+- **scientific notation** — the number regex `-?\d+(?:\.\d+)?` dropped exponents, so ssalib's
+  `1.27e-15` (≪ 1e-6) parsed as `1.275` and failed. (Also latent in pyamg/zodipy/w2w, which passed
+  only by an *accidental* cancellation of both bugs.)
+- **metric direction** — lower-is-better was inferred from the metric name; deviation-type metrics
+  (`aard`, `diff`, `residual`, `deviation`) matched no keyword and were treated as higher-is-better,
+  so despasito's excellent `AARD=0.033` read as a fail against a `≤0.15` bar.
+Fix validated by re-running every pilot smoke and confirming *no* other verdict changed; both repos
+re-verify True and are re-scored to `revived`. The robust path remains an explicit `PASS`/`FAIL` token
+in the smoke (which most emitted smokes print); the metric-threshold branch is the fragile fallback.
+
 ## Limitations
 Small-ish N (wide CIs); JOSS packaging rate is partly by-construction (JOSS *requires* packaged
 software); unreviewed arm is life-science-leaning; "installs in a standard env" penalises packages
 with undocumented system deps (arguably itself a reproducibility gap); single run (agent-free, so
-deterministic modulo network); domain-matched bio sub-cut is underpowered (JOSS-bio N≈12).
+deterministic modulo network); domain-matched bio sub-cut is underpowered (JOSS-bio N≈12). The
+revival pilot is a single run per repo (N=12, wide CI) and, like Track-1, its success bar is
+"installs + a shipped example runs and we re-verify it," not a full scientific reproduction.
