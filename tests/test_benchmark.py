@@ -83,6 +83,25 @@ def test_interpret_smoke_scientific_notation_and_deviation_metrics():
                                "compliance_reduction_ratio", 0.1) is True
 
 
+def test_interpret_smoke_two_list_direction_and_inconclusive():
+    """Direction comes from two explicit vocabularies; an unrecognised metric is
+    inconclusive (None), never a confident-but-wrong False. Prevents the false
+    negatives that keyword-guessing produced (aard/discordance read as fails)."""
+    # newly-covered lower-is-better names
+    assert run.interpret_smoke("discordance=0.0177", "discordance", 0.1) is True   # imputeqc
+    assert run.interpret_smoke("discordance=0.42", "discordance", 0.1) is False
+    # higher-is-better floor/boolean checks
+    assert run.interpret_smoke("top1_matches_reference=1", "top1_matches_reference", 1) is True
+    assert run.interpret_smoke("num_ASE_genes_detected=7", "num_ASE_genes_detected", 1) is True
+    # "matches" must NOT collide with "mismatch" (lower-is-better)
+    assert run.interpret_smoke("mismatch_rate=0.02", "mismatch_rate", 0.1) is True
+    # a genuinely direction-ambiguous name → inconclusive, not a guess
+    assert run.interpret_smoke("peak_plasma_current_amps=654488",
+                               "peak_plasma_current_amps", 100000) is None
+    # a metric matching BOTH vocabularies is also inconclusive (won't happen to guess)
+    assert run.interpret_smoke("error_score=5", "error_score", 1) is None
+
+
 def test_results_io_roundtrip(tmp_path):
     p = tmp_path / "results.json"
     rows = [run.BenchmarkResult(repo_url="u/a", outcome="revived").to_dict()]

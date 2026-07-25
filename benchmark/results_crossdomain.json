@@ -137,11 +137,11 @@
     "sanity_threshold": 100000,
     "reproduced_reported": null,
     "reproduced_measured": null,
-    "verified": true,
+    "verified": null,
     "base_image": "lazarus/disruptionpy:working",
     "summary": "Given one open-access MAST shot number, retrieve its physics signals over the public STFC S3/Zarr store and assemble a disruption-analysis xarray Dataset on a common timebase (plasma current, q95, density, Greenwald fraction, etc.).",
     "attempted_at": "2026-07-23",
-    "notes": ""
+    "notes": "two-list verifier abstains on peak_plasma_current_amps direction; value 654488 A clears the 100000 A floor (genuine revival, verification inconclusive)"
   },
   {
     "repo_url": "https://github.com/ml-evs/matador",

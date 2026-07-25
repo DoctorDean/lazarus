@@ -121,8 +121,21 @@ def classify(*, completed: bool, is_error: bool, contract_emitted: bool,
 # confirm WE see it pass. No agent, no rebuild: it reuses the snapshot the
 # resurrection already produced, so it's one short container run, not a redo.
 # --------------------------------------------------------------------------
-_LOWER_IS_BETTER = ("rmsd", "loss", "mae", "mse", "error", "distance", "perplexity",
-                    "residual", "deviation", "aard", "diff")  # deviation/difference metrics
+# Metric-direction vocabulary. A name-keyword heuristic can only ever *confidently*
+# classify a metric it recognises; guessing a default direction for an unrecognised
+# name is what produced false-negative revivals (a lower-is-better `discordance`/`aard`
+# compared as higher-is-better and read as a fail). So we keep TWO explicit lists and,
+# when a metric matches neither (or both), return None (inconclusive) rather than a
+# confident-but-wrong verdict — a revival is never downgraded on a direction we can't name.
+_LOWER_IS_BETTER = ("rmsd", "rmse", "nrmse", "mae", "mse", "loss", "error", "distance",
+                    "perplexity", "residual", "deviation", "aard", "diff", "discord",
+                    "drift", "mismatch", "discrepancy", "gap")  # error/deviation family
+_HIGHER_IS_BETTER = ("auc", "roc", "r_squared", "r2", "accuracy", "precision", "recall",
+                     "f1", "fraction", "ratio", "count", "num", "reads", "points",
+                     "probability", "prob", "solved", "significant", "detected",
+                     "generated", "imported", "sample", "score", "correlation", "pearson",
+                     "spearman", "hits", "iou", "dice", "psnr", "ssim", "bleu", "valid",
+                     "matches")  # "matches" (not "match") so it can't collide with "mismatch"
 # Number pattern that ALSO matches scientific notation (e.g. 1.27e-15). The prior
 # `-?\d+(?:\.\d+)?` silently dropped the exponent, so a passing 1.27e-15 was read as
 # 1.275 and failed a <=1e-6 threshold — a false-negative on an otherwise-clean revival.
@@ -132,8 +145,10 @@ _NUM = r"-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?"
 def interpret_smoke(output: str, metric: Optional[str] = None,
                     threshold: Optional[float] = None) -> Optional[bool]:
     """Decide pass/fail from a smoke run's output. Prefers an explicit PASS/FAIL
-    token; else extracts the metric and compares to threshold (direction inferred
-    from the metric name). Returns None when it genuinely can't tell."""
+    token; else extracts the metric and compares to threshold, using the two
+    direction vocabularies (lower- vs higher-is-better). Returns None when it
+    genuinely can't tell — no explicit verdict, no parseable metric, or a metric
+    whose direction matches neither (or both) vocabularies."""
     # Authoritative verdict = a standalone UPPERCASE PASS/FAIL, which the emitted
     # smokes print deliberately. Case-sensitive so prose noise like
     # "mesg: ttyname failed: Inappropriate ioctl for device" (a non-TTY docker
@@ -154,8 +169,14 @@ def interpret_smoke(output: str, metric: Optional[str] = None,
         else:
             val = float(m.group(1))
         if val is not None:
-            below = any(k in metric.lower() for k in _LOWER_IS_BETTER)
-            return (val <= threshold) if below else (val >= threshold)
+            ml = metric.lower()
+            low = any(k in ml for k in _LOWER_IS_BETTER)
+            high = any(k in ml for k in _HIGHER_IS_BETTER)
+            if low and not high:
+                return val <= threshold
+            if high and not low:
+                return val >= threshold
+            # direction unknown or ambiguous → inconclusive, never a confident False
     return None
 
 

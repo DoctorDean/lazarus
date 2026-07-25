@@ -66,9 +66,9 @@ auto-land). Manifest: `benchmark/revival_crossdomain_repos.txt`; results: `bench
 
 | metric | value |
 |---|---|
-| revived (installs + shipped example runs, WE re-verify the smoke) | **11/12 = 92%** (Wilson [65–99]) |
+| revived (installs + shipped example runs) | **11/12 = 92%** (Wilson [65–99]) |
 | of which *reproduced* a reported number (±15%) | 4 (zodipy, PyBox, pySRURGS, AHGestimation) |
-| independently verified by our own smoke re-run | 11/11 |
+| independently verified by our own smoke re-run | 10/11 (+1 inconclusive — disruption-py, see verifier note) |
 | not revived | 1 — RadGEEToolbox, **data-gated** on Google Earth Engine credentials (external auth, not decay/code) |
 
 Domains covered: numerical linear algebra, astronomy, atmospheric chemistry, topology optimisation,
@@ -77,23 +77,59 @@ DFT/materials, remote sensing, and hydrology (**R** — the cross-language case)
 $0.7/repo. w2w needed one retry (a transient Scout structured-output miss — `infra-failed`, retryable).
 
 ### Verifier correction (`interpret_smoke`)
-Independent verification (the harness re-runs the emitted smoke and applies *its own* pass/fail, never
-the agent's) initially mis-scored **ssalib** and **despasito** as `runs-unverified`. Both were
-**false negatives** from two real bugs in `interpret_smoke`, now fixed (+ unit tests):
+Independent verification re-runs the emitted smoke and applies *our own* pass/fail (never the agent's).
+The metric-threshold fallback (used when a smoke prints no explicit `PASS`/`FAIL` token) had two real
+bugs that produced **false-negative** revivals, both now fixed with unit tests:
 - **scientific notation** — the number regex `-?\d+(?:\.\d+)?` dropped exponents, so ssalib's
-  `1.27e-15` (≪ 1e-6) parsed as `1.275` and failed. (Also latent in pyamg/zodipy/w2w, which passed
-  only by an *accidental* cancellation of both bugs.)
-- **metric direction** — lower-is-better was inferred from the metric name; deviation-type metrics
-  (`aard`, `diff`, `residual`, `deviation`) matched no keyword and were treated as higher-is-better,
-  so despasito's excellent `AARD=0.033` read as a fail against a `≤0.15` bar.
-Fix validated by re-running every pilot smoke and confirming *no* other verdict changed; both repos
-re-verify True and are re-scored to `revived`. The robust path remains an explicit `PASS`/`FAIL` token
-in the smoke (which most emitted smokes print); the metric-threshold branch is the fragile fallback.
+  `1.27e-15` (≪ 1e-6) parsed as `1.275` and failed. (Latent in pyamg/zodipy/w2w too, which passed
+  only by an *accidental* cancellation of the two bugs.) Fixed to parse full sci-notation.
+- **metric direction** — a single keyword list guessed lower-is-better and *defaulted the rest to
+  higher-is-better*. Deviation-type metrics that matched no keyword (`aard`, `discordance`, …) were
+  compared the wrong way (despasito's `AARD=0.033` and imputeqc's `discordance=0.018` read as fails).
+  Replaced with **two explicit vocabularies** (lower- and higher-is-better); a metric matching
+  **neither (or both) is `None` (inconclusive), never a confident False** — so a revival is never
+  downgraded on a direction the instrument can't name.
+
+Consequence, applied uniformly to both arms and validated against **every** metric (only the intended
+verdicts moved): ssalib, despasito (JOSS) and imputeqc, GADMA (EPMC) re-verify correctly;
+`peak_plasma_current_amps` (disruption-py) and `log_likelihood` (GADMA) have no nameable direction and
+so read as **inconclusive** — their revivals stand (the values clear their floors), only the automatic
+badge abstains. Crucially, `None` is *not* a free pass: **TAMPA** returns `None` only because its smoke
+*crashed* (missing output PNG), so it is kept `runs-unverified`, not silently upgraded. The robust path
+remains an explicit `PASS`/`FAIL` token in the smoke; the metric-threshold branch is the fallback.
+
+## Cross-domain revival — UNREVIEWED arm (EPMC), the symmetric complement
+The reviewed pilot shows revival works across domains; this arm tests the **venue/quality axis** on the
+*harder* population. We took a **census of ALL 24 install-decay=False repos** in the unreviewed (EPMC)
+frame — no sub-sampling, so no selection bias — and ran the **identical Track-1 instrument**.
+Manifest `benchmark/revival_epmc_repos.txt`; data `benchmark/results_epmc_revival.json`. Life-science-
+leaning by construction (a stated frame limitation): 18 Python / 6 R.
+
+| | independently verified | revived (ran + produced a result) | reproduced a # | packaging rate |
+|---|---|---|---|---|
+| **Reviewed (JOSS)** | 10/12 = 83% | 11/12 = 92% | 4 | 94% |
+| **Unreviewed (EPMC)** | 18/23 = 78% | 21/23 = 91% | 5 | 41% |
+
+**The two arms are statistically indistinguishable** (Wilson CIs overlap heavily) despite unreviewed
+software packaging **less than half as often**. Headline: *the reviewed/unreviewed gap is packaging
+discipline, not resurrectability — once an agent is on the repo, peer review does not predict whether
+the science comes back.* Full EPMC accounting (24): 18 verified · 3 revived-inconclusive (GADMA clears
+its floor; SpheroScan/annotate could not be auto-confirmed) · 1 `runs-unverified` (**TAMPA** — smoke
+errors, honestly counted as *not* a clean revival) · 1 `budget-exceeded` (**DrGA** — a 90-min
+Bioconductor compile that ran past the per-repo cap) · 1 `infra-failed` (**cmmrt** — repeated mid-Scout
+connection drops, no fair attempt; excluded from the 23-repo denominator, retryable). Cost ≈ $41
+(≈ $51 both arms). Two mid-run robustness notes: `docker commit` briefly `(Paused)`s a container (benign,
+not a host suspend); and the per-repo wall-clock watchdog counts a paused container's time as elapsed.
 
 ## Limitations
 Small-ish N (wide CIs); JOSS packaging rate is partly by-construction (JOSS *requires* packaged
 software); unreviewed arm is life-science-leaning; "installs in a standard env" penalises packages
 with undocumented system deps (arguably itself a reproducibility gap); single run (agent-free, so
 deterministic modulo network); domain-matched bio sub-cut is underpowered (JOSS-bio N≈12). The
-revival pilot is a single run per repo (N=12, wide CI) and, like Track-1, its success bar is
-"installs + a shipped example runs and we re-verify it," not a full scientific reproduction.
+revival arms are a single run per repo (reviewed N=12, unreviewed N=23; wide, overlapping CIs) and,
+like Track-1, the success bar is "installs + a shipped example runs and we re-verify it," not a full
+scientific reproduction. The reviewed arm is a *purposive* one-per-domain draw (biases the rate up,
+good for the generalisation claim, not for a rate); the unreviewed arm is a *census* of its frame (no
+selection bias) but life-science-leaning. The reviewed↔unreviewed comparison mixes domain and venue
+(the unreviewed arm is not domain-matched to JOSS), so it speaks to *venue*, not domain. Automatic
+verification abstains (`inconclusive`) on metrics whose direction it cannot name from the metric name.

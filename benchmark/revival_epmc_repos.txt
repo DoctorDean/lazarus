@@ -1,0 +1,30 @@
+# EPMC (UNREVIEWED) revival arm — census of ALL install-decay=False repos in the
+# unreviewed frame (n=24). Symmetric complement to the JOSS reviewed revival pilot:
+# tests the VENUE/quality axis (reviewed vs unreviewed), holding the agent constant.
+# Life-science-leaning by construction (a stated limitation of the unreviewed frame).
+# No sub-sampling => no selection bias. Same Track-1 instrument.
+# repo | stratum | lang | today's failure
+https://github.com/BieseckerLab/SomatoSim  # bioinformatics-methods | python | pip_requirements_failed
+https://github.com/BioinfoUNIBA/REDItools2  # bioinformatics-methods | python | pip_requirements_failed
+https://github.com/FunctionalUrology/SpheroScan  # genomics | python | pip_requirements_failed
+https://github.com/GIST-CSBL/HoTS  # cheminformatics | python | conda_env_failed
+https://github.com/MolecularAI/aizynthfinder  # cheminformatics | python | pip_install_failed
+https://github.com/MoreiraLAB/DrugTax  # cheminformatics | python | pip_install_failed
+https://github.com/OluwadareLab/EnsembleSplice  # bioinformatics-methods | python | pip_requirements_failed
+https://github.com/bihealth/sodar-server  # genomics | python | pip_requirements_failed
+https://github.com/cfarkas/annotate_my_genomes  # genomics | python | conda_env_failed
+https://github.com/constantino-garcia/cmmrt  # cheminformatics | python | pip_requirements_failed
+https://github.com/crimBubble/ECCsplorer  # bioinformatics-methods | python | conda_env_failed
+https://github.com/ctlab/GADMA  # genomics | python | pip_install_failed
+https://github.com/dkoslicki/TAMPA  # genomics | python | pip_requirements_failed
+https://github.com/haddocking/interface-classifier  # bioinformatics-methods | python | pip_install_failed
+https://github.com/lanagarmire/lilikoi  # genomics | python | R_install_failed
+https://github.com/mhalushka/miRge  # bioinformatics-methods | python | pip_install_failed
+https://github.com/npdeloss/meirlop  # bioinformatics-methods | python | pip_install_failed
+https://github.com/zoccoler/metroid  # bioinformatics-methods | python | pip_requirements_failed
+https://github.com/JingXieMIZZOU/BLMRM  # bioinformatics-methods | r | R_install_failed
+https://github.com/alexcis95/PhenoExam  # bioinformatics-methods | r | R_install_failed
+https://github.com/ezer/NITPicker  # bioinformatics-methods | r | R_install_failed
+https://github.com/huynguyen250896/DrGA  # bioinformatics-methods | r | R_install_failed
+https://github.com/inzilico/imputeqc  # bioinformatics-methods | r | R_install_failed
+https://github.com/overton-group/eHDPrep  # genomics | r | R_install_failed
