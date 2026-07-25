@@ -108,17 +108,17 @@ leaning by construction (a stated frame limitation): 18 Python / 6 R.
 | | independently verified | revived (ran + produced a result) | reproduced a # | packaging rate |
 |---|---|---|---|---|
 | **Reviewed (JOSS)** | 10/12 = 83% | 11/12 = 92% | 4 | 94% |
-| **Unreviewed (EPMC)** | 18/23 = 78% | 21/23 = 91% | 5 | 41% |
+| **Unreviewed (EPMC)** | 19/24 = 79% | 22/24 = 92% | 6 | 41% |
 
-**The two arms are statistically indistinguishable** (Wilson CIs overlap heavily) despite unreviewed
-software packaging **less than half as often**. Headline: *the reviewed/unreviewed gap is packaging
-discipline, not resurrectability — once an agent is on the repo, peer review does not predict whether
-the science comes back.* Full EPMC accounting (24): 18 verified · 3 revived-inconclusive (GADMA clears
-its floor; SpheroScan/annotate could not be auto-confirmed) · 1 `runs-unverified` (**TAMPA** — smoke
-errors, honestly counted as *not* a clean revival) · 1 `budget-exceeded` (**DrGA** — a 90-min
-Bioconductor compile that ran past the per-repo cap) · 1 `infra-failed` (**cmmrt** — repeated mid-Scout
-connection drops, no fair attempt; excluded from the 23-repo denominator, retryable). Cost ≈ $41
-(≈ $51 both arms). Two mid-run robustness notes: `docker commit` briefly `(Paused)`s a container (benign,
+**The two arms are statistically indistinguishable** (Wilson CIs overlap heavily; "ran" is 92% vs 92%)
+despite unreviewed software packaging **less than half as often**. Headline: *the reviewed/unreviewed
+gap is packaging discipline, not resurrectability — once an agent is on the repo, peer review does not
+predict whether the science comes back.* Full EPMC accounting (24, **no exclusions**): 19 verified ·
+3 revived-inconclusive (GADMA clears its floor; SpheroScan/annotate could not be auto-confirmed) ·
+1 `runs-unverified` (**TAMPA** — smoke errors, honestly counted as *not* a clean revival) ·
+1 `budget-exceeded` (**DrGA** — a 90-min Bioconductor compile that ran past the per-repo cap). cmmrt
+took **3 attempts** (the first two were mid-Scout connection drops on the operator side, `infra-failed`/
+retryable; the third got a fair attempt and *reproduced*, pearson_r=1.0). Cost ≈ $43 (≈ $53 both arms). Two mid-run robustness notes: `docker commit` briefly `(Paused)`s a container (benign,
 not a host suspend); and the per-repo wall-clock watchdog counts a paused container's time as elapsed.
 
 ## Limitations
@@ -126,7 +126,7 @@ Small-ish N (wide CIs); JOSS packaging rate is partly by-construction (JOSS *req
 software); unreviewed arm is life-science-leaning; "installs in a standard env" penalises packages
 with undocumented system deps (arguably itself a reproducibility gap); single run (agent-free, so
 deterministic modulo network); domain-matched bio sub-cut is underpowered (JOSS-bio N≈12). The
-revival arms are a single run per repo (reviewed N=12, unreviewed N=23; wide, overlapping CIs) and,
+revival arms are a single run per repo (reviewed N=12, unreviewed N=24; wide, overlapping CIs) and,
 like Track-1, the success bar is "installs + a shipped example runs and we re-verify it," not a full
 scientific reproduction. The reviewed arm is a *purposive* one-per-domain draw (biases the rate up,
 good for the generalisation claim, not for a rate); the unreviewed arm is a *census* of its frame (no

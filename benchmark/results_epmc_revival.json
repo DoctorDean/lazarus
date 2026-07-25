@@ -324,24 +324,6 @@
     "notes": ""
   },
   {
-    "repo_url": "https://github.com/constantino-garcia/cmmrt",
-    "outcome": "infra-failed",
-    "name": "",
-    "turns": 0,
-    "wall_clock_s": 65.53131175041199,
-    "cost_usd": null,
-    "naive_runs": null,
-    "sanity_metric": "",
-    "sanity_threshold": null,
-    "reproduced_reported": null,
-    "reproduced_measured": null,
-    "verified": null,
-    "base_image": "",
-    "summary": "",
-    "attempted_at": "2026-07-25",
-    "notes": "scout failed: Claude Code returned an error result: success"
-  },
-  {
     "repo_url": "https://github.com/crimBubble/ECCsplorer",
     "outcome": "revived",
     "name": "eccsplorer_mapping",
@@ -428,6 +410,24 @@
     "verified": null,
     "base_image": "bioconductor/bioconductor_docker:RELEASE_3_14",
     "summary": "Given the shipped METABRIC breast-cancer example (expression + CNA + clinical for 31 identified driver genes), run DrGA's DriverGeneAnalysis end-to-end and produce its driver-gene analysis outputs — per-gene survival associations, WGCNA functional modules, and enrichment results.",
+    "attempted_at": "2026-07-25",
+    "notes": ""
+  },
+  {
+    "repo_url": "https://github.com/constantino-garcia/cmmrt",
+    "outcome": "reproduced",
+    "name": "cmmrt_rt_dnn",
+    "turns": 31,
+    "wall_clock_s": 1338.7719731330872,
+    "cost_usd": 1.6726884999999998,
+    "naive_runs": null,
+    "sanity_metric": "pearson_r",
+    "sanity_threshold": 0.99,
+    "reproduced_reported": 1,
+    "reproduced_measured": 1,
+    "verified": true,
+    "base_image": "lazarus/cmmrt:dnn-inference-ready",
+    "summary": "Given a molecule's precomputed fingerprint vector (ECFP+MACCS+PFP), predict its chromatographic retention time in seconds using the shipped pretrained SMRT DNN, via cmmrt/rt/predict_with_dnn.py.",
     "attempted_at": "2026-07-25",
     "notes": ""
   }
