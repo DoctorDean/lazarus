@@ -45,17 +45,25 @@ retried, per-attempt-timeout watchdog enforces a 30-min per-repo cap.
 - **dep-rot** — a declared dependency is gone/unavailable (e.g. undocumented Bioconductor deps). *decay.*
 - **compile-rot** — bundled C/C++ no longer compiles under the modern toolchain. *decay.*
 
-## Results (enriched R base; Wilson 95% CIs)
+## Results (enriched R base; Wilson 95% CIs) — scaled
 | | N | packaging rate | install-decay (of packages) |
 |---|---|---|---|
-| JOSS (reviewed) | 150 | 94% [89–97] | 40% [32–48] |
-| EPMC (unreviewed) | 112 | 41% [32–50] | 52% [38–66] |
+| JOSS (reviewed) | 173 | 95% | 37% [30–45] |
+| EPMC (unreviewed) | 257 | 42% | 61% [51–70] |
 
-- **Packaging rate is the clean, significant result** (CIs disjoint). Install-decay-among-packages
-  overlaps (40 vs 52) — directional, not significant at this N.
-- By language (install-decay): JOSS py 40% / r 38%; EPMC py 47% / r 75%.
-- Enriched-base correction: JOSS-R 53%→38% (5 syslib recoveries); EPMC-R 75%→75% (all genuine).
-- Merged final data: `baseline_joss_final.json`, `baseline_crossdomain_final.json` (R rows = enriched).
+- **Both contrasts are now significant** (two-proportion z-tests): packaging 95% vs 42%
+  (z=11.1, p≪0.001); install-decay 37% vs 61% (**z=3.72, p=0.0002**, CIs now disjoint).
+- **This required scaling** the arms past the original calibration frame (JOSS 150, EPMC 112),
+  where install-decay was directional but underpowered (40% vs 52%, p=0.13 — the low EPMC packaging
+  rate starves the *conclusive* denominator, so the very packaging gap that's significant also makes
+  install-decay hard to power). We scaled EPMC to its 3-stratum ceiling (**257**, +145 disjoint) and
+  JOSS to **173** (156 conclusive) — a two-stage seeded draw (pool shifted between draws; the union is
+  a valid larger sample, deduped by repo_url). The EPMC arm is exhausted for these journals; reaching
+  the full ~80%-power N (~587 EPMC) would need *more unreviewed journals* (a frame redefinition).
+- Conclusive-N: JOSS 156, EPMC 102 (EPMC's 42% packaging is the binding constraint on n).
+- Enriched-base correction (from the calibration frame): JOSS-R 53%→38% (5 syslib recoveries); EPMC-R genuine.
+- Data: `baseline_joss_scaled.json`, `baseline_crossdomain_scaled.json` (calibration frames
+  `baseline_*_final.json` retained). Scale-up manifest `frame_scaled_new.json`.
 
 ## Cross-domain revival pilot (companion to the decay measurement)
 The decay study shows rot is broad; this pilot shows the **agent revives past biology**. We drew
