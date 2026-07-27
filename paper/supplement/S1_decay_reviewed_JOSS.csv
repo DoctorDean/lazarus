@@ -1,0 +1,176 @@
+repo,source_paper_title,doi,language,packaged,install_decay_outcome,reason
+4DModeller/fdmr,4DModeller: a spatio-temporal modelling package,10.21105/joss.07047,r,yes,install-decay (fails),R_install_failed
+ADSCIAN/ssalib,SSALib: a Python Library for Time Series Decomposition using Singular Spectrum Analysis,10.21105/joss.08600,python,yes,install-decay (fails),pip_requirements_failed
+AgatheSenellart/MultiVae,MultiVae: A Python package for Multimodal Variational Autoencoders on Partial Datasets.,10.21105/joss.07996,python,yes,install-decay (fails),pip_install_failed
+AlexPof/opycleid,Opycleid: A Python package for transformational music theory,10.21105/joss.00981,python,yes,installs,example_exit_1
+AlidesChimin/SATA,ATAS - Academic Text Analysis System,10.21105/joss.08599,python,yes,install-decay (fails),pip_requirements_failed
+Ayuei/DeBEIR,DeBEIR: A Python Package for Dense Bi-Encoder Information Retrieval,10.21105/joss.05017,python,yes,install-decay (fails),pip_requirements_failed
+Blue-Matter/RPC,Reference Point Calculator (RPC): A Shiny app for exploration of limit reference points for fisheries management,10.21105/joss.05418,r,yes,install-decay (fails),R_install_failed
+C4dynamics/C4dynamics,C4DYNAMICS: The Python framework for state-space modeling and algorithm development,10.21105/joss.08776,python,yes,installs,example_exit_1
+Cosmoglobe/zodipy,ZodiPy: A Python package for zodiacal light simulations,10.21105/joss.06648,python,yes,install-decay (fails),pip_requirements_failed
+CountESS-Project/fqfa,fqfa: A pure Python package for genomic sequence files,10.21105/joss.02076,python,yes,installs,imports_only
+DOE-NCI-MOSSAIC/FrESCO,FrESCO: Framework for Exploring Scalable Computational Oncology,10.21105/joss.05345,python,yes,install-decay (fails),pip_install_failed
+DTUComputeStatisticsAndDataAnalysis/MBPLS,Multiblock PLS: Block dependent prediction modeling for Python,10.21105/joss.01190,python,yes,installs,imports_only
+DahyannAraya/copernicus-seasonal-forecast-tools,Copernicus Seasonal Forecast Tools Package: Bridging Seasonal Climate Predictions and Impact Models for Operational Risk Assessment,10.21105/joss.08827,python,yes,installs,example_exit_1
+GESS-research-group/pyshbundle,PySHbundle: A Python tool for processing GRACE gravimetry data into global surface mass change datasets,10.21105/joss.07550,python,yes,installs,example_exit_1
+Hegghammer/daiR,daiR: an R package for OCR with Google Document AI,10.21105/joss.03538,r,yes,installs,example_exit_1
+IBT-FMI/COSplay,COSplay: Contrast Optimized Stimulation Player,10.21105/joss.01171,python,yes,installs,imports_only
+IslasGECI/nerd,NERD: Numerical Estimation of Rodenticide Density,10.21105/joss.06736,python,yes,install-decay (fails),pip_install_failed
+LLNL/SSAPy,SSAPy - Space Situational Awareness for Python,10.21105/joss.08147,python,yes,installs,example_exit_1
+LTLA/basilisk,basilisk: a Bioconductor package for managing Python environments,10.21105/joss.04742,python,yes,inconclusive (timeout/error),"command failed (exit 1): ['/usr/local/bin/docker', 'run', '-d', '--platform', 'l"
+MIT-PSFC/disruption-py,DisruptionPy: An open-source physics-based scientific framework for disruption analysis of fusion plasmas,10.21105/joss.09364,python,yes,install-decay (fails),pip_install_failed
+Materials-Consortia/optimade-python-tools,optimade-python-tools: a Python library for serving and consuming materials data via OPTIMADE APIs,10.21105/joss.03458,python,yes,installs,imports_only
+MichielsenM/FOAM,Foam: A Python package for forward asteroseismic modelling of gravity modes,10.21105/joss.05884,python,yes,install-decay (fails),pip_install_failed
+MikeSWang/Triumvirate,Triumvirate: A Python/C++ package for three-point clustering measurements,10.21105/joss.05571,python,yes,install-decay (fails),pip_install_failed
+MillionConcepts/pdr,PDR: The Planetary Data Reader,10.21105/joss.07256,python,yes,installs,example_exit_1
+Narayana-Rao/SAR-tools,PolSAR tools: A QGIS plugin for generating SAR descriptors,10.21105/joss.02970,python,no,N/A (not a package),no_install_manifest
+PGijsbers/GAMA,GAMA: Genetic Automated Machine learning Assistant,10.21105/joss.01132,python,yes,install-decay (fails),pip_install_failed
+PhanstielLab/bedtoolsr,Bedtoolsr: An R package for genomic data analysis and manipulation,10.21105/joss.01742,r,yes,installs,ran_ok
+PhanstielLab/coralp,CoralP: Flexible visualization of the human phosphatome,10.21105/joss.01837,r,yes,install-decay (fails),R_install_failed
+PyEllips/pyElli,pyElli: An open source ellipsometry analysis tool for FAIR data,10.21105/joss.08503,python,yes,installs,example_exit_1
+RadioAstronomySoftwareGroup/pyradiosky,pyradiosky: A Python package for Radio Sky Models,10.21105/joss.06503,python,yes,installs,example_exit_1
+SHF-NAILResearchGroup/HINA,HINA: A Learning Analytics Tool for Heterogenous Interaction Network Analysis in Python,10.21105/joss.08299,python,yes,installs,imports_only
+SMRuggiero/sbmltoodepy,SBMLtoODEpy: A software program for converting SBML models into ODE models in Python,10.21105/joss.01643,python,yes,installs,example_exit_1
+SMTG-UCL/surfaxe,Surfaxe: Systematic surface calculations,10.21105/joss.03171,python,yes,installs,ran_ok
+SWIFTSIM/SOAP,SOAP: A Python Package for Calculating the Properties of Galaxies and Halos Formed in Cosmological Simulations,10.21105/joss.08252,python,yes,installs,example_exit_1
+Santiso-Group/despasito,DESPASITO: A Python Package for SAFT EOS Parametrization and Thermodynamic Calculations,10.21105/joss.07365,python,yes,install-decay (fails),pip_install_failed
+ScionResearch/genomesizeR,genomesizeR: An R package for genome size prediction,10.21105/joss.08759,r,yes,install-decay (fails),R_install_failed
+TDAmeritrade/stumpy,STUMPY: A Powerful and Scalable Python Library for Time Series Data Mining,10.21105/joss.01504,python,yes,installs,example_exit_1
+ThibaultFillion/strengths,"STReNGTHS, a Python package to model and simulate complex reaction-diffusion systems",10.21105/joss.06495,python,yes,installs,example_exit_1
+TomasBeuzen/pybeach,pybeach: A Python package for extracting the location of dune toes on beach profile transects,10.21105/joss.01890,python,yes,inconclusive (timeout/error),"command failed (exit 124): ['/usr/local/bin/docker', 'run', '-d', '--platform', "
+ToyotaCRDL/mahos,MAHOS: Measurement Automation Handling and Orchestration System,10.21105/joss.05938,python,yes,install-decay (fails),pip_install_failed
+Turlure-Nael-23018992/SkyRank,"SkyRank: a unified toolkit for Skyline ranking, benchmarking, and visualization",10.21105/joss.08834,python,yes,install-decay (fails),pip_install_failed
+Yu-Group/simChef,simChef: High-quality data science simulations in R,10.21105/joss.06156,r,yes,installs,ran_ok
+aglucaci/Analysis-of-Orthologous-Collections,AOC: A Snakemake workflow for the characterization of natural selection in protein-coding genes,10.21105/joss.09872,python,no,N/A (not a package),no_install_manifest
+aiidateam/kiwipy,"kiwiPy: Robust, high-volume, messaging for big-data and computational science workflows",10.21105/joss.02351,python,yes,installs,example_exit_1
+akoyamp/geopolrisk-py,geopolrisk-py: A Python-Based Library to Operationalize the Geopolitical Supply Risk Method for use in Life Cycle Assessment and Comparative Risk Assessment,10.21105/joss.09600,python,yes,installs,example_exit_1
+alan-turing-institute/autoemulate,AutoEmulate: A Python package for semi-automated emulation,10.21105/joss.07626,python,yes,install-decay (fails),pip_install_failed
+amirivojdan/shekar,Shekar: A Python Toolkit for Persian Natural Language Processing,10.21105/joss.09128,python,yes,installs,ran_ok
+andrewthomasjones/logKDE,logKDE: log-transformed kernel density estimation,10.21105/joss.00870,r,yes,installs,imports_only
+areenberg/MDPSolver,MDPSolver: An Efficient Solver for Markov Decision Processes,10.21105/joss.07544,python,no,N/A (not a package),no_install_manifest
+atmoschem/eixport,eixport: An R package to export emissions to atmospheric models,10.21105/joss.00607,r,yes,installs,imports_only
+atzberg/mlmod,MLMOD: Machine Learning Methods for Data-Driven Modeling in LAMMPS,10.21105/joss.05620,python,yes,install-decay (fails),pip_requirements_failed
+babinyurii/recan,Recan: Python tool for analysis of recombination events in viral genomes,10.21105/joss.02014,python,yes,installs,ran_ok
+barricklab/seabreeze,seabreeze: A Pipeline for Analyzing Structural Variation Between Bacterial Genome Assemblies,10.21105/joss.08065,python,yes,installs,imports_only
+bcgsc/btllib,btllib: A C++ library with Python interface for efficient genomic sequence processing,10.21105/joss.04720,python,no,N/A (not a package),no_install_manifest
+bge-barcoding/gene_fetch,Gene Fetch: A Python tool for sequence retrieval from GenBank across the tree of life,10.21105/joss.08456,python,yes,installs,imports_only
+bioAI-Oslo/Spikeometric,Spikeometric: Linear Non-Linear Cascade Spiking Neural Networks with Pytorch Geometric,10.21105/joss.05451,python,yes,installs,imports_only
+bmorris3/aesop,aesop: ARC Echelle Spectroscopic Observation Pipeline,10.21105/joss.00854,python,yes,installs,imports_only
+brocklab/pycashier,Pycashier: cash in on DNA barcode tags,10.21105/joss.06891,python,yes,installs,example_exit_1
+cadop/seg1d,seg1d: A Python package for Automated segmentation of one-dimensional (1D) data,10.21105/joss.02404,python,yes,installs,example_exit_1
+canimus/cuallee,cuallee: A Python package for data quality checks across multiple DataFrame APIs,10.21105/joss.06684,python,yes,installs,example_exit_1
+cbyrohl/scida,scida: scalable analysis for scientific big data,10.21105/joss.06064,python,yes,install-decay (fails),pip_install_failed
+cddesja/profileR,profileR: An R package for profile analysis,10.21105/joss.01941,r,yes,installs,imports_only
+chainsawriot/sweater,sweater: Speedy Word Embedding Association Test and Extras Using R,10.21105/joss.04036,r,yes,inconclusive (timeout/error),"command failed (exit 1): ['/usr/local/bin/docker', 'run', '-d', '--platform', 'l"
+cjbarrie/academictwitteR,academictwitteR: an R package to access the Twitter Academic Research Product Track v2 API endpoint,10.21105/joss.03272,r,yes,installs,example_exit_1
+coendevente/SlicerNNInteractive,SlicerNNInteractive: A 3D Slicer extension for nnInteractive,10.21105/joss.09003,python,no,N/A (not a package),no_install_manifest
+czbiohub/cerebra,cerebra: A tool for fast and accurate summarizing of variant calling format (VCF) files,10.21105/joss.02432,python,yes,inconclusive (timeout/error),hard_cap
+darrenjw/jax-smfsb,jax-smfsb: A Python library for stochastic systems biology modelling and inference,10.21105/joss.07491,python,yes,installs,example_exit_1
+deniederhut/niacin,niacin: A Python package for text data enrichment,10.21105/joss.02136,python,yes,installs,example_exit_1
+dfki-ric/better_launch,better_launch: A better replacement for the ROS2 launch system,10.21105/joss.08958,python,yes,installs,example_exit_1
+dgasmith/opt_einsum,opt\_einsum - A Python package for optimizing contraction order for einsum-like expressions,10.21105/joss.00753,python,yes,installs,example_exit_1
+diningphil/PyDGN,PyDGN: a Python Library for Flexible and Reproducible Research on Deep Learning for Graphs,10.21105/joss.05713,python,yes,install-decay (fails),pip_install_failed
+dpalmasan/TRUNAJOD2.0,TRUNAJOD: A text complexity library to enhance natural language processing,10.21105/joss.03153,python,yes,installs,example_exit_1
+dspelaez/extended-wdm,EWDM: A wavelet-based method for estimating directional spectra of ocean waves,10.21105/joss.07942,python,yes,installs,ran_ok
+earthlab/earthpy,EarthPy: A Python package that makes it easier to explore and plot raster and vector data using open source Python tools.,10.21105/joss.01886,python,yes,installs,example_exit_1
+engyasin/Offline_MOT,OfflineMOT: A Python package for multiple objects detection and tracking from bird view stationary drone videos,10.21105/joss.04099,python,yes,install-decay (fails),pip_requirements_failed
+equib/pyEQUIB,"pyEQUIB Python Package, an addendum to proEQUIB: IDL Library for Plasma Diagnostics and Abundance Analysis",10.21105/joss.02798,python,yes,install-decay (fails),pip_install_failed
+ericfell/rfbzero,RFBzero: A Python package for zero-dimensional simulation of redox flow battery cycling,10.21105/joss.06537,python,yes,installs,example_exit_1
+ezsolti/feign,feign: a Python package to estimate geometric efficiency in passive gamma spectroscopy measurements of nuclear fuel,10.21105/joss.01650,python,yes,installs,example_exit_1
+fat-forensics/fat-forensics,"FAT Forensics: A Python Toolbox for Implementing and
+Deploying Fairness, Accountability and Transparency
+Algorithms in Predictive Systems",10.21105/joss.01904,python,yes,installs,imports_only
+fatiando/verde,Verde: Processing and gridding spatial data using Green’s functions,10.21105/joss.00957,python,yes,installs,example_exit_1
+fjprichard/PyAFBF,PyAFBF: a Python library for sampling image textures from the anisotropic fractional Brownian field.,10.21105/joss.03821,python,yes,install-decay (fails),pip_install_failed
+flor14/paper,shinyssd v1.0: Species Sensitivity Distributions for Ecotoxicological Risk Assessment,10.21105/joss.00785,r,no,N/A (not a package),no_install_manifest
+for-ai/rl,RL: Generic reinforcement learning codebase in TensorFlow,10.21105/joss.01524,python,yes,install-decay (fails),pip_requirements_failed
+gavinsimpson/gratia,gratia: An R package for exploring generalized additive models,10.21105/joss.06962,r,yes,install-decay (fails),R_install_failed
+gdslab/data-to-science,Data-to-Science (D2S): An open-source ecosystem for collaborative geospatial data science research,10.21105/joss.09497,python,no,N/A (not a package),no_install_manifest
+genome/bam-readcount,Bam-readcount - rapid generation of basepair-resolution sequence metrics,10.21105/joss.03722,python,no,N/A (not a package),no_install_manifest
+geoelements/gns,GNS: A generalizable Graph Neural Network-based simulator for particulate and fluid modeling,10.21105/joss.05025,python,yes,install-decay (fails),pip_requirements_failed
+gica3618/pythonradex,pythonradex: a fast Python re-implementation of RADEX with extended functionality,10.21105/joss.09233,python,yes,installs,example_exit_1
+grant-m-s/astronomicAL,"AstronomicAL: an interactive dashboard for visualisation, integration and classification of data with Active Learning",10.21105/joss.03635,python,yes,install-decay (fails),pip_requirements_failed
+hannes-holey/GaPFlow,GaPFlow: Gap-averaged flow simulations with Gaussian process regression,10.21105/joss.09645,python,yes,install-decay (fails),pip_install_failed
+hema-ted/pyzfs,PyZFS: A Python package for first-principles calculations of zero-field splitting tensors,10.21105/joss.02160,python,yes,installs,imports_only
+indralab/adeft,Adeft: Acromine-based Disambiguation of Entities from Text with applications to the biomedical literature,10.21105/joss.01708,python,yes,install-decay (fails),pip_install_failed
+jbussemaker/SBArchOpt,SBArchOpt: Surrogate-Based Architecture Optimization,10.21105/joss.05564,python,yes,installs,imports_only
+jeffmacinnes/mobileGazeMapping,Mobile Gaze Mapping: A Python package for mapping mobile gaze data to a fixed target stimulus,10.21105/joss.00984,python,yes,install-decay (fails),pip_requirements_failed
+jeremyrcoyle/origami,origami: A Generalized Framework for Cross-Validation in R,10.21105/joss.00512,r,yes,installs,imports_only
+jessecambon/tidygeocoder,tidygeocoder: An R package for geocoding,10.21105/joss.03544,r,yes,installs,example_exit_1
+jfjlaros/bin-parser,General binary file parser.,10.21105/joss.00766,python,yes,installs,imports_only
+johannes-titz/cofad,cofad: An R package and shiny app for contrast analysis,10.21105/joss.03822,r,yes,installs,imports_only
+johannes-titz/passt,passt: An R implementation of the Probability Associator Time (PASS-T) model,10.21105/joss.01900,r,yes,installs,imports_only
+julia-wrobel/registr,registr 2.0: Incomplete Curve Registration for Exponential Family Functional Data,10.21105/joss.02964,python,yes,install-decay (fails),R_install_failed
+kazewong/flowMC,flowMC: Normalizing flow enhanced sampling package for probabilistic inference in JAX,10.21105/joss.05021,python,yes,installs,example_exit_1
+kebschulllab/Dissecting-Atlas-Registered-Tissue,DART: A GUI Pipeline for Aligning Histological Brain Sections to 3D Atlases and Automating Laser Microdissection,10.21105/joss.09109,python,yes,install-decay (fails),conda_env_failed
+keurfonluu/toughio,toughio: Pre- and post-processing Python library for TOUGH,10.21105/joss.02412,python,yes,installs,example_exit_1
+kevin-tofu/scikit-topt,Scikit-Topt: A Python Library for Algorithm Development in Topology Optimization,10.21105/joss.09092,python,yes,install-decay (fails),pip_install_failed
+kyleaoman/martini,MARTINI: Mock Array Radio Telescope Interferometry of the Neutral ISM,10.21105/joss.06860,python,yes,installs,imports_only
+laura-hetzel/MeDUSA,MeDUSA: Taming your metabolic datasets using an R-package for data processing of Direct Infusion Untarged Single-cell Analysis,10.21105/joss.08993,r,no,N/A (not a package),no_install_manifest
+levuvietphong/pyTCR,pyTCR: A tropical cyclone rainfall model for python,10.21105/joss.08074,python,yes,installs,imports_only
+limengbinggz/ddtlcm,ddtlcm: An R package for overcoming weak separation in Bayesian latent class analysis via tree-regularization,10.21105/joss.06220,r,yes,install-decay (fails),R_install_failed
+lllangWV/ParquetDB,ParquetDB: A Lightweight Python Parquet-Based Database,10.21105/joss.07932,python,yes,installs,example_exit_1
+loftytopping/PyBox,PyBox: An automated box-model generator for atmospheric chemistry and aerosol simulations.,10.21105/joss.00755,python,yes,install-decay (fails),conda_env_failed
+markheckmann/OpenRepGrid,OpenRepGrid: An R Package for the Analysis of Repertory Grid Data,10.21105/joss.06918,r,yes,installs,example_exit_1
+mathLab/PyDMD,PyDMD: Python Dynamic Mode Decomposition,10.21105/joss.00530,python,yes,installs,example_exit_1
+matthiasdemuzere/w2w,W2W: A Python package that injects WUDAPT's Local Climate Zone information in WRF,10.21105/joss.04432,python,yes,install-decay (fails),pip_install_failed
+michellab/BioSimSpace,BioSimSpace: An interoperable Python framework for biomolecular simulation,10.21105/joss.01831,python,yes,install-decay (fails),pip_requirements_failed
+mikejohnson51/AHGestimation,"AHGestimation: An R package for computing robust, mass preserving hydraulic geometries and rating curves",10.21105/joss.06145,python,yes,install-decay (fails),R_install_failed
+ml-evs/matador,"matador: a Python library for analysing, curating and performing high-throughput density-functional theory calculations",10.21105/joss.02563,python,yes,install-decay (fails),pip_install_failed
+mmrabe/hypr,hypr: An R package for hypothesis-driven contrast coding,10.21105/joss.02134,r,yes,installs,example_exit_1
+moead-framework/framework,Moead-framework: a modular MOEA/D Python framework,10.21105/joss.02974,python,yes,installs,example_exit_1
+morrowcj/remotePARTS,remotePARTS: Spatiotemporal autoregression analyses for large data sets,10.21105/joss.07937,r,yes,installs,example_exit_1
+mthorrell/gbnet,GBNet: Gradient Boosting packages integrated into PyTorch,10.21105/joss.08047,python,yes,install-decay (fails),pip_requirements_failed
+nedRad88/SCALAR,SCALAR - A Platform for Real-time Machine Learning Competitions on Data Streams,10.21105/joss.02676,python,yes,install-decay (fails),pip_install_failed
+nhejazi/haldensify,haldensify: Highly adaptive lasso conditional density estimation in R,10.21105/joss.04522,r,yes,install-decay (fails),R_install_failed
+noraeisner/LATTE,LATTE: Lightcurve Analysis Tool for Transiting Exoplanets,10.21105/joss.02101,python,yes,install-decay (fails),pip_install_failed
+obss/jury,Jury: A Comprehensive Evaluation Toolkit,10.21105/joss.06452,python,yes,installs,example_exit_1
+oleksulkowski/Syn-CpG-Spacer,Syn-CpG-Spacer: A Panel web app for synonymous recoding of viral genomes with CpG dinucleotides,10.21105/joss.06332,python,yes,installs,example_exit_1
+openscilab/pymilo,PyMilo: A Python Library for ML I/O,10.21105/joss.08858,python,yes,installs,ran_ok
+oschwengers/referenceseeker,ReferenceSeeker: rapid determination of appropriate reference genomes,10.21105/joss.01994,python,yes,installs,imports_only
+pangeo-data/climpred,climpred: Verification of weather and climate forecasts,10.21105/joss.02781,python,yes,installs,example_exit_1
+parafields/parafields,"parafields: A generator for distributed, stationary Gaussian processes",10.21105/joss.05735,python,yes,inconclusive (timeout/error),no_verdict_parsed
+pdebuyl-lab/tidynamics,tidynamics: A tiny package to compute the dynamics of stochastic and molecular simulations,10.21105/joss.00877,python,yes,installs,example_exit_1
+pfeinsper/drone-swarm-search,DSSE: An environment for simulation of reinforcement learning-empowered drone swarm maritime search and rescue missions,10.21105/joss.06746,python,yes,install-decay (fails),pip_requirements_failed
+pnnl/ConStrain,Control Strainer (ConStrain): a data-driven control verification framework,10.21105/joss.08083,python,yes,installs,imports_only
+pySRURGS/pySRURGS,pySRURGS - a python package for symbolic regression by uniform random global search,10.21105/joss.01675,python,yes,install-decay (fails),pip_requirements_failed
+pyamg/pyamg,PyAMG: Algebraic Multigrid Solvers in Python,10.21105/joss.04142,python,yes,install-decay (fails),pip_install_failed
+pyplati/platipy,PlatiPy: Processing Library and Analysis Toolkit for Medical Imaging in Python,10.21105/joss.05374,python,yes,installs,example_exit_1
+pyvisa/pyvisa,PyVISA: the Python instrumentation package,10.21105/joss.05304,python,yes,installs,imports_only
+quanteda/quanteda,quanteda: An R package for the quantitative analysis of textual data,10.21105/joss.00774,r,yes,install-decay (fails),R_install_failed
+qurit/rt-utils,RT-utils: A Minimal Python Library for RT-struct Manipulation,10.21105/joss.07361,python,yes,installs,example_exit_1
+radwinskis/RadGEEToolbox,RadGEEToolbox: Streamlined Multispectral &amp; SAR Analysis for Google Earth Engine,10.21105/joss.08164,python,yes,install-decay (fails),pip_requirements_failed
+raphaelvallat/pingouin,Pingouin: statistics in Python,10.21105/joss.01026,python,yes,installs,imports_only
+rasbt/mlxtend,MLxtend: Providing machine learning and data science utilities and extensions to Python's scientific computing stack,10.21105/joss.00638,python,yes,installs,example_exit_1
+rhenkin/visxhclust,visxhclust: An R Shiny package for visual exploration of hierarchical clustering,10.21105/joss.04074,r,yes,installs,imports_only
+rikenbit/nnTensor,nnTensor: An R package for non-negative matrix/tensor decomposition,10.21105/joss.05015,r,yes,install-decay (fails),R_install_failed
+robwschlegel/heatwaveR,heatwaveR: A central algorithm for the detection of heatwaves and cold-spells,10.21105/joss.00821,r,yes,installs,imports_only
+ropensci/c3dr,c3dr: An R Package to Read and Write C3D Motion Capture Files,10.21105/joss.09951,python,yes,install-decay (fails),R_install_failed
+ropensci/weathercan,weathercan: Download and format weather data from Environment and Climate Change Canada,10.21105/joss.00571,r,yes,installs,example_exit_1
+sbi-dev/sbi,sbi reloaded: a toolkit for simulation-based inference workflows,10.21105/joss.07754,python,yes,installs,example_exit_1
+schochastics/netrankr,"netrankr: An R package for total, partial, and probabilistic rankings in networks",10.21105/joss.04563,r,yes,installs,example_exit_1
+simonGreenhill/Treemaker,treemaker:  A Python tool for constructing a Newick formatted tree from a set of classifications.,10.21105/joss.01040,python,yes,installs,ran_ok
+sjbeckett/localcovid19now,localcovid19now: processing and mapping COVID-19 case data at subnational scales,10.21105/joss.04898,r,yes,installs,example_exit_1
+sjspielman/phyphy,phyphy: Python package for facilitating the execution and parsing of HyPhy standard analyses,10.21105/joss.00514,python,yes,installs,example_exit_1
+soraxas/sbp-env,sbp-env: A Python Package for Sampling-based Motion Planner and Samplers,10.21105/joss.03782,python,yes,inconclusive (timeout/error),"command failed (exit 125): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--"
+springer-math/Mathematics-of-Epidemics-on-Networks,"EoN (Epidemics on Networks): a fast, flexible Python package for simulation, analytic approximation, and analysis of epidemics on networks",10.21105/joss.01731,python,yes,installs,example_exit_1
+steven-murray/hankel,hankel: A Python library for performing simple and accurate Hankel transformations,10.21105/joss.01397,python,yes,installs,imports_only
+survey-methods/samplics,"samplics: a Python Package for selecting, weighting and analyzing data from complex sampling designs.",10.21105/joss.03376,python,yes,installs,example_exit_1
+szymon-datalions/pyinterpolate,Pyinterpolate: Spatial interpolation in Python for point measurements and aggregated datasets,10.21105/joss.02869,python,yes,inconclusive (timeout/error),"command failed (exit 125): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--"
+terminological/dtrackr,dtrackr: An R package for tracking the provenance of data,10.21105/joss.04707,r,yes,install-decay (fails),R_install_failed
+terrytangyuan/autoplotly,autoplotly: An R package for automatic generation of interactive visualizations for statistical results,10.21105/joss.00657,r,yes,installs,imports_only
+tesselle/aion,aion: An R Package to Represent Archaeological Time Series,10.21105/joss.06210,r,yes,install-decay (fails),R_install_failed
+thesketh/pygen-structures,pygen-structures: A Python package to generate 3D molecular structures for simulations using the CHARMM forcefield,10.21105/joss.02157,python,yes,installs,example_exit_1
+thraraujo/pysymmpol,PySymmPol - Symmetric Polynomials,10.21105/joss.06724,python,yes,install-decay (fails),pip_install_failed
+tresoldi/ngesh,Ngesh: a Python library for synthetic phylogenetic data,10.21105/joss.03173,python,yes,installs,example_exit_1
+uw-comphys/openccm,OpenCCM: An Open-Source Continuous Compartmental Modelling Package,10.21105/joss.06963,python,yes,installs,imports_only
+vsoch/helpme,HelpMe Command Line Helper Utility,10.21105/joss.00775,python,yes,installs,imports_only
+weecology/portalcasting,portalcasting: Supporting automated forecasting of rodent populations,10.21105/joss.03220,r,yes,install-decay (fails),R_install_failed
+wetransform-os/ProMCDA,ProMCDA: A Python package for Probabilistic Multi-Criteria Decision Analysis,10.21105/joss.06190,python,yes,install-decay (fails),pip_requirements_failed
+whimian/pyGeoPressure,PyGeoPressure: Geopressure Prediction in Python,10.21105/joss.00992,python,yes,inconclusive (timeout/error),"command failed (exit 1): ['/usr/local/bin/docker', 'run', '-d', '--platform', 'l"
+wilsoncai1992/data.adapt.multi.test,adaptest: Data-Adaptive Statistics for High-Dimensional Testing in R,10.21105/joss.00161,r,yes,installs,imports_only
+wilsonrljr/sysidentpy,SysIdentPy: A Python package for System Identification using NARMAX models,10.21105/joss.02384,python,yes,installs,example_exit_1
+xiangfstats/GenieR,genieR: An R package for inference of demographic history of phylogenies,10.21105/joss.00634,r,yes,installs,imports_only
+xianggebenben/GraphSL,GraphSL: An Open-Source Library for Graph Source Localization Approaches and Benchmark Datasets,10.21105/joss.06796,python,yes,install-decay (fails),pip_requirements_failed
+ybayle/Scyland3D,Scyland3D: Processing 3D landmarks,10.21105/joss.01262,python,yes,installs,example_exit_1
+zabore/riskclustr,riskclustr: Functions to Study Etiologic Heterogeneity,10.21105/joss.01269,r,yes,installs,imports_only
