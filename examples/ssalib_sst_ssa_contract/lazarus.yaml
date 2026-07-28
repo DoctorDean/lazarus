@@ -1,0 +1,59 @@
+name: ssalib_sst_ssa
+repo_url: https://github.com/ADSCIAN/ssalib
+base_image: lazarus/ssalib:ssa-ready
+entrypoint: '#!/usr/bin/env bash
+
+  set -euo pipefail
+
+  mkdir -p "$OUTDIR"
+
+  # $INPUT is an optional oisst2.1-format monthly SST JSON. If empty/unset the
+
+  # built-in ssalib load_sst() series is used. Either way SSA decomposes the
+
+  # series, reconstructs trend+seasonality, verifies the exactness property, and
+
+  # writes ssa_components.csv, decomposed_signal.png and metrics.json to $OUTDIR.
+
+  cd /root/repo
+
+  python3 run_ssa.py "${INPUT:-}" "$OUTDIR"'
+inputs:
+- name: INPUT
+  type: file
+  description: Optional oisst2.1-format monthly SST JSON (list whose element 0 has
+    a 'data' array of ["YYYY,MM,DD", value] rows). If omitted, the built-in ssalib.datasets.load_sst()
+    series is used.
+outputs:
+- name: ssa_components.csv
+  type: file
+  description: 'Per-date SSA signals: ssa_original, ssa_preprocessed, ssa_reconstructed,
+    ssa_residuals, trend, seasonality (physical units).'
+- name: decomposed_signal.png
+  type: file
+  description: 'README-style decomposition figure: original SST, trend, and seasonality.'
+- name: metrics.json
+  type: file
+  description: n_components, reconstruction_relative_l2_error, component_columns,
+    series_length.
+smoke:
+  description: Load built-in SST, decompose, sum ALL elementary components, verify
+    SSA exactness (relative L2 error vs preprocessed series < 1e-6) and trend/seasonality
+    to_frame export.
+  command: cd /root/repo && python3 run_ssa.py /tmp/smoke_out 2>&1 | grep reconstruction_relative_l2_error=
+    | tail -1
+  metric: reconstruction_relative_l2_error
+  threshold: 1.0e-06
+  input_ref: ''
+benchmark: null
+paper: 'Delforge et al., SSALib: Singular Spectrum Analysis Library (JOSS)'
+commit: 5f4d28998309410d644bcb455a99b2c67484a58a
+patches:
+- 'Added run_ssa.py runner: loads oisst-format SST (built-in load_sst() or an oisst-format
+  JSON via $INPUT), runs SingularSpectrumAnalysis.decompose(), verifies SSA exactness
+  by summing all elementary components vs the preprocessed series, reconstructs trend=[0,1]/seasonality=[2,3],
+  exports to_frame() CSV + decomposition PNG + metrics.json. No source changes needed;
+  package installs and runs as-is on Python 3.11 with numpy 2.4 / pandas 3.0 / scipy
+  1.15.'
+platform: linux/amd64
+gpus: ''

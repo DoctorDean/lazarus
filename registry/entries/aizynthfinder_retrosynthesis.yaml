@@ -1,0 +1,23 @@
+name: aizynthfinder_retrosynthesis
+title: AiZynthFinder
+domain: Retrosynthesis
+summary: Monte-Carlo tree search retrosynthetic route planning over reaction templates.
+repo_url: https://github.com/MolecularAI/aizynthfinder
+paper: 'AiZynthFinder: a fast, robust and flexible open-source software for retrosynthetic
+  planning. (doi:10.1186/s13321-020-00472-1)'
+era: Py · ML
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-aizynth:working
+gpu: false
+image_public: true
+from_url: true
+turns: 21
+sanity_metric: is_solved
+sanity_threshold: 1
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/aizynthfinder_retrosynthesis_contract
+added: '2026-07-28'

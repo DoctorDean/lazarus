@@ -43,20 +43,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from frame import EPMC, extract_repo, paper_text, repo_public, _get  # noqa: E402
 import urllib.parse  # noqa: E402
 
-# Phase-1 strata: (domain label, Europe PMC query). Each targets a distinct computational
-# subfield/venue so the sample spans domains, not just one journal. Tune/extend as needed.
+# This is the UNREVIEWED arm of the reviewed-vs-unreviewed contrast: regular research
+# journals that *link* a repo in the abstract but do NOT review software for runnability
+# (JOSS/SoftwareX, sourced by joss.py, are the reviewed arm). Only venues that pass the
+# abstract-extraction viability probe are kept — EPMC-indexed, "Availability: github…" in
+# the abstract, enough hits. Dropped after probing: PLOS Comput Biol (link in body, not
+# abstract), Methods Ecol. Evol. (~14 hits), Neuroinformatics (thin). These strata are
+# life-science-leaning (the honest limitation vs. JOSS's true cross-domain breadth).
 STRATA = [
-    ("computational-biology", 'ISSN:"1553-7358" AND PUB_YEAR:[2018 TO 2022] AND github'),          # PLOS Comput Biol
-    ("bioinformatics-methods", 'ISSN:"1471-2105" AND PUB_YEAR:[2018 TO 2022] AND github'),          # BMC Bioinformatics
-    ("genomics", 'ISSN:"2047-217X" AND PUB_YEAR:[2018 TO 2022] AND github'),                        # GigaScience
-    ("cheminformatics", 'ISSN:"1758-2946" AND PUB_YEAR:[2018 TO 2022] AND github'),                 # J. Cheminformatics
-    ("ecology-evolution-methods", 'ISSN:"2041-210X" AND PUB_YEAR:[2018 TO 2022] AND github'),       # Methods Ecol. Evol.
-    ("neuroinformatics", 'ISSN:"1539-2791" AND PUB_YEAR:[2018 TO 2022] AND github'),                # Neuroinformatics
+    ("bioinformatics-methods", 'ISSN:"1471-2105" AND PUB_YEAR:[2018 TO 2022] AND github'),  # BMC Bioinformatics (~723)
+    ("genomics", 'ISSN:"2047-217X" AND PUB_YEAR:[2018 TO 2022] AND github'),                # GigaScience (~251)
+    ("cheminformatics", 'ISSN:"1758-2946" AND PUB_YEAR:[2018 TO 2022] AND github'),         # J. Cheminformatics (~156)
 ]
-# Phase-2 strata (need a non-EPMC source — implement a Crossref enumerator, then add here):
-#   ("scientific-software", 'ISSN:"2475-9066" ...'),   # JOSS  — repo-guaranteed
-#   ("scientific-software", 'ISSN:"2352-7110" ...'),   # SoftwareX — repo-guaranteed
-#   ("machine-learning", ...), ("astronomy", ...), ("chemistry", ...)
+# NOTE: Crossref does NOT carry the repo for JOSS/SoftwareX (see crossref.py probe: 0%);
+# Papers With Code's data dump is defunct (redirects to HuggingFace). So unreviewed *cross-
+# domain* repo sourcing has no clean automated source — the reviewed arm (JOSS) carries the
+# cross-domain breadth, the unreviewed arm (here + the Track-1 Bioinformatics frame) carries
+# the "code as an afterthought" decay signal.
 
 
 def enumerate_epmc(query: str, max_papers: int = 2000) -> list[dict]:

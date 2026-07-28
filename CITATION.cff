@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use Lazarus, please cite the paper below (and, if helpful, the software)."
+title: Lazarus
+abstract: >-
+  An agent that resurrects dead research code from a bare GitHub URL into a callable,
+  independently-verified pipeline component — with a principled measurement of computational
+  reproducibility decay.
+type: software
+authors:
+  - given-names: Dean
+    family-names: Sherry
+repository-code: "https://github.com/DoctorDean/lazarus"
+url: "https://doctordean.github.io/lazarus/"
+license: MIT
+version: "0.3.0"
+keywords:
+  - reproducibility
+  - research software
+  - LLM agents
+  - computational biology
+  - software decay
+preferred-citation:
+  type: article
+  title: "Resurrecting dead research code: an autonomous agent and a principled measurement of computational reproducibility decay"
+  authors:
+    - given-names: Dean
+      family-names: Sherry
+  year: 2026
+  journal: bioRxiv
+  # doi: "10.1101/..."   # TODO: add the bioRxiv DOI once the preprint is approved

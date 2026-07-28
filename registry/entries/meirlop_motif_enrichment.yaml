@@ -1,0 +1,24 @@
+name: meirlop_motif_enrichment
+title: MEIRLOP
+domain: Genomics — motif enrichment
+summary: Motif enrichment in ranked lists via logistic regression controlling for
+  covariates.
+repo_url: https://github.com/npdeloss/meirlop
+paper: 'MEIRLOP: improving score-based motif enrichment by incorporating sequence
+  bias covariates. (doi:10.1186/s12859-020-03739-4)'
+era: Py
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-meirlop:working
+gpu: false
+image_public: true
+from_url: true
+turns: 22
+sanity_metric: roc_auc
+sanity_threshold: 0.75
+sanity_direction: above
+reproduced_metric: roc_auc
+reproduced_reported: 0.7814
+reproduced_measured: 0.7814194753559087
+giveback_pr: null
+contract: examples/meirlop_motif_enrichment_contract
+added: '2026-07-28'

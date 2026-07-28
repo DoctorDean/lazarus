@@ -1,0 +1,41 @@
+name: matador_kp_convex_hull
+repo_url: https://github.com/ml-evs/matador
+base_image: lazarus/matador:hull-ready
+entrypoint: cd /root/repo && python run_hull.py "$INPUT" "$OUTDIR" K,P
+inputs:
+- name: INPUT
+  type: directory
+  description: Directory of CASTEP .res structure files for the K-P system (e.g. tests/data/hull-KP-KSnP_pub
+    with 295 files). A glob pattern is also accepted.
+outputs:
+- name: hull_dist.dat
+  type: file
+  description: One energy distance above the convex hull (eV/atom) per input structure,
+    in glob-sorted file order.
+smoke:
+  description: Rebuild the binary K-P convex hull from the 295 shipped .res files
+    and compare computed hull_dist to the shipped reference tests/data/test_KP_hull_dist.dat
+    (mirrors test_binary_hull_distances).
+  command: cd /root/repo && python run_hull.py tests/data/hull-KP-KSnP_pub /tmp/smoke_out
+    K,P 2>/dev/null | grep hull_dist_max_abs_error_vs_reference
+  metric: hull_dist_max_abs_error_vs_reference
+  threshold: 0.001
+  input_ref: ''
+benchmark:
+  description: Published K-P binary convex hull distances reproduced from 295 shipped
+    DFT .res structures via matador.hull.QueryConvexHull.
+  metric: max_abs_error_vs_reference_eV_per_atom
+  reported: 0
+  tolerance: 0.001
+  n: 295
+  source: repo tests/data/test_KP_hull_dist.dat (test_binary_hull_distances)
+  command: cd /root/repo && python prove_kp_hull.py
+  measured: 0
+paper: ''
+commit: ''
+patches:
+- 'No source patches required: pip install -e . plus requirements/requirements.txt
+  on Python 3.11 resolves numpy 1.26.4, scipy 1.17.1, spglib 2.7.0, numba 0.66.0,
+  matplotlib 3.5.3, seekpath 2.2.1, python-ternary 1.0.8; capability runs unmodified.'
+platform: linux/amd64
+gpus: ''

@@ -1,0 +1,59 @@
+name: scikit_topt_oc
+repo_url: https://github.com/kevin-tofu/scikit-topt
+base_image: lazarus/scikit-topt:oc-working
+entrypoint: 'set -euo pipefail
+
+  # The capability is self-contained: it generates its own box-cantilever mesh via
+
+  # sktopt.mesh.toy_problem.create_box_hex, so $INPUT is optional/ignored.
+
+  # Optional overrides via env: MESH_SIZE (default 0.4), MAX_ITERS (default 25).
+
+  export MPLBACKEND=Agg
+
+  mkdir -p "$OUTDIR"
+
+  cd /root/repo
+
+  DST="$OUTDIR" MESH_SIZE="${MESH_SIZE:-0.4}" MAX_ITERS="${MAX_ITERS:-25}" python
+  run_revival.py
+
+  echo "Optimized density field: $OUTDIR/cubic_top.vtu"
+
+  echo "Recorded history:        $OUTDIR/histories.npz"'
+inputs:
+- name: INPUT
+  type: unused
+  description: 'Ignored. The optimizer builds its own 8x8x1 hex box cantilever via
+    sktopt.mesh.toy_problem.create_box_hex (Dirichlet face at x=0, two opposing Neumann
+    loads at x=8). Optional env overrides: MESH_SIZE (default 0.4), MAX_ITERS (default
+    25).'
+outputs:
+- name: cubic_top.vtu
+  type: vtu-mesh
+  description: Optimized material-density field (thresholded topology) as a VTK unstructured
+    grid.
+- name: histories.npz
+  type: npz
+  description: 'Optimizer history: per-iteration compliance objective, rho_projected
+    (min/mean/max/std), vol_error, etc.'
+smoke:
+  description: Run the OC topology optimizer on the coarsened box cantilever (headless,
+    export_img=False) and assert the recorded compliance drops >=10% while the mean
+    design density holds at the 0.6 volume-fraction target.
+  command: cd /root/repo && DST=/tmp/smoke MESH_SIZE=0.4 MAX_ITERS=25 MPLBACKEND=Agg
+    python run_revival.py 2>/dev/null | grep RESULT
+  metric: compliance_reduction_ratio
+  threshold: 0.1
+  input_ref: ''
+benchmark: null
+paper: ''
+commit: ''
+patches:
+- 'Added run_revival.py: a headless driver mirroring examples/tutorial/box_oc.py with
+  export_img=False (no GL/VTK display), mesh_size coarsened 0.2->0.4, max_iters lowered
+  60->25, and a sanity assertion that reads the recorded compliance history from histories.npz.'
+- No source patches to scikit-topt were required; the installed 0.3.10 wheel runs
+  as-is on x86-64 CPU with MPLBACKEND=Agg. PETSc/petsc4up not used.
+platform: linux/amd64
+gpus: ''

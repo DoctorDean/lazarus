@@ -125,7 +125,7 @@ elif [ -f DESCRIPTION ]; then
   RPKG=$(grep -i '^Package:' DESCRIPTION | head -1 | sed 's/[Pp]ackage:[[:space:]]*//' | tr -d '\r')
   # install AND verify the package is actually available (install_local only *warns* on a
   # failed build, so a missing package after install is a real install failure).
-  timeout 1200 Rscript -e "if(!requireNamespace('remotes',quietly=TRUE))install.packages('remotes',repos='https://cloud.r-project.org'); remotes::install_local('.',dependencies=TRUE,upgrade='never'); if(!requireNamespace('$RPKG',quietly=TRUE)) quit(status=3)" >/tmp/inst.log 2>&1 || { echo "INSTLOG:"; tail -4 /tmp/inst.log; verdict 0 install R_install_failed; }
+  timeout 1200 Rscript -e "if(!requireNamespace('remotes',quietly=TRUE))install.packages('remotes',repos='https://cloud.r-project.org'); remotes::install_local('.',dependencies=TRUE,upgrade='never',build=FALSE); if(!requireNamespace('$RPKG',quietly=TRUE)) quit(status=3)" >/tmp/inst.log 2>&1 || { echo "INSTLOG:"; tail -4 /tmp/inst.log; verdict 0 install R_install_failed; }
 else
   verdict 0 install no_install_manifest
 fi
@@ -176,7 +176,8 @@ fi
 class NaiveResult:
     repo_url: str
     naive_runs: Optional[bool] = None
-    stage: str = ""
+    installed: Optional[bool] = None   # did install SUCCEED? (robust decay signal; less
+    stage: str = ""                     # noisy than naive_runs, which also needs a runnable example)
     reason: str = ""
     lang: str = ""
     wall_clock_s: float = 0.0
@@ -186,7 +187,8 @@ class NaiveResult:
         return asdict(self)
 
 
-def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int = 1800) -> NaiveResult:
+def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int = 1800,
+                  r_image: Optional[str] = None) -> NaiveResult:
     from lazarus.sandbox import DockerClient, Sandbox, find_docker
 
     slug = "/".join(repo_url.rstrip("/").split("/")[-2:])
@@ -198,7 +200,8 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
               .replace("README_B64", b64).replace("PRIMARY_LANG", lang))
     t0 = time.time()
     client = DockerClient(binary=find_docker(), docker_host=docker_host)
-    sb = Sandbox(client, base_image_for(lang), workdir="/")
+    image = r_image if (lang == "r" and r_image) else base_image_for(lang)
+    sb = Sandbox(client, image, workdir="/")
     fired = threading.Event()
     done = threading.Event()
 
@@ -206,10 +209,19 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
         if done.wait(timeout_s):
             return
         fired.set()
-        try:
-            sb.stop()
-        except Exception:  # noqa: BLE001
-            pass
+        # A single `docker rm -f` over a flaky ssh:// can hang or fail, and one swallowed
+        # failure lets the capped run continue unbounded (observed: a repo stuck 2.5h under a
+        # 30m cap). Force-remove by name with a per-attempt timeout, retried until it's gone.
+        deadline = time.time() + 180
+        while time.time() < deadline and not done.is_set():
+            try:
+                cr = client.run(["rm", "-f", sb.name], timeout=30)
+                if cr.ok or "No such container" in (cr.stderr or ""):
+                    sb.started = False
+                    return
+            except Exception:  # noqa: BLE001 — a hung/failed kill just means: retry
+                pass
+            time.sleep(3)
 
     threading.Thread(target=_watchdog, daemon=True).start()
     try:
@@ -235,6 +247,17 @@ def naive_run_one(repo_url: str, *, docker_host: Optional[str], timeout_s: int =
         except Exception:  # noqa: BLE001
             pass
     res.wall_clock_s = time.time() - t0
+    # install SUCCEEDED iff we reached the example stage; FAILED at clone/install; and is
+    # INCONCLUSIVE (None) on timeout/error — those are excluded from the decay denominator,
+    # not miscounted as decayed. `installed` is the robust decay signal (naive_runs also needs
+    # a runnable example, which over-reports decay when the example needs args/data — see pilot).
+    if res.stage == "example":
+        res.installed = True
+    elif res.reason == "no_install_manifest":
+        res.installed = None   # not a standard installable package (workflow/C++/subdir) → N/A, excluded
+    elif res.stage in ("install", "clone"):
+        res.installed = False
+    # else timeout/error/unknown → installed stays None (inconclusive)
     return res
 
 
@@ -244,6 +267,8 @@ def main(argv=None) -> int:
     ap.add_argument("--url", action="append", help="a single repo (repeatable); overrides --frame")
     ap.add_argument("--docker-host", default=None)
     ap.add_argument("--timeout", type=int, default=1800)
+    ap.add_argument("--r-image", default=None,
+                    help="override the R base image, e.g. lazarus/r-sysdeps:4.2.0 (with common system libs)")
     ap.add_argument("--out", default="benchmark/baseline.json")
     args = ap.parse_args(argv)
 
@@ -257,7 +282,7 @@ def main(argv=None) -> int:
         if url in done_urls:
             print(f"skip (done): {url}"); continue
         print(f"\n=== baseline: {url} ===", flush=True)
-        r = naive_run_one(url, docker_host=args.docker_host, timeout_s=args.timeout)
+        r = naive_run_one(url, docker_host=args.docker_host, timeout_s=args.timeout, r_image=args.r_image)
         rows = [x for x in rows if x["repo_url"] != url] + [r.to_dict()]
         Path(args.out).write_text(json.dumps(rows, indent=2, ensure_ascii=False))
         print(f"  -> naive_runs={r.naive_runs}  ({r.stage}/{r.reason}, {r.lang}, {r.wall_clock_s:.0f}s)")

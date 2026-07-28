@@ -1,0 +1,24 @@
+name: scikit_topt_oc
+title: Scikit-Topt
+domain: Topology optimization
+summary: Structural topology optimization (optimality-criteria / MMA density methods)
+  in Python.
+repo_url: https://github.com/kevin-tofu/scikit-topt
+paper: 'Scikit-Topt: A Python Library for Algorithm Development in Topology Optimization
+  (doi:10.21105/joss.09092)'
+era: Py
+license: Apache-2.0
+base_image: ghcr.io/doctordean/lazarus-scikit-topt:oc-working
+gpu: false
+image_public: true
+from_url: true
+turns: 26
+sanity_metric: compliance_reduction_ratio
+sanity_threshold: 0.1
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/scikit_topt_oc_contract
+added: '2026-07-28'

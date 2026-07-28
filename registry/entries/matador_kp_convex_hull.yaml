@@ -1,0 +1,24 @@
+name: matador_kp_convex_hull
+title: matador
+domain: Materials science / DFT
+summary: Aggregate, query and analyse first-principles (DFT) crystal-structure calculations;
+  build phase-stability convex hulls.
+repo_url: https://github.com/ml-evs/matador
+paper: 'matador: a Python library for analysing, curating and performing high-throughput
+  density-functional theory calculations (doi:10.21105/joss.02563)'
+era: Py · materials informatics
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-matador:hull-ready
+gpu: false
+image_public: true
+from_url: true
+turns: 18
+sanity_metric: hull_dist_max_abs_error_vs_reference
+sanity_threshold: 0.001
+sanity_direction: below
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/matador_kp_convex_hull_contract
+added: '2026-07-28'

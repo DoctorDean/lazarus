@@ -1,0 +1,24 @@
+name: despasito_saft_gamma_mie_propane_saturation
+title: DESPASITO
+domain: Thermodynamics
+summary: 'SAFT-Gamma-Mie equation of state: parameterize and predict thermodynamic
+  properties (e.g. vapor pressure).'
+repo_url: https://github.com/Santiso-Group/despasito
+paper: 'DESPASITO: A Python Package for SAFT EOS Parametrization and Thermodynamic
+  Calculations (doi:10.21105/joss.07365)'
+era: Py · Numba
+license: BSD-3-Clause
+base_image: ghcr.io/doctordean/lazarus-despasito:propane-sat-working
+gpu: false
+image_public: true
+from_url: true
+turns: 39
+sanity_metric: aard_vapor_pressure
+sanity_threshold: 0.15
+sanity_direction: below
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/despasito_saft_gamma_mie_propane_saturation_contract
+added: '2026-07-28'

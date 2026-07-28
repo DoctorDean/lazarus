@@ -1,0 +1,13 @@
+repo,domain,dead_baseline,lazarus_outcome,verification,measured,reported,turns,cost_usd
+ADSCIAN/ssalib,time-series decomposition,install-decay=True (failed own install),revived,verified,,,24,0.83
+Cosmoglobe/zodipy,astronomy,install-decay=True (failed own install),reproduced,reproduced (verified),0.009223488,0.01,19,0.65
+MIT-PSFC/disruption-py,plasma physics,install-decay=True (failed own install),revived,ran (verification inconclusive),,,16,0.67
+Santiso-Group/despasito,thermodynamics (SAFT EOS),install-decay=True (failed own install),revived,verified,0.032578,0,39,1.62
+kevin-tofu/scikit-topt,topology optimization,install-decay=True (failed own install),revived,verified,,,26,1.53
+loftytopping/PyBox,atmospheric chemistry,install-decay=True (failed own install),reproduced,reproduced (verified),0.4648,0.5,18,0.77
+matthiasdemuzere/w2w,urban climate / geospatial,install-decay=True (failed own install),revived,verified,5.96e-08,0,12,0.58
+mikejohnson51/AHGestimation,"hydrology (R, cross-language)",install-decay=True (failed own install),reproduced,reproduced (verified),0.997434,0.9975,17,0.76
+ml-evs/matador,DFT / materials,install-decay=True (failed own install),revived,verified,0,0,18,0.64
+pySRURGS/pySRURGS,symbolic regression,install-decay=True (failed own install),reproduced,reproduced (verified),0.9999971782340981,0.999999,22,0.82
+pyamg/pyamg,numerical linear algebra,install-decay=True (failed own install),revived,verified,,,11,0.52
+radwinskis/RadGEEToolbox,remote sensing,install-decay=True (failed own install),data-gated,blocked (external credentials),,,14,0.59

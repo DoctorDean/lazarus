@@ -1,0 +1,107 @@
+{
+  "frame": "R repos only",
+  "sample": [
+    {
+      "repo_url": "https://github.com/PhanstielLab/bedtoolsr"
+    },
+    {
+      "repo_url": "https://github.com/cjbarrie/academictwitteR"
+    },
+    {
+      "repo_url": "https://github.com/atmoschem/eixport"
+    },
+    {
+      "repo_url": "https://github.com/ScionResearch/genomesizeR"
+    },
+    {
+      "repo_url": "https://github.com/mmrabe/hypr"
+    },
+    {
+      "repo_url": "https://github.com/nhejazi/haldensify"
+    },
+    {
+      "repo_url": "https://github.com/sjbeckett/localcovid19now"
+    },
+    {
+      "repo_url": "https://github.com/ropensci/weathercan"
+    },
+    {
+      "repo_url": "https://github.com/terminological/dtrackr"
+    },
+    {
+      "repo_url": "https://github.com/wilsoncai1992/data.adapt.multi.test"
+    },
+    {
+      "repo_url": "https://github.com/johannes-titz/passt"
+    },
+    {
+      "repo_url": "https://github.com/gavinsimpson/gratia"
+    },
+    {
+      "repo_url": "https://github.com/xiangfstats/GenieR"
+    },
+    {
+      "repo_url": "https://github.com/andrewthomasjones/logKDE"
+    },
+    {
+      "repo_url": "https://github.com/4DModeller/fdmr"
+    },
+    {
+      "repo_url": "https://github.com/tesselle/aion"
+    },
+    {
+      "repo_url": "https://github.com/PhanstielLab/coralp"
+    },
+    {
+      "repo_url": "https://github.com/weecology/portalcasting"
+    },
+    {
+      "repo_url": "https://github.com/morrowcj/remotePARTS"
+    },
+    {
+      "repo_url": "https://github.com/rikenbit/nnTensor"
+    },
+    {
+      "repo_url": "https://github.com/terrytangyuan/autoplotly"
+    },
+    {
+      "repo_url": "https://github.com/laura-hetzel/MeDUSA"
+    },
+    {
+      "repo_url": "https://github.com/flor14/paper"
+    },
+    {
+      "repo_url": "https://github.com/johannes-titz/cofad"
+    },
+    {
+      "repo_url": "https://github.com/jessecambon/tidygeocoder"
+    },
+    {
+      "repo_url": "https://github.com/quanteda/quanteda"
+    },
+    {
+      "repo_url": "https://github.com/Blue-Matter/RPC"
+    },
+    {
+      "repo_url": "https://github.com/schochastics/netrankr"
+    },
+    {
+      "repo_url": "https://github.com/cddesja/profileR"
+    },
+    {
+      "repo_url": "https://github.com/rhenkin/visxhclust"
+    },
+    {
+      "repo_url": "https://github.com/limengbinggz/ddtlcm"
+    },
+    {
+      "repo_url": "https://github.com/zabore/riskclustr"
+    },
+    {
+      "repo_url": "https://github.com/markheckmann/OpenRepGrid"
+    },
+    {
+      "repo_url": "https://github.com/Yu-Group/simChef"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+name: deepfri_mf
+repo_url: https://github.com/flatironinstitute/DeepFRI
+base_image: lazarus/deepfri:working
+entrypoint: 'set -euo pipefail
+
+  cd /root/repo
+
+  mkdir -p "$OUTDIR"
+
+  python predict.py --cmap "$INPUT" -ont mf --verbose -o "$OUTDIR/DeepFRI"
+
+  echo "Predictions written to $OUTDIR/DeepFRI_MF_predictions.csv"'
+inputs:
+- name: INPUT
+  type: file
+  description: 'Single protein C-alpha contact map + sequence in .npz format (numpy
+    arrays: C_alpha, seqres). Example: examples/pdb_cmaps/1S3P-A.npz'
+outputs:
+- name: DeepFRI_MF_predictions.csv
+  type: file
+  description: 'Predicted molecular-function GO terms with confidence scores (columns:
+    Protein, GO_term, Score, GO_term name)'
+- name: DeepFRI_MF_pred_scores.json
+  type: file
+  description: 'Full prediction scores JSON (keys: pdb_chains, Y_hat, goterms, gonames)'
+smoke:
+  description: Predict MF-GO terms for Parvalbumin alpha (PDB 1S3P chain A) and check
+    the top term is GO:0005509 (calcium ion binding) with high confidence.
+  command: cd /root/repo && rm -rf /tmp/smoke_out && mkdir -p /tmp/smoke_out && python
+    predict.py --cmap ./examples/pdb_cmaps/1S3P-A.npz -ont mf -o /tmp/smoke_out/DeepFRI
+    >/dev/null 2>&1 && python3 -c "import csv; rows=[r for r in csv.reader(open('/tmp/smoke_out/DeepFRI_MF_predictions.csv'))
+    if r and not r[0].startswith('###') and r[0]!='Protein']; top=rows[0]; print('top1_go_term_and_score=%s'
+    % (top[2] if top[1]=='GO:0005509' else '0'))"
+  metric: top1_go_term_and_score
+  threshold: 0.9
+  input_ref: examples/pdb_cmaps/1S3P-A.npz
+benchmark:
+  description: 'README headline: MF-GO prediction for PDB 1S3P chain A (Parvalbumin
+    alpha) top term GO:0005509 calcium ion binding'
+  metric: top1_score_GO:0005509
+  reported: 0.99824
+  tolerance: 0.1
+  n: 1
+  source: README.md Option 1 example output
+  command: ''
+  measured: 0.99999
+paper: Gligorijevic et al., Structure-Based Function Prediction using Graph Convolutional
+  Networks, bioRxiv 2019 (doi:10.1101/786236)
+commit: 3bd6c7eae67894ccedbe1117e33b3abe544bca71
+patches:
+- 'setup.py: changed dependency tensorflow-gpu==2.3.1 -> tensorflow==2.3.1 (CPU build)
+  so inference runs without a GPU; all other pins (numpy==1.18.5, networkx==2.4, scikit-learn==0.23.1,
+  biopython==1.76) unchanged.'
+platform: linux/amd64
+gpus: ''

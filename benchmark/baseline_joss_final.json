@@ -1,0 +1,1502 @@
+[
+  {
+    "repo_url": "https://github.com/PhanstielLab/bedtoolsr",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 144.89420199394226,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gica3618/pythonradex",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 107.09188508987427,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 2\n    doi = {10.21105/joss.09233},\n           ^^^^^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cjbarrie/academictwitteR",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 298.7008469104767,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"Get started\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (academictwitteR)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/kazewong/flowMC",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 119.26940488815308,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jeffmacinnes/mobileGazeMapping",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 13.364685773849487,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/atmoschem/eixport",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 258.22707772254944,
+    "log_tail": "RAN: Rscript -e 'library(eixport)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/aglucaci/Analysis-of-Orthologous-Collections",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 11.342108964920044,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PGijsbers/GAMA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 68.17841696739197,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ScionResearch/genomesizeR",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 691.6278619766235,
+    "log_tail": "INSTLOG:\n2: In i.p(...) :\n  installation of package \u2018/tmp/RtmpqJY0T9/file1a75db0d84\u2019 had non-zero exit status\n3: In i.p(...) :\n  installation of package \u2018/tmp/RtmpqJY0T9/file1a740f87ff5/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mmrabe/hypr",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 117.76670384407043,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"To assign\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (hypr)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/barricklab/seabreeze",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 79.05497407913208,
+    "log_tail": "RAN: python -c 'import src'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/genome/bam-readcount",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 27.971358060836792,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ThibaultFillion/strengths",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 39.52733778953552,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/steven-murray/hankel",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 109.59905099868774,
+    "log_tail": "RAN: python -c 'import hankel'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/darrenjw/jax-smfsb",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 173.15817499160767,
+    "log_tail": "RAN: python demos/abc-cal.py\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/demos/abc-cal.py\", line 5, in <module>\n    import jsmfsb\n  File \"/opt/conda/lib/python3.14/site-packages/jsmfsb/__init__.py\", line 1, in <module>\n    from jsmfsb.spn import *\n  File \"/opt/conda/lib/python3.14/site-packages/jsmfsb/spn.py\", line 5, in <module>\n    import jax\nModuleNotFoundError: No module named 'jax'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/nhejazi/haldensify",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 311.19664311408997,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/haldensify\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/Rtmp2OTm8a/file1a761b28ebd/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/sjbeckett/localcovid19now",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 616.6893398761749,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError in LoadData(\"LoadUS\") : could not find function \"LoadData\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (localcovid19now)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/obss/jury",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 132.4118058681488,
+    "log_tail": "a/lib/python3.14/site-packages/datasets/arrow_dataset.py\", line 66, in <module>\n    from .arrow_writer import ArrowWriter, OptimizedTypedSequence\n  File \"/opt/conda/lib/python3.14/site-packages/datasets/arrow_writer.py\", line 27, in <module>\n    from .features import Features, Image, Value\n  File \"/opt/conda/lib/python3.14/site-packages/datasets/features/__init__.py\", line 18, in <module>\n    from .features import Array2D, Array3D, Array4D, Array5D, ClassLabel, Features, Sequence, Value\n  File \"/opt/conda/lib/python3.14/site-packages/datasets/features/features.py\", line 630, in <module>\n    class _ArrayXDExtensionType(pa.PyExtensionType):\n                                ^^^^^^^^^^^^^^^^^^\nAttributeError: module 'pyarrow' has no attribute 'PyExtensionType'. Did you mean: 'ExtensionType'?\nINSTLOG_TAIL:\nERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\ntyper 0.25.1 requires click>=8.2.1, but you have click 8.0.4 which is incompatible.\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jfjlaros/bin-parser",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 10.925085067749023,
+    "log_tail": "RAN: python -c 'import extras'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/levuvietphong/pyTCR",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 294.37148809432983,
+    "log_tail": "RAN: python -c 'import tcr'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ropensci/weathercan",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 379.38750290870667,
+    "log_tail": "RAN: Rscript vignettes/precompile.R\nEXLOG_TAIL:\nprocessing file: vignettes/interpolate_data.Rmd.orig\noutput file: vignettes/interpolate_data.Rmd\n\n\n\nprocessing file: vignettes/normals.Rmd.orig\nQuitting from lines 104-112 (vignettes/normals.Rmd.orig) \nError in n$normals : object of type 'closure' is not subsettable\nCalls: knit ... inline_exec -> hook_eval -> withVisible -> eval -> eval -> ncol\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (weathercan)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Turlure-Nael-23018992/SkyRank",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 26.317021131515503,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/wilsonrljr/sysidentpy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 64.8693470954895,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 25\n    SysIdentPy aims to be a free and open-source package to help the community to design NARMAX models for System Identification and TimeSeries Forecasting. More than that, be a free and robust alternative to one of the most used tools to build NARMAX models, which is the Matlab's System Identification Toolbox.\n                                                                                                                                                                                                                                                                                       ^\nSyntaxError: unterminated string literal (detected at line 25)\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/tresoldi/ngesh",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 23.777517080307007,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    python3 -c \"import ngesh ; ngesh.show_random_tree()\"\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/terminological/dtrackr",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 282.28421807289124,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/dtrackr\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpnKl0sa/file1a74e76933e/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/dspelaez/extended-wdm",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 62.4302179813385,
+    "log_tail": "RAN: python /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ezsolti/feign",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 49.40511512756348,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 2\n    uo2.set_path(('/yourpath/UO2.dat',1))\nIndentationError: unexpected indent\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Ayuei/DeBEIR",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 928.3253602981567,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SMTG-UCL/surfaxe",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 98.49303483963013,
+    "log_tail": "RAN: python /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/wilsoncai1992/data.adapt.multi.test",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 411.29929995536804,
+    "log_tail": "RAN: Rscript -e 'library(adaptest)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/johannes-titz/passt",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 220.8165898323059,
+    "log_tail": "RAN: Rscript -e 'library(passt)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MillionConcepts/pdr",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 343.24755907058716,
+    "log_tail": "RAN: python -c 'import pdr'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pdr\n  File \"/repo/pdr/__init__.py\", line 6, in <module>\n    from pdr.pdr import Data, Metadata\n  File \"/repo/pdr/pdr.py\", line 21, in <module>\n    import multidict\nModuleNotFoundError: No module named 'multidict'\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gavinsimpson/gratia",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 471.4133040904999,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/gratia\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpcsKita/file1a71987046c/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/atzberg/mlmod",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 38.98849105834961,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mathLab/PyDMD",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 205.4456329345703,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  :math:`\\lambda` tikhonov parameter.\n/repo/pydmd/paramdmd.py:264: SyntaxWarning: \"\\d\" is an invalid escape sequence. Such sequences will not work in the future. Did you mean \"\\\\d\"? A raw string is also an option.\n  x_1(t_1,\\\\mu_1) & \\dots & x_1(t_n,\\\\mu_1) & x_1(t_1,\\\\mu_1)\n/repo/pydmd/paramdmd.py:292: SyntaxWarning: \"\\m\" is an invalid escape sequence. Such sequences will not work in the future. Did you mean \"\\\\m\"? A raw string is also an option.\n  In symbols, from the given matrix :math:`X^x_{t,\\mu} \\in\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 4, in <module>\n    dmd.fit(X)\n            ^\nNameError: name 'X' is not defined\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/canimus/cuallee",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 16.592249155044556,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\nDependency modules missing: No module named 'pandas'\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 7, in <module>\n    .validate(df)\n              ^^\nNameError: name 'df' is not defined\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/fjprichard/PyAFBF",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 23.872570753097534,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/kebschulllab/Dissecting-Atlas-Registered-Tissue",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "conda_env_failed",
+    "lang": "python",
+    "wall_clock_s": 1077.4120678901672,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=conda_env_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/xiangfstats/GenieR",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 171.86792612075806,
+    "log_tail": "RAN: Rscript -e 'library(genieR)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/deniederhut/niacin",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 141.62655997276306,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 1, in <module>\n    from niacin.text import en\n  File \"/repo/niacin/text/en/__init__.py\", line 45, in <module>\n    from .char import (\n    ...<11 lines>...\n    )\n  File \"/repo/niacin/text/en/char.py\", line 24, in <module>\n    from pkg_resources import resource_string\nModuleNotFoundError: No module named 'pkg_resources'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Cosmoglobe/zodipy",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 180.86072897911072,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/andrewthomasjones/logKDE",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 134.84999799728394,
+    "log_tail": "RAN: Rscript -e 'library(logKDE)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/IBT-FMI/COSplay",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 911.3180890083313,
+    "log_tail": "RAN: python -c 'import cosplay'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\nError response from daemon: No such exec instance: 8f5df00cca16dbd5832b9adfc8a233e30dc5f15b5be03e1373449f360c135e1a\n"
+  },
+  {
+    "repo_url": "https://github.com/radwinskis/RadGEEToolbox",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 148.91527795791626,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ropensci/c3dr",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "python",
+    "wall_clock_s": 71.46309971809387,
+    "log_tail": "INSTLOG:\ntimeout: failed to run command \u2018Rscript\u2019: No such file or directory\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/bcgsc/btllib",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 69.94327974319458,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gdslab/data-to-science",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 301.60056805610657,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jbussemaker/SBArchOpt",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 235.32529592514038,
+    "log_tail": "RAN: python -c 'import sb_arch_opt'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/AlexPof/opycleid",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 96.31437397003174,
+    "log_tail": "RAN: python examples/beethoven_knet.py\nEXLOG_TAIL:\n  File \"/repo/examples/beethoven_knet.py\", line 14\n    print str(my_knet)\n    ^^^^^^^^^^^^^^^^^^\nSyntaxError: Missing parentheses in call to 'print'. Did you mean print(...)?\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/akoyamp/geopolrisk-py",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 96.1490707397461,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/4DModeller/fdmr",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 581.710058927536,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/fdmr\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpQ65t3b/file1a752f5dd06/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/for-ai/rl",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 85.64827084541321,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MIT-PSFC/disruption-py",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 12.451673030853271,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/tesselle/aion",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 119.8088870048523,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/aion\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpYOEHOd/file1a72fbb6ede/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/RadioAstronomySoftwareGroup/pyradiosky",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 117.47952604293823,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/xianggebenben/GraphSL",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 31.45382595062256,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/diningphil/PyDGN",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 914.2766208648682,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PhanstielLab/coralp",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 316.3353440761566,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/coralp\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpAt39rc/file1a77f31b072/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PyEllips/pyElli",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 71.11743593215942,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/uw-comphys/openccm",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 86.27871704101562,
+    "log_tail": "RAN: python -c 'import openccm'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ericfell/rfbzero",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 37.463634967803955,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pyamg/pyamg",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 39.596609115600586,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/engyasin/Offline_MOT",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 930.2102541923523,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Narayana-Rao/SAR-tools",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 24.45468282699585,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/equib/pyEQUIB",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 11.728420972824097,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/AlidesChimin/SATA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 31.50103497505188,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/DTUComputeStatisticsAndDataAnalysis/MBPLS",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 61.22780108451843,
+    "log_tail": "RAN: python -c 'import mbpls'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pySRURGS/pySRURGS",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 29.167587280273438,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/fat-forensics/fat-forensics",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 42.208664894104004,
+    "log_tail": "RAN: python -c 'import fatf'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/weecology/portalcasting",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 378.429811000824,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/portalcasting\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpDMI9Zc/file1a76d009f87/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/brocklab/pycashier",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 49.21801495552063,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/morrowcj/remotePARTS",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 431.6247618198395,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected ',' in \"Then,\"\nExecution halted\nINSTLOG_TAIL:\n** checking absolute paths in shared objects and dynamic libraries\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (remotePARTS)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pfeinsper/drone-swarm-search",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 64.54036402702332,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pangeo-data/climpred",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 87.1017792224884,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/rikenbit/nnTensor",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 238.26829290390015,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/nnTensor\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpiZN0La/file1a71456434f/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cbyrohl/scida",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 149.20330595970154,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Santiso-Group/despasito",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 330.6882429122925,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/terrytangyuan/autoplotly",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 230.92357182502747,
+    "log_tail": "RAN: Rscript -e 'library(autoplotly)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SMRuggiero/sbmltoodepy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 53.13922691345215,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 2, in <module>\n    ParseAndCreateModel(inputFilePath, jsonFilePath = None, outputFilePath = None, className = \"SBMLmodel\")\n    ^^^^^^^^^^^^^^^^^^^\nNameError: name 'ParseAndCreateModel' is not defined\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/fatiando/verde",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 412.2116918563843,
+    "log_tail": "RAN: python -c 'import verde'\nEXLOG_TAIL:\n    import verde\n  File \"/repo/verde/__init__.py\", line 8, in <module>\n    from . import datasets, synthetic\n  File \"/repo/verde/datasets/__init__.py\", line 7, in <module>\n    from .sample_data import (\n    ...<9 lines>...\n    )\n  File \"/repo/verde/datasets/sample_data.py\", line 12, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Materials-Consortia/optimade-python-tools",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 14.550620794296265,
+    "log_tail": "RAN: python -c 'import optimade'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/rasbt/mlxtend",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 81.13065695762634,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    uv run --with mlxtend python -c \"import mlxtend; print(mlxtend.__version__)\"\n       ^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/coendevente/SlicerNNInteractive",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.514850854873657,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SWIFTSIM/SOAP",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 103.99496006965637,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    snapnum=0077\n            ^^\nSyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/laura-hetzel/MeDUSA",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 188.79487419128418,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/babinyurii/recan",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 50.32862615585327,
+    "log_tail": "RAN: python /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/flor14/paper",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 44.19921684265137,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/geoelements/gns",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 30.806457996368408,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/LLNL/SSAPy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 86.82528924942017,
+    "log_tail": "RAN: python examples/tle_drag_paths.py\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/examples/tle_drag_paths.py\", line 29, in <module>\n    import ssapy\nModuleNotFoundError: No module named 'ssapy'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/johannes-titz/cofad",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 345.2607522010803,
+    "log_tail": "RAN: Rscript -e 'library(cofad)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/alan-turing-institute/autoemulate",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 36.94212985038757,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/indralab/adeft",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 861.2568290233612,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\nError response from daemon: No such exec instance: c74f910f1a9da33278e9d628efed5267289c9a2817e888664539d4d9269d8ae8\n"
+  },
+  {
+    "repo_url": "https://github.com/IslasGECI/nerd",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 28.0856032371521,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pyvisa/pyvisa",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 16.211095809936523,
+    "log_tail": "RAN: python -c 'import pyvisa'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/loftytopping/PyBox",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "conda_env_failed",
+    "lang": "python",
+    "wall_clock_s": 192.33362102508545,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=conda_env_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/dgasmith/opt_einsum",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 23.053170204162598,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 6\n    1 loops, best of 3: 934 ms per loop\n      ^^^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/oleksulkowski/Syn-CpG-Spacer",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 157.34740114212036,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    python3 -m http.server\n               ^^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/DOE-NCI-MOSSAIC/FrESCO",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 212.86059284210205,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jessecambon/tidygeocoder",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 251.02732586860657,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected symbol in \"In this\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (tidygeocoder)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/quanteda/quanteda",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 290.02298188209534,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/quanteda\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/Rtmp3EOuMb/file1a758e67f89/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SHF-NAILResearchGroup/HINA",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 89.74847984313965,
+    "log_tail": "RAN: python -c 'import hina'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Blue-Matter/RPC",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 579.0453250408173,
+    "log_tail": "INSTLOG:\n1: In i.p(...) :\n  installation of package \u2018/tmp/RtmpTBJ9Nd/remotes1a71b2f0551/Blue-Matter-MSEextra-c237e41\u2019 had non-zero exit status\n2: In i.p(...) :\n  installation of package \u2018/tmp/RtmpTBJ9Nd/file1a7330856d/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/grant-m-s/astronomicAL",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 47.075007915496826,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pyplati/platipy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 152.0573558807373,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    There aren't many requirements, just an installed Python interpreter (3.7 or greater). PlatiPy can\n              ^\nSyntaxError: unterminated string literal (detected at line 1)\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/hema-ted/pyzfs",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 63.89521789550781,
+    "log_tail": "RAN: python -c 'import pyzfs'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/schochastics/netrankr",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 242.8321979045868,
+    "log_tail": "RAN: Rscript /repo/.naive_example\nEXLOG_TAIL:\nError: unexpected '<' in \"<\"\nExecution halted\nINSTLOG_TAIL:\n** checking absolute paths in shared objects and dynamic libraries\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (netrankr)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ml-evs/matador",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 38.48807215690613,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/hannes-holey/GaPFlow",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 33.78383183479309,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pnnl/ConStrain",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 198.61148715019226,
+    "log_tail": "RAN: python -c 'import constrain'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/areenberg/MDPSolver",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 13.202187776565552,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MichielsenM/FOAM",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 65.78194785118103,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cddesja/profileR",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 203.30009388923645,
+    "log_tail": "RAN: Rscript -e 'library(profileR)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/kevin-tofu/scikit-topt",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 12.366387128829956,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/qurit/rt-utils",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 55.79686498641968,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    <p align=\"center\">\n    ^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/matthiasdemuzere/w2w",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 37.768431663513184,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/keurfonluu/toughio",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 27.142559051513672,
+    "log_tail": "RAN: python -c 'import toughio'\nEXLOG_TAIL:\n    from ._extract import extract\n  File \"/repo/toughio/_cli/_extract.py\", line 3, in <module>\n    from .._io.output import read as read_output\n  File \"/repo/toughio/_io/__init__.py\", line 1, in <module>\n    from .h5 import write as write_h5\n  File \"/repo/toughio/_io/h5/__init__.py\", line 1, in <module>\n    from ._write import write\n  File \"/repo/toughio/_io/h5/_write.py\", line 3, in <module>\n    import h5py\nModuleNotFoundError: No module named 'h5py'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/openscilab/pymilo",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 54.39808773994446,
+    "log_tail": "RAN: python /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/AgatheSenellart/MultiVae",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 917.1592979431152,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ToyotaCRDL/mahos",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 17.84845280647278,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/michellab/BioSimSpace",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 18.265942096710205,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/lllangWV/ParquetDB",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 95.31728005409241,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/opt/conda/lib/python3.14/site-packages/pyarrow/dataset.py\", line 790, in dataset\n    return _filesystem_dataset(source, **kwargs)\n  File \"/opt/conda/lib/python3.14/site-packages/pyarrow/dataset.py\", line 482, in _filesystem_dataset\n    return factory.finish(schema)\n           ~~~~~~~~~~~~~~^^^^^^^^\n  File \"pyarrow/_dataset.pyx\", line 3228, in pyarrow._dataset.DatasetFactory.finish\n  File \"pyarrow/error.pxi\", line 155, in pyarrow.lib.pyarrow_internal_check_status\n  File \"pyarrow/error.pxi\", line 92, in pyarrow.lib.check_status\n    raise convert_status(status)\npyarrow.lib.ArrowInvalid: Error creating dataset. Could not read schema from 'parquetdb/__init__.py'. Is this a 'parquet' file?: Could not open Parquet input source 'parquetdb/__init__.py': Parquet magic bytes not found in footer. Either the file is corrupted or this is not a parquet file.\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/simonGreenhill/Treemaker",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 16.209100008010864,
+    "log_tail": "RAN: python /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/thesketh/pygen-structures",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 1345.8870441913605,
+    "log_tail": "RAN: python -c 'import pygen_structures'\nEXLOG_TAIL:\n    from pygen_structures.mol_containers import Atom, Structure, Molecule\n  File \"/repo/pygen_structures/mol_containers/__init__.py\", line 9, in <module>\n    from pygen_structures.mol_containers.molecule import Molecule\n  File \"/repo/pygen_structures/mol_containers/molecule.py\", line 12, in <module>\n    from pygen_structures.charmm_containers import *\n  File \"/repo/pygen_structures/charmm_containers.py\", line 9, in <module>\n    from pygen_structures.mol_containers.structure import Structure\n  File \"/repo/pygen_structures/mol_containers/structure.py\", line 9, in <module>\n    from rdkit import Chem\nModuleNotFoundError: No module named 'rdkit'\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/soraxas/sbp-env",
+    "naive_runs": null,
+    "installed": null,
+    "stage": "error",
+    "reason": "command failed (exit 125): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--",
+    "lang": "python",
+    "wall_clock_s": 191.9175570011139,
+    "log_tail": ""
+  },
+  {
+    "repo_url": "https://github.com/bmorris3/aesop",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 156.17661309242249,
+    "log_tail": "RAN: python -c 'import aesop'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/rhenkin/visxhclust",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 423.25308322906494,
+    "log_tail": "RAN: Rscript -e 'library(visxhclust)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/vsoch/helpme",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 15.526490211486816,
+    "log_tail": "RAN: python -c 'import helpme'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/sjspielman/phyphy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 21.001924991607666,
+    "log_tail": "RAN: python examples/visualize_feature_tree_ete3.py\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/examples/visualize_feature_tree_ete3.py\", line 8, in <module>\n    import ete3\n  File \"/opt/conda/lib/python3.14/site-packages/ete3/__init__.py\", line 51, in <module>\n    from .ncbi_taxonomy import *\n  File \"/opt/conda/lib/python3.14/site-packages/ete3/ncbi_taxonomy/__init__.py\", line 40, in <module>\n    from .ncbiquery import *\n  File \"/opt/conda/lib/python3.14/site-packages/ete3/ncbi_taxonomy/ncbiquery.py\", line 61, in <module>\n    import six\nModuleNotFoundError: No module named 'six'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/TDAmeritrade/stumpy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 334.41241478919983,
+    "log_tail": "RAN: python -c 'import stumpy'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import stumpy\n  File \"/repo/stumpy/__init__.py\", line 9, in <module>\n    from numba import cuda\nModuleNotFoundError: No module named 'numba'\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/limengbinggz/ddtlcm",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 1121.2883310317993,
+    "log_tail": "INSTLOG:\nWarning messages:\n1: In i.p(...) : installation of package \u2018ggtree\u2019 had non-zero exit status\n2: In i.p(...) :\n  installation of package \u2018/tmp/RtmpYI8Fnd/file1a74be5efbc/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\nError response from daemon: No such exec instance: 197531e5ddea3a6e9bcaab44c26eac6c2d4ec57be9f245b44c641c94180f4caa\n"
+  },
+  {
+    "repo_url": "https://github.com/bge-barcoding/gene_fetch",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 38.311342000961304,
+    "log_tail": "RAN: python -c 'import tests'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/DahyannAraya/copernicus-seasonal-forecast-tools",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 299.8541262149811,
+    "log_tail": "RAN: python -c 'import seasonal_forecast_tools'\nEXLOG_TAIL:\n    import seasonal_forecast_tools\n  File \"/repo/seasonal_forecast_tools/__init__.py\", line 23, in <module>\n    from .core.seasonal_forecast import *  # This will import all functions from seasonal_forecast.py\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/seasonal_forecast_tools/core/__init__.py\", line 22, in <module>\n    from .seasonal_forecast import *  # This will import all functions from seasonal_forecast.py\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/repo/seasonal_forecast_tools/core/seasonal_forecast.py\", line 46, in <module>\n    import pandas as pd\nModuleNotFoundError: No module named 'pandas'\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ADSCIAN/ssalib",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 61.03709697723389,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/kyleaoman/martini",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 50.39591407775879,
+    "log_tail": "RAN: python -c 'import martini'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mikejohnson51/AHGestimation",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "python",
+    "wall_clock_s": 16.03288698196411,
+    "log_tail": "INSTLOG:\ntimeout: failed to run command \u2018Rscript\u2019: No such file or directory\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/zabore/riskclustr",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 942.7366302013397,
+    "log_tail": "RAN: Rscript -e 'library(riskclustr)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\nError response from daemon: No such exec instance: f064f4db8853471fad214a232a717e4c218fc62d92b348143493bce05d07ae5d\n"
+  },
+  {
+    "repo_url": "https://github.com/aiidateam/kiwipy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 19.272949934005737,
+    "log_tail": "RAN: python examples/rmq_broadcast_client.py\nEXLOG_TAIL:\n    with kiwipy.connect('amqp://127.0.0.1') as comm:\n         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/conda/lib/python3.14/site-packages/kiwipy/communicate.py\", line 10, in connect\n    from . import rmq  # Avoid circular ref: pylint: disable=import-outside-toplevel\n    ^^^^^^^^^^^^^^^^^\n  File \"/opt/conda/lib/python3.14/site-packages/kiwipy/rmq/__init__.py\", line 3, in <module>\n    from .communicator import *\n  File \"/opt/conda/lib/python3.14/site-packages/kiwipy/rmq/communicator.py\", line 9, in <module>\n    import aio_pika\nModuleNotFoundError: No module named 'aio_pika'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/thraraujo/pysymmpol",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 34.32172632217407,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/noraeisner/LATTE",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 72.40374612808228,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/earthlab/earthpy",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 260.74107909202576,
+    "log_tail": "RAN: python examples/get_data.py\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/examples/get_data.py\", line 40, in <module>\n    import earthpy as et\nModuleNotFoundError: No module named 'earthpy'\nINSTLOG_TAIL:\nChannel \"defaults\" has the following notices:\n  [info] -- Tue Jun  9 00:00:00 2026\n  PyTorch 2.12 with CUDA support is now available to install with your current channel (Anaconda Main). Learn more: https://anaconda.org/main/pytorch?utm_source=channel_notices\n\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/survey-methods/samplics",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 121.13629078865051,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 2\n    author  = {Diallo, Mamadou S.},\n                       ^^^^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/springer-math/Mathematics-of-Epidemics-on-Networks",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 57.65822410583496,
+    "log_tail": "RAN: python -c 'import EoN'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import EoN\n  File \"/repo/EoN/__init__.py\", line 130, in <module>\n    import EoN.auxiliary\n  File \"/repo/EoN/auxiliary.py\", line 3, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/bioAI-Oslo/Spikeometric",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 545.1663200855255,
+    "log_tail": "RAN: python -c 'import tests'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MikeSWang/Triumvirate",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 15.560193061828613,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/markheckmann/OpenRepGrid",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "r",
+    "wall_clock_s": 486.56345295906067,
+    "log_tail": "RAN: Rscript demo/OpenRepGrid.r\nEXLOG_TAIL:\nError in biplot2d(feixas2004) : could not find function \"biplot2d\"\nExecution halted\nINSTLOG_TAIL:\n** testing if installed package can be loaded from temporary location\n** testing if installed package can be loaded from final location\n** testing if installed package keeps a record of temporary installation path\n* DONE (OpenRepGrid)\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Yu-Group/simChef",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 552.6440308094025,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/amirivojdan/shekar",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 921.3078813552856,
+    "log_tail": "RAN: python /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\nError response from daemon: No such exec instance: f85fc9f4660cc73706527acc6f50da510ab116720cc62783b1eff1dca9018000\n"
+  },
+  {
+    "repo_url": "https://github.com/nedRad88/SCALAR",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 936.6459941864014,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ybayle/Scyland3D",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 1852.6579940319061,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 2, in <module>\n    Scyland3D.pts2csv(\"example/\")\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^\n  File \"/repo/Scyland3D/Scyland3D.py\", line 228, in pts2csv\n    assert os.path.exists(indir) and os.path.isdir(indir), indir + \" not found.\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: example/ not found.\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/szymon-datalions/pyinterpolate",
+    "naive_runs": null,
+    "installed": null,
+    "stage": "error",
+    "reason": "command failed (exit 125): ['/Users/dean/.orbstack/bin/docker', 'run', '-d', '--",
+    "lang": "python",
+    "wall_clock_s": 923.6077527999878,
+    "log_tail": ""
+  }
+]

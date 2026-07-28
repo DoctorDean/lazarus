@@ -1,0 +1,15 @@
+# Cross-domain revival pilot (Track-2 companion): 12 JOSS install-decay=False repos,
+# one per distinct non-bio domain. Same harness/model as the Track-1 bio bricks.
+# slug | domain | today's failure | lang
+https://github.com/pyamg/pyamg  # numerical linear algebra | pip_install_failed | python
+https://github.com/Cosmoglobe/zodipy  # astronomy | pip_requirements_failed | python
+https://github.com/loftytopping/PyBox  # atmospheric chemistry | conda_env_failed | python
+https://github.com/kevin-tofu/scikit-topt  # topology optimization | pip_install_failed | python
+https://github.com/ADSCIAN/ssalib  # time-series decomposition | pip_requirements_failed | python
+https://github.com/Santiso-Group/despasito  # thermodynamics (SAFT EOS) | pip_install_failed | python
+https://github.com/pySRURGS/pySRURGS  # symbolic regression | pip_requirements_failed | python
+https://github.com/matthiasdemuzere/w2w  # urban climate / geospatial | pip_install_failed | python
+https://github.com/MIT-PSFC/disruption-py  # plasma physics | pip_install_failed | python
+https://github.com/ml-evs/matador  # DFT / materials | pip_install_failed | python
+https://github.com/radwinskis/RadGEEToolbox  # remote sensing | pip_requirements_failed | python
+https://github.com/mikejohnson51/AHGestimation  # hydrology (R, cross-language) | R_install_failed | python

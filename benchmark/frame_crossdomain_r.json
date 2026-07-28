@@ -1,0 +1,44 @@
+{
+  "frame": "R repos only",
+  "sample": [
+    {
+      "repo_url": "https://github.com/JingXieMIZZOU/BLMRM"
+    },
+    {
+      "repo_url": "https://github.com/Wen-YiYu/BEXCIS"
+    },
+    {
+      "repo_url": "https://github.com/gkumar09/iSeqQC"
+    },
+    {
+      "repo_url": "https://github.com/ezer/NITPicker"
+    },
+    {
+      "repo_url": "https://github.com/LupienLab/SMURF"
+    },
+    {
+      "repo_url": "https://github.com/huynguyen250896/DrGA"
+    },
+    {
+      "repo_url": "https://github.com/alexcis95/PhenoExam"
+    },
+    {
+      "repo_url": "https://github.com/marcos-diazg/musica"
+    },
+    {
+      "repo_url": "https://github.com/fumi-github/omicwas"
+    },
+    {
+      "repo_url": "https://github.com/inzilico/imputeqc"
+    },
+    {
+      "repo_url": "https://github.com/hippo-yf/MUREN"
+    },
+    {
+      "repo_url": "https://github.com/SchulzLab/Triangulate"
+    },
+    {
+      "repo_url": "https://github.com/overton-group/eHDPrep"
+    }
+  ]
+}

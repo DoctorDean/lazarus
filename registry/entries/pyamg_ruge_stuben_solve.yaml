@@ -1,0 +1,22 @@
+name: pyamg_ruge_stuben_solve
+title: PyAMG
+domain: Numerical linear algebra
+summary: Algebraic multigrid solvers and preconditioners for large sparse linear systems.
+repo_url: https://github.com/pyamg/pyamg
+paper: 'PyAMG: Algebraic Multigrid Solvers in Python (doi:10.21105/joss.04142)'
+era: Py · C++
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-pyamg:solve-ready
+gpu: false
+image_public: true
+from_url: true
+turns: 11
+sanity_metric: relative_residual
+sanity_threshold: 1.0e-08
+sanity_direction: below
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/pyamg_ruge_stuben_solve_contract
+added: '2026-07-28'

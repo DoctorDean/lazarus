@@ -1,0 +1,1122 @@
+[
+  {
+    "repo_url": "https://github.com/stracquadaniolab/pygna",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 331.44121074676514,
+    "log_tail": "RAN: python -c 'import pygna'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/anna-pa-m/adabmDCA",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 12.772767066955566,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gzampieri/Scuba",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.432740211486816,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MathOnco/NeoPredPipe",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.766900062561035,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/pdbeurope/pdbecif",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 15.934598922729492,
+    "log_tail": "RAN: python -c 'import test'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/JingXieMIZZOU/BLMRM",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 241.46144104003906,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/BLMRM\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpE3VMvU/file1a3432a20e0/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Wen-YiYu/BEXCIS",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 34.694406032562256,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gkumar09/iSeqQC",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 38.024090051651,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/JupitersMight/DI2",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 12.734256982803345,
+    "log_tail": "RAN: python -c 'import DI2'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import DI2\n  File \"/repo/DI2/__init__.py\", line 1, in <module>\n    from DI2.DI2 import *\n  File \"/repo/DI2/DI2.py\", line 15, in <module>\n    import pandas as pd\nModuleNotFoundError: No module named 'pandas'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/RodolfoAllendes/cline",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.871433019638062,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/OluwadareLab/EnsembleSplice",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 110.29011678695679,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/vyacheslav-tsivina/signature-sj",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 13.068073034286499,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/IrinaVKuznetsova/CirGO",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.573333978652954,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ezer/NITPicker",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 400.6172893047333,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/NITPicker\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpCkiCQb/file1a71c2cf544/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jie108/dagbagM",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.352238893508911,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/LupienLab/SMURF",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 38.806188106536865,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/npdeloss/meirlop",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 115.35127305984497,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/KHP-Informatics/DNAscan",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 26.867398023605347,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/BioinfoUNIBA/REDItools2",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 220.91034603118896,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/huynguyen250896/DrGA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 108.85601902008057,
+    "log_tail": "INSTLOG:\nIn addition: Warning message:\nIn system(full, intern = TRUE, ignore.stderr = quiet) :\n  running command ''/usr/bin/git' ls-remote https://git.bioconductor.org/packages/GO.db RELEASE_3_23 2>/dev/null' had status 128\nExecution halted\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/bioxsjtu/VariFAST",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 34.07936406135559,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/galaxyproject/dunovo",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 14.006785154342651,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/yoann-dufresne/SLIM",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 26.05486488342285,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/zhxiaokang/RASflow",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 33.89937162399292,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/BieseckerLab/SomatoSim",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 252.99450182914734,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/UCDenver-ccp/Concept-Recognition-as-Translation",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 471.15810990333557,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/alexcis95/PhenoExam",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 331.2820920944214,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/PhenoExam\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpTAWv6W/file1a46fdf99ac/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/nkiip/IDLP",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 33.092756032943726,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/haddocking/interface-classifier",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 16.52876114845276,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cnickh/wgdtree",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 38.37548637390137,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    This package provides the following functions:\n         ^^^^^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/karubiotools/getSequenceInfo",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 16.75555682182312,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/zoccoler/metroid",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 102.46115303039551,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/crimBubble/ECCsplorer",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "conda_env_failed",
+    "lang": "python",
+    "wall_clock_s": 460.45948600769043,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=conda_env_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/gymreklab/chips",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 16.872514009475708,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/mhalushka/miRge",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 89.17081212997437,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/marcos-diazg/musica",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 34.783445835113525,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ebundhoo/TAGOPSIN",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 24.492117881774902,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ucrbioinfo/PGV",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 29.48014783859253,
+    "log_tail": "RAN: python -c 'import pgv'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/acg-team/ProPIP",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 15.950652122497559,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/fumi-github/omicwas",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "r",
+    "wall_clock_s": 257.9567611217499,
+    "log_tail": "RAN: Rscript -e 'library(omicwas)'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/inzilico/imputeqc",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 181.36653685569763,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/imputeqc\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpAXFZ6W/file1a434c3039b/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ialbert/biostar-central",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 22.51601505279541,
+    "log_tail": "RAN: python -c 'import biostar'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/hippo-yf/MUREN",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "r",
+    "wall_clock_s": 68.48971176147461,
+    "log_tail": "RAN: Rscript /repo/.naive_example\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/DatabaseGroup/DeSignate",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 28.31012272834778,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    python3 designate.py -h\n            ^^^^^^^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/fkallen/CARE",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 15.282901763916016,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ahsv/RankCorr",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 11.797541856765747,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/yiwenstat/MCPCA_PopGen",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 9.99546217918396,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/harmancilab/SVAT",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.612479209899902,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MW55/Natrix",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 34.725261926651,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/asoltis/MutEnricher",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 19.899200201034546,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/replikation/What_the_Phage",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 25.294867038726807,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/cfarkas/annotate_my_genomes",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "conda_env_failed",
+    "lang": "python",
+    "wall_clock_s": 66.55841112136841,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=conda_env_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Lcornet/GENERA",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 11.633573055267334,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/usegalaxy-eu/gpu-jupyterlab-docker",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 13.410573720932007,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/lmweber/snp-dmx-cancer",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 17.52608299255371,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/jschellh/ProtSpaM",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 9.878957033157349,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/sjthursby/CandiMeth",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 11.306285858154297,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/abyzovlab/CNVpytor",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 97.68215990066528,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 2\n    cnvpytor> chr1:1M-50M\n                   ^\nSyntaxError: invalid decimal literal\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/dkoslicki/TAMPA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 80.23336911201477,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/AnacletoLAB/parSMURF",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 13.429245948791504,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/NuttyLogic/BSBolt",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 29.462260961532593,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n  File \"/repo/.naive_example\", line 1\n    python3 -m bsbolt\n               ^^^^^^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/bihealth/sodar-server",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 17.13711428642273,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/SchulzLab/Triangulate",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "r",
+    "wall_clock_s": 173.53082990646362,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/nrdg/fracridge",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "ran_ok",
+    "lang": "python",
+    "wall_clock_s": 70.89730477333069,
+    "log_tail": "RAN: python examples/plot_alpha_vs_gamma.py\n===BASELINE=== naive_runs=1 stage=example reason=ran_ok\n\n"
+  },
+  {
+    "repo_url": "https://github.com/anuprulez/galaxy_tool_recommendation",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 519.130774974823,
+    "log_tail": "RAN: python -c 'import scripts'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ShaokunAn/D-EE",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 30.615303993225098,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ASaiM/framework",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 17.39321231842041,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PapenfussLab/bionix",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 21.84807562828064,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/BGI-Qingdao/TGS-GapCloser",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.234214067459106,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/camoragaq/BrumiR",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 110.46297287940979,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/PGB-LIV/VAPPER",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 123.66827201843262,
+    "log_tail": "RAN: python -c 'import repo'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import repo\nModuleNotFoundError: No module named 'repo'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/srp33/ShinyLearner",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 16.231738805770874,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/slzarate/parliament2",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 1222.3433759212494,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/vetscience/Assemblosis",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 11.191434144973755,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/bionitio-team/bionitio",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 9.582312107086182,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/HUST-NingKang-Lab/Meta-Prism-2.0",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.060405731201172,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/B-UMMI/LMAS",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 67.69922995567322,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/sib-swiss/HAMAP-SPARQL",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.053866863250732,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/abs-tudelft/variant-calling-at-scale",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.893555164337158,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/lanagarmire/lilikoi",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "python",
+    "wall_clock_s": 14.191386938095093,
+    "log_tail": "INSTLOG:\ntimeout: failed to run command \u2018Rscript\u2019: No such file or directory\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ikmb/gwas-qc",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 28.52204203605652,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/neufeld/AXIOME3",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.88916301727295,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ctlab/GADMA",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 99.34946012496948,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/alexmascension/triku",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 178.80991387367249,
+    "log_tail": "RAN: python -c 'import triku'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/FunctionalUrology/SpheroScan",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 63.14373993873596,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/eMetaboHUB/Forum-LiteraturePropagation",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 14.07524585723877,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/overton-group/eHDPrep",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "R_install_failed",
+    "lang": "r",
+    "wall_clock_s": 378.4285509586334,
+    "log_tail": "INSTLOG:\n* removing \u2018/usr/local/lib/R/site-library/eHDPrep\u2019\nWarning message:\nIn i.p(...) :\n  installation of package \u2018/tmp/RtmpViEdtd/file1a7139ce8f2/repo\u2019 had non-zero exit status\n===BASELINE=== naive_runs=0 stage=install reason=R_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/smajidian/phaseme",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 48.08146405220032,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/aomlomics/tourmaline",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 17.852619171142578,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/KanduriC/simAIRR",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 39.05498003959656,
+    "log_tail": "RAN: python -c 'import simAIRR'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\n"
+  },
+  {
+    "repo_url": "https://github.com/OSS-Lab/ChemChaste",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 12.478989124298096,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/adelenelai/onglai-classify-homologues",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 91.6807930469513,
+    "log_tail": "RAN: python -c 'import onglai-classify-homologues'\nEXLOG_TAIL:\n  File \"<string>\", line 1\n    import onglai-classify-homologues\n                 ^\nSyntaxError: invalid syntax\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/laeeq80/spark-cpvs",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 56.48584699630737,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/Transilico/MolData",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 61.65586304664612,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/stefan-hoeck/cyby2",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 31.54929518699646,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/chemosim-lab/ProLIF",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 333.91296100616455,
+    "log_tail": "RAN: python -c 'import prolif'\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import prolif\n  File \"/repo/prolif/__init__.py\", line 3, in <module>\n    from prolif.fingerprint import Fingerprint\n  File \"/repo/prolif/fingerprint.py\", line 46, in <module>\n    from rdkit import Chem\nModuleNotFoundError: No module named 'rdkit'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/GIST-CSBL/HoTS",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "conda_env_failed",
+    "lang": "python",
+    "wall_clock_s": 145.45577311515808,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=conda_env_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/GIST-CSBL/DeSIDE-DDI",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 98.88709020614624,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/UnixJunkie/FASMIFRA",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 11.586874008178711,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/zenanz/ChemTables",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.255719900131226,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/bigchem/transformer-cnn",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 34.67543697357178,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/lasigeBioTM/MER",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 10.733536005020142,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MolecularAI/aizynthfinder",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 13.26963186264038,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/lich-uct/syba",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 47.79658222198486,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 1, in <module>\n    from rdkit import Chem\nModuleNotFoundError: No module named 'rdkit'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/ShirleyWISiu/LigTMap",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 447.9314658641815,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/reymond-group/mhfp",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 22.650317907333374,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 1, in <module>\n    from mhfp.encoder import MHFPEncoder\n  File \"/repo/mhfp/encoder.py\", line 3, in <module>\n    import numpy as np\nModuleNotFoundError: No module named 'numpy'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  },
+  {
+    "repo_url": "https://github.com/tbwxmu/SAMPN",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 39.96484613418579,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/vfscalfani/CSN_tutorial",
+    "naive_runs": false,
+    "installed": null,
+    "stage": "install",
+    "reason": "no_install_manifest",
+    "lang": "python",
+    "wall_clock_s": 13.214217901229858,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=no_install_manifest\n\n"
+  },
+  {
+    "repo_url": "https://github.com/MoreiraLAB/DrugTax",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_install_failed",
+    "lang": "python",
+    "wall_clock_s": 20.899281978607178,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_install_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/volkamerlab/TeachOpenCADD",
+    "naive_runs": true,
+    "installed": true,
+    "stage": "example",
+    "reason": "imports_only",
+    "lang": "python",
+    "wall_clock_s": 948.8090190887451,
+    "log_tail": "RAN: python -c 'import teachopencadd'\n===BASELINE=== naive_runs=1 stage=example reason=imports_only\n\nError response from daemon: No such exec instance: bd4a3a66bc5d09564d50d2566b9be8abb45a6671e402d373b249b8d1b3607782\n"
+  },
+  {
+    "repo_url": "https://github.com/constantino-garcia/cmmrt",
+    "naive_runs": false,
+    "installed": false,
+    "stage": "install",
+    "reason": "pip_requirements_failed",
+    "lang": "python",
+    "wall_clock_s": 963.479284286499,
+    "log_tail": "===BASELINE=== naive_runs=0 stage=install reason=pip_requirements_failed\n\n"
+  },
+  {
+    "repo_url": "https://github.com/BTheDragonMaster/pikachu",
+    "naive_runs": false,
+    "installed": true,
+    "stage": "example",
+    "reason": "example_exit_1",
+    "lang": "python",
+    "wall_clock_s": 69.48790407180786,
+    "log_tail": "RAN: python /repo/.naive_example\nEXLOG_TAIL:\n/repo/pikachu/drawing/drawing.py:2522: SyntaxWarning: \"\\d\" is an invalid escape sequence. Such sequences will not work in the future. Did you mean \"\\\\d\"? A raw string is also an option.\n  match = re.search('[RXZ]\\d+', atom_text)\nTraceback (most recent call last):\n  File \"/repo/.naive_example\", line 1, in <module>\n    from pikachu.general import draw_smiles\n  File \"/repo/pikachu/general.py\", line 10, in <module>\n    from pikachu.chem.molfile.write_molfile import MolFileWriter\n  File \"/repo/pikachu/chem/molfile/write_molfile.py\", line 1, in <module>\n    import pkg_resources\nModuleNotFoundError: No module named 'pkg_resources'\nINSTLOG_TAIL:\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n===BASELINE=== naive_runs=0 stage=example reason=example_exit_1\n\n"
+  }
+]

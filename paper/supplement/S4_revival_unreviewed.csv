@@ -1,0 +1,25 @@
+repo,domain,dead_baseline,lazarus_outcome,verification,measured,reported,turns,cost_usd
+BieseckerLab/SomatoSim,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,16,0.65
+BioinfoUNIBA/REDItools2,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,16,0.5
+FunctionalUrology/SpheroScan,genomics,install-decay=True (failed own install),revived,ran (verification inconclusive),,,13,0.6
+GIST-CSBL/HoTS,cheminformatics,install-decay=True (failed own install),reproduced,reproduced (verified),0.8381,0.838,43,2.67
+JingXieMIZZOU/BLMRM,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,26,1.3
+MolecularAI/aizynthfinder,cheminformatics,install-decay=True (failed own install),revived,verified,,,21,0.98
+MoreiraLAB/DrugTax,cheminformatics,install-decay=True (failed own install),revived,verified,,,16,0.61
+OluwadareLab/EnsembleSplice,bioinformatics-methods,install-decay=True (failed own install),reproduced,reproduced (verified),0.9536363636363636,0.95,29,1.82
+alexcis95/PhenoExam,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,41,2.35
+bihealth/sodar-server,genomics,install-decay=True (failed own install),revived,verified,,,32,1.3
+cfarkas/annotate_my_genomes,genomics,install-decay=True (failed own install),revived,ran (verification inconclusive),,,26,1.79
+constantino-garcia/cmmrt,cheminformatics,install-decay=True (failed own install),reproduced,reproduced (verified),1,1,31,1.67
+crimBubble/ECCsplorer,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,53,4.63
+ctlab/GADMA,genomics,install-decay=True (failed own install),revived,ran (verification inconclusive),,,29,1.86
+dkoslicki/TAMPA,genomics,install-decay=True (failed own install),runs-unverified,NOT verified (smoke failed),,,21,0.95
+ezer/NITPicker,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,53,2.94
+haddocking/interface-classifier,bioinformatics-methods,install-decay=True (failed own install),revived,verified,,,10,0.43
+huynguyen250896/DrGA,bioinformatics-methods,install-decay=True (failed own install),budget-exceeded,budget-exceeded (>90 min),,,37,2.93
+inzilico/imputeqc,bioinformatics-methods,install-decay=True (failed own install),revived,verified,0.01901,0.1,43,2.25
+lanagarmire/lilikoi,genomics,install-decay=True (failed own install),reproduced,reproduced (verified),0.955,0.92,46,2.94
+mhalushka/miRge,bioinformatics-methods,install-decay=True (failed own install),reproduced,reproduced (verified),100,100,51,3.12
+npdeloss/meirlop,bioinformatics-methods,install-decay=True (failed own install),reproduced,reproduced (verified),0.7814194753559087,0.7814,22,0.92
+overton-group/eHDPrep,genomics,install-decay=True (failed own install),revived,verified,,,31,1.16
+zoccoler/metroid,bioinformatics-methods,install-decay=True (failed own install),revived,verified,0.9679,0.8,39,2.34

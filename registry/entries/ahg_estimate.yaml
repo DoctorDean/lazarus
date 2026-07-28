@@ -1,0 +1,24 @@
+name: ahg_estimate
+title: AHGestimation
+domain: Hydrology
+summary: Robust, mass-conserving estimation of at-a-station hydraulic geometry from
+  river channel measurements.
+repo_url: https://github.com/mikejohnson51/AHGestimation
+paper: 'AHGestimation: An R package for computing robust, mass preserving hydraulic
+  geometries and rating curves (doi:10.21105/joss.06145)'
+era: R
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-ahgestimation:ready
+gpu: false
+image_public: true
+from_url: true
+turns: 17
+sanity_metric: continuity_exponent_sum_error
+sanity_threshold: 0.05
+sanity_direction: below
+reproduced_metric: continuity_exponent_sum
+reproduced_reported: 0.9975
+reproduced_measured: 0.997434
+giveback_pr: null
+contract: examples/ahg_estimate_contract
+added: '2026-07-28'

@@ -1,0 +1,23 @@
+name: trrosetta_predict
+title: trRosetta
+domain: Protein structure prediction
+summary: Predict inter-residue distance and orientation distributions from an MSA
+  (feeds Rosetta folding).
+repo_url: https://github.com/gjoni/trRosetta
+paper: ''
+era: Py · TensorFlow
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-trrosetta:predict-ready
+gpu: false
+image_public: true
+from_url: true
+turns: 14
+sanity_metric: pearson_r
+sanity_threshold: 0.99
+sanity_direction: above
+reproduced_metric: pearson_r of flattened <8A contact maps
+reproduced_reported: 1
+reproduced_measured: 1
+giveback_pr: null
+contract: examples/trrosetta_predict_contract
+added: '2026-07-28'

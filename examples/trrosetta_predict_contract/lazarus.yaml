@@ -1,0 +1,43 @@
+name: trrosetta_predict
+repo_url: https://github.com/gjoni/trRosetta
+base_image: lazarus/trrosetta:predict-ready
+entrypoint: cd /root/repo && python ./network/predict.py -m ./model2019_07 "$INPUT"
+  "$OUTDIR/out.npz"
+inputs:
+- name: INPUT
+  type: file
+  description: Protein multiple sequence alignment in A3M/FASTA format (e.g. example/T1001.a3m,
+    a 140-residue MSA)
+outputs:
+- name: out.npz
+  type: file
+  description: "npz with 4 arrays: dist (L,L,37), omega (L,L,25), theta (L,L,25),\
+    \ phi (L,L,13) \u2014 softmax probability distributions over the distogram + anglegram\
+    \ bins, averaged over the 5-model ensemble"
+smoke:
+  description: Run inference on the shipped T1001.a3m example, derive the <8A contact
+    map from the distogram, and compare Pearson correlation against the shipped reference
+    example/T1001.npz; also assert output shapes and that each is a valid probability
+    distribution.
+  command: cd /root/repo && python ./network/predict.py -m ./model2019_07 example/T1001.a3m
+    out.npz >/dev/null 2>&1 && python sanity.py 2>/dev/null | grep pearson_r
+  metric: pearson_r
+  threshold: 0.99
+  input_ref: example/T1001.a3m
+benchmark:
+  description: 'Reproduce the shipped reference prediction for target T1001: <8A contact
+    probability map derived from the predicted distogram vs the repo''s example/T1001.npz
+    reference.'
+  metric: pearson_r of flattened <8A contact maps
+  reported: 1
+  tolerance: 0.01
+  n: 1
+  source: repo example/T1001.npz (shipped reference output)
+  command: ''
+  measured: 1
+paper: Yang et al., "Improved protein structure prediction using predicted inter-residue
+  orientations", PNAS 2020
+commit: gjoni/trRosetta HEAD (depth-1 clone, 2026-07-14)
+patches: []
+platform: linux/amd64
+gpus: ''

@@ -1,0 +1,24 @@
+name: w2w_lcz_to_wrf
+title: W2W
+domain: Urban climate / geospatial
+summary: Inject WUDAPT Local Climate Zone maps into WRF geographic input for urban-canopy
+  modelling.
+repo_url: https://github.com/matthiasdemuzere/w2w
+paper: 'W2W: A Python package that injects WUDAPT''s Local Climate Zone information
+  in WRF (doi:10.21105/joss.04432)'
+era: Py · geospatial
+license: MIT
+base_image: ghcr.io/doctordean/lazarus-w2w:working
+gpu: false
+image_public: true
+from_url: true
+turns: 12
+sanity_metric: max_abs_diff_FRC_URB2D
+sanity_threshold: 0.0001
+sanity_direction: below
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/w2w_lcz_to_wrf_contract
+added: '2026-07-28'
