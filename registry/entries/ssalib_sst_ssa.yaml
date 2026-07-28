@@ -1,0 +1,24 @@
+name: ssalib_sst_ssa
+title: SSALib
+domain: Time-series analysis
+summary: 'Singular Spectrum Analysis: decompose a time series into trend/oscillatory/noise
+  components and reconstruct.'
+repo_url: https://github.com/ADSCIAN/ssalib
+paper: 'SSALib: a Python Library for Time Series Decomposition using Singular Spectrum
+  Analysis (doi:10.21105/joss.08600)'
+era: Py
+license: BSD-3-Clause
+base_image: ghcr.io/doctordean/lazarus-ssalib:ssa-ready
+gpu: false
+image_public: false
+from_url: true
+turns: 24
+sanity_metric: reconstruction_relative_l2_error
+sanity_threshold: 1.0e-06
+sanity_direction: below
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/ssalib_sst_ssa_contract
+added: '2026-07-28'

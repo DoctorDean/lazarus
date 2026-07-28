@@ -1,0 +1,24 @@
+name: prodigy_cryst
+title: PRODIGY-CRYSTAL
+domain: Structural biology — interface classification
+summary: Classify a protein-protein interface as biological or crystallographic from
+  interfacial contacts.
+repo_url: https://github.com/haddocking/interface-classifier
+paper: 'Distinguishing crystallographic from biological interfaces in protein complexes:
+  role of intermolecular contacts and energetics for classification. (doi:10.1186/s12859-018-2414-9)'
+era: Py
+license: Apache-2.0
+base_image: ghcr.io/doctordean/lazarus-prodigy-cryst:bio-ready
+gpu: false
+image_public: false
+from_url: true
+turns: 10
+sanity_metric: bio_probability
+sanity_threshold: 0.79
+sanity_direction: above
+reproduced_metric: null
+reproduced_reported: null
+reproduced_measured: null
+giveback_pr: null
+contract: examples/prodigy_cryst_contract
+added: '2026-07-28'

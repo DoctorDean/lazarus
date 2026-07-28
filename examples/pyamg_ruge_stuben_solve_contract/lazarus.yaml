@@ -1,0 +1,34 @@
+name: pyamg_ruge_stuben_solve
+repo_url: https://github.com/pyamg/pyamg
+base_image: lazarus/pyamg:solve-ready
+entrypoint: python3 /root/solve_poisson.py "$INPUT" "$OUTDIR"
+inputs:
+- name: INPUT
+  type: file
+  description: 'Optional text/JSON spec of the 2D Poisson grid: ''500'', ''500 500'',
+    or {"grid":[500,500],"tol":1e-10,"seed":0}. If empty/missing, defaults to a 500x500
+    grid built from PyAMG''s own gallery (no external data needed).'
+outputs:
+- name: x.npy
+  type: file
+  description: Solution vector x of Ax=b (numpy .npy)
+- name: residuals.txt
+  type: file
+  description: AMG residual history, one value per line (monotonically decreasing)
+- name: metrics.json
+  type: file
+  description: grid, n, nnz, tol, iterations, relative_residual, monotonic flag
+smoke:
+  description: Build A=poisson((500,500),'csr'), random b, ruge_stuben_solver, solve
+    tol=1e-10; assert relative residual ||b-A@x||/||b|| < 1e-8
+  command: python3 /root/solve_poisson.py '' /tmp/smoke && python3 -c "import json;m=json.load(open('/tmp/smoke/metrics.json'));print('relative_residual=%.3e'%m['relative_residual']);assert
+    m['relative_residual']<1e-8"
+  metric: relative_residual
+  threshold: 1.0e-08
+  input_ref: default 500x500 gallery poisson
+benchmark: null
+paper: ''
+commit: 0c02134
+patches: []
+platform: linux/amd64
+gpus: ''

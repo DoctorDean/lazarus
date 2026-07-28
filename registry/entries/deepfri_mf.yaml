@@ -1,0 +1,23 @@
+name: deepfri_mf
+title: DeepFRI
+domain: Protein function prediction
+summary: Predict protein GO-term / EC function from structure via a graph convolutional
+  network + protein language model.
+repo_url: https://github.com/flatironinstitute/DeepFRI
+paper: ''
+era: Py · TensorFlow · protein LM
+license: BSD-3-Clause
+base_image: ghcr.io/doctordean/lazarus-deepfri:working
+gpu: false
+image_public: false
+from_url: true
+turns: 21
+sanity_metric: top1_go_term_and_score
+sanity_threshold: 0.9
+sanity_direction: above
+reproduced_metric: top1_score_GO:0005509
+reproduced_reported: 0.99824
+reproduced_measured: 0.99999
+giveback_pr: null
+contract: examples/deepfri_mf_contract
+added: '2026-07-28'

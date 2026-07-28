@@ -1,0 +1,42 @@
+name: ahg_estimate
+repo_url: https://github.com/mikejohnson51/AHGestimation
+base_image: lazarus/ahgestimation:ready
+entrypoint: Rscript /usr/local/bin/run_ahg.R "$INPUT" "$OUTDIR"
+inputs:
+- name: INPUT
+  type: csv
+  description: USGS field-measurement time series CSV with columns Q_cms,Y_m,V_ms,TW_m
+    (also accepts Q,Y,V,TW). Pass the literal 'nwis' or a nonexistent path to use
+    the package's shipped nwis dataset (USGS site 01096500, Nashua River, 275 rows).
+    A ready copy ships at /usr/local/share/nwis.csv.
+outputs:
+- name: ahg_solutions.csv
+  type: csv
+  description: Ranked at-a-station hydraulic-geometry solutions from the OLS/NLS/NSGA-2
+    ensemble solver; row 1 is the best-ranked (condition=bestValid) mass-conserving
+    fit with power-law coefficients (V_coef,TW_coef,Y_coef) and exponents (V_exp,TW_exp,Y_exp),
+    viability flag, and NRMSE metrics.
+smoke:
+  description: Run ahg_estimate on the shipped nwis dataset; assert top row viable
+    and mass-conserving (exponents sum to 1 within 0.05).
+  command: Rscript /usr/local/bin/run_ahg.R nwis /tmp/ahgout >/tmp/ahg.log 2>&1; grep
+    continuity_abs_error /tmp/ahg.log | sed 's/continuity_abs_error=/continuity_exponent_sum_error=/'
+  metric: continuity_exponent_sum_error
+  threshold: 0.05
+  input_ref: ''
+benchmark:
+  description: 'README documented best-ranked fit for USGS gage 01096500: exponents
+    V=0.3247, TW=0.1167, Y=0.5561 sum to 0.9975 (mass conservation), c1=1.048, c2=0.997,
+    tot_nrmse~0.85.'
+  metric: continuity_exponent_sum
+  reported: 0.9975
+  tolerance: 0.05
+  n: 275
+  source: README.md best-ranked (bestValid) solution row
+  command: ''
+  measured: 0.997434
+paper: ''
+commit: 76a6ed0b7bb540365323e827f8bac191157c2fd6
+patches: []
+platform: linux/amd64
+gpus: ''

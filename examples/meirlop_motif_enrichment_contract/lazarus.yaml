@@ -1,0 +1,53 @@
+name: meirlop_motif_enrichment
+repo_url: https://github.com/npdeloss/meirlop
+base_image: lazarus/meirlop:working
+entrypoint: "#!/usr/bin/env bash\nset -euo pipefail\n# $INPUT  = a JASPAR-format motif\
+  \ matrix file (must contain >=1 motif, e.g. MA0139.1 CTCF)\n# $OUTDIR = directory\
+  \ to receive MEIRLOP logistic-regression enrichment results\nsource activate meirlop\n\
+  cd /root/repo\nmkdir -p \"$OUTDIR\"\nmeirlop --jobs \"${MEIRLOP_JOBS:-16}\" \\\n\
+  \        --covariates notebooks/covariates.tsv \\\n        --scan \\\n        --fa\
+  \ notebooks/scored_fasta.fa \\\n        \"$INPUT\" \\\n        \"$OUTDIR\"\necho\
+  \ \"Results written to $OUTDIR/lr_results.tsv\"\n"
+inputs:
+- name: INPUT
+  type: file
+  description: JASPAR-format motif matrix file (PFM), containing at least MA0139.1
+    CTCF. Subset of JASPAR CORE vertebrates non-redundant PFMs.
+outputs:
+- name: lr_results.tsv
+  type: file
+  description: 'Per-motif logistic-regression enrichment table: motif_id, coef, auc,
+    pval, padj, num_peaks. CTCF (MA0139.1) reproduces auc=0.7814, padj=0.0.'
+smoke:
+  description: Run enrichment on the shipped DHS scored FASTA with a CTCF-containing
+    motif file and confirm MA0139.1 CTCF auc >= 0.75 with padj < 0.05.
+  command: source activate meirlop && cd /root/repo && meirlop --jobs 16 --covariates
+    notebooks/covariates.tsv --scan --fa notebooks/scored_fasta.fa notebooks/ctcf_motifs.txt
+    /tmp/smoke_out >/dev/null 2>&1 && python -c "import pandas as pd; d=pd.read_csv('/tmp/smoke_out/lr_results.tsv',sep='\t').set_index('motif_id').loc['MA0139.1
+    CTCF']; assert d.auc>=0.75 and d.padj<0.05, d; print('roc_auc=%.4f'%d.auc)"
+  metric: roc_auc
+  threshold: 0.75
+  input_ref: notebooks/ctcf_motifs.txt
+benchmark:
+  description: 'Reproduce shipped reference: MA0139.1 CTCF logistic-regression AUC
+    on 235,220 DHS scored sequences (notebooks/meirlop_output_directory/lr_results.tsv,
+    rank-1 motif).'
+  metric: roc_auc
+  reported: 0.7814
+  tolerance: 0.001
+  n: 235220
+  source: notebooks/meirlop_output_directory/lr_results.tsv
+  command: meirlop --covariates notebooks/covariates.tsv --scan --fa notebooks/scored_fasta.fa
+    notebooks/ctcf_motifs.txt out/
+  measured: 0.7814194753559087
+paper: 'MEIRLOP: Motif Enrichment In Ranked Lists Of Peaks (Delos Santos et al.)'
+commit: ae89ec2d6e72ffea5da664929a12b50f282813f4
+patches:
+- 'No source patches required. Revival was purely environmental: created a conda env
+  (bioconda + conda-forge) with python=3.8, biopython, pybedtools, moods, logomaker,
+  joblib, numpy, pandas, scikit-learn, statsmodels, tqdm, python-slugify; installed
+  meirlop with ''pip install --no-deps -e .''. The dead jaspar2018.genereg.net download
+  host was bypassed by fetching motifs directly from the current JASPAR API at https://jaspar.elixir.no/api/v1/matrix/<id>/?format=jaspar
+  and subsetting to CTCF + 9 reference motifs.'
+platform: linux/amd64
+gpus: ''

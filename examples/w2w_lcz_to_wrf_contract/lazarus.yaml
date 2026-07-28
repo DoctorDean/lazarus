@@ -1,0 +1,103 @@
+name: w2w_lcz_to_wrf
+repo_url: https://github.com/matthiasdemuzere/w2w
+base_image: lazarus/w2w:working
+entrypoint: '#!/usr/bin/env bash
+
+  set -euo pipefail
+
+
+  # $INPUT  : a directory containing the WRF geo_em.d01..d04.nc domain files
+
+  #           and the WUDAPT LCZ GeoTIFF.
+
+  # $OUTDIR : where the three modified WRF NetCDF files are written.
+
+  #
+
+  # Override the LCZ tif / WRF file names via env if they differ from the
+
+  # shipped Zaragoza sample defaults.
+
+  LCZ_FILE="${LCZ_FILE:-lcz_zaragoza.tif}"
+
+  WRF_FILE="${WRF_FILE:-geo_em.d04.nc}"
+
+
+  mkdir -p "$OUTDIR"
+
+  IODIR="$OUTDIR/io"
+
+  rm -rf "$IODIR"
+
+  mkdir -p "$IODIR"
+
+
+  # Stage inputs into a writable working dir (w2w writes outputs alongside inputs).
+
+  cp "$INPUT"/*.nc  "$IODIR"/ 2>/dev/null || true
+
+  cp "$INPUT"/*.tif "$IODIR"/ 2>/dev/null || true
+
+
+  # Run the WUDAPT-to-WRF inference (needs d01-d04 present for nesting hierarchy).
+
+  w2w "$IODIR" "$LCZ_FILE" "$WRF_FILE"
+
+
+  # Surface the three headline outputs into $OUTDIR.
+
+  base="${WRF_FILE%.nc}"
+
+  cp "$IODIR/${base}_NoUrban.nc"    "$OUTDIR"/
+
+  cp "$IODIR/${base}_LCZ_extent.nc" "$OUTDIR"/
+
+  cp "$IODIR/${base}_LCZ_params.nc" "$OUTDIR"/
+
+
+  echo "Outputs written to $OUTDIR:"
+
+  ls -la "$OUTDIR"/${base}_NoUrban.nc "$OUTDIR"/${base}_LCZ_extent.nc "$OUTDIR"/${base}_LCZ_params.nc'
+inputs:
+- name: INPUT
+  type: directory
+  description: Directory holding WRF geo_em.d01..d04.nc domain files plus the WUDAPT
+    LCZ GeoTIFF (e.g. the repo's sample_data/ for Zaragoza).
+outputs:
+- name: geo_em.d04_NoUrban.nc
+  type: netcdf
+  description: WRF domain with urban land cover replaced by surrounding natural LC.
+- name: geo_em.d04_LCZ_extent.nc
+  type: netcdf
+  description: WRF domain with LCZ-based urban extent implemented (no UCP values yet).
+- name: geo_em.d04_LCZ_params.nc
+  type: netcdf
+  description: WRF domain with LCZ urban extent + urban canopy parameter values (FRC_URB2D,
+    LU_INDEX classes 31-41, URB_PARAM matrix).
+smoke:
+  description: Run w2w on the shipped Zaragoza sample and compare generated FRC_URB2D
+    against the committed reference geo_em.d04_LCZ_params.nc.
+  command: mkdir -p /root/smoke && cp /root/repo/sample_data/geo_em.d0[1-4].nc /root/repo/sample_data/lcz_zaragoza.tif
+    /root/smoke/ && w2w /root/smoke lcz_zaragoza.tif geo_em.d04.nc >/dev/null 2>&1
+    && python3 -c "import numpy as np,xarray as xr; g=xr.open_dataset('/root/smoke/geo_em.d04_LCZ_params.nc')['FRC_URB2D'].values.astype('f8');
+    r=xr.open_dataset('/root/repo/sample_data/geo_em.d04_LCZ_params.nc')['FRC_URB2D'].values.astype('f8');
+    print('max_abs_diff_FRC_URB2D=%.3e'%float(np.max(np.abs(g-r))))"
+  metric: max_abs_diff_FRC_URB2D
+  threshold: 0.0001
+  input_ref: sample_data (Zaragoza)
+benchmark:
+  description: Regenerated geo_em.d04_LCZ_params.nc FRC_URB2D urban-fraction field
+    vs. the reference file committed in sample_data/.
+  metric: max_abs_diff_FRC_URB2D
+  reported: 0
+  tolerance: 0.0001
+  n: 16524
+  source: repo sample_data/geo_em.d04_LCZ_params.nc (Zaragoza)
+  command: w2w ./sample_data lcz_zaragoza.tif geo_em.d04.nc
+  measured: 5.96e-08
+paper: 'Demuzere et al., W2W: A Python tool to ingest WUDAPT''s Local Climate Zone
+  information into WRF (JOSS)'
+commit: 2ee0f06e6788dcf732e520f1d59b1ffd8ca4e66b
+patches: []
+platform: linux/amd64
+gpus: ''

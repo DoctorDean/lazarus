@@ -1,0 +1,38 @@
+name: prodigy_cryst
+repo_url: https://github.com/haddocking/interface-classifier
+base_image: lazarus/prodigy-cryst:bio-ready
+entrypoint: '#!/usr/bin/env bash
+
+  set -euo pipefail
+
+  mkdir -p "$OUTDIR"
+
+  # Classify a single protein-protein complex PDB interface as BIO or XTAL
+
+  # using the shipped pretrained scikit-learn contacts-based classifier.
+
+  prodigy_cryst "$INPUT" | tee "$OUTDIR/prediction.txt"'
+inputs:
+- name: INPUT
+  type: file
+  description: A protein-protein complex structure in PDB (or mmCIF) format, e.g.
+    1PPE.pdb
+outputs:
+- name: prediction.txt
+  type: file
+  description: 'Intermolecular-contact breakdown, link density, and the prediction
+    line ''Class: <BIO|XTAL> <p_bio> <p_xtal>'''
+smoke:
+  description: Run prodigy_cryst on the shipped 1PPE example and confirm the BIO probability
+    matches the README reference (0.804).
+  command: cp /root/repo/examples/1ppe.pdb /tmp/1PPE.pdb && prodigy_cryst /tmp/1PPE.pdb
+    | awk '/Class:/{print "bio_probability="$4}'
+  metric: bio_probability
+  threshold: 0.79
+  input_ref: examples/1ppe.pdb
+benchmark: null
+paper: ''
+commit: 29d99d535cae3014608c9394b8809619a60fcfa2
+patches: []
+platform: linux/amd64
+gpus: ''

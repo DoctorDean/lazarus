@@ -1,0 +1,52 @@
+name: aizynthfinder_retrosynthesis
+repo_url: https://github.com/MolecularAI/aizynthfinder
+base_image: lazarus/aizynth:working
+entrypoint: '#!/bin/bash
+
+  set -euo pipefail
+
+  source activate aizynth
+
+  mkdir -p "$OUTDIR"
+
+  # $INPUT: a text file with one target SMILES per line (e.g. aspirin: CC(=O)Oc1ccccc1C(=O)O)
+
+  # Pretrained USPTO expansion/filter models + ZINC stock + config.yml live at /root/data
+  (from download_public_data)
+
+  aizynthcli --config /root/data/config.yml --smiles "$INPUT" --output "$OUTDIR/out.json.gz"
+
+  echo "Retrosynthesis complete. Output: $OUTDIR/out.json.gz"'
+inputs:
+- name: INPUT
+  type: file
+  description: Text file with one target molecule SMILES per line (e.g. aspirin CC(=O)Oc1ccccc1C(=O)O)
+outputs:
+- name: out.json.gz
+  type: file
+  description: Gzipped JSON with {schema, data:[record]}; each record has is_solved,
+    number_of_solved_routes, precursors_in_stock, top_score, and full retrosynthetic
+    trees
+smoke:
+  description: Plan a route for aspirin and assert the target is solved with >=1 fully
+    in-stock route
+  command: source activate aizynth && cd /root && printf 'CC(=O)Oc1ccccc1C(=O)O\n'
+    > /tmp/smiles.txt && aizynthcli --config /root/data/config.yml --smiles /tmp/smiles.txt
+    --output /tmp/out.json.gz >/dev/null 2>&1 && python -c "import json,gzip; r=json.load(gzip.open('/tmp/out.json.gz','rt'))['data'][0];
+    print('is_solved=%d' % (1 if (r['is_solved'] is True and r['number_of_solved_routes']>=1)
+    else 0))"
+  metric: is_solved
+  threshold: 1
+  input_ref: ''
+benchmark: null
+paper: 'Genheden et al., "AiZynthFinder: a fast, robust and flexible open-source software
+  for retrosynthetic planning", J. Cheminform. 12, 70 (2020)'
+commit: v4.4.1
+patches:
+- 'No source patches required. Two operational fixes: (1) created a conda env with
+  Python 3.11 because the base image ships Python 3.14 which is outside the repo''s
+  supported range (>=3.10,<3.13); (2) `mkdir -p data` before `download_public_data
+  data`, because the helper writes files into the target folder but does not create
+  it, otherwise raising FileNotFoundError.'
+platform: linux/amd64
+gpus: ''
