@@ -10,7 +10,7 @@ era: Py · geospatial
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-w2w:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 12
 sanity_metric: max_abs_diff_FRC_URB2D

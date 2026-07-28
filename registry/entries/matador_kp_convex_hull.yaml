@@ -10,7 +10,7 @@ era: Py · materials informatics
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-matador:hull-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 18
 sanity_metric: hull_dist_max_abs_error_vs_reference

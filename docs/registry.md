@@ -50,7 +50,6 @@ Robust, mass-conserving estimation of at-a-station hydraulic geometry from river
 lazarus pull ahg_estimate
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-ahgestimation:ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## AiZynthFinder  <small>`aizynthfinder_retrosynthesis`</small>
 
@@ -66,7 +65,6 @@ Monte-Carlo tree search retrosynthetic route planning over reaction templates.
 lazarus pull aizynthfinder_retrosynthesis
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-aizynth:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## Basset  <small>`basset_predict`</small>
 
@@ -112,7 +110,6 @@ Predict protein GO-term / EC function from structure via a graph convolutional n
 lazarus pull deepfri_mf
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-deepfri:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## DeepLatentMicrobiome  <small>`deeplatentmicrobiome_env2otu`</small>
 
@@ -143,7 +140,6 @@ SAFT-Gamma-Mie equation of state: parameterize and predict thermodynamic propert
 lazarus pull despasito_saft_gamma_mie_propane_saturation
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-despasito:propane-sat-working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## DiffDock  <small>`diffdock_blind_docking`</small>
 
@@ -280,7 +276,6 @@ Aggregate, query and analyse first-principles (DFT) crystal-structure calculatio
 lazarus pull matador_kp_convex_hull
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-matador:hull-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## MEIRLOP  <small>`meirlop_motif_enrichment`</small>
 
@@ -296,7 +291,6 @@ Motif enrichment in ranked lists via logistic regression controlling for covaria
 lazarus pull meirlop_motif_enrichment
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-meirlop:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## PRODIGY-CRYSTAL  <small>`prodigy_cryst`</small>
 
@@ -312,7 +306,6 @@ Classify a protein-protein interface as biological or crystallographic from inte
 lazarus pull prodigy_cryst
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-prodigy-cryst:bio-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## PyAMG  <small>`pyamg_ruge_stuben_solve`</small>
 
@@ -328,7 +321,6 @@ Algebraic multigrid solvers and preconditioners for large sparse linear systems.
 lazarus pull pyamg_ruge_stuben_solve
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-pyamg:solve-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## ScanNet  <small>`scannet_ppi_binding_sites`</small>
 
@@ -360,7 +352,6 @@ Structural topology optimization (optimality-criteria / MMA density methods) in 
 lazarus pull scikit_topt_oc
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-scikit-topt:oc-working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## Sequoya  <small>`sequoya_nsgaii_msa`</small>
 
@@ -392,7 +383,6 @@ Singular Spectrum Analysis: decompose a time series into trend/oscillatory/noise
 lazarus pull ssalib_sst_ssa
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-ssalib:ssa-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## trRosetta  <small>`trrosetta_predict`</small>
 
@@ -407,7 +397,6 @@ Predict inter-residue distance and orientation distributions from an MSA (feeds 
 lazarus pull trrosetta_predict
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-trrosetta:predict-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## W2W  <small>`w2w_lcz_to_wrf`</small>
 
@@ -423,4 +412,3 @@ Inject WUDAPT Local Climate Zone maps into WRF geographic input for urban-canopy
 lazarus pull w2w_lcz_to_wrf
 ```
 
-> ℹ️ The pinned image `ghcr.io/doctordean/lazarus-w2w:working` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.

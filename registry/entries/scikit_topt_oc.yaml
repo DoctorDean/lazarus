@@ -10,7 +10,7 @@ era: Py
 license: Apache-2.0
 base_image: ghcr.io/doctordean/lazarus-scikit-topt:oc-working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 26
 sanity_metric: compliance_reduction_ratio

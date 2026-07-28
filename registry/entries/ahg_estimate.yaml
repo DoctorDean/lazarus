@@ -10,7 +10,7 @@ era: R
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-ahgestimation:ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 17
 sanity_metric: continuity_exponent_sum_error

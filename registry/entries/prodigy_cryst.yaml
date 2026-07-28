@@ -10,7 +10,7 @@ era: Py
 license: Apache-2.0
 base_image: ghcr.io/doctordean/lazarus-prodigy-cryst:bio-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 10
 sanity_metric: bio_probability

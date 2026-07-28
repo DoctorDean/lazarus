@@ -10,7 +10,7 @@ era: Py
 license: BSD-3-Clause
 base_image: ghcr.io/doctordean/lazarus-ssalib:ssa-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 24
 sanity_metric: reconstruction_relative_l2_error

@@ -8,7 +8,7 @@ era: Py · C++
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-pyamg:solve-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 11
 sanity_metric: relative_residual

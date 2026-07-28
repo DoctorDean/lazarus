@@ -9,7 +9,7 @@ era: Py · ML
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-aizynth:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 21
 sanity_metric: is_solved

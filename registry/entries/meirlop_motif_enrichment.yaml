@@ -10,7 +10,7 @@ era: Py
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-meirlop:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 22
 sanity_metric: roc_auc

@@ -9,7 +9,7 @@ era: Py · TensorFlow · protein LM
 license: BSD-3-Clause
 base_image: ghcr.io/doctordean/lazarus-deepfri:working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 21
 sanity_metric: top1_go_term_and_score

@@ -10,7 +10,7 @@ era: Py · Numba
 license: BSD-3-Clause
 base_image: ghcr.io/doctordean/lazarus-despasito:propane-sat-working
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 39
 sanity_metric: aard_vapor_pressure

@@ -9,7 +9,7 @@ era: Py · TensorFlow
 license: MIT
 base_image: ghcr.io/doctordean/lazarus-trrosetta:predict-ready
 gpu: false
-image_public: false
+image_public: true
 from_url: true
 turns: 14
 sanity_metric: pearson_r
