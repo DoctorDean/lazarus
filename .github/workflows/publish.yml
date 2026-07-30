@@ -41,3 +41,8 @@ jobs:
           name: dist
           path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # A GitHub Release whose version already exists on PyPI (e.g. a
+          # registry/docs milestone with no code change) skips gracefully
+          # instead of failing. PyPI publishes only when pyproject version is new.
+          skip-existing: true
