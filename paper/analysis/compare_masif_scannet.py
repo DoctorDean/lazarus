@@ -7,7 +7,7 @@ Usage:
     python analysis/compare_masif_scannet.py <artifacts_dir>
 
 <artifacts_dir> must contain (extracted with `docker cp` from the resurrected snapshots,
-see analysis/RESULTS.md):
+see RESULTS.md):
     4ZQK.pdb                          # the full complex (chains A=PD-L1, B=PD-1)
     masif/pred_4ZQK_A.npy             # MaSIF per-vertex interaction-site scores
     masif/p1_X.npy p1_Y.npy p1_Z.npy  # MaSIF per-vertex coordinates

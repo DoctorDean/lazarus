@@ -62,8 +62,8 @@ retried, per-attempt-timeout watchdog enforces a 30-min per-repo cap.
   the full ~80%-power N (~587 EPMC) would need *more unreviewed journals* (a frame redefinition).
 - Conclusive-N: JOSS 156, EPMC 102 (EPMC's 42% packaging is the binding constraint on n).
 - Enriched-base correction (from the calibration frame): JOSS-R 53%→38% (5 syslib recoveries); EPMC-R genuine.
-- Data: `baseline_joss_scaled.json`, `baseline_crossdomain_scaled.json` (calibration frames
-  `baseline_*_final.json` retained). Scale-up manifest `frame_scaled_new.json`.
+- Data: `benchmark/baseline_joss_scaled.json`, `benchmark/baseline_crossdomain_scaled.json` (calibration
+  frames `benchmark/baseline_*_final.json` retained). Scale-up manifest `benchmark/frame_scaled_new.json`.
 
 ## Cross-domain revival pilot (companion to the decay measurement)
 The decay study shows rot is broad; this pilot shows the **agent revives past biology**. We drew

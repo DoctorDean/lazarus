@@ -70,5 +70,5 @@ cid=$(docker run -d --gpus all lazarus/dmasif:site-ready sleep infinity)
 docker exec "$cid" bash -lc 'export KEOPS_CACHE_FOLDER=/root/keops_cache; cd /root/MaSIF_colab && python predict_site.py examples/4ZQK.pdb /root/out A cuda:0'
 docker cp "$cid:/root/out/." artifacts/dmasif/; docker rm -f "$cid"
 
-python analysis/compare_three_way.py artifacts
+python paper/analysis/compare_three_way.py artifacts
 ```

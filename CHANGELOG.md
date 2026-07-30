@@ -4,6 +4,37 @@ All notable changes to Lazarus (`lazarus-bio`) are documented here. The format f
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0] — 2026-07-28
+
+A **registry + evidence** milestone. The installed `lazarus-bio` package is *unchanged* from
+0.3.0 — the new tools reach users live via the registry, so there's nothing to `pip install`.
+See the [v0.4.0 GitHub Release](https://github.com/DoctorDean/lazarus/releases) for the full write-up.
+
+### Added
+- **Registry grew 13 → 25 (23 pullable from GHCR).** Twelve new cross-domain revivals published and
+  wired in: PyAMG (numerical LA), matador (materials/DFT), DESPASITO (thermodynamics), AHGestimation
+  (hydrology), Scikit-Topt (topology opt.), SSALib (time-series), W2W (urban climate), AiZynthFinder
+  (retrosynthesis), MEIRLOP, PRODIGY-CRYSTAL, DeepFRI, trRosetta — plus Basset, now published.
+  (dMaSIF and Sequoya stay rebuild-locally — license and image size.)
+- **Cross-domain reproducibility study** (submitted as a preprint): peer-reviewed (JOSS, N=173) vs.
+  unreviewed (Europe PMC, N=257) research software — packaging 95% vs. 42%, install-decay 37% vs. 61%
+  (both significant), revival ~92% on both arms. Methods in `paper/CROSSDOMAIN_METHODS.md`; per-repo
+  tables S1–S4 in `paper/supplement/`.
+- **40+ revivals across a dozen fields** (biology + materials, chemistry, hydrology, astronomy, plasma
+  physics, …) — the agent generalizes past biology.
+- **Roadmap** (`docs/roadmap.md`) — a tiered community vision.
+
+### Changed
+- Hardened the independent verifier (`interpret_smoke`): scientific-notation parsing + explicit
+  higher/lower-is-better vocabularies; returns *inconclusive* rather than a false pass on an
+  un-nameable metric (with unit tests).
+- Repo tidy: README reworked into four acts; paper methods + analysis grouped under `paper/`; the
+  composed pipeline brick moved to `pipelines/`; superseded benchmark intermediates pruned.
+
+### Fixed
+- Public tools' contracts reference their GHCR image (not a local build tag), so `lazarus pull` → run
+  works for anyone — verified anonymously pullable end-to-end.
+
 ## [0.3.0] — 2026-07-18
 
 ### Added

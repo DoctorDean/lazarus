@@ -94,7 +94,7 @@ hadn't earned. Details: [`docs/CHALLENGES.md`](docs/CHALLENGES.md).
 **Three-way head-to-head** (the three site predictors, scored by one script on identical
 PD-L1 residue labels): **ScanNet 0.915 · dMaSIF 0.854 · MaSIF 0.823**. All localize the
 interface (a **13-residue consensus core**); the two *surface* methods (MaSIF & dMaSIF)
-agree most (Spearman ρ 0.70). Details: [`analysis/RESULTS.md`](analysis/RESULTS.md).
+agree most (Spearman ρ 0.70). Details: [`paper/analysis/RESULTS.md`](paper/analysis/RESULTS.md).
 
 ## Reproduces the paper
 
@@ -139,7 +139,7 @@ to compare **peer-reviewed software (JOSS, N=173) against unreviewed code linked
 Both gaps are statistically significant — yet the agent revives reviewed and unreviewed code
 *equally well*. The finding: **the reviewed/unreviewed gap is packaging discipline, not
 recoverability.** Peer review predicts whether code installs, not whether the science can be
-brought back. Full methods: [`benchmark/CROSSDOMAIN_METHODS.md`](benchmark/CROSSDOMAIN_METHODS.md);
+brought back. Full methods: [`paper/CROSSDOMAIN_METHODS.md`](paper/CROSSDOMAIN_METHODS.md);
 per-repo data: [`paper/supplement/`](paper/supplement/).
 
 ---
