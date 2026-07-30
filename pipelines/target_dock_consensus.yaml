@@ -1,0 +1,64 @@
+# target_dock_consensus — triangulate a druggable small-molecule site from FOUR
+# independently-resurrected tools, and cross-validate against the crystal ligand:
+#
+#   fpocket  (geometry)   ─┐
+#   ScanNet  (learned)    ─┼─▶ dock_site_consensus ─▶ "all four converge on one site?"
+#   DiffDock (generative) ─┤
+#   EquiBind (generative) ─┘
+#
+# Run (6MOA — DiffDock's hero system):
+#   lazarus run pipelines/target_dock_consensus.yaml \
+#     --input complex=6moa.pdb --input ligand_smiles="<6MOA ligand SMILES>" \
+#     --registry examples --registry pipelines \
+#     --docker-host ssh://you@your-gpu-box
+name: target-dock-consensus
+
+inputs:
+  complex: { type: path:pdb }      # protein + crystal-ligand HETATM (e.g. 6MOA)
+  ligand_smiles: { type: string }  # the ligand as SMILES (DiffDock's ligand_description)
+
+steps:
+  - id: prep                       # split the complex -> receptor + reference ligand + DiffDock CSV
+    uses: dock_prep
+    with:
+      complex: "${inputs.complex}"
+      ligand_smiles: "${inputs.ligand_smiles}"
+
+  - id: fpocket                    # druggable pockets (2010 C) on the apo receptor
+    uses: fpocket2
+    with: { INPUT: "${prep.receptor}" }
+
+  - id: scannet                    # per-residue functional-site probability
+    uses: scannet_ppi_binding_sites
+    with: { INPUT: "${prep.receptor}", CHAIN: A }
+
+  - id: diffdock                   # GPU brick; the runner passes --gpus from its contract
+    uses: diffdock_blind_docking
+    with:
+      INPUT: "${prep.diffdock}"    # the CSV
+      receptor: "${prep.receptor}" # co-located so the CSV's relative protein_path resolves
+    # ── RUN-PHASE INTEGRATION POINTS (verify on first GPU run) ─────────────────
+    #  1. protein_path in diffdock.csv is RELATIVE ("receptor.pdb"); confirm DiffDock's
+    #     CWD is the dir holding both, else make it absolute or bundle as a dir input.
+    #  2. DiffDock writes $OUTDIR/<complex_name>/rank1.sdf (nested). The consensus
+    #     selector below is "rank1"; if the runner's glob is non-recursive, flatten the
+    #     rank1 pose to the step's top-level output.
+    # ──────────────────────────────────────────────────────────────────────────
+
+  - id: equibind                   # CPU; auto-splits the ligand from the complex PDB
+    uses: equibind_blind_docking
+    with: { INPUT: "${inputs.complex}" }
+
+  - id: consensus                  # the fusion: contacts vs pocket vs site, + RMSDs
+    uses: dock_site_consensus
+    with:
+      receptor: "${prep.receptor}"
+      pockets: "${fpocket.pockets}"
+      scannet: "${scannet.predictions}"
+      diffdock_pose: "${diffdock.rank1}"
+      equibind_pose: "${equibind.docked_ligand}"
+      reference_ligand: "${prep.reference}"
+
+outputs:
+  triage: "${consensus.triage}"     # per-residue triage.csv
+  summary: "${consensus.summary}"   # the triangulation verdict

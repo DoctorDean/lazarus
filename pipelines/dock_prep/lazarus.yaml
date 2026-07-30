@@ -1,0 +1,52 @@
+name: dock_prep
+repo_url: (Lazarus adapter)
+base_image: python:3.11-slim
+entrypoint: "set -euo pipefail\nmkdir -p \"$OUTDIR\"\npython - <<'PY'\n#!/usr/bin/env python3\n\"\"\"\
+  dock_prep \u2014 standardise a single complex PDB into inputs for the docking bricks.\n\ncomplex PDB\
+  \ (protein + crystal-ligand HETATM) + ligand SMILES  ->\n  receptor.pdb          protein ATOM records\
+  \ only (for fpocket / ScanNet / the consensus)\n  reference_ligand.pdb  the largest non-solvent HETATM\
+  \ residue (crystal pose, for RMSD)\n  diffdock.csv          DiffDock input row (complex_name,protein_path,ligand_description,protein_sequence)\n\
+  \nEquiBind consumes the original complex PDB directly (it auto-splits the ligand), so no\nseparate EquiBind\
+  \ input is produced here.\n\nStdlib only \u2014 runs on a generic python image with no build.\n\"\"\"\
+  \nimport os\n\n# solvent / ions / common crystallisation additives to exclude when picking the ligand\n\
+  SOLVENT = {\"HOH\", \"WAT\", \"DOD\", \"NA\", \"CL\", \"K\", \"MG\", \"ZN\", \"CA\", \"MN\", \"FE\"\
+  , \"CU\",\n           \"SO4\", \"PO4\", \"GOL\", \"EDO\", \"PEG\", \"ACT\", \"DMS\", \"TRS\", \"IOD\"\
+  , \"BR\"}\n\n\ndef main():\n    out = os.environ[\"OUTDIR\"]\n    os.makedirs(out, exist_ok=True)\n\
+  \    smiles = os.environ.get(\"ligand_smiles\", \"\").strip()\n\n    atoms, het = [], {}   # het: (resname,\
+  \ chain, resseq) -> [lines]\n    for ln in open(os.environ[\"complex\"]):\n        if ln.startswith(\"\
+  ATOM\"):\n            atoms.append(ln)\n        elif ln.startswith(\"HETATM\"):\n            rn = ln[17:20].strip()\n\
+  \            if rn in SOLVENT:\n                continue\n            het.setdefault((rn, ln[21], ln[22:26].strip()),\
+  \ []).append(ln)\n\n    with open(os.path.join(out, \"receptor.pdb\"), \"w\") as f:\n        f.writelines(atoms)\n\
+  \        f.write(\"END\\n\")\n\n    ref = max(het, key=lambda k: len(het[k])) if het else None   # largest\
+  \ het group = ligand\n    with open(os.path.join(out, \"reference_ligand.pdb\"), \"w\") as f:\n    \
+  \    if ref:\n            f.writelines(het[ref])\n        f.write(\"END\\n\")\n\n    # protein_path\
+  \ is RELATIVE \u2014 the receptor is co-located in the DiffDock step dir.\n    # (Verify/adjust when\
+  \ the pipeline first runs on the GPU box; see the pipeline YAML.)\n    with open(os.path.join(out, \"\
+  diffdock.csv\"), \"w\") as f:\n        f.write(\"complex_name,protein_path,ligand_description,protein_sequence\\\
+  n\")\n        f.write(f\"target,receptor.pdb,{smiles},\\n\")\n\n    print(f\"receptor_atoms={len(atoms)}\
+  \ het_groups={len(het)} \"\n          f\"reference_ligand={('/'.join(ref) if ref else 'none')} \"\n\
+  \          f\"smiles={'yes' if smiles else 'MISSING'}\")\n\n\nif __name__ == \"__main__\":\n    main()\n\
+  \nPY\n"
+inputs:
+- name: complex
+  type: file
+  description: complex PDB (protein + crystal-ligand HETATM)
+- name: ligand_smiles
+  type: string
+  description: the ligand as a SMILES string (for DiffDock)
+outputs:
+- name: receptor.pdb
+  type: file
+  description: protein-only receptor for fpocket/ScanNet/consensus
+- name: reference_ligand.pdb
+  type: file
+  description: the crystal ligand (largest non-solvent HETATM)
+- name: diffdock.csv
+  type: file
+  description: DiffDock input CSV
+smoke: null
+paper: "Lazarus adapter \u2014 split a complex PDB into standardised docking inputs"
+commit: ''
+patches: []
+platform: linux/amd64
+gpus: ''

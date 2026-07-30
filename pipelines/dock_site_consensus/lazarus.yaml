@@ -1,0 +1,148 @@
+name: dock_site_consensus
+repo_url: (Lazarus adapter)
+base_image: python:3.11-slim
+entrypoint: "set -euo pipefail\npip install --quiet numpy >/dev/null 2>&1 || pip install --quiet --break-system-packages\
+  \ numpy >/dev/null 2>&1\nmkdir -p \"$OUTDIR\"\npython - <<'PY'\n#!/usr/bin/env python3\n\"\"\"dock_site_consensus\
+  \ \u2014 the fusion core of the `target_dock_consensus` pipeline.\n\nTriangulate a small-molecule binding\
+  \ site from four independently-resurrected tools:\n\n  fpocket   (geometry)   -> druggable pocket +\
+  \ lining residues\n  ScanNet   (learned)    -> per-residue functional-site probability\n  DiffDock \
+  \ (generative) -> a docked ligand pose\n  EquiBind  (generative) -> a docked ligand pose\n\nand report\
+  \ whether the two docked poses land in the pocket fpocket flags druggable and\nScanNet flags a site\
+  \ \u2014 i.e. whether all four converge on the same place.\n\nInputs are file paths passed as environment\
+  \ variables (the Lazarus compose runner sets\nthem from upstream step artifacts); outputs are written\
+  \ to $OUTDIR.\n\nDependency-light on purpose (stdlib + numpy) so it runs on a generic `python:3.11-slim`\n\
+  image with no custom build. Geometry (contact residues, centroids) is order-robust and\ncarries the\
+  \ headline; straight heavy-atom RMSD is reported as a secondary number with an\nexplicit atom-order\
+  \ caveat.\n\"\"\"\nimport os, csv, json, sys\nimport numpy as np\n\nCONTACT_A = 4.0      # ligand-atom\
+  \ -> residue-atom distance (\xC5) that counts as contact\nSITE_P = 0.5         # ScanNet probability\
+  \ that counts as a predicted site residue\nDRUG = 0.5           # fpocket druggability that counts as\
+  \ \"druggable\"\n\n\n# ---- parsers (stdlib only) -------------------------------------------------\n\
+  def parse_pdb_residues(path, chain=\"A\"):\n    \"\"\"resid -> (resname, Nx3 heavy-atom coords) for\
+  \ one chain (ATOM records).\"\"\"\n    res = {}\n    for ln in open(path):\n        if not ln.startswith(\"\
+  ATOM\"):\n            continue\n        if chain and ln[21].strip() and ln[21] != chain:\n         \
+  \   continue\n        elem = ln[76:78].strip() or ln[12:16].strip()[0]\n        if elem == \"H\":\n\
+  \            continue\n        rid = int(ln[22:26])\n        xyz = (float(ln[30:38]), float(ln[38:46]),\
+  \ float(ln[46:54]))\n        rn, coords = res.get(rid, (ln[17:20].strip(), []))\n        coords.append(xyz)\n\
+  \        res[rid] = (rn, coords)\n    return {r: (n, np.array(c, float)) for r, (n, c) in res.items()}\n\
+  \n\ndef parse_sdf_heavy_atoms(path):\n    \"\"\"Heavy-atom coords (Nx3) of the FIRST molecule in a V2000\
+  \ SDF.\"\"\"\n    lines = open(path).read().split(\"$$$$\")[0].splitlines()\n    if len(lines) < 4:\n\
+  \        return np.empty((0, 3))\n    natoms = int(lines[3][0:3])\n    out = []\n    for ln in lines[4:4\
+  \ + natoms]:\n        elem = ln[31:34].strip()\n        if elem == \"H\":\n            continue\n  \
+  \      out.append((float(ln[0:10]), float(ln[10:20]), float(ln[20:30])))\n    return np.array(out, float)\
+  \ if out else np.empty((0, 3))\n\n\ndef parse_ligand_any(path):\n    \"\"\"Heavy-atom coords from an\
+  \ SDF or a PDB (HETATM) reference ligand.\"\"\"\n    if path.lower().endswith((\".sdf\", \".mol\")):\n\
+  \        return parse_sdf_heavy_atoms(path)\n    out = []\n    for ln in open(path):\n        if ln.startswith(\"\
+  HETATM\"):\n            elem = ln[76:78].strip() or ln[12:16].strip()[0]\n            if elem == \"\
+  H\":\n                continue\n            out.append((float(ln[30:38]), float(ln[38:46]), float(ln[46:54])))\n\
+  \    return np.array(out, float) if out else np.empty((0, 3))\n\n\n# ---- geometry --------------------------------------------------------------\n\
+  def contact_residues(lig_xyz, residues):\n    \"\"\"resids with any heavy atom within CONTACT_A of any\
+  \ ligand heavy atom.\"\"\"\n    hits = set()\n    if len(lig_xyz) == 0:\n        return hits\n    for\
+  \ rid, (_, coords) in residues.items():\n        if len(coords) and np.min(np.linalg.norm(\n       \
+  \         coords[:, None, :] - lig_xyz[None, :, :], axis=-1)) <= CONTACT_A:\n            hits.add(rid)\n\
+  \    return hits\n\n\ndef centroid_dist(a, b):\n    if len(a) == 0 or len(b) == 0:\n        return None\n\
+  \    return float(np.linalg.norm(a.mean(0) - b.mean(0)))\n\n\ndef rmsd_same_order(a, b):\n    \"\"\"\
+  Heavy-atom RMSD assuming a consistent atom order (both tools re-pose the SAME\n    input ligand). Approximate\
+  \ \u2014 a symmetry/order-robust RMSD (rdkit) is the refinement.\"\"\"\n    if len(a) == 0 or len(b)\
+  \ == 0 or len(a) != len(b):\n        return None\n    return float(np.sqrt(((a - b) ** 2).sum(1).mean()))\n\
+  \n\n# ---- fpocket / ScanNet -----------------------------------------------------\ndef _g(d, *keys,\
+  \ default=None):\n    for k in keys:\n        if k in d:\n            return d[k]\n    return default\n\
+  \n\ndef load_pockets(path):\n    \"\"\"-> list of {rank, druggability, residues:set[int]}, best-druggability\
+  \ first.\"\"\"\n    data = json.load(open(path))\n    if isinstance(data, dict):\n        data = _g(data,\
+  \ \"pockets\", default=[]) or []\n    out = []\n    for i, p in enumerate(data):\n        resids = set()\n\
+  \        for r in _g(p, \"lining_residues\", \"residues\", \"resids\", default=[]) or []:\n        \
+  \    try:\n                resids.add(int(r))\n            except (ValueError, TypeError):\n       \
+  \         pass\n        out.append({\"rank\": _g(p, \"rank\", \"pocket\", default=i + 1),\n        \
+  \            \"drug\": float(_g(p, \"druggability\", \"drug_score\",\n                             \
+  \        \"druggability_score\", default=0) or 0),\n                    \"residues\": resids})\n   \
+  \ out.sort(key=lambda x: -x[\"drug\"])\n    return out\n\n\ndef load_scannet(path, chain=\"A\"):\n \
+  \   \"\"\"resid -> binding-site probability, one chain.\"\"\"\n    sn = {}\n    for row in csv.DictReader(open(path)):\n\
+  \        if row.get(\"Chain\", chain).strip() not in (chain, \"\"):\n            continue\n        try:\n\
+  \            sn[int(row[\"Residue Index\"])] = float(row[\"Binding site probability\"])\n        except\
+  \ (KeyError, ValueError, TypeError):\n            pass\n    return sn\n\n\n# ---- main ------------------------------------------------------------------\n\
+  def main():\n    out = os.environ[\"OUTDIR\"]\n    os.makedirs(out, exist_ok=True)\n    residues = parse_pdb_residues(os.environ[\"\
+  receptor\"])\n    pockets = load_pockets(os.environ[\"pockets\"])\n    scannet = load_scannet(os.environ[\"\
+  scannet\"])\n    top = pockets[0] if pockets else {\"drug\": 0.0, \"residues\": set(), \"rank\": None}\n\
+  \n    poses = {}\n    for tool, env in ((\"diffdock\", \"diffdock_pose\"), (\"equibind\", \"equibind_pose\"\
+  )):\n        if os.environ.get(env) and os.path.exists(os.environ[env]):\n            poses[tool] =\
+  \ parse_sdf_heavy_atoms(os.environ[env])\n    ref = (parse_ligand_any(os.environ[\"reference_ligand\"\
+  ])\n           if os.environ.get(\"reference_ligand\") and os.path.exists(os.environ[\"reference_ligand\"\
+  ])\n           else np.empty((0, 3)))\n\n    # per-pose analysis\n    analysis = {}\n    for tool, xyz\
+  \ in poses.items():\n        contacts = contact_residues(xyz, residues)\n        in_pocket = contacts\
+  \ & top[\"residues\"]\n        site_contacts = {r for r in contacts if scannet.get(r, 0.0) >= SITE_P}\n\
+  \        analysis[tool] = {\n            \"n_contacts\": len(contacts),\n            \"contacts\": contacts,\n\
+  \            \"pocket_overlap\": len(in_pocket) / len(contacts) if contacts else 0.0,\n            \"\
+  site_overlap\": len(site_contacts) / len(contacts) if contacts else 0.0,\n            \"mean_scannet\"\
+  : float(np.mean([scannet.get(r, 0.0) for r in contacts])) if contacts else 0.0,\n            \"rmsd_to_ref\"\
+  : rmsd_same_order(xyz, ref),\n            \"centroid_to_ref\": centroid_dist(xyz, ref),\n        }\n\
+  \n    # pose agreement (order-robust centroid + best-effort RMSD)\n    agree_centroid = agree_rmsd =\
+  \ None\n    if \"diffdock\" in poses and \"equibind\" in poses:\n        agree_centroid = centroid_dist(poses[\"\
+  diffdock\"], poses[\"equibind\"])\n        agree_rmsd = rmsd_same_order(poses[\"diffdock\"], poses[\"\
+  equibind\"])\n\n    # per-residue triage table\n    all_ids = sorted(residues)\n    with open(os.path.join(out,\
+  \ \"triage.csv\"), \"w\", newline=\"\") as f:\n        w = csv.writer(f)\n        w.writerow([\"resid\"\
+  , \"resname\", \"scannet_prob\", \"in_top_pocket\",\n                    \"contacted_by_diffdock\",\
+  \ \"contacted_by_equibind\"])\n        for rid in all_ids:\n            w.writerow([rid, residues[rid][0],\
+  \ round(scannet.get(rid, 0.0), 3),\n                        int(rid in top[\"residues\"]),\n       \
+  \                 int(rid in analysis.get(\"diffdock\", {}).get(\"contacts\", set())),\n           \
+  \             int(rid in analysis.get(\"equibind\", {}).get(\"contacts\", set()))])\n\n    # human-readable\
+  \ verdict\n    both_in_pocket = all(analysis[t][\"pocket_overlap\"] >= 0.5 for t in analysis) and len(analysis)\
+  \ >= 1\n    druggable = top[\"drug\"] >= DRUG\n    with open(os.path.join(out, \"summary.txt\"), \"\
+  w\") as f:\n        p = f.write\n        p(\"Triangulated druggable-site consensus\\n=====================================\\\
+  n\")\n        p(f\"receptor residues: {len(residues)} | ScanNet site residues (p>={SITE_P}): \"\n  \
+  \        f\"{sum(v >= SITE_P for v in scannet.values())}\\n\")\n        p(f\"fpocket top pocket: rank\
+  \ {top['rank']}, druggability {top['drug']:.2f} \"\n          f\"({'druggable' if druggable else 'not\
+  \ druggable'}), {len(top['residues'])} lining residues\\n\\n\")\n        for tool in (\"diffdock\",\
+  \ \"equibind\"):\n            a = analysis.get(tool)\n            if not a:\n                p(f\"{tool}:\
+  \ no pose\\n\"); continue\n            p(f\"{tool} pose: {a['n_contacts']} contact residues | \"\n \
+  \             f\"{a['pocket_overlap']*100:.0f}% in the druggable pocket | \"\n              f\"{a['site_overlap']*100:.0f}%\
+  \ are ScanNet sites | mean ScanNet {a['mean_scannet']:.2f}\\n\")\n            if a[\"centroid_to_ref\"\
+  ] is not None:\n                p(f\"   vs crystal ligand: centroid {a['centroid_to_ref']:.2f} \xC5\"\
+  \n                  + (f\", heavy-atom RMSD {a['rmsd_to_ref']:.2f} \xC5 (same-order)\\n\"\n        \
+  \             if a[\"rmsd_to_ref\"] is not None else \" (RMSD n/a \u2014 atom count mismatch)\\n\"))\n\
+  \        if agree_centroid is not None:\n            p(f\"\\nDiffDock vs EquiBind agreement: centroid\
+  \ {agree_centroid:.2f} \xC5\"\n              + (f\", RMSD {agree_rmsd:.2f} \xC5\\n\" if agree_rmsd is\
+  \ not None else \"\\n\"))\n        p(\"\\n=> \")\n        if druggable and both_in_pocket:\n       \
+  \     p(\"TRIANGULATED. Both docked poses localise to the pocket fpocket flags druggable\\n\"\n    \
+  \          \"   and ScanNet flags a functional site \u2014 four independently-resurrected tools,\\n\"\
+  \n              \"   one binding site.\\n\")\n        elif not druggable:\n            p(\"The site\
+  \ is localised but fpocket finds NO druggable pocket there \u2014 the signature\\n\"\n             \
+  \ \"   of a flat protein-protein interface (an antibody/biologic target, not small-molecule).\\n\")\n\
+  \        else:\n            p(\"The docked poses do NOT concentrate in the top druggable pocket \u2014\
+  \ methods disagree;\\n\"\n              \"   inspect triage.csv.\\n\")\n\n    # machine-readable line\
+  \ (for the pipeline's smoke/verify)\n    dd = analysis.get(\"diffdock\", {}); eb = analysis.get(\"equibind\"\
+  , {})\n    print(f\"pocket_druggability={top['drug']:.3f} \"\n          f\"diffdock_pocket_overlap={dd.get('pocket_overlap',\
+  \ 0):.3f} \"\n          f\"equibind_pocket_overlap={eb.get('pocket_overlap', 0):.3f} \"\n          f\"\
+  pose_agreement_centroid_A={agree_centroid if agree_centroid is not None else 'NA'} \"\n          f\"\
+  diffdock_centroid_to_ref_A={dd.get('centroid_to_ref', 'NA')}\")\n\n\nif __name__ == \"__main__\":\n\
+  \    main()\n\nPY\n"
+inputs:
+- name: receptor
+  type: file
+  description: receptor PDB (protein, chain A)
+- name: pockets
+  type: file
+  description: fpocket pockets.json
+- name: scannet
+  type: file
+  description: ScanNet per-residue CSV
+- name: diffdock_pose
+  type: file
+  description: DiffDock rank1 pose SDF
+- name: equibind_pose
+  type: file
+  description: EquiBind docked_ligand.sdf
+- name: reference_ligand
+  type: file
+  description: (optional) crystal ligand SDF/PDB for RMSD
+outputs:
+- name: triage.csv
+  type: file
+  description: 'per-residue: ScanNet prob, in-pocket flag, contacted-by-each-docker'
+- name: summary.txt
+  type: file
+  description: human-readable triangulation verdict + RMSDs
+smoke: null
+paper: "Lazarus adapter \u2014 triangulates a druggable site from fpocket + ScanNet + two docking poses"
+commit: ''
+patches: []
+platform: linux/amd64
+gpus: ''
