@@ -70,7 +70,7 @@ lazarus pull aizynthfinder_retrosynthesis
 
 Predict DNaseI-hypersensitivity across 164 cell types from a 600 bp DNA sequence.
 
-- **Source:** [davek44/Basset](https://github.com/davek44/Basset) · see source repo
+- **Source:** [davek44/Basset](https://github.com/davek44/Basset) · MIT
 - **Stack:** 2016 · Lua Torch7
 - **Sanity check:** `min_perseq_std ≥ 0.01`  ·  **reproduced the paper:** mean AUROC (164 targets) **0.894** vs 0.895
 - **Revived:** 48 autonomous agent-turns  ·  from a bare URL (Scout-planned)
@@ -80,7 +80,6 @@ Predict DNaseI-hypersensitivity across 164 cell types from a 600 bp DNA sequence
 lazarus pull basset_predict
 ```
 
-> ℹ️ The pinned image `lazarus/basset:site-ready` isn't published yet — `pull` fetches the contract (API + CLI + Dockerfile + smoke test) so it can be rebuilt.
 
 ## CoCoNet  <small>`coconet_binning`</small>
 

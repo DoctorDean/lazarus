@@ -70,10 +70,8 @@ ENTRIES = [
         summary="Predict DNaseI-hypersensitivity across 164 cell types from a 600 bp DNA sequence.",
         repo_url="https://github.com/davek44/Basset",
         paper="Kelley et al., Genome Research 2016 — Basset",
-        era="2016 · Lua Torch7", license="see source repo",
-        # NOT published to GHCR pending an upstream license check (repo states none clearly).
-        # Users rebuild locally via Lazarus; see docs/IMAGES.md.
-        base_image="lazarus/basset:site-ready", gpu=False, from_url=True, turns=48,
+        era="2016 · Lua Torch7", license="MIT",
+        base_image="ghcr.io/doctordean/lazarus-basset:site-ready", image_public=True, gpu=False, from_url=True, turns=48,
         sanity_metric="min_perseq_std", sanity_threshold=0.01, sanity_direction="above",
         reproduced_metric="mean AUROC (164 targets)", reproduced_reported=0.895, reproduced_measured=0.894,
         contract="examples/basset_predict_contract", added="2026-07-10",
