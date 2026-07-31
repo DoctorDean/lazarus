@@ -15,6 +15,7 @@
   <a href="https://doctordean.github.io/lazarus/"><img src="https://img.shields.io/badge/docs-github.io-0c8f6e" alt="Docs" /></a>
   <a href="https://colab.research.google.com/github/DoctorDean/lazarus/blob/main/notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" /></a>
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT" />
+  <a href="https://doi.org/10.5281/zenodo.21715908"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21715908.svg" alt="DOI" /></a>
 </p>
 
 <p align="center"><em>New here? <a href="notebooks/Lazarus_Democratizing_Dead_SOTA.ipynb">Open the notebook in Colab</a> — a 2-minute, zero-setup tour (no Docker, no GPU): run the dependency pinner live, inspect the revived tools, and see the binder-triage result rendered in 3D.</em></p>
@@ -125,7 +126,7 @@ per-repo outcomes all live in [`benchmark/`](benchmark/).
 | **Revived by Lazarus**, of the dead ones | **17 / 17 → 100%** | 82–100% |
 | Reproduced the paper's own reported metric | **5 / 20** | |
 
-**Then across science, and across peer review** — a controlled study, submitted as a preprint.
+**Then across science, and across peer review** — a controlled study ([preprint](https://doi.org/10.5281/zenodo.21715908)).
 Lazarus has now revived **40+ repos across a dozen fields** (astronomy, materials/DFT, plasma
 physics, hydrology, thermodynamics, retrosynthesis…), and we used its agent-free `decay-check`
 to compare **peer-reviewed software (JOSS, N=173) against unreviewed code linked in papers
@@ -312,7 +313,7 @@ landed — a hero set of dead repos revived across protein, genomics, and molecu
 three-way method comparison, a live binder-triage pipeline, reproduced paper benchmarks, and
 two give-back PRs — plus a systematic measurement: an **N=20 benchmark** (85% dead, 100% of the
 dead revived) and a **cross-domain reproducibility study** — 40+ revivals across a dozen fields,
-reviewed vs. unreviewed decay, submitted as a preprint — and a **registry of 25 tools** (23
+reviewed vs. unreviewed decay ([preprint](https://doi.org/10.5281/zenodo.21715908)) — and a **registry of 25 tools** (23
 pullable from GHCR). 74 passing tests, published to PyPI (`pip install lazarus-bio`).
 
 **Contributions welcome** — add a repo, curate a registry entry, or file a revival that failed.

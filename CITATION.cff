@@ -26,5 +26,6 @@ preferred-citation:
     - given-names: Dean
       family-names: Sherry
   year: 2026
-  journal: bioRxiv
-  # doi: "10.1101/..."   # TODO: add the bioRxiv DOI once the preprint is approved
+  month: 7
+  doi: "10.5281/zenodo.21715908"
+  url: "https://doi.org/10.5281/zenodo.21715908"

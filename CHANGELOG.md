@@ -16,7 +16,7 @@ See the [v0.4.0 GitHub Release](https://github.com/DoctorDean/lazarus/releases) 
   (hydrology), Scikit-Topt (topology opt.), SSALib (time-series), W2W (urban climate), AiZynthFinder
   (retrosynthesis), MEIRLOP, PRODIGY-CRYSTAL, DeepFRI, trRosetta — plus Basset, now published.
   (dMaSIF and Sequoya stay rebuild-locally — license and image size.)
-- **Cross-domain reproducibility study** (submitted as a preprint): peer-reviewed (JOSS, N=173) vs.
+- **Cross-domain reproducibility study** ([preprint](https://doi.org/10.5281/zenodo.21715908)): peer-reviewed (JOSS, N=173) vs.
   unreviewed (Europe PMC, N=257) research software — packaging 95% vs. 42%, install-decay 37% vs. 61%
   (both significant), revival ~92% on both arms. Methods in `paper/CROSSDOMAIN_METHODS.md`; per-repo
   tables S1–S4 in `paper/supplement/`.
