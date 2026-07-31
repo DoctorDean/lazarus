@@ -21,7 +21,11 @@ SOLVENT = {"HOH", "WAT", "DOD", "NA", "CL", "K", "MG", "ZN", "CA", "MN", "FE", "
 def main():
     out = os.environ["OUTDIR"]
     os.makedirs(out, exist_ok=True)
-    smiles = os.environ.get("ligand_smiles", "").strip()
+    # ligand_smiles arrives as a file path (the pipeline input model is file-based);
+    # fall back to treating it as a literal for standalone use. First token = SMILES.
+    _lig = os.environ.get("ligand_smiles", "")
+    smiles = (open(_lig).read().split()[0].strip()
+              if _lig and os.path.exists(_lig) else _lig.strip())
 
     atoms, het = [], {}   # het: (resname, chain, resseq) -> [lines]
     for ln in open(os.environ["complex"]):

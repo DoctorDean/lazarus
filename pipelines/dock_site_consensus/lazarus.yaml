@@ -83,37 +83,48 @@ entrypoint: "set -euo pipefail\npip install --quiet numpy >/dev/null 2>&1 || pip
   \ \"contacted_by_equibind\"])\n        for rid in all_ids:\n            w.writerow([rid, residues[rid][0],\
   \ round(scannet.get(rid, 0.0), 3),\n                        int(rid in top[\"residues\"]),\n       \
   \                 int(rid in analysis.get(\"diffdock\", {}).get(\"contacts\", set())),\n           \
-  \             int(rid in analysis.get(\"equibind\", {}).get(\"contacts\", set()))])\n\n    # human-readable\
-  \ verdict\n    both_in_pocket = all(analysis[t][\"pocket_overlap\"] >= 0.5 for t in analysis) and len(analysis)\
-  \ >= 1\n    druggable = top[\"drug\"] >= DRUG\n    with open(os.path.join(out, \"summary.txt\"), \"\
-  w\") as f:\n        p = f.write\n        p(\"Triangulated druggable-site consensus\\n=====================================\\\
-  n\")\n        p(f\"receptor residues: {len(residues)} | ScanNet site residues (p>={SITE_P}): \"\n  \
-  \        f\"{sum(v >= SITE_P for v in scannet.values())}\\n\")\n        p(f\"fpocket top pocket: rank\
-  \ {top['rank']}, druggability {top['drug']:.2f} \"\n          f\"({'druggable' if druggable else 'not\
-  \ druggable'}), {len(top['residues'])} lining residues\\n\\n\")\n        for tool in (\"diffdock\",\
-  \ \"equibind\"):\n            a = analysis.get(tool)\n            if not a:\n                p(f\"{tool}:\
-  \ no pose\\n\"); continue\n            p(f\"{tool} pose: {a['n_contacts']} contact residues | \"\n \
-  \             f\"{a['pocket_overlap']*100:.0f}% in the druggable pocket | \"\n              f\"{a['site_overlap']*100:.0f}%\
-  \ are ScanNet sites | mean ScanNet {a['mean_scannet']:.2f}\\n\")\n            if a[\"centroid_to_ref\"\
-  ] is not None:\n                p(f\"   vs crystal ligand: centroid {a['centroid_to_ref']:.2f} \xC5\"\
-  \n                  + (f\", heavy-atom RMSD {a['rmsd_to_ref']:.2f} \xC5 (same-order)\\n\"\n        \
-  \             if a[\"rmsd_to_ref\"] is not None else \" (RMSD n/a \u2014 atom count mismatch)\\n\"))\n\
-  \        if agree_centroid is not None:\n            p(f\"\\nDiffDock vs EquiBind agreement: centroid\
-  \ {agree_centroid:.2f} \xC5\"\n              + (f\", RMSD {agree_rmsd:.2f} \xC5\\n\" if agree_rmsd is\
-  \ not None else \"\\n\"))\n        p(\"\\n=> \")\n        if druggable and both_in_pocket:\n       \
-  \     p(\"TRIANGULATED. Both docked poses localise to the pocket fpocket flags druggable\\n\"\n    \
-  \          \"   and ScanNet flags a functional site \u2014 four independently-resurrected tools,\\n\"\
-  \n              \"   one binding site.\\n\")\n        elif not druggable:\n            p(\"The site\
-  \ is localised but fpocket finds NO druggable pocket there \u2014 the signature\\n\"\n             \
-  \ \"   of a flat protein-protein interface (an antibody/biologic target, not small-molecule).\\n\")\n\
-  \        else:\n            p(\"The docked poses do NOT concentrate in the top druggable pocket \u2014\
-  \ methods disagree;\\n\"\n              \"   inspect triage.csv.\\n\")\n\n    # machine-readable line\
-  \ (for the pipeline's smoke/verify)\n    dd = analysis.get(\"diffdock\", {}); eb = analysis.get(\"equibind\"\
-  , {})\n    print(f\"pocket_druggability={top['drug']:.3f} \"\n          f\"diffdock_pocket_overlap={dd.get('pocket_overlap',\
-  \ 0):.3f} \"\n          f\"equibind_pocket_overlap={eb.get('pocket_overlap', 0):.3f} \"\n          f\"\
-  pose_agreement_centroid_A={agree_centroid if agree_centroid is not None else 'NA'} \"\n          f\"\
-  diffdock_centroid_to_ref_A={dd.get('centroid_to_ref', 'NA')}\")\n\n\nif __name__ == \"__main__\":\n\
-  \    main()\n\nPY\n"
+  \             int(rid in analysis.get(\"equibind\", {}).get(\"contacts\", set()))])\n\n    # verdict\
+  \ \u2014 accurate to what actually ran; distinguishes a small-molecule pocket\n    # (fpocket druggable,\
+  \ ScanNet quiet) from a PPI interface (ScanNet lit, no pocket).\n    druggable = top[\"drug\"] >= DRUG\n\
+  \    docked = [t for t in (\"diffdock\", \"equibind\") if t in analysis]\n    in_pocket = [t for t in\
+  \ docked if analysis[t][\"pocket_overlap\"] >= 0.5]\n    pocket_scannet = [scannet.get(r, 0.0) for r\
+  \ in top[\"residues\"]]\n    scannet_at_pocket = float(np.mean(pocket_scannet)) if pocket_scannet else\
+  \ 0.0\n    is_ppi = scannet_at_pocket >= SITE_P\n    with open(os.path.join(out, \"summary.txt\"), \"\
+  w\") as f:\n        p = f.write\n        p(\"Druggable-site consensus\\n========================\\n\"\
+  )\n        p(f\"receptor residues: {len(residues)} | docking tools with a pose: \"\n          f\"{',\
+  \ '.join(docked) if docked else 'none'}\\n\")\n        p(f\"fpocket top pocket: rank {top['rank']},\
+  \ druggability {top['drug']:.2f} \"\n          f\"({'druggable' if druggable else 'not druggable'}),\
+  \ {len(top['residues'])} lining residues\\n\")\n        p(f\"ScanNet over that pocket: mean p={scannet_at_pocket:.2f}\
+  \ \"\n          f\"({'a predicted interaction site' if is_ppi else 'quiet \u2014 not a PPI interface'})\\\
+  n\\n\")\n        for tool in (\"diffdock\", \"equibind\"):\n            a = analysis.get(tool)\n   \
+  \         if not a:\n                p(f\"{tool}: no pose (skipped / blocked)\\n\"); continue\n    \
+  \        p(f\"{tool} pose: {a['n_contacts']} contact residues, \"\n              f\"{a['pocket_overlap']*100:.0f}%\
+  \ in the druggable pocket\")\n            if a[\"centroid_to_ref\"] is not None:\n                p(f\"\
+  ; vs crystal ligand centroid {a['centroid_to_ref']:.2f} \xC5\"\n                  + (f\", RMSD {a['rmsd_to_ref']:.2f}\
+  \ \xC5 (same-order)\" if a[\"rmsd_to_ref\"] is not None else \"\"))\n            p(\"\\n\")\n      \
+  \  if agree_centroid is not None:\n            p(f\"DiffDock vs EquiBind agreement: centroid {agree_centroid:.2f}\
+  \ \xC5\"\n              + (f\", RMSD {agree_rmsd:.2f} \xC5\\n\" if agree_rmsd is not None else \"\\\
+  n\"))\n        p(\"\\n=> \")\n        conv = [\"fpocket\"] + in_pocket + ([\"ScanNet\"] if is_ppi else\
+  \ [])\n        if druggable and in_pocket:\n            best = min((analysis[t][\"centroid_to_ref\"\
+  ] for t in in_pocket\n                        if analysis[t][\"centroid_to_ref\"] is not None), default=None)\n\
+  \            p(f\"CONFIRMED small-molecule site. fpocket flags a druggable pocket \"\n             \
+  \ f\"(druggability {top['drug']:.2f}); {' + '.join(in_pocket)} \"\n              f\"dock{'s' if len(in_pocket)\
+  \ == 1 else ''} the ligand into it\"\n              + (f\" ({best:.2f} \xC5 from the crystal ligand)\"\
+  \ if best is not None else \"\") + \".\\n   \"\n              + (\"ScanNet also flags it a protein-interaction\
+  \ site (a dual-function surface).\\n\"\n                 if is_ppi else\n                 \"ScanNet\
+  \ (a PPI-interface predictor) stays quiet \u2014 the signature of a small-molecule\\n\"\n          \
+  \       \"   cleft, not a protein-protein interface.\\n\")\n              + f\"   Independently-resurrected\
+  \ tools converging here: {' + '.join(conv)}.\\n\")\n        elif not druggable and is_ppi:\n       \
+  \     p(\"PPI / biologic target. ScanNet flags a functional interface but fpocket finds NO\\n\"\n  \
+  \            \"   druggable pocket there \u2014 a flat protein-protein interface (an antibody target,\\\
+  n\"\n              \"   not a small-molecule one).\\n\")\n        else:\n            p(\"Inconclusive\
+  \ \u2014 the docked pose(s) do not concentrate in the top druggable pocket;\\n\"\n              \" \
+  \  inspect triage.csv.\\n\")\n\n    # machine-readable line (for the pipeline's smoke/verify)\n    dd\
+  \ = analysis.get(\"diffdock\", {}); eb = analysis.get(\"equibind\", {})\n    print(f\"pocket_druggability={top['drug']:.3f}\
+  \ \"\n          f\"diffdock_pocket_overlap={dd.get('pocket_overlap', 0):.3f} \"\n          f\"equibind_pocket_overlap={eb.get('pocket_overlap',\
+  \ 0):.3f} \"\n          f\"pose_agreement_centroid_A={agree_centroid if agree_centroid is not None else\
+  \ 'NA'} \"\n          f\"diffdock_centroid_to_ref_A={dd.get('centroid_to_ref', 'NA')}\")\n\n\nif __name__\
+  \ == \"__main__\":\n    main()\n\nPY\n"
 inputs:
 - name: receptor
   type: file

@@ -12,9 +12,12 @@ entrypoint: "set -euo pipefail\nmkdir -p \"$OUTDIR\"\npython - <<'PY'\n#!/usr/bi
   SOLVENT = {\"HOH\", \"WAT\", \"DOD\", \"NA\", \"CL\", \"K\", \"MG\", \"ZN\", \"CA\", \"MN\", \"FE\"\
   , \"CU\",\n           \"SO4\", \"PO4\", \"GOL\", \"EDO\", \"PEG\", \"ACT\", \"DMS\", \"TRS\", \"IOD\"\
   , \"BR\"}\n\n\ndef main():\n    out = os.environ[\"OUTDIR\"]\n    os.makedirs(out, exist_ok=True)\n\
-  \    smiles = os.environ.get(\"ligand_smiles\", \"\").strip()\n\n    atoms, het = [], {}   # het: (resname,\
-  \ chain, resseq) -> [lines]\n    for ln in open(os.environ[\"complex\"]):\n        if ln.startswith(\"\
-  ATOM\"):\n            atoms.append(ln)\n        elif ln.startswith(\"HETATM\"):\n            rn = ln[17:20].strip()\n\
+  \    # ligand_smiles arrives as a file path (the pipeline input model is file-based);\n    # fall back\
+  \ to treating it as a literal for standalone use. First token = SMILES.\n    _lig = os.environ.get(\"\
+  ligand_smiles\", \"\")\n    smiles = (open(_lig).read().split()[0].strip()\n              if _lig and\
+  \ os.path.exists(_lig) else _lig.strip())\n\n    atoms, het = [], {}   # het: (resname, chain, resseq)\
+  \ -> [lines]\n    for ln in open(os.environ[\"complex\"]):\n        if ln.startswith(\"ATOM\"):\n  \
+  \          atoms.append(ln)\n        elif ln.startswith(\"HETATM\"):\n            rn = ln[17:20].strip()\n\
   \            if rn in SOLVENT:\n                continue\n            het.setdefault((rn, ln[21], ln[22:26].strip()),\
   \ []).append(ln)\n\n    with open(os.path.join(out, \"receptor.pdb\"), \"w\") as f:\n        f.writelines(atoms)\n\
   \        f.write(\"END\\n\")\n\n    ref = max(het, key=lambda k: len(het[k])) if het else None   # largest\
@@ -32,15 +35,15 @@ inputs:
   type: file
   description: complex PDB (protein + crystal-ligand HETATM)
 - name: ligand_smiles
-  type: string
-  description: the ligand as a SMILES string (for DiffDock)
+  type: file
+  description: file whose first token is the ligand SMILES (for DiffDock)
 outputs:
 - name: receptor.pdb
   type: file
-  description: protein-only receptor for fpocket/ScanNet/consensus
+  description: protein-only receptor
 - name: reference_ligand.pdb
   type: file
-  description: the crystal ligand (largest non-solvent HETATM)
+  description: crystal ligand (largest non-solvent HETATM)
 - name: diffdock.csv
   type: file
   description: DiffDock input CSV
