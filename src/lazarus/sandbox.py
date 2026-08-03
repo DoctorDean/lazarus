@@ -202,10 +202,14 @@ class Sandbox:
         *,
         workdir: Optional[str] = None,
         env: Optional[dict] = None,
+        user: Optional[str] = None,
         timeout: Optional[float] = None,
     ) -> CommandResult:
-        """Run a command in the container. Strings run under ``bash -lc``."""
+        """Run a command in the container. Strings run under ``bash -lc``.
+        ``user`` (e.g. "0") overrides the exec user via ``docker exec --user``."""
         args = ["exec"]
+        if user is not None:
+            args += ["--user", user]
         if workdir is not None:
             args += ["-w", workdir]
         for key, value in (env or {}).items():

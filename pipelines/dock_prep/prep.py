@@ -47,11 +47,13 @@ def main():
             f.writelines(het[ref])
         f.write("END\n")
 
-    # protein_path is RELATIVE — the receptor is co-located in the DiffDock step dir.
-    # (Verify/adjust when the pipeline first runs on the GPU box; see the pipeline YAML.)
+    # protein_path = the absolute path where the pipeline's `receptor` step-input lands
+    # in the DiffDock container. The compose runner places a file input named <name> at
+    # /lazarus/in/<name>/<basename>, so the pipeline must pass receptor.pdb to DiffDock
+    # under the input name `receptor` (see target_dock_consensus.yaml).
     with open(os.path.join(out, "diffdock.csv"), "w") as f:
         f.write("complex_name,protein_path,ligand_description,protein_sequence\n")
-        f.write(f"target,receptor.pdb,{smiles},\n")
+        f.write(f"target,/lazarus/in/receptor/receptor.pdb,{smiles},\n")
 
     print(f"receptor_atoms={len(atoms)} het_groups={len(het)} "
           f"reference_ligand={('/'.join(ref) if ref else 'none')} "
