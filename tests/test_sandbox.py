@@ -82,6 +82,22 @@ def test_exec_string_runs_under_bash_lc():
     assert argv[-3:] == ["bash", "-lc", "echo hi"]
 
 
+def test_exec_with_user_adds_user_flag():
+    runner, box = make_box()
+    box.start()
+    box.exec("mkdir -p /lazarus", user="0")
+    argv = runner.last
+    assert argv[argv.index("--user") + 1] == "0"
+    assert argv[-3:] == ["bash", "-lc", "mkdir -p /lazarus"]
+
+
+def test_exec_without_user_omits_flag():
+    runner, box = make_box()
+    box.start()
+    box.exec("echo hi")
+    assert "--user" not in runner.last
+
+
 def test_exec_list_runs_directly():
     runner, box = make_box()
     box.start()

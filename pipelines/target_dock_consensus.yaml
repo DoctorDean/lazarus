@@ -35,15 +35,10 @@ steps:
   - id: diffdock                   # GPU brick; the runner passes --gpus from its contract
     uses: diffdock_blind_docking
     with:
-      INPUT: "${prep.diffdock}"    # the CSV
-      receptor: "${prep.receptor}" # co-located so the CSV's relative protein_path resolves
-    # ── RUN-PHASE INTEGRATION POINTS (verify on first GPU run) ─────────────────
-    #  1. protein_path in diffdock.csv is RELATIVE ("receptor.pdb"); confirm DiffDock's
-    #     CWD is the dir holding both, else make it absolute or bundle as a dir input.
-    #  2. DiffDock writes $OUTDIR/<complex_name>/rank1.sdf (nested). The consensus
-    #     selector below is "rank1"; if the runner's glob is non-recursive, flatten the
-    #     rank1 pose to the step's top-level output.
-    # ──────────────────────────────────────────────────────────────────────────
+      INPUT: "${prep.diffdock}"    # the CSV; its protein_path targets the receptor input below
+      receptor: "${prep.receptor}" # lands at /lazarus/in/receptor/receptor.pdb (the CSV's abs path)
+    # DiffDock writes $OUTDIR/<complex_name>/rank1.sdf (nested); ${diffdock.rank1} below
+    # resolves it through the runner's recursive artifact glob. Verified end-to-end on 6MOA.
 
   - id: equibind                   # CPU; auto-splits the ligand from the complex PDB
     uses: equibind_blind_docking

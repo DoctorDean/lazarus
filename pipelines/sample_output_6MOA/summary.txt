@@ -1,0 +1,14 @@
+Druggable-site consensus
+========================
+receptor residues: 109 | docking tools with a pose: diffdock, equibind
+fpocket top pocket: rank 1, druggability 0.93 (druggable), 21 lining residues
+ScanNet over that pocket: mean p=0.26 (quiet — not a PPI interface)
+
+diffdock pose: 11 contact residues, 91% in the druggable pocket; vs crystal ligand centroid 0.22 Å, RMSD 5.30 Å (same-order)
+equibind pose: 8 contact residues, 100% in the druggable pocket; vs crystal ligand centroid 0.84 Å, RMSD 1.30 Å (same-order)
+DiffDock vs EquiBind agreement: centroid 0.96 Å, RMSD 5.44 Å
+
+=> CONFIRMED small-molecule site. fpocket flags a druggable pocket (druggability 0.93); diffdock + equibind dock the ligand into it (0.22 Å from the crystal ligand).
+   ScanNet (a PPI-interface predictor) stays quiet — the signature of a small-molecule
+   cleft, not a protein-protein interface.
+   Independently-resurrected tools converging here: fpocket + diffdock + equibind.

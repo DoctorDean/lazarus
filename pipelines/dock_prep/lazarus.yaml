@@ -23,10 +23,11 @@ entrypoint: "set -euo pipefail\nmkdir -p \"$OUTDIR\"\npython - <<'PY'\n#!/usr/bi
   \        f.write(\"END\\n\")\n\n    ref = max(het, key=lambda k: len(het[k])) if het else None   # largest\
   \ het group = ligand\n    with open(os.path.join(out, \"reference_ligand.pdb\"), \"w\") as f:\n    \
   \    if ref:\n            f.writelines(het[ref])\n        f.write(\"END\\n\")\n\n    # protein_path\
-  \ is RELATIVE \u2014 the receptor is co-located in the DiffDock step dir.\n    # (Verify/adjust when\
-  \ the pipeline first runs on the GPU box; see the pipeline YAML.)\n    with open(os.path.join(out, \"\
-  diffdock.csv\"), \"w\") as f:\n        f.write(\"complex_name,protein_path,ligand_description,protein_sequence\\\
-  n\")\n        f.write(f\"target,receptor.pdb,{smiles},\\n\")\n\n    print(f\"receptor_atoms={len(atoms)}\
+  \ = the absolute path where the pipeline's `receptor` step-input lands\n    # in the DiffDock container.\
+  \ The compose runner places a file input named <name> at\n    # /lazarus/in/<name>/<basename>, so the\
+  \ pipeline must pass receptor.pdb to DiffDock\n    # under the input name `receptor` (see target_dock_consensus.yaml).\n\
+  \    with open(os.path.join(out, \"diffdock.csv\"), \"w\") as f:\n        f.write(\"complex_name,protein_path,ligand_description,protein_sequence\\\
+  n\")\n        f.write(f\"target,/lazarus/in/receptor/receptor.pdb,{smiles},\\n\")\n\n    print(f\"receptor_atoms={len(atoms)}\
   \ het_groups={len(het)} \"\n          f\"reference_ligand={('/'.join(ref) if ref else 'none')} \"\n\
   \          f\"smiles={'yes' if smiles else 'MISSING'}\")\n\n\nif __name__ == \"__main__\":\n    main()\n\
   \nPY\n"

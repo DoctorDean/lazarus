@@ -170,7 +170,16 @@ class Runner:
         if not rest:
             return ("file", step_out)
         selector = rest[0]
-        matches = sorted(glob.glob(os.path.join(step_out, f"*{selector}*")))
+        # Recursive so nested step outputs are found (e.g. DiffDock writes
+        # <complex_name>/rank1.sdf); files only, so a matching dir name isn't picked.
+        matches = [m for m in glob.glob(
+            os.path.join(step_out, "**", f"*{selector}*"), recursive=True) if os.path.isfile(m)]
+        # Shallowest first, then lexicographic. A top-level artifact ALWAYS beats a nested
+        # one, so recursion can only resolve refs that previously failed — it can never
+        # change a ref that already resolved. Without this, fpocket's nested
+        # <name>_out/<name>_pockets.pqr can outrank its top-level pockets.json whenever the
+        # input's name sorts before "pockets" (digits do), silently swapping the artifact.
+        matches.sort(key=lambda m: (os.path.relpath(m, step_out).count(os.sep), m))
         if not matches:
             raise FileNotFoundError(
                 f"no output matching {selector!r} in step {head!r} ({step_out})"
@@ -211,7 +220,11 @@ class Runner:
         )
         box.start()
         try:
-            box.exec("mkdir -p /lazarus/in /lazarus/out").raise_for_status()
+            # Create the shared work dirs as root and world-writable, so brick images
+            # that run as a non-root user (e.g. DiffDock's appuser) can still read inputs
+            # and write outputs — while the entrypoint keeps the image's own user/HOME.
+            box.exec("mkdir -p /lazarus/in /lazarus/out && chmod -R 777 /lazarus",
+                     user="0").raise_for_status()
             env = {"OUTDIR": "/lazarus/out"}
             for name, (kind, val) in resolved.items():
                 if kind == "file":

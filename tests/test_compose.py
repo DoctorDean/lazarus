@@ -1,5 +1,7 @@
 """Tests for Lazarus Compose — offline, no Docker daemon."""
 
+import os
+
 import pytest
 
 from lazarus.compose import (
@@ -78,6 +80,69 @@ def test_resolve_refs(tmp_path):
     assert kind == "file" and val.endswith("pred_scores.npy")
     with pytest.raises(FileNotFoundError):
         r._resolve("${a.nomatch}", ctx)
+
+
+def test_resolve_ref_finds_nested_step_output(tmp_path):
+    """DiffDock writes $OUTDIR/<complex_name>/rank1.sdf, so the artifact glob recurses."""
+    r = Runner(Registry({}))
+    sdir = tmp_path / "diffdock"
+    (sdir / "target").mkdir(parents=True)
+    (sdir / "target" / "rank1.sdf").write_text("pose")
+    ctx = {"inputs": {}, "steps": {"diffdock": StepResult("diffdock", str(sdir), [])}}
+    kind, val = r._resolve("${diffdock.rank1}", ctx)
+    assert kind == "file" and val.endswith(os.path.join("target", "rank1.sdf"))
+
+
+def test_resolve_ref_skips_directories_matching_the_selector(tmp_path):
+    """A dir whose name matches must not shadow the real file (it sorts first here)."""
+    r = Runner(Registry({}))
+    sdir = tmp_path / "a"
+    (sdir / "rank1_out").mkdir(parents=True)      # sorts before zz_rank1.sdf
+    (sdir / "zz_rank1.sdf").write_text("pose")
+    ctx = {"inputs": {}, "steps": {"a": StepResult("a", str(sdir), [])}}
+    kind, val = r._resolve("${a.rank1}", ctx)
+    assert kind == "file" and val.endswith("zz_rank1.sdf")
+
+
+def test_resolve_ref_prefers_a_top_level_artifact_over_a_nested_one(tmp_path):
+    """Recursion must only ADD resolutions, never change one that already worked.
+
+    fpocket's real layout: the composable pockets.json at the top level, plus a nested
+    <input>_out/<input>_pockets.pqr. Lexicographically the nested file wins whenever the
+    input's name sorts before "pockets" (4ZQK does — digits precede letters), which would
+    silently feed a PQR point cloud to a step expecting JSON. Shallowest-first prevents it.
+    """
+    r = Runner(Registry({}))
+    sdir = tmp_path / "fpocket"
+    (sdir / "4ZQK_out").mkdir(parents=True)
+    (sdir / "4ZQK_out" / "4ZQK_pockets.pqr").write_text("HEADER pqr")
+    (sdir / "pockets.json").write_text("[]")
+    ctx = {"inputs": {}, "steps": {"fpocket": StepResult("fpocket", str(sdir), [])}}
+    kind, val = r._resolve("${fpocket.pockets}", ctx)
+    assert kind == "file" and val.endswith("pockets.json")
+
+
+def test_run_component_prepares_shared_dirs_as_root(tmp_path):
+    """Bricks that run as a non-root user (DiffDock's appuser) still need to read
+    /lazarus/in and write /lazarus/out — so the dirs are made root + world-writable,
+    while the entrypoint itself keeps the image's own user."""
+    calls = []
+
+    def fake(argv, *, input_bytes=None, timeout=None, env=None):
+        calls.append(list(argv))
+        return (0, "", "")
+
+    r = Runner(Registry({}))
+    r.client = DockerClient(runner=fake)
+    c = Contract(name="c", repo_url="", base_image="img:x", entrypoint="run-me")
+    r._run_component(c, {}, tmp_path / "out")
+
+    joined = [" ".join(a) for a in calls]
+    prep = [j for j in joined if "mkdir -p /lazarus/in" in j]
+    assert prep, "shared work dirs were never created"
+    assert "--user 0" in prep[0] and "chmod -R 777 /lazarus" in prep[0]
+    entry = [j for j in joined if j.endswith("bash -lc run-me")]
+    assert entry and "--user" not in entry[0]
 
 
 def test_run_component_issues_expected_docker_sequence(tmp_path):
