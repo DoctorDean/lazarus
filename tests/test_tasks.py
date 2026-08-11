@@ -374,6 +374,40 @@ def test_ligand_centroid_distance_rejects_a_truncated_sdf(tmp_path):
         evaluators.ligand_centroid_distance(bad, ref)
 
 
+def test_ppi_tasks_share_one_criterion_across_repos():
+    """ScanNet and dMaSIF must be graded identically or the comparison means nothing."""
+    root = ROOT / "benchmark" / "tasks" / "dev"
+    a = task_mod.load_task(root / "scannet-ppi-4zqk" / "task.yaml")
+    b = task_mod.load_task(root / "dmasif-ppi-4zqk" / "task.yaml")
+    assert a.repo_url != b.repo_url
+    for f in ("evaluator", "metric", "direction", "threshold"):
+        assert getattr(a.evaluation, f) == getattr(b.evaluation, f), f"{f} differs"
+    assert (a.labels_file.read_text() == b.labels_file.read_text()
+            and a.input_file.read_bytes() == b.input_file.read_bytes())
+
+
+def test_dmasif_dev_task_grades_the_recorded_predictions(tmp_path):
+    """dMaSIF's committed residue scores, graded through the task layer (recorded: 0.8390)."""
+    import csv
+
+    np = pytest.importorskip("numpy")
+    scores = ROOT / "pipeline-output" / "dmasif" / "4ZQK_A_residue_scores.npy"
+    ids = ROOT / "pipeline-output" / "dmasif" / "4ZQK_A_residue_ids.npy"
+    if not scores.exists():
+        pytest.skip("dMaSIF run artifacts not present (pipeline-output is gitignored)")
+    t = task_mod.load_task(
+        ROOT / "benchmark" / "tasks" / "dev" / "dmasif-ppi-4zqk" / "task.yaml")
+    out = tmp_path / "out"
+    out.mkdir()
+    with open(out / "prediction.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["resid", "score"])
+        for rid, sc in zip(np.load(ids).tolist(), np.load(scores).tolist()):
+            w.writerow([rid, sc])
+    s = scoring.grade(t, out)
+    assert s.passed is True and s.measured == pytest.approx(0.8390, abs=5e-4)
+
+
 @pytest.mark.parametrize("tid,pose,expect", [
     ("diffdock-dock-6moa", "diffdock_rank1.sdf", 0.223),
     ("equibind-dock-6moa", "equibind_docked_ligand.sdf", 0.838),

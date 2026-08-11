@@ -1,7 +1,7 @@
 # Scope — a public benchmark for reviving dead research code
 
 *Roadmap Tier-1 "durable" track. Status: **P0 landed, P1 in progress** — the
-task/evaluator/grading layer is built and tested; 3 of ~20 dev tasks converted.*
+task/evaluator/grading layer is built and tested; 4 of ~20 dev tasks converted.*
 
 **Settled:** the test split chases `predict` tasks with hidden labels, and scope is
 **cross-domain** (not comp-bio only) — the generalisation result is the more interesting
@@ -43,9 +43,9 @@ Total spend across all 67: **$103.78**. Outcomes: 42 `revived`, 21 `reproduced`,
 
 ---
 
-## 2. The three things that make this a benchmark
+## 2. What makes this a benchmark
 
-What we have measures *Lazarus*. A leaderboard measures *anyone*. Four gaps, in order of how
+What we have measures *Lazarus*. A leaderboard measures *anyone*. Five gaps, in order of how
 hard they are to close.
 
 ### 2.1 The success criterion must move from the agent to the harness — **the central change**
@@ -108,7 +108,6 @@ It must write `/out/prediction.<ext>` (per the task's declared output schema) an
 `/out/contract.yaml`. Everything else about how it works is its own business. The harness then
 runs the task's evaluator against `/out` plus hidden labels.
 
----
 
 ### 2.4 The recorded results cannot supply the ground truth *(found during P1)*
 
@@ -132,8 +131,34 @@ Consequences:
 - Ground truth is hand-built or hand-verified per task. There is no bulk conversion, which
   is the single biggest driver of the P1 and P3 estimates.
 - Tasks with *constructible* labels are worth far more than tasks with a quoted number,
-  because the label can be rebuilt from a primary source and audited. All three dev tasks
+  because the label can be rebuilt from a primary source and audited. All four dev tasks
   so far are of this kind.
+
+### 2.5 The schema assumes git, and a lot of dead science isn't in git *(found during P1)*
+
+`commit` is required, which quietly excludes any repo that isn't on GitHub. That's not an
+edge case — it cuts out the era the benchmark most wants to cover. **fpocket**, one of the
+25 registry tools, is a 2010 **SourceForge tarball**: no commits, no SHA, nothing to pin.
+The same applies to supplementary ZIPs, institutional FTP, and the 2016 Docker image
+Basset was recovered from.
+
+Excluding them would bias the benchmark toward modern, well-packaged code — the exact
+opposite of the v0.4 finding that *packaging discipline*, not recoverability, is what
+separates reviewed from unreviewed software.
+
+**Proposed:** make the pin polymorphic — either `commit` (git) **or** `artifact_url` +
+`artifact_sha256` (a content-addressed download). Validation requires exactly one. Hashing
+a tarball is in fact a *stronger* pin than a git SHA, since it fixes the bytes rather than
+a mutable ref.
+
+Not implemented yet, deliberately: a task needs a real hash, and fpocket's is not currently
+obtainable. SourceForge served an HTML interstitial to one download attempt and 2 bytes to
+another — the same download evasion the original revival had to defeat. Building the schema
+surface before a task can exercise it would be speculative, so this stays a design item
+until the artifact can actually be captured (most likely from a mirror, or by recording the
+hash during a live revival run).
+
+---
 
 ## 3. Proposed task schema
 
@@ -227,7 +252,7 @@ a cloud GPU pool and a queue.
 | Phase | Work | Rough size |
 |---|---|---|
 | **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
-| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (55/67), 3 real `predict` tasks with constructible labels, 5 evaluators. Remaining: 17 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
+| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (58 repos), 4 real `predict` tasks with constructible labels, 5 evaluators. Remaining: ~16 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
 | **P2** | Submission boundary: containerised CLI, harness adapter, caps enforcement, Lazarus repackaged as the reference submission | 3–4 days |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
 | **P4** | Scoring, board rendering, public submission docs | 3–4 days |

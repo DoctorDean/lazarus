@@ -1,0 +1,37 @@
+# Dev-split task. Contaminated on purpose: dMaSIF is in the Lazarus registry.
+# See ../../../LEADERBOARD_SCOPE.md §2.2.
+id: dmasif-ppi-4zqk
+repo_url: https://github.com/FreyrS/dMaSIF
+commit: 0dcc26c3c218a39d5fe26beb2e788b95fb028896   # 2021-09-01
+paper: Sverrisson et al., CVPR 2021 — dMaSIF
+domain: structural biology
+kind: predict
+split: dev
+
+capability: >-
+  Predict a protein-protein interface probability for every residue of a single protein
+  chain from its surface geometry and chemistry, and write one row per residue.
+
+input_path: input/4ZQK_A.pdb
+output_path: prediction.csv
+output_schema: [resid, score]
+
+evaluation:
+  evaluator: auroc
+  metric: auroc
+  direction: higher
+  threshold: 0.70
+  labels: labels/interface_5A.csv
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  Same input, same labels and same bar as scannet-ppi-4zqk, deliberately — a second repo
+  answering one question, so the pair compares methods rather than implementations.
+  dMaSIF works from a molecular surface rather than a residue graph and needs a GPU, so it
+  also exercises a harder execution path than ScanNet. Lazarus's revival measured 0.8390
+  here (ScanNet: 0.9233). Note for submitters: dMaSIF is CC-BY-NC-ND, which is why the
+  registry ships it rebuild-locally rather than as a pullable image.
