@@ -1,7 +1,7 @@
 # Scope — a public benchmark for reviving dead research code
 
-*Roadmap Tier-1 "durable" track. Status: **P0 landed** — the task/evaluator/grading layer
-exists and is tested. P1 (convert ~20 dev tasks) is next.*
+*Roadmap Tier-1 "durable" track. Status: **P0 landed, P1 in progress** — the
+task/evaluator/grading layer is built and tested; 3 of ~20 dev tasks converted.*
 
 **Settled:** the test split chases `predict` tasks with hidden labels, and scope is
 **cross-domain** (not comp-bio only) — the generalisation result is the more interesting
@@ -45,7 +45,7 @@ Total spend across all 67: **$103.78**. Outcomes: 42 `revived`, 21 `reproduced`,
 
 ## 2. The three things that make this a benchmark
 
-What we have measures *Lazarus*. A leaderboard measures *anyone*. Three gaps, in order of how
+What we have measures *Lazarus*. A leaderboard measures *anyone*. Four gaps, in order of how
 hard they are to close.
 
 ### 2.1 The success criterion must move from the agent to the harness — **the central change**
@@ -109,6 +109,31 @@ It must write `/out/prediction.<ext>` (per the task's declared output schema) an
 runs the task's evaluator against `/out` plus hidden labels.
 
 ---
+
+### 2.4 The recorded results cannot supply the ground truth *(found during P1)*
+
+The obvious shortcut for building tasks is to lift `reproduced_reported` out of
+`results*.json` — 33 of the 67 runs have one. **It does not survive inspection.**
+
+Of those 33, **20 are not paper numbers**: 14 are byte-identical to the run's own
+`sanity_threshold`, and the rest are round self-consistency bars (`pearson_r = 1`,
+`max_abs_diff = 0`, `reads_assigned = 100`). They are the agent's bar for itself, recorded
+in a field named as if it came from the literature.
+
+Promoting those to task targets would reintroduce the §2.1 problem through the data:
+"reproduces the paper" would quietly mean "clears the bar the agent chose". The remaining
+14 are *plausibly* paper-derived and still need a human to confirm each against the
+source.
+
+Consequences:
+
+- `mine_tasks.py` classifies every candidate as `check-paper` (14), `agent-bar` (19) or
+  `no-target` (34) and writes them to a **review manifest, never to a task**.
+- Ground truth is hand-built or hand-verified per task. There is no bulk conversion, which
+  is the single biggest driver of the P1 and P3 estimates.
+- Tasks with *constructible* labels are worth far more than tasks with a quoted number,
+  because the label can be rebuilt from a primary source and audited. All three dev tasks
+  so far are of this kind.
 
 ## 3. Proposed task schema
 
@@ -202,7 +227,7 @@ a cloud GPU pool and a queue.
 | Phase | Work | Rough size |
 |---|---|---|
 | **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
-| **P1** | Task schema + convert ~20 of the existing 67 into a **public dev split** with real evaluators | 3–5 days |
+| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (55/67), 3 real `predict` tasks with constructible labels, 5 evaluators. Remaining: 17 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
 | **P2** | Submission boundary: containerised CLI, harness adapter, caps enforcement, Lazarus repackaged as the reference submission | 3–4 days |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
 | **P4** | Scoring, board rendering, public submission docs | 3–4 days |

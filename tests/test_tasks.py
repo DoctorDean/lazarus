@@ -309,7 +309,86 @@ def test_shipped_dev_tasks_are_valid_and_complete():
     assert tasks, "no tasks found"
     for t in tasks:
         t.check_files()
-        assert len(t.commit) >= 7
+        assert len(t.commit) == 40, f"{t.id}: pin a full 40-char SHA, got {t.commit!r}"
+
+
+def test_shipped_task_commits_match_the_pin_cache():
+    """Every task SHA must be one `mine_tasks.py` actually resolved upstream.
+
+    A hand-typed SHA is worse than useless in a reproducibility benchmark: it looks
+    authoritative and points at nothing. pins.json is the record of what was really
+    looked up, so tasks are checked against it rather than against a format regex —
+    a fabricated-but-well-formed SHA passes the regex and fails here.
+    """
+    import json
+
+    pins = json.loads((ROOT / "benchmark" / "tasks" / "pins.json").read_text())
+    for t in task_mod.load_tasks(ROOT / "benchmark" / "tasks"):
+        entry = pins.get(t.repo_url)
+        assert entry, f"{t.id}: {t.repo_url} has no recorded pin in pins.json"
+        assert t.commit == entry["sha"], (
+            f"{t.id}: task pins {t.commit} but pins.json resolved {entry['sha']}")
+
+
+# --------------------------------------------------------------------------
+# docking evaluator
+# --------------------------------------------------------------------------
+def _sdf(path, coords):
+    lines = ["pose", "  lazarus", "", f"{len(coords):>3}  0  0  0  0  0  0  0  0999 V2000"]
+    lines += [f"{x:>10.4f}{y:>10.4f}{z:>10.4f} C   0  0  0  0  0  0  0  0  0  0  0  0"
+              for x, y, z in coords]
+    path.write_text("\n".join(lines + ["M  END", "$$$$", ""]))
+    return path
+
+
+def _het(path, coords):
+    path.write_text("".join(
+        f"HETATM{i:>5} C1   LIG A 900    {x:>8.3f}{y:>8.3f}{z:>8.3f}  1.00  0.00           C\n"
+        for i, (x, y, z) in enumerate(coords, 1)) + "END\n")
+    return path
+
+
+def test_ligand_centroid_distance_is_order_independent(tmp_path):
+    """Atom order must not matter — DiffDock rebuilds ligands from SMILES."""
+    ref = _het(tmp_path / "ref.pdb", [(0, 0, 0), (2, 0, 0), (0, 2, 0)])
+    same = _sdf(tmp_path / "a.sdf", [(0, 0, 0), (2, 0, 0), (0, 2, 0)])
+    assert evaluators.ligand_centroid_distance(same, ref) == pytest.approx(0.0)
+    shuffled = _sdf(tmp_path / "b.sdf", [(0, 2, 0), (0, 0, 0), (2, 0, 0)])
+    assert evaluators.ligand_centroid_distance(shuffled, ref) == pytest.approx(0.0)
+    moved = _sdf(tmp_path / "c.sdf", [(3, 0, 0), (5, 0, 0), (3, 2, 0)])
+    assert evaluators.ligand_centroid_distance(moved, ref) == pytest.approx(3.0)
+
+
+def test_ligand_centroid_distance_rejects_a_different_molecule(tmp_path):
+    ref = _het(tmp_path / "ref.pdb", [(0, 0, 0)] * 30)
+    tiny = _sdf(tmp_path / "p.sdf", [(0, 0, 0), (1, 0, 0)])
+    with pytest.raises(evaluators.EvaluationError, match="same ligand"):
+        evaluators.ligand_centroid_distance(tiny, ref)
+
+
+def test_ligand_centroid_distance_rejects_a_truncated_sdf(tmp_path):
+    ref = _het(tmp_path / "ref.pdb", [(0, 0, 0), (1, 0, 0)])
+    bad = tmp_path / "p.sdf"
+    bad.write_text("pose\n  x\n\n 30  0  0  0  0  0  0  0  0999 V2000\n   0.0 0.0 0.0 C\n")
+    with pytest.raises(evaluators.EvaluationError, match="truncated"):
+        evaluators.ligand_centroid_distance(bad, ref)
+
+
+@pytest.mark.parametrize("tid,pose,expect", [
+    ("diffdock-dock-6moa", "diffdock_rank1.sdf", 0.223),
+    ("equibind-dock-6moa", "equibind_docked_ligand.sdf", 0.838),
+])
+def test_docking_dev_tasks_grade_the_real_flagship_poses(tmp_path, tid, pose, expect):
+    """The committed 6MOA poses, graded through the task layer."""
+    import shutil
+
+    t = task_mod.load_task(ROOT / "benchmark" / "tasks" / "dev" / tid / "task.yaml")
+    out = tmp_path / "out"
+    out.mkdir()
+    shutil.copy(ROOT / "pipelines" / "sample_output_6MOA" / pose, out / "prediction.sdf")
+    s = scoring.grade(t, out)
+    assert s.passed is True
+    assert s.measured == pytest.approx(expect, abs=5e-3)
 
 
 def test_scannet_dev_task_grades_real_predictions(tmp_path):

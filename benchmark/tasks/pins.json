@@ -1,0 +1,230 @@
+{
+  "https://github.com/BieseckerLab/SomatoSim": {
+    "date": "2021-03-29T18:50:18Z",
+    "sha": "2cedd7722b89a1877a36f72281e4609cebc9b766"
+  },
+  "https://github.com/BioinfoUNIBA/REDItools2": {
+    "date": "2025-07-17T13:26:02Z",
+    "sha": "1e9d396f8aba058f073d7d27bf1148fe408adaf8"
+  },
+  "https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer": {
+    "date": "2025-05-09T11:49:29Z",
+    "sha": "049bbe4e3063e90ae9b0f88ac7e92f47b735d38a"
+  },
+  "https://github.com/GIST-CSBL/HoTS": {
+    "date": "2022-11-06T07:39:04Z",
+    "sha": "4b55af5b9a0e9620fd4bae535ca2e359832fd8db"
+  },
+  "https://github.com/HannesStark/EquiBind": {
+    "date": "2025-02-19T15:19:16Z",
+    "sha": "4cb1b4c562dae914780154518a6b915bb4cba658"
+  },
+  "https://github.com/JingXieMIZZOU/BLMRM": {
+    "date": "2019-04-08T18:46:48Z",
+    "sha": "7ac38e8f5048af70d03d23eeed8577bad37023f7"
+  },
+  "https://github.com/MIT-PSFC/disruption-py": {
+    "date": "2026-06-09T15:13:31Z",
+    "sha": "5d7f6d688ab67a0420fa898334dc2ab9a85ca494"
+  },
+  "https://github.com/MolecularAI/aizynthfinder": {
+    "date": "2026-04-13T08:03:51Z",
+    "sha": "21ff546d5f22331b078390a2f12dc04defc3f39c"
+  },
+  "https://github.com/MoreiraLAB/DrugTax": {
+    "date": "2022-10-27T15:52:26Z",
+    "sha": "e47fe8420344658520880c0a0e49c995edc71caa"
+  },
+  "https://github.com/OluwadareLab/EnsembleSplice": {
+    "date": "2024-01-22T18:57:14Z",
+    "sha": "e04aa5aeb4035adac9ce6c65c2143c2ef7163332"
+  },
+  "https://github.com/Puumanamana/CoCoNet": {
+    "date": "2021-10-22T10:48:06Z",
+    "sha": "064cb8c4a3d7205a66492567cea21fe2c0065073"
+  },
+  "https://github.com/RedaRawi/PaRSnIP": {
+    "date": "2020-04-01T23:59:46Z",
+    "sha": "5a6ad313864fa526c77e0301b45fb4c1aa153d13"
+  },
+  "https://github.com/SCBIT-YYLab/DysRegSig": {
+    "date": "2021-07-13T02:32:23Z",
+    "sha": "aa65ab94ef3ca099f7c3555044d40adc8b3fad32"
+  },
+  "https://github.com/Santiso-Group/despasito": {
+    "date": "2025-02-06T14:32:32Z",
+    "sha": "b54781980e38bc16f82706ab30a29c51ed67c468"
+  },
+  "https://github.com/alexcis95/PhenoExam": {
+    "date": "2022-12-19T11:19:20Z",
+    "sha": "2599874bd7de14a1c1f6718b8b4eb8f353a0074f"
+  },
+  "https://github.com/benhid/Sequoya": {
+    "date": "2020-03-10T13:17:41Z",
+    "sha": "e5a123e1a8f20bbfde0c0a17191d5b96c1b24d1b"
+  },
+  "https://github.com/bihealth/sodar-server": {
+    "date": "2025-12-05T07:27:24Z",
+    "sha": "787fe31b94a06d05a02609f1be00270c1a939560"
+  },
+  "https://github.com/cfarkas/annotate_my_genomes": {
+    "date": "2024-04-10T19:02:24Z",
+    "sha": "401f5ebae995aed4f07184601edc0c8a368221be"
+  },
+  "https://github.com/constantino-garcia/cmmrt": {
+    "date": "2023-12-12T17:14:29Z",
+    "sha": "52d9f78ea1105d50c2b684068ce24d98b002905c"
+  },
+  "https://github.com/crimBubble/ECCsplorer": {
+    "date": "2023-10-04T11:13:03Z",
+    "sha": "b305dd7e36a5728900dc9e47e88676860535bf89"
+  },
+  "https://github.com/ctlab/GADMA": {
+    "date": "2026-01-31T19:53:56Z",
+    "sha": "8dac39943ae461d0c8cf674c72305002fab146da"
+  },
+  "https://github.com/ezer/NITPicker": {
+    "date": "2018-06-27T11:07:22Z",
+    "sha": "33834f081603fcc0f856dcc14085db78f4362d90"
+  },
+  "https://github.com/flatironinstitute/DeepFRI": {
+    "date": "2023-01-11T19:40:51Z",
+    "sha": "3bd6c7eae67894ccedbe1117e33b3abe544bca71"
+  },
+  "https://github.com/gcorso/DiffDock": {
+    "date": "2025-05-02T13:58:49Z",
+    "sha": "85c49b60d3e0b0182a59ee43a34a6d7036981284"
+  },
+  "https://github.com/haddocking/interface-classifier": {
+    "date": "2025-10-01T15:22:29Z",
+    "sha": "29d99d535cae3014608c9394b8809619a60fcfa2"
+  },
+  "https://github.com/hkmztrk/DeepDTA": {
+    "date": "2023-08-16T12:18:16Z",
+    "sha": "a546a8433a6822e958f36171c4356ad6f414d623"
+  },
+  "https://github.com/huynguyen250896/DrGA": {
+    "date": "2023-10-17T15:57:28Z",
+    "sha": "75ddc7893bc1995879a41a8f19c9d38fcc9a4a77"
+  },
+  "https://github.com/iferres/simurg": {
+    "date": "2019-07-30T18:17:55Z",
+    "sha": "303f59daf044d1a2d948a12f985866a6a95aff1f"
+  },
+  "https://github.com/intermine/interMineR": {
+    "date": "2022-01-05T09:53:35Z",
+    "sha": "a4c7bce3f2e4cfdae71eb7e46be9e510674f0ae1"
+  },
+  "https://github.com/inzilico/imputeqc": {
+    "date": "2020-07-27T15:38:28Z",
+    "sha": "f58d3e505d7c558229615c226325b5e8a31e9fd1"
+  },
+  "https://github.com/jertubiana/ScanNet": {
+    "date": "2025-06-18T13:32:33Z",
+    "sha": "a61623cd98d243c2ff4cd03fc3619d2d22ec50e7"
+  },
+  "https://github.com/jorgemf/DeepLatentMicrobiome": {
+    "date": "2020-11-26T11:58:32Z",
+    "sha": "3ca4367f5b73db6eaf8a9dfe78e19829b02c69bb"
+  },
+  "https://github.com/kevin-tofu/scikit-topt": {
+    "date": "2026-06-02T17:00:12Z",
+    "sha": "cf4bd41aaa08bccd260707db714f1c2faaad083f"
+  },
+  "https://github.com/kexinhuang12345/DeepPurpose": {
+    "date": "2024-06-10T00:41:46Z",
+    "sha": "866be98bad0b11e78d4363589b9ee59b5befa307"
+  },
+  "https://github.com/lanagarmire/lilikoi": {
+    "date": "2018-08-30T01:15:59Z",
+    "sha": "24498267dd3472bbd45cabb1afd073f6d9f2cc74"
+  },
+  "https://github.com/lauzingaretti/LinkHD": {
+    "date": "2023-03-06T18:59:43Z",
+    "sha": "b451fd947fab979482cab14b7c7d95c2f1cdadee"
+  },
+  "https://github.com/loftytopping/PyBox": {
+    "date": "2020-11-03T12:57:05Z",
+    "sha": "3efd0a69e15dc9ba8f965342ea47d295c7033f40"
+  },
+  "https://github.com/mhalushka/miRge": {
+    "date": "2022-03-23T21:13:11Z",
+    "sha": "233b9c8790ce9a1353d2071bf67bfae630571c99"
+  },
+  "https://github.com/mikejohnson51/AHGestimation": {
+    "date": "2025-04-10T19:05:31Z",
+    "sha": "76a6ed0b7bb540365323e827f8bac191157c2fd6"
+  },
+  "https://github.com/ml-evs/matador": {
+    "date": "2025-04-16T11:51:14Z",
+    "sha": "8fa53848d55a882aa50c018299c50bea030a9af0"
+  },
+  "https://github.com/mrzResearchArena/PyFeat": {
+    "date": "2022-08-14T09:20:26Z",
+    "sha": "0fe014b790ac86ece0246ca868fb402dc68cc055"
+  },
+  "https://github.com/npdeloss/meirlop": {
+    "date": "2020-08-18T22:21:00Z",
+    "sha": "ae89ec2d6e72ffea5da664929a12b50f282813f4"
+  },
+  "https://github.com/octavian-ganea/equidock_public": {
+    "date": "2022-04-14T17:54:14Z",
+    "sha": "ac2c754399bf20b50a27d86dbff4f6669788d47f"
+  },
+  "https://github.com/overton-group/eHDPrep": {
+    "date": "2026-02-20T15:17:59Z",
+    "sha": "887f3b12c191e883c394bbd0cb8c6ca90393c6bc"
+  },
+  "https://github.com/parklab/HiTea": {
+    "date": "2020-09-17T14:35:57Z",
+    "sha": "a25e8c4ed4ca34c4610502b7f62e2131a8515a41"
+  },
+  "https://github.com/pySRURGS/pySRURGS": {
+    "date": "2022-11-03T02:47:34Z",
+    "sha": "0b79fda2a4fafe7859369db9071fead992bf6282"
+  },
+  "https://github.com/pyamg/pyamg": {
+    "date": "2026-03-30T14:27:52Z",
+    "sha": "0c021343e7dce3274f0d587fd60be2bd0ae53495"
+  },
+  "https://github.com/radamsRHA/PhyloWGA": {
+    "date": "2020-10-16T20:35:58Z",
+    "sha": "d4edd53f58b0551c9a028330b9518c0194a75a4d"
+  },
+  "https://github.com/radwinskis/RadGEEToolbox": {
+    "date": "2026-06-24T13:51:53Z",
+    "sha": "3b93c9df0a0500cda20d1ea9a648103d801be86b"
+  },
+  "https://github.com/rauschenberger/joinet": {
+    "date": "2024-09-27T06:01:46Z",
+    "sha": "d5f0b581288f0231a6c9d5e4d1d7de3a412a1aa9"
+  },
+  "https://github.com/skalyaanamoorthy/PoseFilter": {
+    "date": "2021-02-16T23:43:44Z",
+    "sha": "619eca51aec26ce15c36be69b5f82baa6c14f867"
+  },
+  "https://github.com/szymczak-lab/PathwayGuidedRF": {
+    "date": "2020-01-27T07:48:40Z",
+    "sha": "c9412b37efacc27f91647f3472fea5bc4f530139"
+  },
+  "https://github.com/theislab/scgen": {
+    "date": "2023-10-01T11:27:41Z",
+    "sha": "d79e1f04233c30f9a4eb5b8d57718127909807d7"
+  },
+  "https://github.com/thinng/GraphDTA": {
+    "date": "2021-04-13T05:13:35Z",
+    "sha": "6162245c6776684b391d30610850fe7077478435"
+  },
+  "https://github.com/tylii/ddap": {
+    "date": "2019-03-26T17:38:36Z",
+    "sha": "b974bd6dba5d3b3a9b37492a4240bd40b1c0d7fc"
+  },
+  "https://github.com/uci-cbcl/DanQ": {
+    "date": "2017-01-14T00:06:06Z",
+    "sha": "98341e0e2eeb4b8ec12632b93fb09c563605451a"
+  },
+  "https://github.com/zoccoler/metroid": {
+    "date": "2020-09-23T02:17:16Z",
+    "sha": "7e301e4c1d8e582b04bddc0c701ec32dc404dfd7"
+  }
+}

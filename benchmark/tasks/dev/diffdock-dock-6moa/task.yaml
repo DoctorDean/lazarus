@@ -1,0 +1,37 @@
+# Dev-split task. Contaminated on purpose: DiffDock is in the Lazarus registry and this
+# exact system is the flagship pipeline's hero case. See ../../../LEADERBOARD_SCOPE.md §2.2.
+id: diffdock-dock-6moa
+repo_url: https://github.com/gcorso/DiffDock
+commit: 85c49b60d3e0b0182a59ee43a34a6d7036981284   # 2025-05-02
+paper: Corso et al., ICLR 2023 — DiffDock
+domain: structural biology
+kind: predict
+split: dev
+
+capability: >-
+  Blind-dock a small molecule, given only the receptor structure and the ligand as SMILES,
+  and write the top-ranked pose. No pocket is supplied — finding it is part of the task.
+
+input_path: input/receptor.pdb
+output_path: prediction.sdf
+
+evaluation:
+  evaluator: ligand_centroid_distance
+  metric: centroid_distance_A
+  direction: lower          # Å from the crystal pose — smaller is better
+  threshold: 2.0
+  labels: labels/reference_ligand.pdb
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  The ligand SMILES is in input/jw4.smi. 2.0 Å is the conventional docking-success bar.
+  Ground truth is the crystal pose of JW4 in PDB 6MOA — public, but not derivable from the
+  receptor-only input, which is what makes it a fair target. Scored on centroid distance,
+  not RMSD: DiffDock rebuilds the ligand from SMILES and does not preserve atom order, so a
+  same-order RMSD would punish a correct pose (0.22 Å centroid vs 5.30 Å same-order RMSD on
+  this very system). DiffDock is generative, so repeat runs vary by ~0.02 Å here — far
+  inside the bar.

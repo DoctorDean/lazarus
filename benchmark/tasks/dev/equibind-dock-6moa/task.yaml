@@ -1,0 +1,35 @@
+# Dev-split task. Contaminated on purpose: EquiBind is in the Lazarus registry.
+# See ../../../LEADERBOARD_SCOPE.md §2.2.
+id: equibind-dock-6moa
+repo_url: https://github.com/HannesStark/EquiBind
+commit: 4cb1b4c562dae914780154518a6b915bb4cba658   # 2025-02-19
+paper: Stärk et al., ICML 2022 — EquiBind
+domain: structural biology
+kind: predict
+split: dev
+
+capability: >-
+  Blind-dock a small molecule into a receptor structure in one shot (regression, not
+  sampling) and write the docked pose.
+
+input_path: input/receptor.pdb
+output_path: prediction.sdf
+
+evaluation:
+  evaluator: ligand_centroid_distance
+  metric: centroid_distance_A
+  direction: lower
+  threshold: 2.0
+  labels: labels/reference_ligand.pdb
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  Same target and bar as diffdock-dock-6moa, deliberately: two repos, two eras, one
+  criterion, so the pair shows the board comparing methods rather than implementations.
+  EquiBind re-poses the supplied ligand and preserves atom order, so a same-order RMSD
+  would also be meaningful here (1.30 Å) — but the task scores centroid distance so both
+  docking tasks are graded identically.
