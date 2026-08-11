@@ -38,7 +38,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "build>=1", "twine>=5"]
+# numpy is test-only: it's needed to import the pipelines/ consensus adapter. The brick
+# itself installs numpy inside its own container, so the shipped package stays stdlib-light.
+dev = ["pytest>=7", "build>=1", "twine>=5", "numpy>=1.21"]
 # The autonomous loop + Scout need the Claude Agent SDK (Python >= 3.10).
 agent = ["claude-agent-sdk>=0.2"]
 
