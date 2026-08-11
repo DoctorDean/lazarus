@@ -60,6 +60,13 @@ class BenchmarkResult:
     summary: str = ""                       # the Scout's capability line
     attempted_at: str = ""                  # ISO date (stamped by the caller)
     notes: str = ""
+    # --- leaderboard scoring (harness-owned criterion; see task.py / score.py) ---
+    # Populated only when a run is graded against a benchmark Task. The fields above
+    # describe what the AGENT claimed; these describe what WE measured.
+    task_id: str = ""
+    task_metric: str = ""
+    task_measured: Optional[float] = None
+    task_passed: Optional[bool] = None      # None = could not be graded (not a failure)
 
     @property
     def revived(self) -> bool:
@@ -443,6 +450,38 @@ def run_one(repo_url: str, *, docker_host: Optional[str], max_turns: int = 90,
             res.notes = (res.notes + " | independent smoke re-run FAILED").strip(" |")
         elif passed is None:
             res.notes = (res.notes + " | verification inconclusive").strip(" |")
+    return res
+
+
+# --------------------------------------------------------------------------
+# Leaderboard scoring — the harness's criterion replaces the agent's
+# --------------------------------------------------------------------------
+def apply_task_score(res: BenchmarkResult, task, out_dir) -> BenchmarkResult:
+    """Grade a run against a benchmark ``Task`` and fold the verdict into ``res``.
+
+    This is the seam between the registry-building harness (where the agent defines
+    success, which is right for a registry) and the leaderboard (where it can't be,
+    because every submission would set its own bar). When a task is supplied, the
+    harness's verdict is authoritative: an agent that emitted a contract and passed its
+    own smoke test still scores ``runs-unverified`` if our evaluator says the output
+    misses the mark.
+
+    Ungradable runs (no output, unparseable, evaluator error) are left at whatever the
+    agent-side classification decided and flagged in ``notes`` — they are not silently
+    converted into method failures, which would let a harness bug deflate a rate.
+    """
+    import score as _score  # local: keeps run.py importable without numpy
+
+    s = _score.grade(task, out_dir)
+    res.task_id, res.task_metric = s.task_id, s.metric
+    res.task_measured, res.task_passed = s.measured, s.passed
+    if s.passed is True:
+        res.outcome = "reproduced" if task.kind == "reproduce" else "revived"
+    elif s.passed is False:
+        res.outcome = "runs-unverified"
+        res.notes = (res.notes + f" | task {task.id}: {s.reason}").strip(" |")
+    else:
+        res.notes = (res.notes + f" | task {task.id} ungradable: {s.reason}").strip(" |")
     return res
 
 

@@ -1,6 +1,11 @@
 # Scope — a public benchmark for reviving dead research code
 
-*Roadmap Tier-1 "durable" track. Status: **scoping**, nothing built yet.*
+*Roadmap Tier-1 "durable" track. Status: **P0 landed** — the task/evaluator/grading layer
+exists and is tested. P1 (convert ~20 dev tasks) is next.*
+
+**Settled:** the test split chases `predict` tasks with hidden labels, and scope is
+**cross-domain** (not comp-bio only) — the generalisation result is the more interesting
+claim and the v0.4 corpus already spans a dozen fields.
 
 **The pitch:** *SWE-bench for resurrecting dead scientific software.* A frozen set of dead
 repositories, a fixed success criterion per repo, and a submission format so any agent — not just
@@ -196,7 +201,7 @@ a cloud GPU pool and a queue.
 
 | Phase | Work | Rough size |
 |---|---|---|
-| **P0** | Extract the success criterion from the contract into a task spec; add the evaluator interface; refactor `run.py` so scoring is task-owned | 2–3 days |
+| **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
 | **P1** | Task schema + convert ~20 of the existing 67 into a **public dev split** with real evaluators | 3–5 days |
 | **P2** | Submission boundary: containerised CLI, harness adapter, caps enforcement, Lazarus repackaged as the reference submission | 3–4 days |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
@@ -208,14 +213,11 @@ whether the benchmark is credible.
 
 ---
 
-## 8. Decisions needed before P0
+## 8. Decisions
 
-1. **Task kind mix.** Chase `predict` tasks with hidden labels (stronger, much more work per task),
-   or accept mostly `reproduce` tasks against published numbers (weaker, far faster to build)?
-   *Recommendation: `predict` for the test split, `reproduce` allowed in dev.*
-2. **Domain scope.** Comp-bio only — matching the original tight frame and the first paper — or
-   cross-domain, matching where the v0.4 study actually went? *Recommendation: cross-domain; the
-   generalisation result is the more interesting claim, and the corpus already exists.*
+1. ~~**Task kind mix.**~~ **Settled: `predict` for the test split**, `reproduce` allowed in dev.
+2. ~~**Domain scope.**~~ **Settled: cross-domain.** Every task carries a `domain` field so the
+   board can be sliced by field, and so a submission that only handles bio is visible as such.
 3. **Who runs official submissions.** Confirms whether P4 needs a queue and a budget.
 4. **Test-set size.** 50 tasks ≈ $80/sweep. 100 doubles cost and roughly halves the noise on a
    single-point rate.

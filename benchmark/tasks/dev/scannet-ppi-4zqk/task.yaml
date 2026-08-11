@@ -1,0 +1,35 @@
+# Dev-split task. Contaminated on purpose: ScanNet is in the Lazarus registry and its
+# revival is published, so this exists to exercise the harness, not to rank anyone.
+# See ../../../LEADERBOARD_SCOPE.md §2.2.
+id: scannet-ppi-4zqk
+repo_url: https://github.com/jertubiana/ScanNet
+commit: a61623cd98d243c2ff4cd03fc3619d2d22ec50e7   # 2025-06-18, predates our PR #16
+paper: Tubiana et al., Nature Methods 2022 — ScanNet
+domain: structural biology
+kind: predict
+split: dev
+
+capability: >-
+  Predict a protein-protein interface probability for every residue of a single protein
+  chain, from structure alone (no MSA), and write one row per residue.
+
+input_path: input/4ZQK_A.pdb
+output_path: prediction.csv
+output_schema: [resid, score]
+
+evaluation:
+  evaluator: auroc
+  metric: auroc
+  direction: higher     # explicit; never inferred from the metric name
+  threshold: 0.70
+  labels: labels/interface_5A.csv
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  Threshold 0.70 is a deliberately loose bar: it asks whether the method was revived into
+  something that genuinely localises the interface, not whether it matches a leaderboard
+  best. Lazarus's own revival measured 0.9233 on this input.
