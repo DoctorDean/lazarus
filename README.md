@@ -350,7 +350,7 @@ docks into a real drug pocket** ([BRD2 / 6MOA](pipelines/sample_output_6MOA/)), 
 benchmarks, and two give-back PRs — plus a systematic measurement: an **N=20 benchmark** (85% dead,
 100% of the dead revived) and a **cross-domain reproducibility study** — 40+ revivals across a dozen
 fields, reviewed vs. unreviewed decay ([preprint](https://doi.org/10.5281/zenodo.21715908)) — and a
-**registry of 25 tools** (23 pullable from GHCR). 91 passing tests, published to PyPI
+**registry of 25 tools** (23 pullable from GHCR). 92 passing tests, published to PyPI
 (`pip install lazarus-bio`).
 
 **Contributions welcome** — add a repo, curate a registry entry, or file a revival that failed.

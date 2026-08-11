@@ -2,7 +2,7 @@
 
 Lazarus set out to prove one thing: that an agent can take dead research code — a bare
 GitHub URL, nothing else — and bring it back as a callable, verified component. As of
-**v0.4** that's proven and measured:
+**v0.5** that's proven, measured, and *used*:
 
 - **It works, and it generalizes.** 40+ repositories revived across biology *and* a dozen
   other fields — from materials science and plasma physics to hydrology and retrosynthesis —
@@ -13,6 +13,9 @@ GitHub URL, nothing else — and bring it back as a callable, verified component
   gap is **packaging discipline, not recoverability**.
 - **The revivals are public.** A registry of 25 tools (23 pullable from GHCR), each with a
   verified contract, plus fixes sent upstream as pull requests.
+- **And they compose into new science.** Four resurrected tools — spanning 2010→2023, C→Python,
+  CPU→GPU — run as one pipeline and converge on a real drug pocket in BRD2, cross-validated
+  sub-Å against the crystal ligand. Revival as a *supply chain*, not a museum.
 
 That's the foundation. This document is where it goes next.
 
@@ -24,20 +27,24 @@ here is locked; it's an invitation. If one of these is what pulls you in, open a
 
 ## Tier 1 — The next chapter
 
-Three directions, best pursued as a pair: one **flagship** demonstration for reach, and one
-**durable** investment that compounds.
+Two **durable** investments remain — the kind that compound. The flagship demonstration that used
+to head this list is done; it's kept below as the worked example of what "finished" looks like.
 
-### Flagship · Real science from resurrected bricks
-The `compose`/contract layer already lets revived tools snap together — but the vision (revival as
-a *supply chain for new work*, not a museum) is under-demonstrated. Build a genuine multi-tool
-pipeline entirely from tools that were dead a month ago — e.g. structural biology:
-pocket detection (`fpocket`) → docking (`DiffDock` / `EquiBind`) → interface classification
-(`PRODIGY-CRYSTAL`) → scoring — and produce a **real result**.
+### ✅ Shipped in v0.5 · Real science from resurrected bricks
+*Was: build a genuine multi-tool pipeline entirely from tools that were dead a month ago, and
+produce a real result.*
 
-*Why it matters:* it's the most quotable proof there is, and it lands hardest with the scientists
-who feel the reproducibility pain. *Good first steps:* pick a question answerable by 3–4 registry
-bricks; wire the contracts into one `compose` pipeline; write up the result and the fact that every
-component was unrunnable a week prior.
+[`pipelines/target_dock_consensus.yaml`](https://github.com/DoctorDean/lazarus/blob/main/pipelines/target_dock_consensus.yaml)
+runs fpocket (2010 C, geometry) + ScanNet (learned) + DiffDock (2023 generative, GPU) + EquiBind
+(generative, CPU) as one `lazarus run` and triangulates a druggable site. On BRD2's BD2
+bromodomain (PDB 6MOA): druggability **0.93**, ScanNet quiet at mean p **0.26**, both dockers
+in-pocket at **0.20 Å** / **0.84 Å** from the crystal-ligand centroid, both converging on
+**Asn429** and **Trp370** — the real BET pharmacophore. Verdict: *CONFIRMED small-molecule site* —
+the mirror image of the PD-L1 pipeline's *flat interface, biologic target*. The full run is
+committed at
+[`pipelines/sample_output_6MOA/`](https://github.com/DoctorDean/lazarus/tree/main/pipelines/sample_output_6MOA),
+including an honest note on which numbers reproduce exactly and which move (DiffDock is
+generative). See [Compose & reproduce](compose.md).
 
 ### Durable · The reproducibility observatory
 Turn the one-off benchmark into a *continuous* service: `decay-check` sweeping a large corpus (all
