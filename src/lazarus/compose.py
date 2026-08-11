@@ -170,10 +170,16 @@ class Runner:
         if not rest:
             return ("file", step_out)
         selector = rest[0]
-        # recursive so nested step outputs are found (e.g. DiffDock writes
+        # Recursive so nested step outputs are found (e.g. DiffDock writes
         # <complex_name>/rank1.sdf); files only, so a matching dir name isn't picked.
-        matches = sorted(m for m in glob.glob(
-            os.path.join(step_out, "**", f"*{selector}*"), recursive=True) if os.path.isfile(m))
+        matches = [m for m in glob.glob(
+            os.path.join(step_out, "**", f"*{selector}*"), recursive=True) if os.path.isfile(m)]
+        # Shallowest first, then lexicographic. A top-level artifact ALWAYS beats a nested
+        # one, so recursion can only resolve refs that previously failed — it can never
+        # change a ref that already resolved. Without this, fpocket's nested
+        # <name>_out/<name>_pockets.pqr can outrank its top-level pockets.json whenever the
+        # input's name sorts before "pockets" (digits do), silently swapping the artifact.
+        matches.sort(key=lambda m: (os.path.relpath(m, step_out).count(os.sep), m))
         if not matches:
             raise FileNotFoundError(
                 f"no output matching {selector!r} in step {head!r} ({step_out})"

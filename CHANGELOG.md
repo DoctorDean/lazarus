@@ -4,11 +4,18 @@ All notable changes to Lazarus (`lazarus-bio`) are documented here. The format f
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [0.5.0] — 2026-08-11
 
 The Tier-1 **flagship** from the roadmap: *real science from resurrected bricks*. Unlike 0.4.0,
-this one **does** change the installed package — the two runner fixes below are what make a
-pipeline like this composable at all, so they need a release to reach users.
+this one **does** change the installed package — the runner fixes below are what make a pipeline
+like this composable at all, so they need a release to reach users.
+
+**Upgrading from 0.3.0 is safe.** The public API is unchanged except for one additive,
+keyword-only argument (`Sandbox.exec(user=...)`, default `None` — omit it and the emitted
+`docker exec` is byte-identical). No symbol was added, removed, or re-signed. Artifact
+resolution is strictly a superset of 0.3.0's: a `${step.selector}` that resolved before resolves
+to the same file, and refs that previously failed may now succeed. `pin`, `resurrect`,
+`registry`, `pull` and `decay-check` are untouched.
 
 ### Added
 - **`target_dock_consensus`** (`pipelines/`) — a four-brick pipeline that triangulates a druggable
@@ -25,14 +32,18 @@ pipeline like this composable at all, so they need a release to reach users.
 - **`pipelines/sample_output_6MOA/`** — the committed run: every output artifact, the exact command,
   input provenance, and an explicit note on what reproduces exactly (fpocket, ScanNet, EquiBind) vs.
   what moves run to run (DiffDock is generative — two runs gave 0.20 Å / 0.22 Å).
-- 17 new tests (74 → 91): regression cover for both runner fixes, a parity check that each adapter's
+- 18 new tests (74 → 92): regression cover for the runner fixes, a parity check that each adapter's
   `.py` still matches the copy embedded in its contract, and unit cover for the adapters' parsing,
   geometry, and all three verdict branches (confirmed / PPI / inconclusive).
 
 ### Fixed
 - **Nested step artifacts now resolve.** `${step.selector}` globs recursively and matches files
   only, so an output like DiffDock's `$OUTDIR/<complex_name>/rank1.sdf` is found and a
-  same-named directory can't shadow it.
+  same-named directory can't shadow it. Matches are ordered **shallowest-first**, so a top-level
+  artifact always beats a nested one and recursion can only *add* resolutions — without that,
+  fpocket's nested `<input>_out/<input>_pockets.pqr` outranks its top-level `pockets.json`
+  whenever the input's name sorts before `"pockets"` (digits do, e.g. `4ZQK`), silently feeding a
+  PQR point cloud to a step expecting JSON.
 - **Bricks that run as a non-root user can now be composed.** The shared `/lazarus` work dirs are
   created as root and made world-writable, so images with their own user (DiffDock's `appuser`) can
   read staged inputs and write outputs; `Sandbox.exec` gained a `user=` argument.

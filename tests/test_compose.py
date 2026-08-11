@@ -104,6 +104,24 @@ def test_resolve_ref_skips_directories_matching_the_selector(tmp_path):
     assert kind == "file" and val.endswith("zz_rank1.sdf")
 
 
+def test_resolve_ref_prefers_a_top_level_artifact_over_a_nested_one(tmp_path):
+    """Recursion must only ADD resolutions, never change one that already worked.
+
+    fpocket's real layout: the composable pockets.json at the top level, plus a nested
+    <input>_out/<input>_pockets.pqr. Lexicographically the nested file wins whenever the
+    input's name sorts before "pockets" (4ZQK does — digits precede letters), which would
+    silently feed a PQR point cloud to a step expecting JSON. Shallowest-first prevents it.
+    """
+    r = Runner(Registry({}))
+    sdir = tmp_path / "fpocket"
+    (sdir / "4ZQK_out").mkdir(parents=True)
+    (sdir / "4ZQK_out" / "4ZQK_pockets.pqr").write_text("HEADER pqr")
+    (sdir / "pockets.json").write_text("[]")
+    ctx = {"inputs": {}, "steps": {"fpocket": StepResult("fpocket", str(sdir), [])}}
+    kind, val = r._resolve("${fpocket.pockets}", ctx)
+    assert kind == "file" and val.endswith("pockets.json")
+
+
 def test_run_component_prepares_shared_dirs_as_root(tmp_path):
     """Bricks that run as a non-root user (DiffDock's appuser) still need to read
     /lazarus/in and write /lazarus/out — so the dirs are made root + world-writable,
