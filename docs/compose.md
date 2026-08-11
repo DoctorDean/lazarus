@@ -71,6 +71,13 @@ merely *somewhere on the protein*. Verdict: *"CONFIRMED small-molecule site"* �
 PD-L1 answered, with the opposite result, this one cross-validated sub-Å against the drug already in
 the crystal. One command, run on a remote A4500 GPU box (Bertha) via `--docker-host ssh`.
 
+The whole run is committed — every output file, the exact command, and an honest note on what
+reproduces exactly and what doesn't — at
+[`pipelines/sample_output_6MOA/`](https://github.com/DoctorDean/lazarus/tree/main/pipelines/sample_output_6MOA).
+fpocket, ScanNet and EquiBind are deterministic and repeat exactly; DiffDock is a *generative*
+model, so its pose shifts slightly between runs (a second independent run gave 0.22 Å / 91% /
+0.96 Å). The verdict, the pocket, and the Asn429 + Trp370 convergence are stable across both.
+
 ## Reproduce — the trust layer
 
 A smoke test proves a method *runs*; a benchmark proves it's *the method*. A contract's `benchmark`

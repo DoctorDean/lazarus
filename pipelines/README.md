@@ -36,9 +36,14 @@ Both adapters are stdlib/numpy-only (generic `python:3.11-slim`, no build). `con
 `prep.py` are the readable, locally-testable sources; the same code is embedded in each brick's
 `lazarus.yaml` entrypoint so the contract is self-contained.
 
-> **Status:** verified end-to-end on the A4500 GPU box (BRD2 / **6MOA**). fpocket flags a druggable
-> pocket (druggability **0.93**); DiffDock and EquiBind both dock JW4 into it (90% / 100% pocket
-> overlap, **0.20 Å** / 0.84 Å from the crystal-ligand centroid; DiffDock↔EquiBind agree to 1.02 Å);
-> ScanNet stays quiet (mean p 0.26) — the signature of a small-molecule cleft, not a PPI interface.
+> **Status:** verified end-to-end on the A4500 GPU box (BRD2 / **6MOA**), twice. fpocket flags a
+> druggable pocket (druggability **0.93**); DiffDock and EquiBind both dock JW4 into it (90–91% /
+> 100% pocket overlap, **0.20–0.22 Å** / 0.84 Å from the crystal-ligand centroid; DiffDock↔EquiBind
+> agree to ~1 Å); ScanNet stays quiet (mean p 0.26) — the signature of a small-molecule cleft, not a
+> PPI interface. Both dockers converge on **Asn429** and **Trp370**, the real BET pharmacophore.
 > Verdict: **CONFIRMED small-molecule site**, three independently-resurrected tools converging
 > (fpocket geometry + DiffDock + EquiBind generative), cross-validated against the crystal ligand.
+>
+> The committed run — every output file, the exact command, and which numbers are deterministic
+> vs. run-to-run (DiffDock is generative) — is in
+> [`sample_output_6MOA/`](sample_output_6MOA/README.md).

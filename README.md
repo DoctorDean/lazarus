@@ -27,7 +27,7 @@
 - **Why** — [The wall](#the-wall) · [What Lazarus does](#what-lazarus-does)
 - **Does it work?** — [Six dead repos, resurrected](#six-dead-repos-resurrected-autonomously) · [Reproduces the paper](#reproduces-the-paper) · [Measured at scale](#measured-at-scale)
 - **How it works** — [The Scout writes the plan](#point-it-at-a-url--the-scout-writes-the-plan) · [Five organs](#five-organs) · [Runs anywhere](#runs-on-a-laptop-executes-anywhere)
-- **Use it** — [Quickstart](#quickstart) · [Registry & pull](#the-registry--pull-a-revived-tool) · [Compose pipelines](#compose--a-pipeline-from-revived-bricks) · [`decay-check`](#is-it-dead-measure-it--decay-check) · [Dashboard](#try-it--the-dashboard) · [Give back](#give-back)
+- **Use it** — [Quickstart](#quickstart) · [Registry & pull](#the-registry--pull-a-revived-tool) · [Compose pipelines](#compose--a-pipeline-from-revived-bricks) · [The flagship](#the-flagship--four-dead-tools-find-a-real-drug-pocket) · [`decay-check`](#is-it-dead-measure-it--decay-check) · [Dashboard](#try-it--the-dashboard) · [Give back](#give-back)
 - [Status](#status) · [License](#license)
 
 ---
@@ -263,6 +263,41 @@ molecule pocket — a flat protein-protein interface, i.e. an antibody/biologic 
 That's textbook immuno-oncology (PD-1/PD-L1 *is* an antibody target), reproduced from dead
 code. Sample output: [`examples/pipelines/sample_output_4ZQK/`](examples/pipelines/sample_output_4ZQK/).
 
+## The flagship — four dead tools find a real drug pocket
+
+[`pipelines/target_dock_consensus.yaml`](pipelines/target_dock_consensus.yaml) asks the same
+question of a different target and goes a step further: it doesn't just locate the site, it
+**docks a drug into it**. Four tools spanning **2010→2023, C→Python, CPU→GPU,
+geometry→learned→generative**, feeding one consensus adapter:
+
+```
+        ─▶ fpocket  (2010 C · geometry)       ─┐
+complex ─▶ ScanNet  (learned · PPI-site)      ─┼─▶ consensus ─▶ CONFIRMED small-molecule site
+        ─▶ DiffDock (2023 · generative · GPU) ─┤
+        ─▶ EquiBind (generative · CPU)        ─┘
+```
+
+```bash
+lazarus run pipelines/target_dock_consensus.yaml \
+  --input complex=6moa.pdb --input ligand_smiles=jw4.smi \
+  --registry examples --registry pipelines \
+  --docker-host ssh://you@your-x86-gpu-box
+```
+
+Run live on **BRD2's BD2 bromodomain** (PDB 6MOA), a validated BET oncology target, the four
+methods reinforce rather than cancel. fpocket scores its top pocket **druggability 0.93**;
+ScanNet, asked the PPI question over those same residues, stays **quiet (mean p 0.26)** — a
+small-molecule cleft, not an interface. Both dockers land *inside* that pocket, **0.20 Å** and
+**0.84 Å** from the crystal ligand's centroid, and both converge on **Asn429** (the conserved
+acetyl-lysine anchor) and **Trp370** (the WPF-shelf tryptophan) — the real BET pharmacophore, not
+merely *somewhere on the protein*. Same question as PD-L1, opposite answer, this one
+cross-validated sub-Å against the drug already sitting in the crystal structure.
+
+The full run is committed at
+[`pipelines/sample_output_6MOA/`](pipelines/sample_output_6MOA/) — every output file, the exact
+command, and a note on which numbers are deterministic and which move between runs (DiffDock is
+generative; the verdict and the pharmacophore are stable, the second decimal isn't).
+
 ## Is it dead? Measure it — `decay-check`
 
 The agent-free flip side of reviving: **does a repo still install and run today?** — the same
@@ -310,11 +345,13 @@ remote + `--gpus`) · autonomous repair loop · capability locator · contract e
 with reproduction certificates) · **Lazarus Compose** · a **registry** of revived tools · a
 public **dashboard** · an agent-free **decay-check** (CLI + GitHub Action). All three pillars
 landed — a hero set of dead repos revived across protein, genomics, and molecular docking, a
-three-way method comparison, a live binder-triage pipeline, reproduced paper benchmarks, and
-two give-back PRs — plus a systematic measurement: an **N=20 benchmark** (85% dead, 100% of the
-dead revived) and a **cross-domain reproducibility study** — 40+ revivals across a dozen fields,
-reviewed vs. unreviewed decay ([preprint](https://doi.org/10.5281/zenodo.21715908)) — and a **registry of 25 tools** (23
-pullable from GHCR). 74 passing tests, published to PyPI (`pip install lazarus-bio`).
+three-way method comparison, a live binder-triage pipeline, a **four-brick flagship that finds and
+docks into a real drug pocket** ([BRD2 / 6MOA](pipelines/sample_output_6MOA/)), reproduced paper
+benchmarks, and two give-back PRs — plus a systematic measurement: an **N=20 benchmark** (85% dead,
+100% of the dead revived) and a **cross-domain reproducibility study** — 40+ revivals across a dozen
+fields, reviewed vs. unreviewed decay ([preprint](https://doi.org/10.5281/zenodo.21715908)) — and a
+**registry of 25 tools** (23 pullable from GHCR). 91 passing tests, published to PyPI
+(`pip install lazarus-bio`).
 
 **Contributions welcome** — add a repo, curate a registry entry, or file a revival that failed.
 Start at [CONTRIBUTING.md](CONTRIBUTING.md). Development happens on the `next` branch.

@@ -4,6 +4,40 @@ All notable changes to Lazarus (`lazarus-bio`) are documented here. The format f
 [Keep a Changelog](https://keepachangelog.com/), and the project adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+The Tier-1 **flagship** from the roadmap: *real science from resurrected bricks*. Unlike 0.4.0,
+this one **does** change the installed package — the two runner fixes below are what make a
+pipeline like this composable at all, so they need a release to reach users.
+
+### Added
+- **`target_dock_consensus`** (`pipelines/`) — a four-brick pipeline that triangulates a druggable
+  small-molecule site and cross-validates it against a crystal ligand: fpocket (2010 C, geometry) +
+  ScanNet (learned, PPI-site) + DiffDock (2023, generative, GPU) + EquiBind (generative, CPU) into
+  one consensus adapter. Verified end-to-end on **BRD2's BD2 bromodomain (PDB 6MOA)**: druggability
+  **0.93**, ScanNet quiet (mean p **0.26**), both dockers in-pocket at **0.20 Å** / **0.84 Å** from
+  the crystal-ligand centroid, both converging on **Asn429** + **Trp370** — the real BET
+  pharmacophore. Verdict: *CONFIRMED small-molecule site*, the mirror image of the PD-L1 pipeline's
+  *flat interface / biologic target*.
+- Two new stdlib+numpy bricks: **`dock_prep`** (split a complex into receptor + reference ligand +
+  DiffDock CSV) and **`dock_site_consensus`** (the fusion: pose → contact residues, overlap with the
+  druggable pocket and the predicted site, pose-vs-crystal and pose-vs-pose geometry).
+- **`pipelines/sample_output_6MOA/`** — the committed run: every output artifact, the exact command,
+  input provenance, and an explicit note on what reproduces exactly (fpocket, ScanNet, EquiBind) vs.
+  what moves run to run (DiffDock is generative — two runs gave 0.20 Å / 0.22 Å).
+- 17 new tests (74 → 91): regression cover for both runner fixes, a parity check that each adapter's
+  `.py` still matches the copy embedded in its contract, and unit cover for the adapters' parsing,
+  geometry, and all three verdict branches (confirmed / PPI / inconclusive).
+
+### Fixed
+- **Nested step artifacts now resolve.** `${step.selector}` globs recursively and matches files
+  only, so an output like DiffDock's `$OUTDIR/<complex_name>/rank1.sdf` is found and a
+  same-named directory can't shadow it.
+- **Bricks that run as a non-root user can now be composed.** The shared `/lazarus` work dirs are
+  created as root and made world-writable, so images with their own user (DiffDock's `appuser`) can
+  read staged inputs and write outputs; `Sandbox.exec` gained a `user=` argument.
+- `dock_prep` writes the DiffDock CSV's `protein_path` as the absolute in-container receptor path.
+
 ## [0.4.0] — 2026-07-28
 
 A **registry + evidence** milestone. The installed `lazarus-bio` package is *unchanged* from
