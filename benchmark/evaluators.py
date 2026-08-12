@@ -162,6 +162,26 @@ def accuracy(prediction: Path, labels: Optional[Path], task=None) -> float:
     return float((y_pred == y_true).mean())
 
 
+def r_squared(prediction: Path, labels: Optional[Path], task=None) -> float:
+    """Coefficient of determination against held-out targets, joined on id.
+
+    Not clipped at 0: a model worse than predicting the mean genuinely scores negative,
+    and hiding that would make a broken submission look merely mediocre.
+    """
+    if labels is None:
+        raise EvaluationError("r_squared needs a labels file")
+    y_pred, y_true = _align(
+        _read_rows(prediction), _read_rows(labels),
+        ("id", "index", "sequence_id", "resid"),
+        ("score", "prediction", "value", "pred", "y"),
+        ("label", "y", "target", "truth", "value"),
+    )
+    ss_tot = float(((y_true - y_true.mean()) ** 2).sum())
+    if ss_tot == 0.0:
+        raise EvaluationError("targets are constant — R² is undefined")
+    return float(1.0 - ((y_true - y_pred) ** 2).sum() / ss_tot)
+
+
 def scalar(prediction: Path, labels: Optional[Path], task=None) -> float:
     """One number out of a free-form output file — the ``reproduce`` grader.
 
@@ -326,6 +346,7 @@ BUILTINS = {
     "rmse": rmse,
     "accuracy": accuracy,
     "scalar": scalar,
+    "r_squared": r_squared,
     "ligand_centroid_distance": ligand_centroid_distance,
     "relative_residual": relative_residual,
 }

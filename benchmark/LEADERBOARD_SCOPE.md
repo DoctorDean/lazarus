@@ -1,7 +1,7 @@
 # Scope — a public benchmark for reviving dead research code
 
 *Roadmap Tier-1 "durable" track. Status: **P0 landed, P1 in progress** — the
-task/evaluator/grading layer is built and tested; 5 of ~20 dev tasks converted, now cross-domain.*
+task/evaluator/grading layer is built and tested; 6 of ~20 dev tasks converted, across 3 domains.*
 
 **Settled:** the test split chases `predict` tasks with hidden labels, and scope is
 **cross-domain** (not comp-bio only) — the generalisation result is the more interesting
@@ -252,7 +252,7 @@ a cloud GPU pool and a queue.
 | Phase | Work | Rough size |
 |---|---|---|
 | **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
-| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (58 repos), 5 real `predict` tasks with constructible labels, 6 evaluators. Remaining: ~15 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
+| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (**all 67**), 6 real `predict` tasks across 3 domains, 7 evaluators. Remaining: ~14 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
 | **P2** | Submission boundary: containerised CLI, harness adapter, caps enforcement, Lazarus repackaged as the reference submission | 3–4 days |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
 | **P4** | Scoring, board rendering, public submission docs | 3–4 days |

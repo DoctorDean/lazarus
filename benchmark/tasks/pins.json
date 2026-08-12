@@ -1,4 +1,8 @@
 {
+  "https://github.com/ADSCIAN/ssalib": {
+    "date": "2025-11-14T18:46:57Z",
+    "sha": "5f4d28998309410d644bcb455a99b2c67484a58a"
+  },
   "https://github.com/BieseckerLab/SomatoSim": {
     "date": "2021-03-29T18:50:18Z",
     "sha": "2cedd7722b89a1877a36f72281e4609cebc9b766"
@@ -7,6 +11,10 @@
     "date": "2025-07-17T13:26:02Z",
     "sha": "1e9d396f8aba058f073d7d27bf1148fe408adaf8"
   },
+  "https://github.com/Cosmoglobe/zodipy": {
+    "date": "2026-06-22T05:49:34Z",
+    "sha": "69d3a68c3dde870399e33dce84e991237876b59f"
+  },
   "https://github.com/Edinburgh-Genome-Foundry/DnaFeaturesViewer": {
     "date": "2025-05-09T11:49:29Z",
     "sha": "049bbe4e3063e90ae9b0f88ac7e92f47b735d38a"
@@ -14,6 +22,10 @@
   "https://github.com/FreyrS/dMaSIF": {
     "date": "2021-09-01T11:50:08Z",
     "sha": "0dcc26c3c218a39d5fe26beb2e788b95fb028896"
+  },
+  "https://github.com/FunctionalUrology/SpheroScan": {
+    "date": "2023-11-28T10:57:16Z",
+    "sha": "5e8b10d0b571edee4a888d610c348131e465e4d4"
   },
   "https://github.com/GIST-CSBL/HoTS": {
     "date": "2022-11-06T07:39:04Z",
@@ -59,6 +71,10 @@
     "date": "2025-02-06T14:32:32Z",
     "sha": "b54781980e38bc16f82706ab30a29c51ed67c468"
   },
+  "https://github.com/ablab/TandemTools": {
+    "date": "2020-10-15T08:34:34Z",
+    "sha": "ad668db812fe97f1d7038f6fafe7fbd7508ce038"
+  },
   "https://github.com/alexcis95/PhenoExam": {
     "date": "2022-12-19T11:19:20Z",
     "sha": "2599874bd7de14a1c1f6718b8b4eb8f353a0074f"
@@ -75,6 +91,10 @@
     "date": "2024-04-10T19:02:24Z",
     "sha": "401f5ebae995aed4f07184601edc0c8a368221be"
   },
+  "https://github.com/churchlab/UniRep": {
+    "date": "2020-03-04T01:07:37Z",
+    "sha": "95735d4e5d98e91bd1bd23fe2e279fefe9949cb1"
+  },
   "https://github.com/constantino-garcia/cmmrt": {
     "date": "2023-12-12T17:14:29Z",
     "sha": "52d9f78ea1105d50c2b684068ce24d98b002905c"
@@ -86,6 +106,10 @@
   "https://github.com/ctlab/GADMA": {
     "date": "2026-01-31T19:53:56Z",
     "sha": "8dac39943ae461d0c8cf674c72305002fab146da"
+  },
+  "https://github.com/dkoslicki/TAMPA": {
+    "date": "2023-08-08T13:47:43Z",
+    "sha": "cbc52d5f71b28030df9abb03acb38db7de2721d6"
   },
   "https://github.com/ezer/NITPicker": {
     "date": "2018-06-27T11:07:22Z",
@@ -99,6 +123,10 @@
     "date": "2025-05-02T13:58:49Z",
     "sha": "85c49b60d3e0b0182a59ee43a34a6d7036981284"
   },
+  "https://github.com/gjoni/trRosetta": {
+    "date": "2021-05-20T16:58:13Z",
+    "sha": "29d2cadcdb4740888441de56e8a9e884dd7889ad"
+  },
   "https://github.com/haddocking/interface-classifier": {
     "date": "2025-10-01T15:22:29Z",
     "sha": "29d99d535cae3014608c9394b8809619a60fcfa2"
@@ -106,6 +134,10 @@
   "https://github.com/hkmztrk/DeepDTA": {
     "date": "2023-08-16T12:18:16Z",
     "sha": "a546a8433a6822e958f36171c4356ad6f414d623"
+  },
+  "https://github.com/hr1912/TreeExp": {
+    "date": "2019-07-12T19:06:04Z",
+    "sha": "ce33240343cfda4011c636dc2793a5c53e490987"
   },
   "https://github.com/huynguyen250896/DrGA": {
     "date": "2023-10-17T15:57:28Z",
@@ -150,6 +182,10 @@
   "https://github.com/loftytopping/PyBox": {
     "date": "2020-11-03T12:57:05Z",
     "sha": "3efd0a69e15dc9ba8f965342ea47d295c7033f40"
+  },
+  "https://github.com/matthiasdemuzere/w2w": {
+    "date": "2024-11-11T00:13:18Z",
+    "sha": "2ee0f06e6788dcf732e520f1d59b1ffd8ca4e66b"
   },
   "https://github.com/mhalushka/miRge": {
     "date": "2022-03-23T21:13:11Z",
@@ -207,6 +243,10 @@
     "date": "2021-02-16T23:43:44Z",
     "sha": "619eca51aec26ce15c36be69b5f82baa6c14f867"
   },
+  "https://github.com/songlab-cal/tape": {
+    "date": "2021-09-07T14:29:48Z",
+    "sha": "6d345c2b2bbf52cd32cf179325c222afd92aec7e"
+  },
   "https://github.com/szymczak-lab/PathwayGuidedRF": {
     "date": "2020-01-27T07:48:40Z",
     "sha": "c9412b37efacc27f91647f3472fea5bc4f530139"
@@ -226,6 +266,14 @@
   "https://github.com/uci-cbcl/DanQ": {
     "date": "2017-01-14T00:06:06Z",
     "sha": "98341e0e2eeb4b8ec12632b93fb09c563605451a"
+  },
+  "https://github.com/weng-lab/ZING": {
+    "date": "2019-05-10T22:10:02Z",
+    "sha": "d356574cee4aefd0211d8905180051d8a50c2273"
+  },
+  "https://github.com/zky0708/2DImpute": {
+    "date": "2020-03-08T20:57:23Z",
+    "sha": "bf42b08148f043153442dcfa7bf569ee6290b996"
   },
   "https://github.com/zoccoler/metroid": {
     "date": "2020-09-23T02:17:16Z",

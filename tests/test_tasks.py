@@ -467,6 +467,51 @@ def test_pyamg_dev_task_grades_an_exact_solve(tmp_path):
     assert s.passed is True and s.measured < 1e-12
 
 
+def test_r_squared_is_not_clipped_at_zero(tmp_path):
+    """A model worse than the mean must score negative, not a flattering 0."""
+    labels = _write(tmp_path / "y.csv", "id,label\na,1\nb,2\nc,3\n")
+    exact = _write(tmp_path / "p.csv", "id,score\na,1\nb,2\nc,3\n")
+    assert evaluators.r_squared(exact, labels) == pytest.approx(1.0)
+    mean = _write(tmp_path / "m.csv", "id,score\na,2\nb,2\nc,2\n")
+    assert evaluators.r_squared(mean, labels) == pytest.approx(0.0)
+    awful = _write(tmp_path / "b.csv", "id,score\na,3\nb,2\nc,1\n")
+    assert evaluators.r_squared(awful, labels) < 0
+
+
+def test_symbolic_regression_task_discriminates_a_linear_fit(tmp_path):
+    """The shipped bar must be unreachable without recovering the non-linear form."""
+    import csv
+
+    np = pytest.importorskip("numpy")
+    t = task_mod.load_task(ROOT / "benchmark" / "tasks" / "dev" /
+                           "pysrurgs-symbolic-regression" / "task.yaml")
+    tr = list(csv.DictReader((t.input_file / "train.csv").read_text().splitlines()))
+    te = list(csv.DictReader((t.input_file / "test.csv").read_text().splitlines()))
+    Xtr = np.array([[float(r["x0"]), float(r["x1"])] for r in tr])
+    ytr = np.array([float(r["y"]) for r in tr])
+    Xte = np.array([[float(r["x0"]), float(r["x1"])] for r in te])
+    lab = {r["id"]: float(r["label"]) for r in
+           csv.DictReader(t.labels_file.read_text().splitlines())}
+
+    def submit(pred):
+        out = tmp_path / f"out{len(list(tmp_path.iterdir()))}"
+        out.mkdir()
+        with open(out / "prediction.csv", "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["id", "score"])
+            for r, p in zip(te, pred):
+                w.writerow([r["id"], repr(float(p))])
+        return out
+
+    exact = np.array([lab[r["id"]] for r in te])
+    assert scoring.grade(t, submit(exact)).passed is True
+
+    A = np.c_[np.ones(len(Xtr)), Xtr]
+    coef, *_ = np.linalg.lstsq(A, ytr, rcond=None)
+    s = scoring.grade(t, submit(np.c_[np.ones(len(Xte)), Xte] @ coef))
+    assert s.passed is False and s.measured < 0.2, "a linear fit must not clear the bar"
+
+
 def test_ppi_tasks_share_one_criterion_across_repos():
     """ScanNet and dMaSIF must be graded identically or the comparison means nothing."""
     root = ROOT / "benchmark" / "tasks" / "dev"

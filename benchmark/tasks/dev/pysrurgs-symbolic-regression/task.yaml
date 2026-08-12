@@ -1,0 +1,38 @@
+# Dev-split task. pySRURGS is in the Lazarus registry, so the revival is public — but the
+# data here is newly generated, so no prior run has fitted this system.
+# See ../../../LEADERBOARD_SCOPE.md §2.2 and §9.
+id: pysrurgs-symbolic-regression
+repo_url: https://github.com/pySRURGS/pySRURGS
+commit: 0b79fda2a4fafe7859369db9071fead992bf6282   # 2022-11-03
+paper: Towsey, JOSS 2019 — pySRURGS
+domain: symbolic regression
+kind: predict
+split: dev
+
+capability: >-
+  Fit a symbolic expression to a small numeric dataset by uniform random global search,
+  then predict the target for unseen inputs.
+
+input_path: input           # a directory: train.csv (x0,x1,y) + test.csv (id,x0,x1)
+output_path: prediction.csv
+output_schema: [id, score]
+
+evaluation:
+  evaluator: r_squared
+  metric: r_squared
+  direction: higher
+  threshold: 0.90
+  labels: labels/test_y.csv
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  Fit on the 120 rows of train.csv, then predict y for each of the 60 ids in test.csv.
+  Targets come from a noiseless closed-form function of two variables, so the ceiling is
+  R^2 = 1.0. The bar is calibrated to discriminate rather than to be generous: predicting
+  the training mean scores 0.00 and the best possible LINEAR fit scores 0.107, so 0.90
+  cannot be reached without recovering the non-linear form. The original revival was held
+  to r_squared >= 0.99 on its own data.
