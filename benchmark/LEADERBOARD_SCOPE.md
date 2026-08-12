@@ -1,7 +1,7 @@
 # Scope — a public benchmark for reviving dead research code
 
 *Roadmap Tier-1 "durable" track. Status: **P0 landed, P1 in progress** — the
-task/evaluator/grading layer is built and tested; 6 of ~20 dev tasks converted, across 3 domains.*
+task/evaluator/grading layer is built and tested; 7 of a revised ~9 dev tasks, across 4 domains.*
 
 **Settled:** the test split chases `predict` tasks with hidden labels, and scope is
 **cross-domain** (not comp-bio only) — the generalisation result is the more interesting
@@ -252,7 +252,7 @@ a cloud GPU pool and a queue.
 | Phase | Work | Rough size |
 |---|---|---|
 | **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
-| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (**all 67**), 6 real `predict` tasks across 3 domains, 7 evaluators. Remaining: ~14 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
+| **P1** *(nearly done)* | Public dev split. Done: candidate miner, **all 67 pinned**, 7 tasks across 4 domains, 7 evaluators, both task kinds. Target cut from ~20 to **~9** (see §10). Remaining: an artifact-pinned task (blocked on fpocket's hash) and optionally one `rmse`/`accuracy` task | ~1 day |
 | **P2** | Submission boundary: containerised CLI, harness adapter, caps enforcement, Lazarus repackaged as the reference submission | 3–4 days |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
 | **P4** | Scoring, board rendering, public submission docs | 3–4 days |
@@ -294,3 +294,46 @@ choosing what to convert next.
 4. **Quoted paper numbers** (`reproduce`) — cheapest to write, weakest to trust, and
    §2.4 shows the recorded values can't be lifted without checking each against the source.
    Use only to fill gaps a constructible target can't reach.
+
+---
+
+## 10. Why the dev target dropped from ~20 to ~9
+
+**Nothing is computed from the dev split.** It publishes no rate, ranks nobody, and is
+contaminated by construction (§2.2). It has two jobs: exercise the harness, and give
+submitters something to develop against. Neither is served by a task *count*.
+
+Where N genuinely matters is the **test** split, because that is where a published number
+has to survive a confidence interval:
+
+| test N | 90% solved → 95% CI (Wilson) | width |
+|---|---|---|
+| 20 | [69.9%, 97.2%] | 27 pp |
+| 50 | [78.6%, 95.7%] | 17 pp |
+| 100 | [82.6%, 94.5%] | 12 pp |
+
+At N=20 a 70% agent and a 97% agent are indistinguishable. At ~$1.15 and ~18 min per task,
+buying that resolution is cheap — so the effort belongs there, not in dev.
+
+So the dev target is now a **coverage** target, not a count. What it must exercise, and
+where it stands at 7 tasks:
+
+| feature | status |
+|---|---|
+| both task kinds (`predict`, `reproduce`) | ✅ |
+| `self_verifying` grading | ✅ (`pyamg-poisson-solve`) |
+| paired tasks sharing one criterion | ✅ (ScanNet / dMaSIF) |
+| directory inputs, non-CSV output | ✅ |
+| ≥3 domains | ✅ (4) |
+| `artifact` pin (non-git source) | ❌ blocked on fpocket's hash (§2.5) |
+| `accuracy` / `rmse` evaluators | ❌ unit-tested only; a task is optional |
+
+Two caveats on this decision, recorded so it can be revisited:
+
+- **7 tasks is thin as a submitter on-ramp.** Four structural-biology tasks and three
+  one-offs is a narrow surface for someone building an agent. The intended fix is growth
+  from *retired test tasks* under the §2.2 rotation, which costs nothing extra, rather
+  than hand-built dev tasks now.
+- **`reproduce` is dev-only by construction.** The kind exists for exactly one task
+  (`deepdta-davis-ci`). If rotation never produces another, the honest move is deleting
+  the kind rather than carrying an unexercised code path.

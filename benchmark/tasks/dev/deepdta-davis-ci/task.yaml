@@ -1,0 +1,33 @@
+# Dev-split task, and the split's only `reproduce` exemplar. Its job is to document how a
+# paper number must be verified before it can be a target — see ../../../LEADERBOARD_SCOPE.md §2.4.
+id: deepdta-davis-ci
+repo_url: https://github.com/hkmztrk/DeepDTA
+commit: a546a8433a6822e958f36171c4356ad6f414d623   # 2023-08-16
+paper: "Öztürk, Özgür & Ozkirimli, Bioinformatics 2018 — DeepDTA (doi:10.1093/bioinformatics/bty593)"
+domain: drug-target affinity
+kind: reproduce
+split: dev
+
+capability: >-
+  Train the CNN-CNN drug-target affinity model on the Davis dataset shipped with the repo
+  and report the test Concordance Index the paper reports for that configuration.
+
+output_path: result.txt
+
+evaluation:
+  evaluator: scalar
+  metric: concordance_index
+  reported: 0.878        # VERIFIED against the paper — see README, not lifted from results.json
+  rel_tol: 0.03          # tightened from the 0.15 default; justified in the README
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  No harness input: the Davis dataset ships in the repo, which is what makes this a
+  reproduction rather than a prediction. Write result.txt containing
+  `concordance_index=<value>`; the grader requires the metric to be labelled rather than
+  inferred from a bare number, so a training log with several numbers in it will be
+  refused instead of guessed at.

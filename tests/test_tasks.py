@@ -512,6 +512,35 @@ def test_symbolic_regression_task_discriminates_a_linear_fit(tmp_path):
     assert s.passed is False and s.measured < 0.2, "a linear fit must not clear the bar"
 
 
+def test_deepdta_reproduce_task_band_excludes_the_papers_own_ablations(tmp_path):
+    """The tolerance is part of the verification, not a default to inherit.
+
+    DeepDTA's paper reports 0.878 for CNN-CNN and 0.790 / 0.835 for weaker configurations
+    of the same model. The default ±15% band would certify both of those as "reproduced";
+    the task tightens to ±3% (still ~6.5x the paper's own std of 0.004) so it doesn't.
+    """
+    t = task_mod.load_task(
+        ROOT / "benchmark" / "tasks" / "dev" / "deepdta-davis-ci" / "task.yaml")
+    assert t.kind == "reproduce" and t.evaluation.reported == 0.878
+    out = tmp_path / "out"
+    out.mkdir()
+
+    def grade(value):
+        (out / "result.txt").write_text(f"concordance_index={value}\n")
+        return scoring.grade(t, out)
+
+    assert grade(0.878).passed is True
+    assert grade(0.871).passed is True                 # a faithful re-run may drift
+    for ablation in (0.790, 0.835):
+        s = grade(ablation)
+        assert s.passed is False, f"±{t.evaluation.rel_tol:.0%} wrongly admits {ablation}"
+    assert grade(0.999).passed is False                # too high is also a failure
+
+    # an unlabelled training log must be refused, not mined for a number that fits
+    (out / "result.txt").write_text("epoch 40 loss 0.261 val 0.878 time 900\n")
+    assert scoring.grade(t, out).passed is None
+
+
 def test_ppi_tasks_share_one_criterion_across_repos():
     """ScanNet and dMaSIF must be graded identically or the comparison means nothing."""
     root = ROOT / "benchmark" / "tasks" / "dev"
