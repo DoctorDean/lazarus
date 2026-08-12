@@ -54,11 +54,36 @@ def test_task_loads_and_validates():
     assert t.caps.turns == 90                      # defaults applied
 
 
-@pytest.mark.parametrize("commit", ["main", "HEAD", "v1.2.0", "", "zzzzzzz"])
+@pytest.mark.parametrize("commit", ["main", "HEAD", "v1.2.0", "zzzzzzz"])
 def test_task_rejects_an_unpinned_commit(commit):
     """Branches/tags move — including via our own give-back PRs — so they're refused."""
     with pytest.raises(TaskError, match="pinned git SHA"):
         Task.from_dict(_spec(commit=commit))
+
+
+def test_task_requires_exactly_one_pin():
+    with pytest.raises(TaskError, match="a pin is required"):
+        Task.from_dict(_spec(commit=""))
+    with pytest.raises(TaskError, match="exactly one pin"):
+        Task.from_dict(_spec(artifact_url="https://x/y.tar.gz", artifact_sha256="a" * 64))
+
+
+def test_artifact_pin_is_accepted_for_sources_that_were_never_in_git():
+    """fpocket is a 2010 SourceForge tarball — no commits exist to point at."""
+    t = Task.from_dict(_spec(commit="", artifact_url="https://sf.net/fpocket2.tar.gz",
+                             artifact_sha256="b" * 64))
+    assert t.pin_kind == "artifact" and t.pin.startswith("sha256:")
+
+
+def test_artifact_pin_demands_a_real_hash_and_url():
+    with pytest.raises(TaskError, match="artifact_sha256 must be 64 hex"):
+        Task.from_dict(_spec(commit="", artifact_url="https://x/y.tgz",
+                             artifact_sha256="deadbeef"))
+    with pytest.raises(TaskError, match="artifact_sha256 must be 64 hex"):
+        Task.from_dict(_spec(commit="", artifact_url="https://x/y.tgz"))
+    with pytest.raises(TaskError, match="artifact_url must be a URL"):
+        Task.from_dict(_spec(commit="", artifact_url="sf.net/y.tgz",
+                             artifact_sha256="c" * 64))
 
 
 def test_predict_task_requires_an_explicit_direction():
@@ -309,7 +334,8 @@ def test_shipped_dev_tasks_are_valid_and_complete():
     assert tasks, "no tasks found"
     for t in tasks:
         t.check_files()
-        assert len(t.commit) == 40, f"{t.id}: pin a full 40-char SHA, got {t.commit!r}"
+        if t.pin_kind == "git":
+            assert len(t.commit) == 40, f"{t.id}: pin a full 40-char SHA, got {t.commit!r}"
 
 
 def test_shipped_task_commits_match_the_pin_cache():
@@ -324,6 +350,8 @@ def test_shipped_task_commits_match_the_pin_cache():
 
     pins = json.loads((ROOT / "benchmark" / "tasks" / "pins.json").read_text())
     for t in task_mod.load_tasks(ROOT / "benchmark" / "tasks"):
+        if t.pin_kind == "artifact":
+            continue        # content-addressed; the hash IS the verification
         entry = pins.get(t.repo_url)
         assert entry, f"{t.id}: {t.repo_url} has no recorded pin in pins.json"
         assert t.commit == entry["sha"], (
@@ -372,6 +400,71 @@ def test_ligand_centroid_distance_rejects_a_truncated_sdf(tmp_path):
     bad.write_text("pose\n  x\n\n 30  0  0  0  0  0  0  0  0999 V2000\n   0.0 0.0 0.0 C\n")
     with pytest.raises(evaluators.EvaluationError, match="truncated"):
         evaluators.ligand_centroid_distance(bad, ref)
+
+
+def test_self_verifying_tasks_need_no_labels_but_cannot_have_both():
+    t = Task.from_dict(_spec(evaluation={
+        "evaluator": "relative_residual", "metric": "relative_residual",
+        "direction": "lower", "threshold": 1e-8, "labels": "", "self_verifying": True}))
+    assert t.evaluation.self_verifying and not t.evaluation.labels
+    with pytest.raises(TaskError, match="drop evaluation.labels"):
+        Task.from_dict(_spec(evaluation={"self_verifying": True}))   # labels still set
+
+
+def test_relative_residual_grades_a_solved_system(tmp_path):
+    """Self-verifying: the score is arithmetic over the input, so no answer key exists."""
+    import csv
+
+    np = pytest.importorskip("numpy")
+    src = tmp_path / "input"
+    src.mkdir()
+    # 2x2 diagonal system: 2x0 = 4, 4x1 = 8  ->  x = (2, 2)
+    (src / "A.mtx").write_text(
+        "%%MatrixMarket matrix coordinate real general\n2 2 2\n1 1 2.0\n2 2 4.0\n")
+    (src / "b.txt").write_text("4.0\n8.0\n")
+    t = Task.from_dict(_spec(input_path="input", output_path="solution.csv", evaluation={
+        "evaluator": "relative_residual", "metric": "relative_residual",
+        "direction": "lower", "threshold": 1e-8, "labels": "", "self_verifying": True}))
+    t._dir = tmp_path
+    out = tmp_path / "out"
+    out.mkdir()
+
+    (out / "solution.csv").write_text("index,value\n0,2.0\n1,2.0\n")
+    s = scoring.grade(t, out)
+    assert s.passed is True and s.measured == pytest.approx(0.0, abs=1e-12)
+
+    (out / "solution.csv").write_text("index,value\n1,2.0\n0,2.0\n")   # order-independent
+    assert scoring.grade(t, out).passed is True
+
+    (out / "solution.csv").write_text("index,value\n0,0.0\n1,0.0\n")
+    assert scoring.grade(t, out).passed is False
+
+    (out / "solution.csv").write_text("index,value\n0,2.0\n")          # incomplete
+    s = scoring.grade(t, out)
+    assert s.passed is None and "exactly once" in s.reason
+
+
+def test_pyamg_dev_task_grades_an_exact_solve(tmp_path):
+    """The shipped 625-unknown system, solved directly and graded end to end."""
+    import csv
+
+    np = pytest.importorskip("numpy")
+    t = task_mod.load_task(
+        ROOT / "benchmark" / "tasks" / "dev" / "pyamg-poisson-solve" / "task.yaml")
+    r, c, v, (n, _) = evaluators._read_mtx(t.input_file / "A.mtx")
+    b = np.asarray([float(x) for x in (t.input_file / "b.txt").read_text().split()])
+    A = np.zeros((n, n))
+    np.add.at(A, (r, c), v)
+    x = np.linalg.solve(A, b)
+    out = tmp_path / "out"
+    out.mkdir()
+    with open(out / "solution.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["index", "value"])
+        for i, val in enumerate(x):
+            w.writerow([i, repr(float(val))])
+    s = scoring.grade(t, out)
+    assert s.passed is True and s.measured < 1e-12
 
 
 def test_ppi_tasks_share_one_criterion_across_repos():

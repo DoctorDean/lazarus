@@ -1,7 +1,7 @@
 # Scope — a public benchmark for reviving dead research code
 
 *Roadmap Tier-1 "durable" track. Status: **P0 landed, P1 in progress** — the
-task/evaluator/grading layer is built and tested; 4 of ~20 dev tasks converted.*
+task/evaluator/grading layer is built and tested; 5 of ~20 dev tasks converted, now cross-domain.*
 
 **Settled:** the test split chases `predict` tasks with hidden labels, and scope is
 **cross-domain** (not comp-bio only) — the generalisation result is the more interesting
@@ -151,8 +151,8 @@ separates reviewed from unreviewed software.
 a tarball is in fact a *stronger* pin than a git SHA, since it fixes the bytes rather than
 a mutable ref.
 
-Not implemented yet, deliberately: a task needs a real hash, and fpocket's is not currently
-obtainable. SourceForge served an HTML interstitial to one download attempt and 2 bytes to
+**Implemented** (`commit` XOR `artifact_url` + `artifact_sha256`). No task uses it yet:
+fpocket's hash is not currently obtainable. SourceForge served an HTML interstitial to one download attempt and 2 bytes to
 another — the same download evasion the original revival had to defeat. Building the schema
 surface before a task can exercise it would be speculative, so this stays a design item
 until the artifact can actually be captured (most likely from a mirror, or by recording the
@@ -252,7 +252,7 @@ a cloud GPU pool and a queue.
 | Phase | Work | Rough size |
 |---|---|---|
 | **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
-| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (58 repos), 4 real `predict` tasks with constructible labels, 5 evaluators. Remaining: ~16 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
+| **P1** *(in progress)* | Convert ~20 of the 67 into a **public dev split**. Done: candidate miner + commit pinning (58 repos), 5 real `predict` tasks with constructible labels, 6 evaluators. Remaining: ~15 more tasks, each needing hand-built or hand-verified ground truth (see §2.4) | 3–5 days |
 | **P2** | Submission boundary: containerised CLI, harness adapter, caps enforcement, Lazarus repackaged as the reference submission | 3–4 days |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
 | **P4** | Scoring, board rendering, public submission docs | 3–4 days |
@@ -273,3 +273,24 @@ whether the benchmark is credible.
    single-point rate.
 5. **Venue timing.** Freeze the test set before or after the workshop deadline? Freezing early
    makes the paper reproducible; freezing late buys more tasks.
+
+---
+
+## 9. Task patterns, ranked by how much they're worth *(learned in P1)*
+
+Building the first five made the ordering obvious. Prefer the top of this list when
+choosing what to convert next.
+
+1. **Self-verifying** — the score is recomputed from the input (a residual, an energy, a
+   constraint that either holds or doesn't). No answer key exists, so it cannot be leaked
+   or contaminated, and anyone can audit the score. `pyamg-poisson-solve` is the model.
+   **Cross-domain science is full of these** and they should dominate the held-out split.
+2. **Constructible labels** — ground truth rebuilt from a primary source (interface
+   residues from a deposited structure, a crystal ligand pose). Auditable and re-derivable,
+   but the answer key ships with the task, so it only suits `dev` unless withheld.
+3. **Paired tasks** — the same input, labels and threshold across two repos
+   (`scannet-ppi-4zqk` / `dmasif-ppi-4zqk`). Worth building deliberately: they let the
+   board attribute a difference to the method rather than to an easier task.
+4. **Quoted paper numbers** (`reproduce`) — cheapest to write, weakest to trust, and
+   §2.4 shows the recorded values can't be lifted without checking each against the source.
+   Use only to fill gaps a constructible target can't reach.

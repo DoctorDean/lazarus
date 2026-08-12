@@ -66,9 +66,34 @@ def trust_of(row: dict) -> str:
     return CHECK_PAPER
 
 
+def _token() -> str:
+    """Optional ``GITHUB_TOKEN``, from the environment or the gitignored ``.env``.
+
+    Anonymous access is 60 requests/hour, which is fine for topping up a pin cache but
+    painful for P3's fresh corpus (hundreds of lookups). A token lifts it to 5000/hour.
+    Every repo read here is public, so the token needs **no scopes at all**.
+    """
+    import os
+
+    tok = os.environ.get("GITHUB_TOKEN", "").strip()
+    if tok:
+        return tok
+    env = Path(".env")
+    if env.exists():
+        for line in env.read_text(errors="replace").splitlines():
+            key, _, val = line.partition("=")
+            if key.strip() == "GITHUB_TOKEN":
+                return val.strip().strip("'\"")
+    return ""
+
+
 def _api(url: str):
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "lazarus-benchmark/0.5", "Accept": "application/vnd.github+json"})
+    headers = {"User-Agent": "lazarus-benchmark/0.5",
+               "Accept": "application/vnd.github+json"}
+    tok = _token()
+    if tok:
+        headers["Authorization"] = f"Bearer {tok}"
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=30) as fh:
         return json.load(fh)
 
@@ -104,6 +129,7 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     cache = json.loads(PINS.read_text()) if PINS.exists() else {}
+    print(f"github auth: {'token (5000/hr)' if _token() else 'anonymous (60/hr)'}")
     rows = load_runs()
     rows = [r for r in rows if not args.trust or trust_of(r) == args.trust]
     rows.sort(key=lambda r: (trust_of(r) != CHECK_PAPER, r.get("name") or ""))

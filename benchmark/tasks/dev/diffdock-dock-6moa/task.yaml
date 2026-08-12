@@ -12,7 +12,7 @@ capability: >-
   Blind-dock a small molecule, given only the receptor structure and the ligand as SMILES,
   and write the top-ranked pose. No pocket is supplied — finding it is part of the task.
 
-input_path: input/receptor.pdb
+input_path: input           # a directory: receptor.pdb + jw4.smi
 output_path: prediction.sdf
 
 evaluation:

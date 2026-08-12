@@ -1,0 +1,37 @@
+# Dev-split task, and the first non-biology one. PyAMG is in the Lazarus registry, so the
+# revival is public — but this task is self-verifying, so there is no answer key to leak.
+# See ../../../LEADERBOARD_SCOPE.md §2.2 and §3.
+id: pyamg-poisson-solve
+repo_url: https://github.com/pyamg/pyamg
+commit: 0c021343e7dce3274f0d587fd60be2bd0ae53495   # 2026-03-30
+paper: Bell, Olson & Schroder, JOSS 2022 — PyAMG
+domain: numerical linear algebra
+kind: predict
+split: dev
+
+capability: >-
+  Build an algebraic-multigrid solver for a sparse symmetric positive-definite system and
+  return the solution vector x of Ax = b to a tight tolerance.
+
+input_path: input
+output_path: solution.csv
+output_schema: [index, value]
+
+evaluation:
+  evaluator: relative_residual
+  metric: relative_residual
+  direction: lower
+  threshold: 1.0e-8
+  self_verifying: true   # ground truth is the equation itself — nothing stored, nothing to leak
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  input/A.mtx is a 625x625 2D 5-point Poisson stencil (25x25 grid, 3025 nonzeros) in Matrix
+  Market coordinate format; input/b.txt is the right-hand side, one value per line, from a
+  fixed seed. Write one row per unknown, index 0..624. The 1e-8 bar matches the tolerance
+  the original revival was held to; a direct dense solve reaches 1.4e-15, so the bar tests
+  that a working solver was built, not numerical heroics.

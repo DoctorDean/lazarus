@@ -12,7 +12,7 @@ capability: >-
   Blind-dock a small molecule into a receptor structure in one shot (regression, not
   sampling) and write the docked pose.
 
-input_path: input/receptor.pdb
+input_path: input           # a directory: receptor.pdb + jw4.smi
 output_path: prediction.sdf
 
 evaluation:

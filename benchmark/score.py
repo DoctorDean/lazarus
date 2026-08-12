@@ -63,7 +63,9 @@ def grade(task: Task, out_dir) -> Score:
                      f"{task.output_path} is empty")
 
     labels = task.labels_file
-    if task.kind == "predict" and (labels is None or not labels.exists()):
+    if task.kind == "predict" and task.evaluation.self_verifying:
+        labels = None                       # graded from the input; there is no answer key
+    elif task.kind == "predict" and (labels is None or not labels.exists()):
         # Withheld on purpose for the test split — a missing label file is an operator
         # error, not a submission failure, so it must not read as a wrong answer.
         return Score(task.id, None, None, task.evaluation.metric,

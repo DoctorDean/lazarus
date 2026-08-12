@@ -16,13 +16,31 @@ Two kinds, per benchmark/LEADERBOARD_SCOPE.md:
 ``predict``    the harness holds hidden labels and scores predictions against them.
                Strong: ground truth is private. Requires an input, an output schema,
                labels, and an explicit metric direction.
+
+               A `predict` task may instead be **self-verifying** (``self_verifying:
+               true``), meaning the answer is checkable from the input alone rather than
+               against a stored label — a linear solve graded by its residual, a structure
+               graded by its energy, a route graded by whether it closes. These are the
+               strongest tasks available: there is no answer key to leak, so they cannot
+               be contaminated, and anyone can recompute the score from the input.
 ``reproduce``  the submission reports the paper's headline number and the harness
                compares it to the published value within a relative band. Broad, but
                weaker — the target is printed in the paper.
 
-Tasks pin a **commit SHA**, never a branch. Upstream moves, and in our case we moved it
-ourselves (the give-back PRs to MaSIF and ScanNet); a task that clones HEAD is measuring
-a target we changed. Validation enforces the pin.
+Tasks are **pinned**, never floating. Upstream moves, and in our case we moved it ourselves
+(the give-back PRs to MaSIF and ScanNet); a task that clones HEAD is measuring a target we
+changed. A pin comes in two forms and validation requires exactly one:
+
+``commit``                          a git SHA — for anything on GitHub.
+``artifact_url`` + ``artifact_sha256``  a content-addressed download — for the large share
+                                    of dead science that was never in git at all (fpocket
+                                    is a 2010 SourceForge tarball; Basset was recovered
+                                    from a 2016 Docker image). Requiring git would bias the
+                                    benchmark toward modern, well-packaged code, inverting
+                                    the very finding that packaging discipline rather than
+                                    recoverability is what separates reviewed from
+                                    unreviewed software. A sha256 is the *stronger* pin: it
+                                    fixes bytes, where a git ref only names them.
 """
 from __future__ import annotations
 
@@ -36,9 +54,10 @@ import yaml
 KINDS = ("predict", "reproduce")
 DIRECTIONS = ("higher", "lower")
 
-# A pin must look like a git object id. Branch names and tags are rejected outright:
+# A git pin must look like an object id. Branch names and tags are rejected outright:
 # they are exactly the moving targets this field exists to prevent.
 _SHA_RE = re.compile(r"^[0-9a-f]{7,40}$")
+_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 
 
 class TaskError(ValueError):
@@ -63,6 +82,7 @@ class Evaluation:
     threshold: Optional[float] = None    # predict: the bar to clear
     direction: str = ""                  # predict: "higher" | "lower" — never inferred
     labels: str = ""                     # predict: path to ground truth, relative to the task dir
+    self_verifying: bool = False         # predict: ground truth is computed, not stored (below)
     reported: Optional[float] = None     # reproduce: the paper's published value
     rel_tol: float = 0.15                # reproduce: relative band (matches run.REPRODUCE_REL_TOL)
 
@@ -71,10 +91,12 @@ class Evaluation:
 class Task:
     id: str
     repo_url: str
-    commit: str                          # pinned SHA — see module docstring
     kind: str
     capability: str
     evaluation: Evaluation
+    commit: str = ""                     # git pin (exactly one pin required)
+    artifact_url: str = ""               # non-git pin: content-addressed download
+    artifact_sha256: str = ""
     paper: str = ""
     domain: str = ""                     # cross-domain scope: track the field per task
     input_path: str = ""                 # predict: harness-supplied input, relative to the task dir
@@ -95,7 +117,18 @@ class Task:
 
     @property
     def input_file(self) -> Optional[Path]:
+        """The task's input. May be a single file or a directory of them — several tasks
+        need more than one (a receptor *and* a ligand SMILES; a matrix *and* a rhs)."""
         return self._resolve(self.input_path)
+
+    @property
+    def pin_kind(self) -> str:
+        return "git" if self.commit else "artifact"
+
+    @property
+    def pin(self) -> str:
+        """Short, display-friendly form of whichever pin this task carries."""
+        return self.commit[:8] if self.commit else f"sha256:{self.artifact_sha256[:8]}"
 
     @property
     def labels_file(self) -> Optional[Path]:
@@ -114,11 +147,30 @@ class Task:
             raise TaskError(f"id must be a lowercase slug, got {self.id!r}")
         if not self.repo_url.startswith(("http://", "https://")):
             raise TaskError(f"{self.id}: repo_url must be a URL, got {self.repo_url!r}")
-        if not _SHA_RE.match(self.commit or ""):
+        has_git = bool(self.commit)
+        has_artifact = bool(self.artifact_url or self.artifact_sha256)
+        if has_git and has_artifact:
+            raise TaskError(
+                f"{self.id}: give exactly one pin — a git `commit` or an "
+                f"`artifact_url` + `artifact_sha256`, not both")
+        if not has_git and not has_artifact:
+            raise TaskError(
+                f"{self.id}: a pin is required — either a git `commit` or an "
+                f"`artifact_url` + `artifact_sha256` for sources that were never in git")
+        if has_git and not _SHA_RE.match(self.commit):
             raise TaskError(
                 f"{self.id}: commit must be a pinned git SHA (>=7 hex chars), got "
                 f"{self.commit!r}. Branches and tags move — including from our own "
                 f"give-back PRs — which would silently change what the task measures.")
+        if has_artifact:
+            if not self.artifact_url.startswith(("http://", "https://")):
+                raise TaskError(
+                    f"{self.id}: artifact_url must be a URL, got {self.artifact_url!r}")
+            if not _SHA256_RE.match(self.artifact_sha256 or ""):
+                raise TaskError(
+                    f"{self.id}: artifact_sha256 must be 64 hex chars (the whole point of "
+                    f"an artifact pin is that the bytes are fixed), got "
+                    f"{self.artifact_sha256!r}")
         if self.kind not in KINDS:
             raise TaskError(f"{self.id}: kind must be one of {KINDS}, got {self.kind!r}")
         if self.split not in ("dev", "test"):
@@ -141,8 +193,14 @@ class Task:
                     f"interpret_smoke.")
             if not self.input_path:
                 raise TaskError(f"{self.id}: predict tasks need an input_path")
-            if not e.labels:
-                raise TaskError(f"{self.id}: predict tasks need evaluation.labels (ground truth)")
+            if not e.labels and not e.self_verifying:
+                raise TaskError(
+                    f"{self.id}: predict tasks need evaluation.labels (ground truth), or "
+                    f"self_verifying: true if the answer is checkable from the input alone")
+            if e.labels and e.self_verifying:
+                raise TaskError(
+                    f"{self.id}: self_verifying tasks compute their own ground truth — "
+                    f"drop evaluation.labels so there's one source of truth")
         else:  # reproduce
             if e.reported is None:
                 raise TaskError(
@@ -238,7 +296,7 @@ def main(argv=None) -> int:
         crit = (f"{e.metric} {'≥' if e.direction == 'higher' else '≤'} {e.threshold}"
                 if t.kind == "predict" else
                 f"{e.metric} within ±{e.rel_tol:.0%} of {e.reported}")
-        print(f"{t.split:<5} {t.id:<28} {t.kind:<9} {crit:<34} {t.commit[:8]} "
+        print(f"{t.split:<5} {t.id:<28} {t.kind:<9} {crit:<34} {t.pin:<15} "
               f"{t.domain or '-'}{note}")
     print(f"\n{len(tasks)} task(s), {bad} with missing data")
     return 1 if bad else 0

@@ -251,12 +251,83 @@ def ligand_centroid_distance(prediction: Path, labels: Optional[Path], task=None
     return float(np.linalg.norm(pose.mean(0) - ref.mean(0)))
 
 
+def _read_mtx(path: Path):
+    """Minimal Matrix Market *coordinate real general* reader -> (rows, cols, vals, shape).
+
+    Deliberately not scipy: the benchmark's graders should have as few moving parts as
+    the thing they grade, and this format is a header plus triples.
+    """
+    rows, cols, vals, shape = [], [], [], None
+    for ln in path.read_text(errors="replace").splitlines():
+        ln = ln.strip()
+        if not ln or ln.startswith("%"):
+            continue
+        parts = ln.split()
+        if shape is None:
+            if len(parts) != 3:
+                raise EvaluationError(f"{path.name}: bad Matrix Market size line {ln!r}")
+            shape = (int(parts[0]), int(parts[1]))
+            continue
+        if len(parts) != 3:
+            raise EvaluationError(f"{path.name}: bad entry line {ln!r}")
+        rows.append(int(parts[0]) - 1)          # Matrix Market is 1-indexed
+        cols.append(int(parts[1]) - 1)
+        vals.append(float(parts[2]))
+    if shape is None:
+        raise EvaluationError(f"{path.name}: no Matrix Market size line")
+    return (np.asarray(rows), np.asarray(cols), np.asarray(vals, dtype=float), shape)
+
+
+def relative_residual(prediction: Path, labels: Optional[Path], task=None) -> float:
+    """‖Ax − b‖₂ / ‖b‖₂ for a submitted solution x. **Self-verifying.**
+
+    There is no stored answer: the task's own input *is* the ground truth, so the score is
+    recomputed arithmetic that anyone can audit and nobody can leak. A also never needs to
+    be assembled densely — the residual is a scatter-add over the stored triples.
+
+    Expects ``task.input_file`` to be a directory holding ``A.mtx`` and ``b.txt``.
+    """
+    src = getattr(task, "input_file", None)
+    if src is None or not Path(src).is_dir():
+        raise EvaluationError("relative_residual needs the task's input directory (A.mtx, b.txt)")
+    src = Path(src)
+    r, c, v, (nrows, ncols) = _read_mtx(src / "A.mtx")
+    try:
+        b = np.asarray([float(t) for t in (src / "b.txt").read_text().split()], dtype=float)
+    except (OSError, ValueError) as exc:
+        raise EvaluationError(f"cannot read b.txt: {exc}") from exc
+    if b.shape[0] != nrows:
+        raise EvaluationError(f"b has {b.shape[0]} entries but A has {nrows} rows")
+
+    rows = _read_rows(prediction)
+    idx = [str(x).strip() for x in _column(rows, "index", "i", "id", "row")]
+    xv = _floats(_column(rows, "value", "x", "score", "solution"), "solution value")
+    try:
+        order = np.asarray([int(i) for i in idx])
+    except ValueError:
+        raise EvaluationError("solution index column must be integers") from None
+    if sorted(order.tolist()) != list(range(ncols)):
+        raise EvaluationError(
+            f"solution must give every index 0..{ncols - 1} exactly once "
+            f"(got {len(order)} rows)")
+    x = np.empty(ncols, dtype=float)
+    x[order] = xv
+
+    ax = np.zeros(nrows, dtype=float)
+    np.add.at(ax, r, v * x[c])
+    nb = float(np.linalg.norm(b))
+    if nb == 0.0:
+        raise EvaluationError("‖b‖ is zero — the task's system is degenerate")
+    return float(np.linalg.norm(ax - b) / nb)
+
+
 BUILTINS = {
     "auroc": auroc,
     "rmse": rmse,
     "accuracy": accuracy,
     "scalar": scalar,
     "ligand_centroid_distance": ligand_centroid_distance,
+    "relative_residual": relative_residual,
 }
 
 
