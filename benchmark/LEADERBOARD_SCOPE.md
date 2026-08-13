@@ -253,7 +253,7 @@ a cloud GPU pool and a queue.
 |---|---|---|
 | **P0 ✅** | Task spec ([`task.py`](task.py)), evaluator interface ([`evaluators.py`](evaluators.py)), grading ([`score.py`](score.py)), the `apply_task_score` seam in `run.py`, a validator CLI, one real dev task, 28 tests | done |
 | **P1** *(nearly done)* | Public dev split. Done: candidate miner, **all 67 pinned**, 7 tasks across 4 domains, 7 evaluators, both task kinds. Target cut from ~20 to **~9** (see §10). Remaining: an artifact-pinned task (blocked on fpocket's hash) and optionally one `rmse`/`accuracy` task | ~1 day |
-| **P2** *(in progress)* | Submission boundary. Done: [`submission.py`](submission.py) (staging with answer-key redaction, argv, caps, grade-what-was-written), [`SUBMISSION.md`](SUBMISSION.md), 14 tests. Remaining: Lazarus repackaged as the reference submission; the deny-list proxy is P4 | 1–2 days |
+| **P2** *(in progress)* | Submission boundary. Done: [`submission.py`](submission.py) (staging with answer-key redaction, argv, caps, grade-what-was-written), [`SUBMISSION.md`](SUBMISSION.md), 14 tests. Reference submission in [`reference/`](reference/) — goal construction tested, orchestration **not yet run end to end**. Remaining: one live run against a dev task; the deny-list proxy is P4 | ~1 day |
 | **P3** | Mine + freeze a **held-out test split** (~50 tasks, pinned SHAs, private labels) | 1–2 weeks, mostly compute + vetting |
 | **P4** | Scoring, board rendering, public submission docs | 3–4 days |
 | **P5** | Baseline numbers (agent-free floor + Lazarus reference), launch, paper draft | 1–2 weeks |

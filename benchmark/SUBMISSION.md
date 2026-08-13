@@ -119,3 +119,25 @@ print(run.ok, score.passed, score.measured)
 The dev tasks are deliberately contaminated — every one is a tool already in the Lazarus
 registry with a published contract. They exist so you can develop against a known answer.
 The held-out split will not be like this.
+
+## The reference submission
+
+[`benchmark/reference/`](reference/) packages Lazarus itself behind this contract — useful
+as a worked example of what an implementation has to do.
+
+Two design choices in it are worth copying, or at least understanding:
+
+- **The translation lives in the goal, not in a per-task adapter.** Lazarus emits a
+  *contract* (a container that runs a revived method), while a task wants a specific file.
+  Rather than reshaping each method's native output into each task's schema — which would
+  be the harness doing the submission's job, and would grow a branch per task — the task's
+  `output_path` and `output_schema` are handed to the agent, which must conform. That is
+  what this contract asks of every submission.
+- **The planner plans; the task judges.** Lazarus's Scout still chooses the base image and
+  decides whether a GPU is needed. It does *not* supply the success criterion — that comes
+  from the task. An agent grading itself is the thing this benchmark exists to prevent, and
+  the reference implementation must not smuggle it back in.
+
+**Status:** the goal construction is unit-tested; the orchestration around it has **not
+been run end to end**. It needs a Docker socket, an `ANTHROPIC_API_KEY` and real compute, so
+treat `reference/` as a specification with tested parts rather than a proven runner.
