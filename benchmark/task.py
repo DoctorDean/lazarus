@@ -139,6 +139,33 @@ class Task:
         d.pop("_dir", None)
         return d
 
+    def public_view(self) -> dict:
+        """The task as a submission is allowed to see it — **the answer key removed**.
+
+        A submission legitimately needs to know what it is being asked for and how well:
+        the capability, the input, the output schema, the metric, its direction and the
+        bar. It must not be handed the ground truth.
+
+        Two fields are therefore stripped:
+
+        ``evaluation.labels``    the path to the answer key.
+        ``evaluation.reported``  for a ``reproduce`` task this *is* the answer — the
+                                 number the submission is supposed to independently
+                                 measure. Shipping the raw spec would let a submission
+                                 echo it back and score a perfect reproduction without
+                                 running anything.
+
+        The threshold stays: knowing "AUROC ≥ 0.70" states the required quality, not the
+        answer. For a reproduce task nothing takes `reported`'s place, and that is
+        correct — the submission is meant to *measure*, not to aim.
+        """
+        d = self.to_dict()
+        ev = dict(d.get("evaluation") or {})
+        ev.pop("labels", None)
+        ev.pop("reported", None)
+        d["evaluation"] = ev
+        return d
+
     # ---- validation ----
     def validate(self) -> "Task":
         """Fail loudly at load time on anything that would corrupt a score later."""
