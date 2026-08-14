@@ -49,10 +49,25 @@ def test_goal_uses_checksum_verification_for_an_artifact_pin():
 
 def test_goal_states_the_exact_output_contract():
     g = ref.build_goal(_predict_spec(), URL, commit=SHA)
-    assert "/out/prediction.csv" in g
+    assert f"{ref.IN_CONTAINER_OUT}/prediction.csv" in g
     assert "`resid,score`" in g
-    assert "/task/input" in g
+    assert f"{ref.IN_CONTAINER_OUT}/input" in g
     assert "exactly once" in g
+
+
+def test_goal_never_points_the_agent_at_the_submission_containers_mounts():
+    """The agent runs in a *revival* container: /out and /task don't exist there.
+
+    Its tools only reach its own filesystem, so telling it to write /out would silently
+    produce nothing — the failure this wrapper originally had.
+    """
+    for spec in (_predict_spec(),
+                 _predict_spec(kind="reproduce", output_path="result.txt",
+                              output_schema=[],
+                              evaluation={"evaluator": "scalar", "metric": "ci"})):
+        g = ref.build_goal(spec, URL, commit=SHA)
+        assert "/out/" not in g and "/task/" not in g
+        assert ref.IN_CONTAINER_OUT in g
 
 
 def test_goal_carries_the_tasks_criterion_not_an_invented_one():

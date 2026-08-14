@@ -23,6 +23,16 @@ Run inside the submission image::
     lazarus_submission.py --repo-url <url> --commit <sha> --task /task/task.yaml --out /out
 
 Needs a Docker socket (it drives containers to do the revival) and ``ANTHROPIC_API_KEY``.
+
+**Why the output is copied rather than written directly.** The resurrection agent works
+inside a *revival* container and its tools only reach that container's filesystem
+(``sandbox_run``, ``sandbox_write_file``, ``sandbox_read_file``) plus one host-side path,
+``emit_contract``, which writes a contract bundle and nothing else. There is no tool that
+copies an arbitrary file to the host — so the agent cannot write ``/out`` itself, because
+``/out`` is a mount of the *submission* container, not the revival one. The agent therefore
+writes to a fixed path inside its own container (:data:`IN_CONTAINER_OUT`) and this wrapper
+copies it out afterwards. Keeping that translation here is what stops the benchmark from
+needing a new tool — i.e. a change to the shipped engine — for its own convenience.
 """
 from __future__ import annotations
 
@@ -34,6 +44,11 @@ import sys
 from pathlib import Path
 
 import yaml
+
+# Where the agent is told to leave its result, *inside the revival container*. The wrapper
+# copies from here to the host /out after the run. Not /out: that path exists only in the
+# submission container.
+IN_CONTAINER_OUT = "/lazarus_result"
 
 
 def _fetch_instructions(repo_url: str, commit: str = "",
@@ -50,6 +65,24 @@ def _fetch_instructions(repo_url: str, commit: str = "",
         f"    echo '{artifact_sha256}  source.archive' | sha256sum -c -\n"
         f"The checksum MUST verify before you unpack it. This source is not in git; the\n"
         f"hash is the pin.\n")
+
+
+def bake_input_image(base_image: str, task_dir, tag: str, *, client) -> str:
+    """Derive an image from ``base_image`` with the task's input already inside it.
+
+    ``Resurrector.resurrect()`` builds and starts its own sandbox from ``self.image``, so
+    there is no seam for the wrapper to copy files in beforehand — and the agent's tools
+    cannot read the host. Baking the input into a one-layer derived image sidesteps both
+    without touching the engine, which is the constraint that matters: the benchmark must
+    not grow features into the shipped package for its own convenience.
+    """
+    task_dir = Path(task_dir)
+    df = task_dir / "Dockerfile.lazarus-bench"
+    df.write_text(f"FROM {base_image}\n"
+                  f"COPY input {IN_CONTAINER_OUT}/input\n")
+    client.run(["build", "--platform", "linux/amd64", "-f", str(df),
+                "-t", tag, str(task_dir)], timeout=1800).raise_for_status()
+    return tag
 
 
 def build_goal(task: dict, repo_url: str, *, commit: str = "",
@@ -70,7 +103,8 @@ def build_goal(task: dict, repo_url: str, *, commit: str = "",
         criterion = (
             f"Report the value of `{ev.get('metric', 'the metric')}` that the method\n"
             f"actually achieves on the benchmark shipped with the repo. Write it to\n"
-            f"/out/{out_path} as `{ev.get('metric', 'metric')}=<value>` and nothing else.\n"
+            f"{IN_CONTAINER_OUT}/{out_path} as `{ev.get('metric', 'metric')}=<value>` and "
+            f"nothing else.\n"
             f"Do NOT write a value you did not measure: the number is compared against the\n"
             f"paper's, and a guess that happens to land inside the band is indistinguishable\n"
             f"from fraud. If you cannot run the benchmark, write no file.\n")
@@ -83,8 +117,9 @@ def build_goal(task: dict, repo_url: str, *, commit: str = "",
                   + ").\n") if ev.get("metric") else ""
         criterion = (
             f"{target}"
-            f"Run the revived method on the input in /task/input and write its predictions\n"
-            f"to /out/{out_path} as {schema_line}.\n"
+            f"Run the revived method on the input (copied into this container at\n"
+            f"{IN_CONTAINER_OUT}/input) and write its predictions to\n"
+            f"{IN_CONTAINER_OUT}/{out_path} as {schema_line}.\n"
             f"Every item in the input must appear exactly once. The grader joins rows by\n"
             f"their id column, so row order does not matter, but ids must match the input\n"
             f"and values must be finite numbers.\n")
@@ -97,7 +132,8 @@ def build_goal(task: dict, repo_url: str, *, commit: str = "",
         f"CAPABILITY TO REVIVE:\n{task.get('capability', '').strip()}\n\n"
         f"WHAT TO PRODUCE:\n{criterion}\n"
         f"NOTES:\n"
-        f"- /task is read-only; /out is where your result must land.\n"
+        f"- Create {IN_CONTAINER_OUT} if it does not exist. That directory is where your\n"
+        f"  result must land; it is collected from this container after you finish.\n"
         f"- Repair whatever is broken: pin era-appropriate dependencies, fix imports,\n"
         f"  replace rotted download URLs, build missing binaries. That is the task.\n"
         f"- Do not invent your own success metric or relax the one above. The output file\n"
@@ -143,14 +179,47 @@ def main(argv=None) -> int:
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    r = Resurrector(image=image, max_turns=args.max_turns, model=args.model,
-                    gpus=gpus, output_dir=str(out / "_contract"),
-                    on_event=lambda e: print(f"{e.kind}: {e.text[:200]}", flush=True))
-    result = asyncio.run(r.resurrect(goal))
+    out_name = task.get("output_path") or "prediction.csv"
 
-    produced = out / (task.get("output_path") or "prediction.csv")
+    # Bake the task input into the image the revival runs in (see bake_input_image).
+    task_dir = Path(args.task).parent
+    if (task_dir / "input").exists():
+        from lazarus.sandbox import DockerClient, find_docker
+        try:
+            image = bake_input_image(
+                image, task_dir, f"lazarus-bench-input:{task.get('id', 'task')}",
+                client=DockerClient(binary=find_docker()))
+        except Exception as exc:  # noqa: BLE001
+            print(f"could not stage the task input into the image: {exc}", file=sys.stderr)
+            return 4
+
+    # keep_container so the result can be copied out after the loop finishes — the agent
+    # has no tool that writes the host, by design (see the module docstring).
+    r = Resurrector(image=image, max_turns=args.max_turns, model=args.model,
+                    gpus=gpus, output_dir=str(out / "_contract"), keep_container=True,
+                    on_event=lambda e: print(f"{e.kind}: {e.text[:200]}", flush=True))
+
+    result = None
+    try:
+        result = asyncio.run(r.resurrect(goal))
+    finally:
+        produced = out / out_name
+        box = r.sandbox
+        if box is not None:
+            try:
+                box.exec(f"test -f {IN_CONTAINER_OUT}/{out_name}").raise_for_status()
+                box.get(f"{IN_CONTAINER_OUT}/{out_name}", str(produced))
+            except Exception as exc:  # noqa: BLE001 — nothing produced is a real outcome
+                print(f"no result to collect: {exc}", file=sys.stderr)
+            try:
+                box.stop()
+            except Exception:  # noqa: BLE001
+                pass
+
+    produced = out / out_name
     print(json.dumps({"completed": bool(result and result.completed),
                       "turns": getattr(result, "num_turns", None),
+                      "collected": str(produced) if produced.exists() else None,
                       "wrote_output": produced.exists()}))
     # Exit non-zero only if nothing was produced. A crash after a correct write still
     # counts — the harness grades the artifact, not the exit code.

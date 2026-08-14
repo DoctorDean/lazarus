@@ -138,6 +138,14 @@ Two design choices in it are worth copying, or at least understanding:
   from the task. An agent grading itself is the thing this benchmark exists to prevent, and
   the reference implementation must not smuggle it back in.
 
-**Status:** the goal construction is unit-tested; the orchestration around it has **not
-been run end to end**. It needs a Docker socket, an `ANTHROPIC_API_KEY` and real compute, so
-treat `reference/` as a specification with tested parts rather than a proven runner.
+It also shows a constraint any wrapper around an existing agent will hit: the revival
+happens in a *different* container from the submission, so `/task` and `/out` do not exist
+where the agent works, and Lazarus's tools deliberately cannot write the host. The wrapper
+therefore bakes the task input into a one-layer derived image and copies the result back out
+afterwards — both entirely wrapper-side, so the benchmark never grows features into the
+shipped engine for its own convenience.
+
+**Status:** the goal construction and staging logic are unit-tested; the orchestration
+around them has **not been run end to end**. It needs a Docker socket, an
+`ANTHROPIC_API_KEY` and real compute, so treat `reference/` as a specification with tested
+parts rather than a proven runner.
