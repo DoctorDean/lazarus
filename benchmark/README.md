@@ -78,3 +78,8 @@ Define a **sampling frame** — comp-bio papers in a set of venues over a year r
 - Cost/token capture from the Agent SDK per run.
 - Publishing images to GHCR (needed for fully-runnable registry entries).
 - Final venue/year frame for the principled sample.
+
+## Resuming this work
+
+See [HANDOFF.md](HANDOFF.md) for exact state, settled decisions, findings and the immediate
+next action; [LEADERBOARD_SCOPE.md](LEADERBOARD_SCOPE.md) for the full design.

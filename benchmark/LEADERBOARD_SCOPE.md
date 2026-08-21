@@ -1,6 +1,6 @@
 # Scope — a public benchmark for reviving dead research code
 
-*Roadmap Tier-1 "durable" track. Status: **P0–P1 done, P2 in progress** — the
+*Roadmap Tier-1 "durable" track. See [HANDOFF.md](HANDOFF.md) to resume cold. Status: **P0–P1 done, P2 in progress** — the
 task/evaluator/grading layer is built and tested; 7 of a revised ~9 dev tasks across 4 domains; the submission boundary is built.*
 
 **Settled:** the test split chases `predict` tasks with hidden labels, and scope is
