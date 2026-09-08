@@ -31,7 +31,7 @@ import shutil
 import time
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Sequence
 
 import yaml
 
@@ -121,8 +121,23 @@ def stage_task(task, dest) -> Path:
 def build_argv(submission: Submission, task, staged: Path, out_dir: Path, *,
                network: str = "none", gpus: Optional[str] = None,
                memory: Optional[str] = None, cpus: Optional[str] = None,
-               name: Optional[str] = None) -> list:
-    """The exact ``docker`` argv for one submission run. Pure — unit-tested."""
+               name: Optional[str] = None, env_passthrough: Sequence[str] = (),
+               docker_socket: bool = False) -> list:
+    """The exact ``docker`` argv for one submission run. Pure — unit-tested.
+
+    Two options exist for the *reference* submission and are off by default, because both
+    are grants of privilege that an untrusted third-party image must not receive:
+
+    ``env_passthrough`` names variables to forward by name only (``-e NAME``, no value),
+    so the daemon takes them from the harness process's environment and a credential never
+    appears in an argv that ``ps`` can read. A submission needing model credentials is the
+    normal case — but it is the *submitter's* key, supplied when they run it, not ours.
+
+    ``docker_socket`` mounts the host Docker socket. That hands the container control of
+    the daemon, which is why it is a named boolean rather than a free-form docker argument:
+    the reference submission drives containers to do its revival and genuinely needs it,
+    and it should be obvious in a review of the harness exactly who was given it.
+    """
     argv = ["run", "--rm"]
     if name:
         argv += ["--name", name]
@@ -133,6 +148,10 @@ def build_argv(submission: Submission, task, staged: Path, out_dir: Path, *,
         argv += ["--memory", memory]
     if cpus:
         argv += ["--cpus", cpus]
+    for var in env_passthrough:
+        argv += ["-e", var]                       # no "=value": inherited from our env
+    if docker_socket:
+        argv += ["-v", "/var/run/docker.sock:/var/run/docker.sock"]
     argv += ["-v", f"{staged}:{TASK_MOUNT}:ro", "-v", f"{out_dir}:{OUT_MOUNT}"]
     argv += [submission.image,
              "--repo-url", task.repo_url,
@@ -150,7 +169,9 @@ def run_submission(submission: Submission, task, work_dir, *, client,
                    network: str = "none", gpus: Optional[str] = None,
                    memory: Optional[str] = None, cpus: Optional[str] = None,
                    timeout_s: Optional[int] = None,
-                   kill_budget_s: float = 30.0) -> SubmissionRun:
+                   kill_budget_s: float = 30.0,
+                   env_passthrough: Sequence[str] = (),
+                   docker_socket: bool = False) -> SubmissionRun:
     """Stage the task, run the submission container under caps, return what happened.
 
     **Which caps are real.** ``wall_clock_s`` is enforced here, and ``memory``/``cpus``
@@ -168,7 +189,8 @@ def run_submission(submission: Submission, task, work_dir, *, client,
     cap = timeout_s if timeout_s is not None else task.caps.wall_clock_s
     cname = f"lzb-{submission.name}-{task.id}"[:60]
     argv = build_argv(submission, task, staged, out_dir, network=network, gpus=gpus,
-                      memory=memory, cpus=cpus, name=cname)
+                      memory=memory, cpus=cpus, name=cname,
+                      env_passthrough=env_passthrough, docker_socket=docker_socket)
 
     run = SubmissionRun(submission=submission.name, task_id=task.id, out_dir=str(out_dir))
     t0 = time.monotonic()

@@ -158,12 +158,21 @@ class Task:
         The threshold stays: knowing "AUROC ≥ 0.70" states the required quality, not the
         answer. For a reproduce task nothing takes `reported`'s place, and that is
         correct — the submission is meant to *measure*, not to aim.
+
+        ``notes`` is stripped too, and for a less obvious reason. It is an *operator*
+        field: it exists to record why a threshold was chosen, and in practice that
+        rationale cites measurements — this very task's notes end "Lazarus's own revival
+        measured 0.9233 on this input." That is not the answer key, so neither
+        :meth:`Task.validate` nor the staging leak-check objects, but handing a submission
+        the score a working revival achieves leaks calibration: it tells the agent when to
+        stop trying. ``capability`` is the field that describes the task publicly.
         """
         d = self.to_dict()
         ev = dict(d.get("evaluation") or {})
         ev.pop("labels", None)
         ev.pop("reported", None)
         d["evaluation"] = ev
+        d.pop("notes", None)
         return d
 
     # ---- validation ----

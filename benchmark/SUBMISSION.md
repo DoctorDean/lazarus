@@ -3,9 +3,11 @@
 A submission is a **Docker image with a fixed command line**. The harness knows nothing
 else about it — how you revive the repo is entirely your business.
 
-> Status: the boundary is built and unit-tested (`benchmark/submission.py`). The public
-> board, the queue and the held-out split are not (P3–P5 in
+> Status: the boundary is built and exercised against a real Docker daemon
+> (`benchmark/submission.py`). The public board and the held-out split are not (P3–P5 in
 > [LEADERBOARD_SCOPE.md](LEADERBOARD_SCOPE.md)). You can develop against the dev tasks now.
+> Official runs are **self-run by the submitter**, so plan on supplying your own compute and
+> your own model credentials.
 
 ## The contract
 
@@ -141,11 +143,19 @@ Two design choices in it are worth copying, or at least understanding:
 It also shows a constraint any wrapper around an existing agent will hit: the revival
 happens in a *different* container from the submission, so `/task` and `/out` do not exist
 where the agent works, and Lazarus's tools deliberately cannot write the host. The wrapper
-therefore bakes the task input into a one-layer derived image and copies the result back out
-afterwards — both entirely wrapper-side, so the benchmark never grows features into the
-shipped engine for its own convenience.
+therefore derives an image with the task input already inside it (by copy-and-commit, not a
+build — see the status note below) and copies the result back out afterwards — both entirely
+wrapper-side, so the benchmark never grows features into the shipped engine for its own
+convenience.
 
-**Status:** the goal construction and staging logic are unit-tested; the orchestration
-around them has **not been run end to end**. It needs a Docker socket, an
-`ANTHROPIC_API_KEY` and real compute, so treat `reference/` as a specification with tested
-parts rather than a proven runner.
+**Status:** the boundary itself is exercised against a real daemon — staging, the argv, the
+mounts, the exit code and grading are driven by a stub submission in
+`tests/test_reference_integration.py` (opt-in: `LAZARUS_DOCKER_TESTS=1`), which reproduces the
+known answer for `scannet-ppi-4zqk` and asserts from *inside* the container that the answer key
+never crossed. Baking the input and copying the result out are likewise verified under real
+conditions. What remains unproven is the agent-in-the-loop half: credentials authenticating the
+SDK inside the container, and the agent conforming to `output_schema` rather than emitting the
+method's native format. Two notes for anyone wrapping an existing agent, both learned the hard
+way: Debian's `docker-cli` has no buildx plugin, so `docker build` inside a submission falls
+back to a legacy builder that cannot export a cross-platform image — copy-and-commit avoids
+needing a builder at all; and `/task` is mounted read-only, so nothing may be written there.

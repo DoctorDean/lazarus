@@ -72,17 +72,57 @@ def bake_input_image(base_image: str, task_dir, tag: str, *, client) -> str:
 
     ``Resurrector.resurrect()`` builds and starts its own sandbox from ``self.image``, so
     there is no seam for the wrapper to copy files in beforehand — and the agent's tools
-    cannot read the host. Baking the input into a one-layer derived image sidesteps both
+    cannot read the host. Deriving an image with the input already in place sidesteps both
     without touching the engine, which is the constraint that matters: the benchmark must
     not grow features into the shipped package for its own convenience.
+
+    **Done with copy-and-commit, not ``docker build``.** Two reasons, both learned by
+    running it. A Dockerfile needs a writable build context, and ``/task`` is mounted
+    read-only on purpose — it is the answer-adjacent tree. And Debian's ``docker-cli``
+    carries no buildx plugin, so ``docker build`` inside this container falls back to the
+    deprecated legacy builder, which fails to export a cross-platform image at all
+    (``failed to export image: NotFound: content digest ...``). Copy-and-commit needs no
+    builder, no context and no Dockerfile — and it reuses :class:`lazarus.sandbox.Sandbox`,
+    which is the same primitive the engine already uses to bank a successful build.
     """
+    from lazarus.sandbox import Sandbox
+
     task_dir = Path(task_dir)
-    df = task_dir / "Dockerfile.lazarus-bench"
-    df.write_text(f"FROM {base_image}\n"
-                  f"COPY input {IN_CONTAINER_OUT}/input\n")
-    client.run(["build", "--platform", "linux/amd64", "-f", str(df),
-                "-t", tag, str(task_dir)], timeout=1800).raise_for_status()
+    box = Sandbox(client, base_image, workdir="/")
+    box.start(timeout=1800)
+    try:
+        # list form, not a string: `exec` runs strings under `bash -lc`, and a base image
+        # is not obliged to have bash.
+        box.exec(["mkdir", "-p", IN_CONTAINER_OUT]).raise_for_status()
+        box.put(str(task_dir / "input"), f"{IN_CONTAINER_OUT}/input")
+        box.snapshot(tag)
+    finally:
+        box.stop()
     return tag
+
+
+def preflight() -> str:
+    """Check the two things this submission cannot work without. Cheap, and first.
+
+    Both were absent in the first build of the reference image: the Claude CLI install is
+    best-effort by design (it can be mounted instead), and Debian trixie's ``docker.io``
+    ships the daemon while the *client* lives in ``docker-cli``. Either gap produces an
+    image that builds green and fails only after the Scout has spent real money, so the
+    check belongs here rather than in the Dockerfile alone.
+    """
+    from lazarus.resurrect import find_claude_cli
+    from lazarus.sandbox import DockerClient, find_docker
+
+    cli = find_claude_cli()
+    if not cli:
+        return ("no claude CLI on PATH or at ~/.local/bin/claude — the resurrection loop "
+                "drives it, so install it at build time or mount it")
+    client = DockerClient(binary=find_docker())
+    if not client.available():
+        return ("no Docker daemon answering: this submission drives containers to do the "
+                "revival, so it needs a socket (-v /var/run/docker.sock) or DOCKER_HOST, "
+                "and a `docker` client binary in the image")
+    return ""
 
 
 def build_goal(task: dict, repo_url: str, *, commit: str = "",
@@ -158,6 +198,11 @@ def main(argv=None) -> int:
         print("need --commit, or --artifact-url with --artifact-sha256", file=sys.stderr)
         return 2
 
+    problem = preflight()
+    if problem:
+        print(f"preflight failed: {problem}", file=sys.stderr)
+        return 5
+
     task = yaml.safe_load(Path(args.task).read_text()) or {}
     goal = build_goal(task, args.repo_url, commit=args.commit,
                       artifact_url=args.artifact_url,
@@ -207,7 +252,10 @@ def main(argv=None) -> int:
         box = r.sandbox
         if box is not None:
             try:
-                box.exec(f"test -f {IN_CONTAINER_OUT}/{out_name}").raise_for_status()
+                # list form: a string command runs under `bash -lc`, and a revival image
+                # is not obliged to have bash. With a string, a bash-less image reports
+                # "no result to collect" even when the agent wrote a perfectly good file.
+                box.exec(["test", "-f", f"{IN_CONTAINER_OUT}/{out_name}"]).raise_for_status()
                 box.get(f"{IN_CONTAINER_OUT}/{out_name}", str(produced))
             except Exception as exc:  # noqa: BLE001 — nothing produced is a real outcome
                 print(f"no result to collect: {exc}", file=sys.stderr)

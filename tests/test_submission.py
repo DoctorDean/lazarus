@@ -201,3 +201,20 @@ def test_a_submission_that_writes_nothing_is_ungradable_not_wrong(tmp_path):
     run, score = sub.run_and_grade(sub.Submission("a", "img"), t, tmp_path / "w",
                                    client=DockerClient(runner=Recorder()))
     assert run.ok and score.passed is None and "no prediction.csv" in score.reason
+
+
+def test_staging_does_not_leak_operator_notes(tmp_path):
+    """`notes` records why a threshold was picked, which in practice cites a measurement.
+
+    The real scannet task's notes end "Lazarus's own revival measured 0.9233 on this
+    input." That is not the answer key, so the label-file comparison and the `labels:`/
+    `reported:` string check both pass it through — but it tells a submission the score a
+    working revival gets, i.e. when to stop trying.
+    """
+    t = _predict_task(tmp_path)
+    t.notes = "Threshold 0.70 is loose. Our own revival measured 0.9233 on this input."
+    staged = sub.stage_task(t, tmp_path / "staged")
+    spec = (staged / "task.yaml").read_text()
+    assert "0.9233" not in spec and "notes" not in spec
+    assert "0.7" in spec          # the bar itself is public, and must stay
+    assert t.capability in spec

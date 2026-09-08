@@ -18,9 +18,14 @@
 # is acceptable here; SUBMISSION.md does not ask third parties to need it.
 FROM python:3.12-slim
 
+# docker-cli, NOT docker.io: this container talks to a daemon it does not own, over the
+# socket. Debian trixie splits the two, and docker.io is the *daemon* — asking for it with
+# --no-install-recommends yields a dockerd we never run and no `docker` binary at all,
+# which builds green and fails at run time.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        git curl ca-certificates docker.io \
-    && rm -rf /var/lib/apt/lists/*
+        git curl ca-certificates docker-cli \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker --version
 
 # The resurrection loop drives the Claude CLI.
 RUN curl -fsSL https://claude.ai/install.sh | bash || \
