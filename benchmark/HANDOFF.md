@@ -7,7 +7,14 @@ full design and the phase table.
 > **P2 IS CLOSED (2026-09-15).** The reference submission ran end-to-end through the real
 > contract and **PASSED**: `pyamg-poisson-solve`, `relative_residual=4.93e-16` against a
 > `≤1e-8` bar, 21 turns, 7.9 min, on the **Mac (arm64)** — no Bertha involved. All six
-> integration points are proven. **The next action is P3**, the held-out test set.
+> integration points are proven. *(Committed 2026-09-18 as `0493777` — the IS_SANDBOX fix
+> and this rewrite were uncommitted working-tree changes until then.)*
+>
+> **P3 IS UNDERWAY (2026-09-18).** Decisions locked (Dean): a **50-task** test split, ground
+> truth = **self-verifying core + constructible tail**, four prioritised domains
+> (physical/numerical, structural/molecular bio, genomics/bioinformatics, chemistry/materials).
+> The fresh-candidate miner and the first review manifest are built (§11). The per-task grind
+> — decay-check → pin → hand-build criterion → confirm achievable — is the work that remains.
 
 ---
 
@@ -41,7 +48,7 @@ shipped package for its own convenience. It has already been tempting twice — 
 | **P0** grading layer | `task.py`, `evaluators.py`, `score.py`, `run.py:apply_task_score` | done |
 | **P1** dev split | `tasks/dev/*`, `mine_tasks.py`, `tasks/pins.json` | done (7 tasks, 4 domains) |
 | **P2** submission boundary | `submission.py`, `SUBMISSION.md`, `reference/`, `run_reference.py` | **done** — proven end-to-end against a real agent (§4) |
-| **P3** held-out test set | — | not started (the expensive phase) — **now the next action** |
+| **P3** held-out test set | `mine_test_candidates.py`, `tasks/TEST_CANDIDATES.md` | **in progress** — fresh miner + 452-repo manifest built (§11); no task frozen yet |
 | **P4** scoring, board, proxy | — | not started |
 | **P5** baseline + launch | — | not started |
 
@@ -290,12 +297,13 @@ leaderboard for actual adoption.
 
 ```bash
 git diff --stat v0.5.0..next -- src/ pyproject.toml        # expect empty (§2)
-.venv/bin/python -m pytest -q                              # expect 161 passed, 2 skipped
+.venv/bin/python -m pytest -q                              # expect 171 passed, 2 skipped
 LAZARUS_DOCKER_TESTS=1 .venv/bin/python -m pytest -q \
     tests/test_reference_integration.py                    # expect 2 passed; needs Docker
 .venv/bin/python benchmark/task.py --root benchmark/tasks  # list + validate the dev split
-tailscale status | grep bertha                             # is the box back yet?
-ssh dean@100.80.108.2 nvidia-smi                           # ...and does it have its GPU
+.venv/bin/python benchmark/mine_test_candidates.py         # rebuild the P3 fresh manifest (§11)
+tailscale status | grep bertha                             # is the box back yet? (back up 2026-09-18)
+ssh dean@100.80.108.2 nvidia-smi                           # ...and does it have its GPU (A4500, healthy)
 ```
 
 Check the credential before spending anything — a revoked key costs 3 minutes of retries to
@@ -312,3 +320,43 @@ print("key OK" if urllib.request.urlopen(req,timeout=25).status==200 else "?")'
 If `tailscale status` reports `Tailscale is stopped`, that is the **Mac's** client being down,
 not Bertha — reconnect with `tailscale up --accept-routes` (the flag must be repeated or
 `up` refuses) before concluding anything about the box.
+
+---
+
+## 11. P3 — the held-out test set (started 2026-09-18)
+
+**Decisions (Dean, locked):** 50-task test split; ground truth = self-verifying core +
+constructible tail; four prioritised domains. Scope stays cross-domain (§5).
+
+**The fresh pool.** The test split must be freshly mined (§2.2). The three candidate lists
+(`revival_*_repos.txt`, `pilot_repos.txt`) are all already in `tasks/pins.json` — the 70
+attempted — so they are contaminated. `frame_scaled_new.json` already held a **disjoint
+452-repo draw** (JOSS 307 + EPMC 145, verified raw-intersection 0 with pins).
+
+**The miner.** `benchmark/mine_test_candidates.py` enriches that draw by an offline join
+against the JOSS frames' tags, drops everything contaminated (pins + the non-git registry
+tools no frame draw would contain), and scores each candidate on **verifiability**
+(self-verifying / constructible / unclear) and domain. Same discipline as `mine_tasks.py`: it
+writes a review manifest (`tasks/TEST_CANDIDATES.md`), **never a task**. First manifest: **58
+self-verifying + 23 constructible** leads across the four domains (genomics is mostly
+`unclear` — the EPMC arm carries no JOSS tags, so those need hands-on review).
+
+```bash
+.venv/bin/python benchmark/mine_test_candidates.py                    # offline: classify + stratify
+.venv/bin/python benchmark/mine_test_candidates.py --pin \
+    --verifiability self-verifying                                    # resolve SHAs (GitHub; cached)
+```
+
+**The per-candidate grind (the 1–2 weeks that remain), per task:**
+1. **decay-check** — confirm it is dead today (`lazarus decay-check`, agent-free, ~3 min).
+2. **pin** — last commit before `2026-07-01` (`--pin`, cached to `tasks/test_pins.json`).
+3. **hand-build a harness-owned criterion** — self-verifying wherever possible. Only
+   `relative_residual` among the 7 evaluators is self-verifying today; expect to add a few
+   (energy / feasibility / round-trip), each against a real task, never speculatively (§2.5).
+4. **confirm achievable** — the reference must pass, or the task is dead weight.
+
+**Watch items.** 58 self-verifying leads is a thin margin for 50 tasks once decay-check and
+achievability thin them; the JOSS arm is the well to widen if short. Label privacy is not
+wired yet (`.gitignore` covers only `benchmark/output/`) — fine while the split is
+self-verifying-dominant (no labels to hide); the constructible tail will need an off-repo
+label store + a leak guard, built when the first constructible test task needs it.

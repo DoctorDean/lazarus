@@ -331,6 +331,8 @@ def main(argv=None) -> int:
     ap.add_argument("--limit", type=int, default=0,
                     help="cap API lookups this run (GitHub rate limit); 0 = no cap")
     ap.add_argument("--domain", choices=DOMAIN_ORDER, help="only pin candidates in this domain")
+    ap.add_argument("--verifiability", choices=VERIFIABILITY_ORDER,
+                    help="only pin candidates of this verifiability class (e.g. self-verifying)")
     args = ap.parse_args(argv)
 
     fresh = load_fresh(Path(args.fresh))
@@ -345,6 +347,8 @@ def main(argv=None) -> int:
         looked_up = 0
         for r in rows:
             if args.domain and r["domain"] != args.domain:
+                continue
+            if args.verifiability and r["verifiability"] != args.verifiability:
                 continue
             was_cached = r["repo_url"] in cache
             if not was_cached and args.limit and looked_up >= args.limit:

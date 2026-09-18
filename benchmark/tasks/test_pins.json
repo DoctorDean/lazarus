@@ -1,0 +1,226 @@
+{
+  "https://github.com/BattModels/asimtools": {
+    "date": "2026-05-08T20:57:37Z",
+    "sha": "c232b5feb6f154e3c2fd46789c6948345603f0b0"
+  },
+  "https://github.com/BrownDwarf/gollum": {
+    "date": "2026-02-18T06:17:28Z",
+    "sha": "2146db908752bd213971134566f2aef483786df2"
+  },
+  "https://github.com/CM2S/piglot": {
+    "date": "2025-06-17T18:14:57Z",
+    "sha": "a2b0240a6fff556f9558305e6a90fc793f1ae7cd"
+  },
+  "https://github.com/Cavenfish/YetAnotherSimulationSuite.jl": {
+    "date": "2026-01-28T13:01:09Z",
+    "sha": "fadb32df9dc2b333195d9fda7ff8989cc9d84a79"
+  },
+  "https://github.com/DedalusProject/eigentools": {
+    "date": "2023-04-10T13:50:42Z",
+    "sha": "3fc8556dcbe3712043d93527cb943f3f7beef732"
+  },
+  "https://github.com/Leo-Simpson/c-lasso": {
+    "date": "2021-05-05T15:47:17Z",
+    "sha": "82b106c471c70559b1720a5bb79a61a5224cca7f"
+  },
+  "https://github.com/Lindt8/PHITS-Tools": {
+    "date": "2026-06-04T13:56:03Z",
+    "sha": "9434b5a2f4d27c5f6e83f90c209df1e34376ee3f"
+  },
+  "https://github.com/MDAnalysis/solvation-analysis": {
+    "date": "2025-11-26T21:23:47Z",
+    "sha": "7c0daab864c5d05c0c5a09efe0edd62bcfa4d23f"
+  },
+  "https://github.com/ManuelRausch/StatConfR": {
+    "date": "2026-06-02T09:28:05Z",
+    "sha": "48d879015d542267bc13bf559c447e42cabae2a2"
+  },
+  "https://github.com/NKI-AI/direct": {
+    "date": "2026-06-05T15:36:35Z",
+    "sha": "f83b7bbbbf6de13f16d141a8731d1cd52a7fb834"
+  },
+  "https://github.com/Simulation-Decomposition/simdec-python": {
+    "date": "2026-06-10T11:13:19Z",
+    "sha": "b4031b63e444b447e302e814c2a594fd78578df2"
+  },
+  "https://github.com/VChristiaens/special": {
+    "date": "2023-09-29T20:56:27Z",
+    "sha": "fcc0f995a690189c94b8ed85d597f40a76d2540b"
+  },
+  "https://github.com/Xia-Yijie/Xponge": {
+    "date": "2022-11-26T03:41:27Z",
+    "sha": "5ecd73b3b047e3b43556927d6759551d6c41e3b3"
+  },
+  "https://github.com/anthbapt/MOSAIK": {
+    "date": "2026-02-25T11:44:23Z",
+    "sha": "a7f72e394ed0d28dc7ac012d0a6ef6117fb8ac12"
+  },
+  "https://github.com/arkavo/CUDA-METRO": {
+    "date": "2025-05-19T13:44:38Z",
+    "sha": "0c670f43b980464e51710833deeb8ce7a1038f47"
+  },
+  "https://github.com/bio-phys/asyncmd": {
+    "date": "2026-06-08T13:17:40Z",
+    "sha": "9fd7d0c2dc993fb82c0b399a87e2bb1afc82b8b9"
+  },
+  "https://github.com/bjmorgan/site-analysis": {
+    "date": "2026-06-02T12:44:10Z",
+    "sha": "da5213526da7e27ebbc87faed28e264685e8d6ab"
+  },
+  "https://github.com/braindatalab/PyBispectra": {
+    "date": "2026-06-30T08:50:20Z",
+    "sha": "f6388f2a4817ebcec0eb5a7b2bb1ab6a197fa250"
+  },
+  "https://github.com/carlacupcake/hashin_shtrikman_mp": {
+    "date": "2025-10-09T16:52:09Z",
+    "sha": "14e7c92da9b097c7c853a1db2bcf0496a851f731"
+  },
+  "https://github.com/daubners/evoxels": {
+    "date": "2026-05-06T15:59:54Z",
+    "sha": "e90e11fb52aca3e0d6cea7436c0a506410a26195"
+  },
+  "https://github.com/deepskies/DeepBench": {
+    "date": "2025-04-08T13:26:08Z",
+    "sha": "4a39a52375320442b608c9b076b37670889d8c91"
+  },
+  "https://github.com/dfm/emcee": {
+    "date": "2026-03-15T15:09:05Z",
+    "sha": "8ab6c0fcc4afd46db0b401ec0c705d47ade07035"
+  },
+  "https://github.com/esa/torchquad": {
+    "date": "2025-08-03T19:04:04Z",
+    "sha": "4e5e95b0c585c53e58d51c37ebbae0ce13231a60"
+  },
+  "https://github.com/fAndreuzzi/BisPy": {
+    "date": "2022-01-21T22:32:11Z",
+    "sha": "18f5853c3a052c4d2b11d776e3cef83b1e304050"
+  },
+  "https://github.com/gvec-group/gvec": {
+    "date": "2026-06-19T07:14:36Z",
+    "sha": "24295cd03dd5f88bfc7b382480fa2034832dcbf3"
+  },
+  "https://github.com/gyselax/gyselalibxx": {
+    "date": "2026-06-29T12:05:52Z",
+    "sha": "2edea8d6b58d585ffd38d58cbe4a3db48af002fe"
+  },
+  "https://github.com/instituteofmechanics/paraqus": {
+    "date": "2025-05-26T16:47:03Z",
+    "sha": "91b00219d08a11446fdef4d1c777a0d460c92039"
+  },
+  "https://github.com/jacobblum/simDRIFT": {
+    "date": "2024-05-16T22:53:02Z",
+    "sha": "15756bb2cb71656985efc8349098167fa91dce6b"
+  },
+  "https://github.com/jbuisine/macop": {
+    "date": "2022-06-28T13:30:52Z",
+    "sha": "aee0df359025928096a166df4cbd455f2bacd92d"
+  },
+  "https://github.com/jmorris335/ConstraintHg": {
+    "date": "2026-05-13T03:48:03Z",
+    "sha": "1cdf7c87b774a89ad31738ced58ea2a7f1a9125a"
+  },
+  "https://github.com/kb-press/ndsplines": {
+    "date": "2025-09-08T01:38:04Z",
+    "sha": "b18766fca2cec3eee70b5ca839b0f57fff9c00e6"
+  },
+  "https://github.com/kokkos/kokkos-fft": {
+    "date": "2026-06-26T06:12:30Z",
+    "sha": "28becfdbcf6b6c5592a130dabe4bbff9293aa5c5"
+  },
+  "https://github.com/m-d-grunnill/MetaCast": {
+    "date": "2024-11-12T20:56:22Z",
+    "sha": "fcf7f88257431d1df5f85c16f50114e18449b783"
+  },
+  "https://github.com/mengaldo/PySPOD": {
+    "date": "2026-06-22T17:11:53Z",
+    "sha": "7226688859207fc349bcbd6826850f1270bb98ca"
+  },
+  "https://github.com/moead-framework/framework": {
+    "date": "2022-10-17T12:18:57Z",
+    "sha": "82e437678f5d54a13a71b8a97fa9a45cb6ec4685"
+  },
+  "https://github.com/mphowardlab/lammpsio": {
+    "date": "2026-06-23T19:42:58Z",
+    "sha": "7a86b2918c96e4984da7de10c922bbd5f790c7b5"
+  },
+  "https://github.com/mrc-ide/individual": {
+    "date": "2026-06-08T09:55:15Z",
+    "sha": "50524f239e965d38b40f178290262760f252fc60"
+  },
+  "https://github.com/mscaudill/openseize": {
+    "date": "2026-02-09T14:31:42Z",
+    "sha": "42067b3e3028cb5c0d78cfcb8fc29b94f622361e"
+  },
+  "https://github.com/octopus-sensing/octopus-sensing": {
+    "date": "2026-02-15T08:17:08Z",
+    "sha": "f59a16a922885d69f037da239692ba69de31a614"
+  },
+  "https://github.com/oemof/tespy": {
+    "date": "2026-06-30T16:21:13Z",
+    "sha": "971dd9a31dbb8a9a3b3a70c7eea1c0a498ff0758"
+  },
+  "https://github.com/pdebuyl-lab/tidynamics": {
+    "date": "2023-07-11T12:35:40Z",
+    "sha": "b0c95e0b337ea1c9748bfebf1ac710182360ef53"
+  },
+  "https://github.com/ramiyaari/simode": {
+    "date": "2020-05-14T13:44:31Z",
+    "sha": "a8ac4343abe4cf6b1c6df5e720a92a061d7bfddd"
+  },
+  "https://github.com/rmsare/pymccrgb": {
+    "date": "2020-08-06T21:18:05Z",
+    "sha": "dc8ad2e46cbe6ff8081c32fa11bce68f869baafa"
+  },
+  "https://github.com/ropensci/lightr": {
+    "date": "2026-06-29T12:08:07Z",
+    "sha": "78bd9354809fc2d1f6ab97a3d4261c77ff86b65c"
+  },
+  "https://github.com/ropensci/mcbette": {
+    "date": "2025-10-29T13:11:24Z",
+    "sha": "7ddf4ddcc9262621f4631068681d3a53107aaff3"
+  },
+  "https://github.com/ropensci/stats19": {
+    "date": "2026-03-18T14:06:45Z",
+    "sha": "182aad77edefecace744272c942e855773aca127"
+  },
+  "https://github.com/sbi-dev/sbi": {
+    "date": "2026-06-30T10:07:52Z",
+    "sha": "5f227ac55e6d39bdbb2cdf5df966ae19dca9958a"
+  },
+  "https://github.com/sciris/sciris": {
+    "date": "2026-05-30T04:35:46Z",
+    "sha": "f5c965a28adddd409f563835f97ba2685094fd8b"
+  },
+  "https://github.com/shirtsgroup/physical_validation": {
+    "date": "2024-07-09T13:27:17Z",
+    "sha": "5b09945cb1ac6b4eb7dd3a7cb6a07a9edd9cbb88"
+  },
+  "https://github.com/siminegroup/E2EDNA2": {
+    "date": "2024-07-19T15:33:45Z",
+    "sha": "44715f81d8039fd9e4633c8131eb60dc0aba0c15"
+  },
+  "https://github.com/slu-openGIS/areal": {
+    "date": "2022-05-30T23:28:06Z",
+    "sha": "07bda84887d9f2272babe91c2ccc1e438f27f162"
+  },
+  "https://github.com/symmy596/SurfinPy": {
+    "date": "2022-03-05T12:17:12Z",
+    "sha": "b094d8af592b79b73cb31a42f4be6b5cd0ac38f3"
+  },
+  "https://github.com/trevorgokey/besmarts": {
+    "date": "2025-05-06T14:59:48Z",
+    "sha": "d5c8af03a177af92d4def2c9004ddff1d383e5ea"
+  },
+  "https://github.com/tud-hri/joan": {
+    "date": "2023-01-31T08:03:46Z",
+    "sha": "789efcf34fbdecb8d32228569d8402f69815e32d"
+  },
+  "https://github.com/ulissigroup/amptorch": {
+    "date": "2023-07-16T02:08:13Z",
+    "sha": "02e5af3639484feda2a01a4e721f434ad54a70a1"
+  },
+  "https://github.com/wang-boyu/pysgn": {
+    "date": "2026-05-04T00:18:43Z",
+    "sha": "fad885a210136dbad980d48f14c1825ee8487a5d"
+  }
+}

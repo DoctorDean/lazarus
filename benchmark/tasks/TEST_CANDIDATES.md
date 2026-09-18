@@ -7,7 +7,7 @@ never attempted (disjoint from `tasks/pins.json`). Each row still needs a human 
 criterion — self-verifying wherever possible (SCOPE §9) — and (3) confirm the task
 is *achievable* before it is frozen. See `../LEADERBOARD_SCOPE.md` §2.2, §9.
 
-- **452** fresh candidates (0 dropped as contaminated, 452 in the draw), 0 pinned before `2026-07-01T00:00:00Z`
+- **452** fresh candidates (0 dropped as contaminated, 452 in the draw), 56 pinned before `2026-07-01T00:00:00Z`
 - target: a **50-task** test split, self-verifying core + constructible tail
 
 ### Verifiability (how it would be graded)
@@ -33,35 +33,35 @@ where the cross-domain self-verifying candidates concentrate.
 
 | verifiability | repo | arm | lang | tags | pin |
 |---|---|---|---|---|---|
-| `self-verifying` | [bio-phys/asyncmd](https://github.com/bio-phys/asyncmd) | joss | Python | python, molecular dynamics, molecular dynamics simulation | `—` |
-| `self-verifying` | [bjmorgan/site-analysis](https://github.com/bjmorgan/site-analysis) | joss | Python/Jupyter Notebook | molecular dynamics, ionic conductors, diffusion | `—` |
-| `self-verifying` | [Cavenfish/YetAnotherSimulationSuite.jl](https://github.com/Cavenfish/YetAnotherSimulationSuite.jl) | joss | Python/Julia | Atomic Simulations, Molecular Dynamics | `—` |
-| `self-verifying` | [MDAnalysis/solvation-analysis](https://github.com/MDAnalysis/solvation-analysis) | joss | Python | python, chemistry, electrolytes | `—` |
-| `self-verifying` | [mphowardlab/lammpsio](https://github.com/mphowardlab/lammpsio) | joss | Python | LAMMPS, molecular dynamics, simulation data | `—` |
-| `self-verifying` | [shirtsgroup/physical_validation](https://github.com/shirtsgroup/physical_validation) | joss | Python | molecular simulation, molecular dynamics, molecular mechanics | `—` |
-| `self-verifying` | [siminegroup/E2EDNA2](https://github.com/siminegroup/E2EDNA2) | joss | Python | simulation pipeline, DNA aptamers | `—` |
-| `self-verifying` | [ulissigroup/amptorch](https://github.com/ulissigroup/amptorch) | joss | Python/C++ | machine learning interatomic potentials, neural networks, molecular dynamics | `—` |
-| `self-verifying` | [Xia-Yijie/Xponge](https://github.com/Xia-Yijie/Xponge) | joss | Python | molecular modelling, molecular simulation, molecular dynamics | `—` |
+| `self-verifying` | [bio-phys/asyncmd](https://github.com/bio-phys/asyncmd) | joss | Python | python, molecular dynamics, molecular dynamics simulation | `9fd7d0c2` |
+| `self-verifying` | [bjmorgan/site-analysis](https://github.com/bjmorgan/site-analysis) | joss | Python/Jupyter Notebook | molecular dynamics, ionic conductors, diffusion | `da521352` |
+| `self-verifying` | [Cavenfish/YetAnotherSimulationSuite.jl](https://github.com/Cavenfish/YetAnotherSimulationSuite.jl) | joss | Python/Julia | Atomic Simulations, Molecular Dynamics | `fadb32df` |
+| `self-verifying` | [MDAnalysis/solvation-analysis](https://github.com/MDAnalysis/solvation-analysis) | joss | Python | python, chemistry, electrolytes | `7c0daab8` |
+| `self-verifying` | [mphowardlab/lammpsio](https://github.com/mphowardlab/lammpsio) | joss | Python | LAMMPS, molecular dynamics, simulation data | `7a86b291` |
+| `self-verifying` | [shirtsgroup/physical_validation](https://github.com/shirtsgroup/physical_validation) | joss | Python | molecular simulation, molecular dynamics, molecular mechanics | `5b09945c` |
+| `self-verifying` | [siminegroup/E2EDNA2](https://github.com/siminegroup/E2EDNA2) | joss | Python | simulation pipeline, DNA aptamers | `44715f81` |
+| `self-verifying` | [ulissigroup/amptorch](https://github.com/ulissigroup/amptorch) | joss | Python/C++ | machine learning interatomic potentials, neural networks, molecular dynamics | `02e5af36` |
+| `self-verifying` | [Xia-Yijie/Xponge](https://github.com/Xia-Yijie/Xponge) | joss | Python | molecular modelling, molecular simulation, molecular dynamics | `5ecd73b3` |
 | `unclear` | [DeepRank/pdb2sql](https://github.com/DeepRank/pdb2sql) | joss | Python | Bioinformatics, PDB files | `—` |
 
 ## chemistry/materials (29)
 
 | verifiability | repo | arm | lang | tags | pin |
 |---|---|---|---|---|---|
-| `self-verifying` | [BattModels/asimtools](https://github.com/BattModels/asimtools) | joss | Python | atomic simulation, density functional theory, workflow | `—` |
-| `self-verifying` | [braindatalab/PyBispectra](https://github.com/braindatalab/PyBispectra) | joss | Python | neuroscience, signal processing, bispectrum | `—` |
-| `self-verifying` | [BrownDwarf/gollum](https://github.com/BrownDwarf/gollum) | joss | Jupyter Notebook/Python | astronomy, spectroscopy, stars | `—` |
-| `self-verifying` | [carlacupcake/hashin_shtrikman_mp](https://github.com/carlacupcake/hashin_shtrikman_mp) | joss | Python | materials, composites, design | `—` |
-| `self-verifying` | [daubners/evoxels](https://github.com/daubners/evoxels) | joss | Python | materials science, differentiable physics, phase-field method | `—` |
-| `self-verifying` | [DedalusProject/eigentools](https://github.com/DedalusProject/eigentools) | joss | Python | eigenvalue problems, partial differential equations, fluid dynamics | `—` |
-| `self-verifying` | [mengaldo/PySPOD](https://github.com/mengaldo/PySPOD) | joss | Python/Jupyter Notebook | dynamical systems, nonlinear dynamics, data-driven dynamics | `—` |
-| `self-verifying` | [oemof/tespy](https://github.com/oemof/tespy) | joss | Python | Thermal Engineering, Thermodynamics, Power Plant Simulation | `—` |
-| `self-verifying` | [rmsare/pymccrgb](https://github.com/rmsare/pymccrgb) | joss | Python | point classification, lidar data, photogrammetric data | `—` |
-| `self-verifying` | [ropensci/lightr](https://github.com/ropensci/lightr) | joss | R | colour, spectrophotometry | `—` |
-| `self-verifying` | [ropensci/stats19](https://github.com/ropensci/stats19) | joss | R | stats19, crashes, dft | `—` |
-| `self-verifying` | [symmy596/SurfinPy](https://github.com/symmy596/SurfinPy) | joss | Python | Chemistry, Physics, Density Functional Theory | `—` |
-| `self-verifying` | [trevorgokey/besmarts](https://github.com/trevorgokey/besmarts) | joss | Python | cheminformatics, graphs, forcefields | `—` |
-| `self-verifying` | [VChristiaens/special](https://github.com/VChristiaens/special) | joss | Python | astronomy, exoplanets, high-contrast | `—` |
+| `self-verifying` | [BattModels/asimtools](https://github.com/BattModels/asimtools) | joss | Python | atomic simulation, density functional theory, workflow | `c232b5fe` |
+| `self-verifying` | [braindatalab/PyBispectra](https://github.com/braindatalab/PyBispectra) | joss | Python | neuroscience, signal processing, bispectrum | `f6388f2a` |
+| `self-verifying` | [BrownDwarf/gollum](https://github.com/BrownDwarf/gollum) | joss | Jupyter Notebook/Python | astronomy, spectroscopy, stars | `2146db90` |
+| `self-verifying` | [carlacupcake/hashin_shtrikman_mp](https://github.com/carlacupcake/hashin_shtrikman_mp) | joss | Python | materials, composites, design | `14e7c92d` |
+| `self-verifying` | [daubners/evoxels](https://github.com/daubners/evoxels) | joss | Python | materials science, differentiable physics, phase-field method | `e90e11fb` |
+| `self-verifying` | [DedalusProject/eigentools](https://github.com/DedalusProject/eigentools) | joss | Python | eigenvalue problems, partial differential equations, fluid dynamics | `3fc8556d` |
+| `self-verifying` | [mengaldo/PySPOD](https://github.com/mengaldo/PySPOD) | joss | Python/Jupyter Notebook | dynamical systems, nonlinear dynamics, data-driven dynamics | `72266888` |
+| `self-verifying` | [oemof/tespy](https://github.com/oemof/tespy) | joss | Python | Thermal Engineering, Thermodynamics, Power Plant Simulation | `971dd9a3` |
+| `self-verifying` | [rmsare/pymccrgb](https://github.com/rmsare/pymccrgb) | joss | Python | point classification, lidar data, photogrammetric data | `dc8ad2e4` |
+| `self-verifying` | [ropensci/lightr](https://github.com/ropensci/lightr) | joss | R | colour, spectrophotometry | `78bd9354` |
+| `self-verifying` | [ropensci/stats19](https://github.com/ropensci/stats19) | joss | R | stats19, crashes, dft | `182aad77` |
+| `self-verifying` | [symmy596/SurfinPy](https://github.com/symmy596/SurfinPy) | joss | Python | Chemistry, Physics, Density Functional Theory | `b094d8af` |
+| `self-verifying` | [trevorgokey/besmarts](https://github.com/trevorgokey/besmarts) | joss | Python | cheminformatics, graphs, forcefields | `d5c8af03` |
+| `self-verifying` | [VChristiaens/special](https://github.com/VChristiaens/special) | joss | Python | astronomy, exoplanets, high-contrast | `fcc0f995` |
 | `constructible` | [MartianColonist/POSEIDON](https://github.com/MartianColonist/POSEIDON) | joss | Python/Jupyter Notebook | astronomy, exoplanets, spectroscopy | `—` |
 | `unclear` | [bessagroup/f3dasm](https://github.com/bessagroup/f3dasm) | joss | Python | data-driven, materials, framework | `—` |
 | `unclear` | [ComtekAdvancedStructures/cmstatr](https://github.com/ComtekAdvancedStructures/cmstatr) | joss | R | statistics, composite materials, material science | `—` |
@@ -82,9 +82,9 @@ where the cross-domain self-verifying candidates concentrate.
 
 | verifiability | repo | arm | lang | tags | pin |
 |---|---|---|---|---|---|
-| `self-verifying` | [anthbapt/MOSAIK](https://github.com/anthbapt/MOSAIK) | joss | Python/Jupyter Notebook | Spatial-transcriptomics, Visualisation, Multi-modality | `—` |
-| `self-verifying` | [dfm/emcee](https://github.com/dfm/emcee) | joss | Python | astronomy | `—` |
-| `self-verifying` | [ropensci/mcbette](https://github.com/ropensci/mcbette) | joss | R | phylogenetics, model comparison, nested sampling | `—` |
+| `self-verifying` | [anthbapt/MOSAIK](https://github.com/anthbapt/MOSAIK) | joss | Python/Jupyter Notebook | Spatial-transcriptomics, Visualisation, Multi-modality | `a7f72e39` |
+| `self-verifying` | [dfm/emcee](https://github.com/dfm/emcee) | joss | Python | astronomy | `8ab6c0fc` |
+| `self-verifying` | [ropensci/mcbette](https://github.com/ropensci/mcbette) | joss | R | phylogenetics, model comparison, nested sampling | `7ddf4ddc` |
 | `constructible` | [czbiohub/cerebra](https://github.com/czbiohub/cerebra) | joss | Python | python, genomics, variant calling | `—` |
 | `constructible` | [marekborowiec/spruceup](https://github.com/marekborowiec/spruceup) | joss | Python | bioinformatics, alignment trimming, phylogenetics | `—` |
 | `constructible` | [mjsull/chromatiblock](https://github.com/mjsull/chromatiblock) | joss | Python | Bioinformatics, Microbial genomics, Visualization | `—` |
@@ -258,33 +258,33 @@ where the cross-domain self-verifying candidates concentrate.
 
 | verifiability | repo | arm | lang | tags | pin |
 |---|---|---|---|---|---|
-| `self-verifying` | [arkavo/CUDA-METRO](https://github.com/arkavo/CUDA-METRO) | joss | Python/Jupyter Notebook | Monte Carlo, 2D Material, CUDA | `—` |
-| `self-verifying` | [CM2S/piglot](https://github.com/CM2S/piglot) | joss | Python | computational mechanics, inverse problems, derivative-free optimisation | `—` |
-| `self-verifying` | [deepskies/DeepBench](https://github.com/deepskies/DeepBench) | joss | Python/Jupyter Notebook | astronomy, physics, simulation | `—` |
-| `self-verifying` | [esa/torchquad](https://github.com/esa/torchquad) | joss | Python | n-dimensional, numerical integration, GPU | `—` |
-| `self-verifying` | [fAndreuzzi/BisPy](https://github.com/fAndreuzzi/BisPy) | joss | Python | Bisimulation, Graph theory, Graph algorithms | `—` |
-| `self-verifying` | [gvec-group/gvec](https://github.com/gvec-group/gvec) | joss | Python | Fortran, plasma physics, MHD | `—` |
-| `self-verifying` | [gyselax/gyselalibxx](https://github.com/gyselax/gyselalibxx) | joss | Python/C++ | HPC, plasma physics, gyrokinetics | `—` |
-| `self-verifying` | [instituteofmechanics/paraqus](https://github.com/instituteofmechanics/paraqus) | joss | Python | finite elements, visualization, vtk | `—` |
-| `self-verifying` | [jacobblum/simDRIFT](https://github.com/jacobblum/simDRIFT) | joss | Python | Diffusion MRI, Diffusion Tensor Imaging, Biophysics | `—` |
-| `self-verifying` | [jbuisine/macop](https://github.com/jbuisine/macop) | joss | Python | Operations Research, Mono-objective, Multi-objective | `—` |
-| `self-verifying` | [jmorris335/ConstraintHg](https://github.com/jmorris335/ConstraintHg) | joss | Python | simulation, modeling, systems | `—` |
-| `self-verifying` | [Leo-Simpson/c-lasso](https://github.com/Leo-Simpson/c-lasso) | joss | Python/JavaScript | regression, classification, constrained regression | `—` |
-| `self-verifying` | [Lindt8/PHITS-Tools](https://github.com/Lindt8/PHITS-Tools) | joss | Python/Jupyter Notebook | PHITS, DCHAIN, Monte Carlo | `—` |
-| `self-verifying` | [ManuelRausch/StatConfR](https://github.com/ManuelRausch/StatConfR) | joss | R | Cognitive modelling, R code, signal detection theory | `—` |
-| `self-verifying` | [moead-framework/framework](https://github.com/moead-framework/framework) | joss | Python/Witcher Script | optimization, Multi-objective, moead | `—` |
-| `self-verifying` | [mrc-ide/individual](https://github.com/mrc-ide/individual) | joss | R/C++ | epidemiology, individual based, agent based | `—` |
-| `self-verifying` | [mscaudill/openseize](https://github.com/mscaudill/openseize) | joss | Python | EEG, neuroscience, signal processing | `—` |
-| `self-verifying` | [NKI-AI/direct](https://github.com/NKI-AI/direct) | joss | Python | Pytorch, Deep Learning, Inverse Problem Solver | `—` |
-| `self-verifying` | [octopus-sensing/octopus-sensing](https://github.com/octopus-sensing/octopus-sensing) | joss | Python | Javascript, Human-Computer-Interaction(HCI), Human behavior research | `—` |
-| `self-verifying` | [pdebuyl-lab/tidynamics](https://github.com/pdebuyl-lab/tidynamics) | joss | Python | physics, time series, stochastic processes | `—` |
-| `self-verifying` | [ramiyaari/simode](https://github.com/ramiyaari/simode) | joss | R | dynamic systems, ordinary differential equations, statistical inference | `—` |
-| `self-verifying` | [sbi-dev/sbi](https://github.com/sbi-dev/sbi) | joss | Python | PyTorch, Bayesian Inference, Simulation-Based Inference | `—` |
-| `self-verifying` | [sciris/sciris](https://github.com/sciris/sciris) | joss | Python | python, scientific software development, computational science | `—` |
-| `self-verifying` | [Simulation-Decomposition/simdec-python](https://github.com/Simulation-Decomposition/simdec-python) | joss | Python | SimDec, statistics, Sensitivity Analysis | `—` |
-| `self-verifying` | [slu-openGIS/areal](https://github.com/slu-openGIS/areal) | joss | R | geospatial science, spatial statistics | `—` |
-| `self-verifying` | [tud-hri/joan](https://github.com/tud-hri/joan) | joss | Python | Human-automated vehicle interaction, Automated driving, Human factors experiments | `—` |
-| `self-verifying` | [wang-boyu/pysgn](https://github.com/wang-boyu/pysgn) | joss | Python | synthetic geospatial networks, python, spatial simulation | `—` |
+| `self-verifying` | [arkavo/CUDA-METRO](https://github.com/arkavo/CUDA-METRO) | joss | Python/Jupyter Notebook | Monte Carlo, 2D Material, CUDA | `0c670f43` |
+| `self-verifying` | [CM2S/piglot](https://github.com/CM2S/piglot) | joss | Python | computational mechanics, inverse problems, derivative-free optimisation | `a2b0240a` |
+| `self-verifying` | [deepskies/DeepBench](https://github.com/deepskies/DeepBench) | joss | Python/Jupyter Notebook | astronomy, physics, simulation | `4a39a523` |
+| `self-verifying` | [esa/torchquad](https://github.com/esa/torchquad) | joss | Python | n-dimensional, numerical integration, GPU | `4e5e95b0` |
+| `self-verifying` | [fAndreuzzi/BisPy](https://github.com/fAndreuzzi/BisPy) | joss | Python | Bisimulation, Graph theory, Graph algorithms | `18f5853c` |
+| `self-verifying` | [gvec-group/gvec](https://github.com/gvec-group/gvec) | joss | Python | Fortran, plasma physics, MHD | `24295cd0` |
+| `self-verifying` | [gyselax/gyselalibxx](https://github.com/gyselax/gyselalibxx) | joss | Python/C++ | HPC, plasma physics, gyrokinetics | `2edea8d6` |
+| `self-verifying` | [instituteofmechanics/paraqus](https://github.com/instituteofmechanics/paraqus) | joss | Python | finite elements, visualization, vtk | `91b00219` |
+| `self-verifying` | [jacobblum/simDRIFT](https://github.com/jacobblum/simDRIFT) | joss | Python | Diffusion MRI, Diffusion Tensor Imaging, Biophysics | `15756bb2` |
+| `self-verifying` | [jbuisine/macop](https://github.com/jbuisine/macop) | joss | Python | Operations Research, Mono-objective, Multi-objective | `aee0df35` |
+| `self-verifying` | [jmorris335/ConstraintHg](https://github.com/jmorris335/ConstraintHg) | joss | Python | simulation, modeling, systems | `1cdf7c87` |
+| `self-verifying` | [Leo-Simpson/c-lasso](https://github.com/Leo-Simpson/c-lasso) | joss | Python/JavaScript | regression, classification, constrained regression | `82b106c4` |
+| `self-verifying` | [Lindt8/PHITS-Tools](https://github.com/Lindt8/PHITS-Tools) | joss | Python/Jupyter Notebook | PHITS, DCHAIN, Monte Carlo | `9434b5a2` |
+| `self-verifying` | [ManuelRausch/StatConfR](https://github.com/ManuelRausch/StatConfR) | joss | R | Cognitive modelling, R code, signal detection theory | `48d87901` |
+| `self-verifying` | [moead-framework/framework](https://github.com/moead-framework/framework) | joss | Python/Witcher Script | optimization, Multi-objective, moead | `82e43767` |
+| `self-verifying` | [mrc-ide/individual](https://github.com/mrc-ide/individual) | joss | R/C++ | epidemiology, individual based, agent based | `50524f23` |
+| `self-verifying` | [mscaudill/openseize](https://github.com/mscaudill/openseize) | joss | Python | EEG, neuroscience, signal processing | `42067b3e` |
+| `self-verifying` | [NKI-AI/direct](https://github.com/NKI-AI/direct) | joss | Python | Pytorch, Deep Learning, Inverse Problem Solver | `f83b7bbb` |
+| `self-verifying` | [octopus-sensing/octopus-sensing](https://github.com/octopus-sensing/octopus-sensing) | joss | Python | Javascript, Human-Computer-Interaction(HCI), Human behavior research | `f59a16a9` |
+| `self-verifying` | [pdebuyl-lab/tidynamics](https://github.com/pdebuyl-lab/tidynamics) | joss | Python | physics, time series, stochastic processes | `b0c95e0b` |
+| `self-verifying` | [ramiyaari/simode](https://github.com/ramiyaari/simode) | joss | R | dynamic systems, ordinary differential equations, statistical inference | `a8ac4343` |
+| `self-verifying` | [sbi-dev/sbi](https://github.com/sbi-dev/sbi) | joss | Python | PyTorch, Bayesian Inference, Simulation-Based Inference | `5f227ac5` |
+| `self-verifying` | [sciris/sciris](https://github.com/sciris/sciris) | joss | Python | python, scientific software development, computational science | `f5c965a2` |
+| `self-verifying` | [Simulation-Decomposition/simdec-python](https://github.com/Simulation-Decomposition/simdec-python) | joss | Python | SimDec, statistics, Sensitivity Analysis | `b4031b63` |
+| `self-verifying` | [slu-openGIS/areal](https://github.com/slu-openGIS/areal) | joss | R | geospatial science, spatial statistics | `07bda848` |
+| `self-verifying` | [tud-hri/joan](https://github.com/tud-hri/joan) | joss | Python | Human-automated vehicle interaction, Automated driving, Human factors experiments | `789efcf3` |
+| `self-verifying` | [wang-boyu/pysgn](https://github.com/wang-boyu/pysgn) | joss | Python | synthetic geospatial networks, python, spatial simulation | `fad885a2` |
 | `constructible` | [cadop/seg1d](https://github.com/cadop/seg1d) | joss | Python | biomechanics, data series, movement | `—` |
 | `constructible` | [DiamondLightSource/volume-segmantics](https://github.com/DiamondLightSource/volume-segmantics) | joss | Python | segmentation, deep learning, volumetric | `—` |
 | `constructible` | [DIDSR/calzone](https://github.com/DIDSR/calzone) | joss | Python | Machine Learning, Artificial Intelligence, Calibration | `—` |
