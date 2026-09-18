@@ -32,6 +32,16 @@ RUN curl -fsSL https://claude.ai/install.sh | bash || \
     echo "install the claude CLI at build time or mount it at /usr/local/bin/claude"
 ENV PATH="/root/.local/bin:${PATH}"
 
+# The SDK drives the CLI with --dangerously-skip-permissions (permission_mode=
+# "bypassPermissions" in lazarus.scout and lazarus.resurrect), and the CLI refuses that flag
+# as root: "cannot be used with root/sudo privileges for security reasons". That killed the
+# Scout two seconds into the first real end-to-end run. IS_SANDBOX is the documented escape
+# for an already-isolated container, and here the container *is* the isolation boundary. The
+# alternative — a non-root user — would have to match the host's docker group id to keep the
+# mounted socket usable, which does not port between hosts. Note this failure is not
+# architecture-specific: it would have happened identically on x86.
+ENV IS_SANDBOX=1
+
 WORKDIR /app
 # lazarus-bio provides the pinner, sandbox, scout and resurrection loop.
 RUN pip install --no-cache-dir "lazarus-bio[agent]>=0.5" pyyaml
