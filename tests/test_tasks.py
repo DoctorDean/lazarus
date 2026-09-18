@@ -348,14 +348,19 @@ def test_shipped_task_commits_match_the_pin_cache():
     """
     import json
 
+    # dev tasks are pinned in pins.json (the attempted corpus); the held-out test pool is
+    # pinned separately in test_pins.json (mine_test_candidates.py). Check each against its own.
     pins = json.loads((ROOT / "benchmark" / "tasks" / "pins.json").read_text())
+    test_pins_path = ROOT / "benchmark" / "tasks" / "test_pins.json"
+    test_pins = json.loads(test_pins_path.read_text()) if test_pins_path.exists() else {}
     for t in task_mod.load_tasks(ROOT / "benchmark" / "tasks"):
         if t.pin_kind == "artifact":
             continue        # content-addressed; the hash IS the verification
-        entry = pins.get(t.repo_url)
-        assert entry, f"{t.id}: {t.repo_url} has no recorded pin in pins.json"
+        cache, src = (test_pins, "test_pins.json") if t.split == "test" else (pins, "pins.json")
+        entry = cache.get(t.repo_url)
+        assert entry, f"{t.id}: {t.repo_url} has no recorded pin in {src}"
         assert t.commit == entry["sha"], (
-            f"{t.id}: task pins {t.commit} but pins.json resolved {entry['sha']}")
+            f"{t.id}: task pins {t.commit} but {src} resolved {entry['sha']}")
 
 
 # --------------------------------------------------------------------------
@@ -465,6 +470,53 @@ def test_pyamg_dev_task_grades_an_exact_solve(tmp_path):
             w.writerow([i, repr(float(val))])
     s = scoring.grade(t, out)
     assert s.passed is True and s.measured < 1e-12
+
+
+def test_c_lasso_test_task_grades_a_constrained_lasso_solve(tmp_path):
+    """The first held-out TEST task, end to end. Solve the constrained Lasso with an
+    independent ADMM (not c-lasso), grade through score.grade: the KKT grader must pass an
+    optimum and fail a wrong answer. This validates the task is solvable and the grader
+    discriminates; the achievability check against the real revived c-lasso is a separate run.
+    """
+    import csv
+
+    np = pytest.importorskip("numpy")
+    t = task_mod.load_task(
+        ROOT / "benchmark" / "tasks" / "test" / "c-lasso-logcontrast" / "task.yaml")
+    assert t.split == "test" and t.evaluation.self_verifying
+    src = t.input_file
+    X = evaluators._read_dense(src / "X.txt", "X")
+    y = evaluators._read_dense(src / "y.txt", "y").reshape(-1)
+    C = evaluators._read_dense(src / "C.txt", "C")
+    lam = float((src / "lambda.txt").read_text().split()[0])
+    p, k = X.shape[1], C.shape[0]
+
+    # ADMM for  min ||Xb-y||^2 + lam||z||_1  s.t. b=z, Cb=0 — an independent solver.
+    rho = 10.0
+    kkt_inv = np.linalg.inv(np.block([[2 * X.T @ X + rho * np.eye(p), C.T],
+                                      [C, np.zeros((k, k))]]))
+    xty2 = 2 * X.T @ y
+    z = np.zeros(p)
+    u = np.zeros(p)
+    for _ in range(6000):
+        beta = (kkt_inv @ np.concatenate([xty2 + rho * (z - u), np.zeros(k)]))[:p]
+        z = np.sign(beta + u) * np.maximum(np.abs(beta + u) - lam / rho, 0.0)
+        u += beta - z
+
+    def _grade(vec):
+        out = tmp_path / "out"
+        out.mkdir(exist_ok=True)
+        with open(out / "beta.csv", "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["index", "value"])
+            for i, val in enumerate(vec):
+                w.writerow([i, repr(float(val))])
+        return scoring.grade(t, out)
+
+    s = _grade(z)
+    assert s.passed is True and s.measured < 1e-2      # optimum clears the 1e-2 bar with margin
+    assert _grade(z + 0.1).passed is False             # breaks feasibility and optimality
+    assert _grade(np.zeros(p)).passed is False         # the trivial point is not optimal here
 
 
 def test_r_squared_is_not_clipped_at_zero(tmp_path):

@@ -341,6 +341,110 @@ def relative_residual(prediction: Path, labels: Optional[Path], task=None) -> fl
     return float(np.linalg.norm(ax - b) / nb)
 
 
+def _read_dense(path: Path, what: str) -> "np.ndarray":
+    """Read a whitespace-delimited dense matrix/vector. Comments (# or %) and blanks are
+    skipped; ragged rows are rejected. numpy's loadtxt would do this, but keeping the reader
+    here and tiny matches relative_residual's stance: a grader has as few moving parts as
+    the thing it grades."""
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError as exc:
+        raise EvaluationError(f"cannot read {path.name}: {exc}") from exc
+    rows = []
+    for ln in text.splitlines():
+        ln = ln.strip()
+        if not ln or ln[0] in "#%":
+            continue
+        try:
+            rows.append([float(t) for t in ln.split()])
+        except ValueError:
+            raise EvaluationError(f"{what}: non-numeric row {ln!r}") from None
+    if not rows:
+        raise EvaluationError(f"{what}: {path.name} has no numeric rows")
+    width = len(rows[0])
+    if any(len(r) != width for r in rows):
+        raise EvaluationError(f"{what}: ragged rows in {path.name}")
+    return np.asarray(rows, dtype=float)
+
+
+def kkt_residual(prediction: Path, labels: Optional[Path], task=None) -> float:
+    r"""KKT-optimality residual for the constrained Lasso. **Self-verifying.**
+
+    The task fixes X, y, lambda and a constraint C and asks for the minimiser of
+
+        ||X b - y||^2  +  lam * ||b||_1     s.t.  C b = 0     (c-lasso's R1 formulation)
+
+    which is convex, so a point is optimal iff it meets the KKT conditions — and those are
+    recomputable from the input alone. There is no stored answer to leak, and anyone can
+    re-derive the number. With g = 2 X^T (X b - y) and a dual nu for the equality C b = 0:
+
+        active i (b_i != 0):  g_i + lam*sign(b_i) + (C^T nu)_i = 0
+        zero   i (b_i == 0):  |g_i + (C^T nu)_i| <= lam
+        feasibility:          C b = 0
+
+    nu is recovered by least squares from the active-set equalities (at the true optimum
+    they are consistent, so this is exact there), then the worst violation is reported,
+    normalised by lam — and feasibility by ||b||_1 — so the score is dimensionless: ~0 at
+    the optimum, O(1) for a wrong, infeasible, or wrong-lambda solution.
+
+    Expects ``task.input_file`` to be a directory holding X.txt, y.txt, C.txt, lambda.txt.
+    The submission writes ``index,value`` rows, one per coefficient, index 0..p-1.
+    """
+    src = getattr(task, "input_file", None)
+    if src is None or not Path(src).is_dir():
+        raise EvaluationError(
+            "kkt_residual needs the task's input directory (X.txt, y.txt, C.txt, lambda.txt)")
+    src = Path(src)
+    X = _read_dense(src / "X.txt", "X")
+    y = _read_dense(src / "y.txt", "y").reshape(-1)
+    C = _read_dense(src / "C.txt", "C")
+    try:
+        lam = float((src / "lambda.txt").read_text().split()[0])
+    except (OSError, ValueError, IndexError) as exc:
+        raise EvaluationError(f"cannot read lambda.txt: {exc}") from exc
+    n, p = X.shape
+    if y.shape[0] != n:
+        raise EvaluationError(f"y has {y.shape[0]} entries but X has {n} rows")
+    if C.shape[1] != p:
+        raise EvaluationError(f"C has {C.shape[1]} columns but X has {p}")
+    if not lam > 0:
+        raise EvaluationError(f"lambda must be positive, got {lam}")
+
+    rows = _read_rows(prediction)
+    idx = [str(x).strip() for x in _column(rows, "index", "i", "id", "row")]
+    bv = _floats(_column(rows, "value", "beta", "b", "coef", "coefficient"), "coefficient value")
+    try:
+        order = np.asarray([int(i) for i in idx])
+    except ValueError:
+        raise EvaluationError("coefficient index column must be integers") from None
+    if sorted(order.tolist()) != list(range(p)):
+        raise EvaluationError(
+            f"solution must give every index 0..{p - 1} exactly once (got {len(order)} rows)")
+    beta = np.empty(p, dtype=float)
+    beta[order] = bv
+
+    g = 2.0 * X.T @ (X @ beta - y)
+    amax = float(np.max(np.abs(beta))) if beta.size else 0.0
+    btol = max(1e-8, 1e-6 * amax)                 # a real solver leaves inactive coeffs ~0, not exactly 0
+    active = np.abs(beta) > btol
+    zero = ~active
+    if active.any():
+        A = C[:, active].T                        # (|active| x k): the active-set stationarity
+        rhs = -g[active] - lam * np.sign(beta[active])
+    else:
+        A, rhs = C.T, -g                          # b == 0 edge: keep C^T nu near -g
+    nu, *_ = np.linalg.lstsq(A, rhs, rcond=None)
+    ctnu = C.T @ nu
+    stat = (float(np.max(np.abs(g[active] + lam * np.sign(beta[active]) + ctnu[active])))
+            if active.any() else 0.0)
+    sub = (float(np.max(np.maximum(np.abs(g[zero] + ctnu[zero]) - lam, 0.0)))
+           if zero.any() else 0.0)
+    feas = float(np.max(np.abs(C @ beta)))
+    optimality = max(stat, sub) / lam
+    feasibility = feas / (float(np.sum(np.abs(beta))) + 1e-12)
+    return max(optimality, feasibility)
+
+
 BUILTINS = {
     "auroc": auroc,
     "rmse": rmse,
@@ -349,6 +453,7 @@ BUILTINS = {
     "r_squared": r_squared,
     "ligand_centroid_distance": ligand_centroid_distance,
     "relative_residual": relative_residual,
+    "kkt_residual": kkt_residual,
 }
 
 

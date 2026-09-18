@@ -1,0 +1,44 @@
+# HELD-OUT TEST-SPLIT task — the first frozen one (P3). Freshly mined (mine_test_candidates.py),
+# never in the attempted corpus, pinned to a commit before any Lazarus contribution. Confirmed
+# dead today (tasks/test_decay.json). Self-verifying, so there is no answer key to withhold:
+# the input IS the problem and the KKT residual is recomputed from it. See ../../../LEADERBOARD_SCOPE.md §9.
+id: c-lasso-logcontrast
+repo_url: https://github.com/Leo-Simpson/c-lasso
+commit: 82b106c471c70559b1720a5bb79a61a5224cca7f   # 2021-05-05, pinned in tasks/test_pins.json
+paper: 10.21105/joss.02844   # c-lasso — constrained sparse and robust regression (JOSS)
+domain: convex optimization
+kind: predict
+split: test
+
+capability: >-
+  Revive c-lasso and solve its standard constrained-Lasso problem (R1): given a design
+  matrix X, response y, penalty lambda and a linear constraint C, return the coefficient
+  vector b minimising  ||X b - y||^2 + lambda*||b||_1  subject to  C b = 0.
+
+input_path: input
+output_path: beta.csv
+output_schema: [index, value]
+
+evaluation:
+  evaluator: kkt_residual
+  metric: kkt_residual
+  direction: lower
+  threshold: 1.0e-2
+  self_verifying: true   # graded by KKT optimality recomputed from X, y, C, lambda — nothing stored
+
+caps:
+  turns: 90
+  wall_clock_s: 5400
+  cost_usd: 10.0
+
+notes: >-
+  The objective is c-lasso's R1 formulation with NO 1/2 or 1/n factor on the least-squares
+  term (so the gradient is g = 2 X^T (X b - y)); configure c-lasso with concomitant = False
+  and rescaled_lam = False so lambda is the absolute penalty, not lambda/lambda_max. C is the
+  single zero-sum / log-contrast row (1^T b = 0). input/: X.txt (64x32 dense), y.txt (64),
+  C.txt (1x32 ones), lambda.txt (=25.0); regenerable byte-for-byte by make_input.py from a
+  fixed seed. Write one index,value row per coefficient, index 0..31. The grader returns the
+  worst KKT violation normalised by lambda (feasibility by ||b||_1): ~1e-15 at the optimum,
+  and every wrong or wrong-lambda solution tested lands at 0.5-9, so the 1e-2 bar clears a
+  well-converged solve with ~50x margin while rejecting a non-solution. Threshold to be
+  re-confirmed against a real c-lasso solve during the achievability check.
