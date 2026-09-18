@@ -1,0 +1,14 @@
+{
+  "note": "P3 decay screen of fresh self-verifying leads (mine_test_candidates.py). Verdict is from `lazarus decay-check --sandbox docker` at the repo's default-branch HEAD, which is a FIRST-PASS proxy: the frozen task will clone the pinned pre-cutoff SHA, which is at least as dead as HEAD. A DECAYED verdict here means the repo needs reviving (good); an ALIVE verdict needs the pinned commit re-checked before the repo is dropped. stage_reason distinguishes an install-time break (deep dependency rot) from an example-time break (which can be shallow and needs per-task vetting of whether the revival is a real challenge). This is a screening record, not a task.",
+  "sandbox": "docker",
+  "ref": "HEAD",
+  "checked_at": "2026-09-18",
+  "checks": [
+    {"repo": "https://github.com/pdebuyl-lab/tidynamics", "verdict": "DECAYED", "exit": 1, "stage_reason": "example/example_exit_1", "seconds": 36},
+    {"repo": "https://github.com/fAndreuzzi/BisPy", "verdict": "DECAYED", "exit": 1, "stage_reason": "install/pip_requirements_failed", "seconds": 6},
+    {"repo": "https://github.com/Leo-Simpson/c-lasso", "verdict": "DECAYED", "exit": 1, "stage_reason": "example/example_exit_1", "seconds": 285},
+    {"repo": "https://github.com/jbuisine/macop", "verdict": "DECAYED", "exit": 1, "stage_reason": "install/pip_requirements_failed", "seconds": 37},
+    {"repo": "https://github.com/moead-framework/framework", "verdict": "DECAYED", "exit": 1, "stage_reason": "example/example_exit_1", "seconds": 31},
+    {"repo": "https://github.com/esa/torchquad", "verdict": "DECAYED", "exit": 1, "stage_reason": "example/example_exit_1", "seconds": 64}
+  ]
+}
