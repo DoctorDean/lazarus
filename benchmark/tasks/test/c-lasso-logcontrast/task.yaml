@@ -40,5 +40,8 @@ notes: >-
   fixed seed. Write one index,value row per coefficient, index 0..31. The grader returns the
   worst KKT violation normalised by lambda (feasibility by ||b||_1): ~1e-15 at the optimum,
   and every wrong or wrong-lambda solution tested lands at 0.5-9, so the 1e-2 bar clears a
-  well-converged solve with ~50x margin while rejecting a non-solution. Threshold to be
-  re-confirmed against a real c-lasso solve during the achievability check.
+  well-converged solve with ~50x margin while rejecting a non-solution. Achievability
+  confirmed 2026-09-19: the Lazarus reference revived c-lasso at this SHA on Bertha (x86) and
+  solved it to kkt_residual=1.57e-14 in 7.4 min (PASS). The bar stays deliberately loose (as
+  pyamg's does) — it tests that a working solve was produced, not solver precision, and must
+  stay safe for other agents' looser solvers.

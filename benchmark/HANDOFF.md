@@ -349,11 +349,27 @@ self-verifying + 23 constructible** leads across the four domains (genomics is m
 
 **The per-candidate grind (the 1–2 weeks that remain), per task:**
 1. **decay-check** — confirm it is dead today (`lazarus decay-check`, agent-free, ~3 min).
+   Use text-mode + `--fail-on-decay`, **not `--json`** (a v0.5.0 `cli.py` bug crashes the
+   JSON path; don't fix in `src/`). First screen (`tasks/test_decay.json`): 6/6 leads dead.
 2. **pin** — last commit before `2026-07-01` (`--pin`, cached to `tasks/test_pins.json`).
 3. **hand-build a harness-owned criterion** — self-verifying wherever possible. Only
-   `relative_residual` among the 7 evaluators is self-verifying today; expect to add a few
-   (energy / feasibility / round-trip), each against a real task, never speculatively (§2.5).
+   `relative_residual` and now `kkt_residual` among the built-ins are self-verifying; expect
+   to add a few more (energy / feasibility / round-trip), each against a real task (§2.5).
 4. **confirm achievable** — the reference must pass, or the task is dead weight.
+
+**First frozen test task — DONE and achievability-proven (2026-09-19).**
+`tasks/test/c-lasso-logcontrast` (`e0ade0f`): revive c-lasso, solve the constrained Lasso,
+graded by the self-verifying `kkt_residual`. The Lazarus reference revived it **on Bertha
+(x86)** and solved to `kkt_residual = 1.57e-14` in 7.4 min — **PASS** at the (deliberately
+loose) 1e-2 bar, no λ-convention slip. This is the template for the remaining ~49.
+
+**Runner: everything goes on Bertha now, not the Mac** (Dean, 2026-09-19 — a local
+resurrection makes the Mac unusable). Bertha is set up: `~/lzb/{benchmark,src}` rsynced,
+`lazarus-submission:local` **rebuilt on x86 with `IS_SANDBOX`** (the `:0.5` image predated
+that fix and would hit §6.10), `~/lzb/.env` placed. `run_reference.py` self-adds `~/lzb/src`
+so the minimal venv needs no `lazarus` install. Launch detached (`setsid`) and poll — the
+launch ssh's channel hangs open otherwise. The Mac is only for non-container work (miner,
+pinning, evaluators, tests).
 
 **Watch items.** 58 self-verifying leads is a thin margin for 50 tasks once decay-check and
 achievability thin them; the JOSS arm is the well to widen if short. Label privacy is not

@@ -65,9 +65,17 @@ The **1e-2** bar clears a well-converged solve with ~50× margin while rejecting
 wrong or wrong-`lambda` answer — including the failure mode that matters most here, an
 agent that revives c-lasso but leaves it on a different `lambda` convention.
 
-## Achievability
+## Achievability — CONFIRMED
 
-The evaluator is validated (`tests/test_tasks.py`), but the number a real revived c-lasso
-actually reaches has **not yet been measured** — that is the achievability run (revive at
-the pinned SHA, solve, grade). If c-lasso's solver is looser than 1e-2 the threshold is
-relaxed then; the task is not final until a genuine revival is shown to pass.
+Proven end-to-end against a real revival, not just the evaluator's unit test. On Bertha
+(x86, native), the Lazarus reference submission cloned c-lasso at the pinned SHA, built it,
+solved this instance and wrote `beta.csv` — graded **PASS** at **`kkt_residual = 1.57e-14`**
+in **7.4 min** (exit 0). Driven by the `capability` line alone (notes are stripped from the
+submission's view), it configured c-lasso to the exact absolute-`lambda` objective with no
+convention slip.
+
+The `1e-2` bar is kept, not tightened to that 1e-14. It is deliberately loose (as pyamg's
+`1e-8` is, against a 1.4e-15 direct solve): it asks whether *a working constrained-Lasso
+solve was produced*, not for a particular solver's precision, and it must stay safe for
+*other* agents whose solvers may be looser than c-lasso's. It clears the real solve by ~12
+orders and rejects every non-solution (≥0.5) by ~50×.
